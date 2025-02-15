@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an unsorted array nums consisting of n integers. A beautiful sequence is a sequence of integers that consist of consecutive integers.\nFor example,\n\n1. 5 6 9 7 8 10 - is a beautiful sequence because it contains consecutive integers.\n2. 1 1 2 3 - is not a beautiful sequence because 1 appears twice.\n\nYou need to find the maximum length of a beautiful sequence that can be made using the elements of nums.\n\nTry to solve the problem in O(n) time complexity.",
+        "complete_approach": "",
+        "constraints": "<p>1 &lt;= n &lt;= 100000</p><p>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint LongestConsecutive(vector <int>& nums) {\n\tint n = nums.size();\n\tunordered_map <int, int> freq;\n\tint ans = 0;\n\tfor (int i = 0; i < n; i++)\n\t\tfreq[nums[i]]++;\n\tfor (int i = 0; i < n; i++) {\n\t\tif (freq[nums[i] - 1] == 0) {\n\t\t\tint cur = nums[i];\n\t\t\tint len = 1;\n\t\t\twhile (freq[cur + 1] > 0) {\n\t\t\t\tlen++;\n\t\t\t\tcur++;\n\t\t\t}\n\t\t\tans = max(ans, len);\n\t\t}\n\t}\n\treturn ans;\n}\n\nint main() \n{\n\tios_base::sync_with_stdio(0);\n\tcin.tie(0);\n\tcout.tie(0);\n\n\tint n;\n\tcin >> n;\n\tvector <int> nums(n);\n\tfor (auto &i : nums)\n\t\tcin >> i;\n\tcout << LongestConsecutive(nums);\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:25:07.296496+00:00"
+        },
+        "hints": {
+            "hint1": "If x is the start of the maximum length beautiful sequence, x-1 must be absent in the array nums.",
+            "hint2": "We can iterate on the array and find the maximum length beautiful sequence for all the starting points (numbers that follow the above condition).",
+            "solution_approach": "To solve this problem in O(n) time complexity we can use std:: unorderer_map (HashMap) in C++ to store the frequency of each number.\nWe iterate on the elements present in the array. If the current element is x and x-1 is present in the array, it is never optimal to choose this element as the start of a beautiful sequence as we can include the previous number to increase the length of the sequence.\nIf x-1 is not present in the array, this number is the start of a beautiful sequence. We keep increasing x by one till x+1 is present in the array. The length of the sequence obtained is the maximum possible length a beautiful sequence can have consisting of these elements. We take the maximum of the lengths of all these sequences and return the answer."
+        },
+        "id": 613,
+        "input_format": "Implement the LongestConsecutive function that takes the array nums.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "-1 -2 -3 -4 -5\nIs the maximum length beautiful sequence that can be obtained.",
+        "output_format": "Return the maximum length of a beautiful sequence that can be made using the elements of nums.",
+        "samples": [
+            {
+                "input": "6\n-5 1 -3 -2 -1 -4",
+                "output": "5"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nint LongestConsecutive(vector <int>& nums) {\n\t\n}\n\n<fix>\nint main() \n{\n\tios_base::sync_with_stdio(0);\n\tcin.tie(0);\n\tcout.tie(0);\n\n\tint n;\n\tcin >> n;\n\tvector <int> nums(n);\n\tfor (auto &i : nums)\n\t\tcin >> i;\n\tcout << LongestConsecutive(nums);\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Longest Consecutive Sequence",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

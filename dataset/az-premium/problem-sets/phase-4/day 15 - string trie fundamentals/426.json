@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given a dictionary of $N$ words (each word consists of lowercase characters) and $Q$ query words. In each query, you will be given an integer $K$ and a word $S$. We want to design a system that will suggest at most $K$ words from the dictionary after each character of a query word is typed. Suggested words should have a common prefix with the query word. If there are more than $K$ dictionary words with a common prefix, return the $K$ lexicographically minimum words. If there is no word with a common prefix, print a blank line.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 N \u2264 10000.</p><p>1 \u2264 MaxLen \u2264 100.</p><p>1 \u2264 Q \u2264 100.</p><p>1 \u2264 |Length of dictionary or query word| \u2264 100.</p><p>Sum of K across all the queries \u2264 10000.</p>",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n// un_coder\n#include <bits/stdc++.h>\ntypedef long long ll;\n#define all(a) a.begin(), a.end()\n#define MOD 1000000007\n#define inf 1e18\n#define ff first\n#define ss second\nusing namespace std;\nvoid solve();\nsigned main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    cout.tie(NULL);\n\n#ifndef ONLINE_JUDGE\n    freopen(\"input.txt\", \"r\", stdin);\n    freopen(\"error.txt\", \"w\", stderr);\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n\n    ll t = 1;\n    // cin>>t;\n    while (t--)\n    {\n        solve();\n        cout << \"\\n\";\n    }\n    cerr << \"time taken : \" << (float)clock() / CLOCKS_PER_SEC << \" secs\" << endl;\n    return 0;\n}\nstruct node\n{\n    int cnt;\n    node *child[26];\n    multiset<string> wend;\n    node()\n    {\n        wend.clear();\n        cnt = 0;\n        for (int i = 0; i < 26; i++)\n            child[i] = NULL;\n    }\n};\nstruct trie\n{\n    node *root;\n    trie()\n    {\n        root = new node;\n    }\n    void insert(string s)\n    {\n        node *cur = root;\n        for (auto c : s)\n        {\n            if (cur->child[c - 'a'] == NULL)\n                cur->child[c - 'a'] = new node;\n            cur = cur->child[c - 'a'];\n            cur->cnt++;\n            cur->wend.insert(s);\n        }\n    }\n    void query(string s, int k)\n    {\n        node *cur = root;\n        for (int i = 0; i < s.length(); i++)\n        {\n            char c = s[i];\n            if (cur->child[c - 'a'] == NULL)\n            {\n                while (i < s.length())\n                {\n                    cout << '\\n';\n                    i++;\n                }\n                continue;\n            }\n            cur = cur->child[c - 'a'];\n            if (cur->wend.size() > 0)\n            {\n                auto it = cur->wend.begin();\n                for (int j = 0; j < k; j++)\n                {\n                    if (it != cur->wend.end())\n                    {\n                        cout << (*it) << \" \";\n                        it++;\n                    }\n                    else\n                        break;\n                }\n            }\n            cout << '\\n';\n        }\n    }\n};\nvoid solve()\n{\n    int n, mlen, q;\n    cin >> n >> mlen >> q;\n    trie t;\n    for (int i = 0; i < n; i++)\n    {\n        int len;\n        string s;\n        cin >> len >> s;\n        t.insert(s);\n    }\n    while (q--)\n    {\n        int len, k;\n        string s;\n        cin >> len >> s >> k;\n        t.query(s, k);\n    }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Editorial code is not passing the Sample cases.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:23:52.138547+00:00"
+        },
+        "hints": {
+            "hint1": "This problem can be solved using Trie data structure.",
+            "hint2": "We can insert all the given words in a trie data structure. Then for each query word, we can traverse through the trie starting from the root, and for each character of the query word, we can move to the corresponding child node of the current node in the trie. While traversing, we can keep track of the set of words that end at each node of the trie. Once we reach the end of the query word, we can print the set of words that end at the current node, up to a maximum of K lexicographically smallest words.",
+            "solution_approach": "For each query word, we traverse the trie starting from the root, and for each character of the query word, we move to the corresponding child node of the current node in the trie. While traversing, we keep track of the set of words that end at each node of the trie. Once we reach the end of the query word, we print the set of words that end at the current node, up to a maximum of K lexicographically smallest words."
+        },
+        "id": 426,
+        "input_format": "<p>The first line contains 3 space-separated integers <i>N, MaxLen, Q</i>- the number of words in the dictionary, the maximum length of a dictionary or query word, the number of queries.</p><p>The next <i>N</i> lines contain an integer denoting the length of the word and a string denoting the word in the dictionary.</p><p>The next <i>Q</i> lines contain an integer denoting the length of the word, a string denoting the query word, and an integer <i>K</i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "",
+        "output_format": "For each query, after every character print at most K lexicographically minimum space-separated dictionary words in a new line. Words should be printed in lexicographical order. If there is no word print a blank line.",
+        "samples": [
+            {
+                "input": "5 5 5\n5 abcde\n4 abcd\n4 abcc\n3 abc\n1 a\n5 abcde 2\n3 xyz 100\n2 ae 100\n3 abc 5\n4 abcc 2",
+                "output": "a abc \nabc abcc \nabc abcc \nabcd abcde \nabcde \n\n\n\na abc abcc abcd abcde \n\na abc abcc abcd abcde \nabc abcc abcd abcde \nabc abcc abcd abcde \na abc \nabc abcc \nabc abcc \nabcc"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Tries"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "Auto Suggestion",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

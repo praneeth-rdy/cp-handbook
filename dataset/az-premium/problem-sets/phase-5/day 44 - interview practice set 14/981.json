@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a string $s$. An awesome substring is a non-empty substring of $s$ such that we can make any number of swaps in order to make it a palindrome.\n\nFind the length of the maximum length awesome substring of $s$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^5$\n$1 \\leq |s| \\leq 10^5$\nString $s$ only contains digts from $0-9$. \nSum of $|s|$ over all test cases is $\\leq 10^6$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nint Awesome(string s) {\n\tint mask = 0, ans = 0;\n\tvector<int> m(1 << 10, s.size() + 1);\n\tm[0] = -1;\n\tfor (int i = 0; i < s.size(); i++) {\n\t\tmask ^= (1 << (s[i] - '0'));\n\t\tfor (int j = 0; j < 10; j++) {\n\t\t\tans = max(ans, i - m[mask ^ (1 << j)]);\n\t\t}\n\t\tans = max(ans, i - m[mask]);\n\t\tm[mask] = min(m[mask], i);\n\t}\n\treturn ans;\n}\nvoid solve() {\n\tstring s;\n\tcin >> s;\n\tcout << Awesome(s) << endl;\n}\nint main() {\n\tios_base :: sync_with_stdio(0);\n\tcin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n\tfreopen(\"input.txt\", \"r\", stdin); \\\n\tfreopen(\"output.txt\", \"w\", stdout);\n#endif\n\tint t = 1;\n\t// int i = 1;\n\tcin >> t;\n\twhile (t--) {\n\t\t// cout << \"Case #\" << i << \": \";\n\t\tsolve();\n\t\t// i++;\n\t}\n\treturn 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:32:21.628619+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "We can form a palindrome if the count of each included number (except maybe one) is even, and this is the property of an awesome string.\n\nA bit in our mask is $0$ if the count for the corresponding number is even, and $1$ if it's odd. As we go through the string, we track odd/even counts in our mask. If we see the same mask again, the subarray between a first position (exclusive) and the current position (inclusive) with the same mask has all numbers with the even count.\n\nWe will use the DP array to track the smallest (first) position of each mask. We can get the size of the substring by subtracting it from the current position.\n\nNote that the position for zero masks is $-1$, as we need to include the very first character.\n\n**Time Complexity:** $O(10*|s|)$ per test case."
+        },
+        "id": 981,
+        "input_format": "First-line contains $T$ - the number of test cases.\nThe first line of each test case contains string $s$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, output the length of the maximum length awesome substring of $s$.",
+        "samples": [
+            {
+                "input": "3\n185801630663498\n213123\n123456\n",
+                "output": "5\n6\n1\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-az"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Awesome",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

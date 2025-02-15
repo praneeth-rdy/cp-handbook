@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given two sets, A and B of N and M integers respectively. There are no duplicate integers in each respective array. Find the set union, set intersection and set difference (A-B) of the two sets in sorted order.",
+        "complete_approach": "",
+        "constraints": "1\u2264 T \u2264 105\n\n1\u2264 N, M \u2264 10<sup>4</sup>\n\n1\u2264 A<sub>i</sub>, B<sub>i</sub> \u2264 10<sup>9</sup>\n\nIt is guaranteed that the sum of N and the sum of M over all test cases does not exceed 2*10^5.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n\nint main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int n, m;\n    cin >> n >> m;\n    set<int> uni, inter, diff;\n    for (int i = 0; i < n; ++i) {\n      int x;\n      cin >> x;\n      uni.insert(x);\n      inter.insert(x);\n      diff.insert(x);\n    }\n    set<int> inters;\n    for (int i = 0; i < m; ++i) {\n      int x;\n      cin >> x;\n      uni.insert(x);\n      if (inter.find(x) != inter.end()) {\n        inters.insert(x);\n      }\n      if (diff.find(x) != diff.end()) {\n        diff.erase(x);\n      }\n    }\n    for (int i : uni) {\n      cout << i << \" \";\n    }\n    cout << \"\\n\";\n    for (int i : inters) {\n      cout << i << \" \";\n    }\n    cout << \"\\n\";\n    for (int i : diff) {\n      cout << i << \" \";\n    }\n    cout << \"\\n\";\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:45:13.237078+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "### Union :\n  Insert all the integers of A and B in `uni` set. Finally elements contained in `uni` contain the answer.\n### Intersection :\n Insert all integers of A in `inter` set and iterate through B to check if the element exists in `inter`. If yes keep that element, if not remove from `inter`. Finally `inter` stores the result.\n### Difference :\n For difference, insert all integers of A in `diff` set and erase all the integers of B if it exists in `diff` set.Finally `diff` stores the difference result.\n\nTime Complexity per test case: $O(N \\log N)$"
+        },
+        "id": 372,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains two space-separated integers N, M - the length of the sets.\n\nThe second line of each test case contains N space-separated integers.\n\nThe third line of each test case contains M space-separated integers.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, print the set union, set intersection and set difference (A-B) of the two sets  in sorted order, each on a separate line.",
+        "samples": [
+            {
+                "input": "3\n4 5\n2 4 1 5\n4 5 6 9 3\n2 3\n4 5\n6 7 1\n3 3\n1 2 3\n1 2 3\n",
+                "output": "1 2 3 4 5 6 9 \n4 5 \n1 2 \n1 4 5 6 7 \n\n4 5 \n1 2 3 \n1 2 3\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Set Operations AZ101",
+        "video_editorial_id": 8189
+    },
+    "details": "Problem Details"
+}

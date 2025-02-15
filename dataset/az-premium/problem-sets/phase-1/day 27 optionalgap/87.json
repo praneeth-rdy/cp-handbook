@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Your class teacher wrote *N* integers on the board. One of your classmates was being mischievous; he replaced the *N* integers with all possible subset sums of the array when the teacher was not in the class.  \n\nSuppose that the integers on the board were [2,1], then the subsets will be: {}, {2}, {1}, {2,1}, and the subset sums will be: {0,2,1,3}.  \n\nYour task is to rebuild the original array given by your teacher.",
+        "complete_approach": "",
+        "constraints": "1 \u2264 *T* \u2264 50  \n1 \u2264 *N* \u2264 15  \n0 \u2264 *A<sub>i</sub>* \u2264 \\( 10^{15} \\)",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n#define ll long long int\n#define rep(i,s,f) for(i=s;i<f;i++)\n#define print(v) for(auto &z:v) cout<<z<<' ';cout<<'\\n'\n#define db cout<<\"db: \"\n#define pb push_back\n#define pii pair<int,int>\n#define F first\n#define S second\n#define B begin()\n#define E end()\n#define all(v) v.B,v.E\n#define sz(v) (int)((v).size())\n#define vi vector<int>\n#define vii vector<pair<int,int>>\n#define boost ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0)\n#define clk1 clock_t start_time=clock()\n#define clk2 cout<<(clock()-start_time)/(double)CLOCKS_PER_SEC\n#define clean(arr) memset(arr,0,sizeof(arr))\n#define mod 1000000007\n#define mod2 998244353\n#define space 100005\n//<<fixed << setprecision(9)\n\nint main()\n{\n    ll n,i,j,t;\n    boost;\n\n    cin>>t;\n    while(t--)\n    {\n        cin>>n;\n        ll m = 1<<n;\n        // there are 2^n numbers\n        ll arr[m];\n        rep(i,0,m)\n            cin>>arr[i];\n        // take input\n        sort(arr,arr+m);\n        // sorting the numbers as per logic.\n        \n        map<ll,ll> sums;// stores the possible sums as of now and their frequency\n\n        sums[0]=1;// 0 can be generated as of now \n\n        vi ans;\n        vector<ll> subsums; // subset sums that can be created\n        \n        rep(i,0,m){\n            if(sums[arr[i]]){\n                sums[arr[i]]--; // this can be created so skip this once and \n            }\n            else{                \n            \tans.pb(arr[i]); // creates the final array, freq is 0, so needed.\n                vector<ll> temp; // new subset sums that can be created.\n                for(auto &z:subsums) // with all the previous \n                    temp.pb(z+arr[i]), sums[z+arr[i]]++; // Merging previous subset sums with this elements and increase their generated frequency.\n                for(auto &z:temp)\n                    subsums.pb(z); // add the newly generated ones to the subset sums that are generated.\n                subsums.pb(arr[i]); // also add this single element set (merging with 0).\n            }\n        }\n        print(ans); // print the final generated numbers.\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:47:39.268028+00:00"
+        },
+        "hints": {
+            "hint1": "The original array has non-negative integers.  The first integer of the original array will be the second element of the new sorted array. Try building the original array by taking the smallest integers.",
+            "hint2": "Think of a data structure that can efficiently return the smallest integer present in the array.",
+            "solution_approach": "The original array has non-negative integers. At each step, we have to take the smallest integer. We can use a multiset for this problem.  \n\nAt each step, when an element *x[i]* is added to the original array, you have to erase all sums formed by *x[i]* and non-empty subsets of {*x[1], x[2], \u2026, x[i \u2013 1]*} from the multiset.\n\n**Time Complexity:** *O(N * 2<sup>N</sup>)*\n"
+        },
+        "id": 87,
+        "input_format": "The first line of the input contains one integer *T* - the number of test cases. Then *T* test cases follow.  \n\nThe first line of each test case contains one integer *N* - the number of elements in the initial array.  \n\nThe second line of each test case contains $( 2^N )$ space-separated integers, the new values on the board.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 1024000,
+        "note": "In the first test case of the example, the original array is [1,2], which has the following subsets: {}, {1}, {2}, {1,2}. Their respective sums are 0, 1, 2, 3.  \n\nIn the third test case of the example, the original array is [1,1,1], which has the following subsets: {}, {1}, {1}, {1}, {1,1}, {1,1}, {1,1}, {1,1,1}. Their respective sums are 0, 1, 1, 1, 2, 2, 2, 3.",
+        "output_format": "For each test case, print N space-separated integers in non-decreasing order.\nIt is guaranteed that a solution always exists.",
+        "samples": [
+            {
+                "input": "3\n2\n0 1 2 3\n3\n0 1 3 4 5 6 8 9\n3\n0 1 1 1 2 2 2 3",
+                "output": "1 2 \n1 3 5 \n1 1 1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 4.0,
+        "title": "Rebuild Original Array",
+        "video_editorial_id": 8144
+    },
+    "details": "Problem Details"
+}

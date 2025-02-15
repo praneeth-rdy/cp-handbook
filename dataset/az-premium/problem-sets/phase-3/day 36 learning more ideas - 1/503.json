@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Find the number of binary strings of length n where \u201c0100\u201d is not present as a substring.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 t \u2264 10<sup>6</sup></p><p>1 \u2264 n \u2264 10<sup>6</sup> where n is the length of the string.</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\n\nconst int mod = 1e9 + 7;\n\nint pw(int a,int b,int p){\n   if(b==0)return 1;\n   int t=pw(a,b/2,p);\n   t=(t*t)%p;\n   if(b%2)return (a*t)%p;\n   return t;\n}\nint dp[1000001][5];\nsigned main(){\n   ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n       dp[0][0] = 1;\n       for (int i = 1; i <= 1000000; ++i) {\n           for (int j = 0; j <= 4; ++j) {\n               // 0100\n               vector<int> v;\n               if(j == 0) {\n                   v = {0, 2};\n               }\n               else if(j == 1) {\n                   v = {0,1};\n               }\n               else if(j == 2) {\n                   v = {1, 3};\n               }\n               else if(j == 3) {\n                   v = {2};\n               }\n               else {\n                   v = {3, 4, 4};\n               }\n               for (int k:v) {\n                   dp[i][j] = (dp[i][j] + dp[i-1][k])%mod;\n               }\n           }\n       }\n   int t;\n   cin >> t;\n   while(t--) {\n       int n;\n       cin>>n;\n       cout << (pw(2,n,mod) - dp[n][4] + mod)%mod << \"\\n\";\n   }\n   return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:17:27.631512+00:00"
+        },
+        "hints": {
+            "hint1": "<p>The total number of binary strings of length n is 2<sup>n</sup>. Find the number of binary strings where \u201c0100\u201d is present as a string and subtract it from 2<sup>n</sup>.</p>",
+            "hint2": "Define `dp[i][j]` which is the number of binary strings if the current string is of `i` characters and it matches first `j` characters of \u201c0100\u201d.",
+            "solution_approach": "Consider all the cases from $j = 0$ to $j = 4$. Use String Matching with Finite Automata to find the DP transitions. At index $i$, the values for $dp[i-1][j]$, $0 \\leq j \\leq 4$ would be known already. The final answer would be $dp[n][4]$.\n\n**Time Complexity per test case:** $O(n)$"
+        },
+        "id": 503,
+        "input_format": "- The first line of the input contains one integer $t$ - the number of test cases. Then $t$ test cases follow.\n- The first and only line of each test case contains an integer $n$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>For the first test case, n = 3, so \u201c0100\u201d cannot be a substring.</p><p>For the second test case, there are total 2<sup>4</sup> = 16 substrings out of which \u201c0100\u201d is a substring. So, the answer is 16-1 = 15.</p>",
+        "output_format": "For each test case, print the number of binary strings of length n where \u201c0100\u201d is not present as a substring mod 10^9+7.",
+        "samples": [
+            {
+                "input": "3\n3\n4\n5",
+                "output": "8\n15\n28"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Count of Binary Strings",
+        "video_editorial_id": 10674
+    },
+    "details": "Problem Details"
+}

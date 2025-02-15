@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Find the number of unordered ways, $N$ can be partitioned into $K$ positive integers (i.e $> 0$ ), i.e sum of all $K$ numbers must be $N$.\n\nPrint the answer $mod$  $10^{9}+7 $.\n\nFor eg. $N=7$, $K=3$, then the number of unordered ways are $4$.\nExplanation : { 1, 5, 1 }, { 2, 2, 3 }, { 4, 2, 1 }, and { 3, 1, 3 }.\nNote : { 1, 5, 1 }, { 1, 1, 5 } and { 5, 1, 1 } are treated as same combination, i.e order doesn't matter.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^{6}$\n$1 \\leq N \\leq 5000$\n$1 \\leq K \\leq 5000$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nll dp[5001][5001], mod = 1e9 + 7;\nll rec(int n, int k) {\n    if (n == 0)return 1;\n    if (n < 0 || k == 0)return 0;\n    auto &ans = dp[n][k];\n    if (ans != -1)return ans;\n    ans = rec(n - k, k);\n    (ans += rec(n, k - 1)) %= mod;\n    return ans;\n}\nvoid solve() {\n    memset(dp, -1, sizeof(dp));\n    int t;\n    cin >> t;\n    while (t--) {\n        int n, k;\n        cin >> n >> k;\n        cout << rec(n - k, k) << endl;\n    }\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    // cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Editorial code is not passing the Sample cases.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:17:24.111505+00:00"
+        },
+        "hints": {
+            "hint1": "One way to approach this problem is to use dynamic programming. We can define $dp[n][k]$ to be the number of ways to partition the number $n$ into $k$ positive integers. To compute $dp[n][k]$, we can try to add the first positive integer of the partition and recursively compute the number of ways to partition the remaining sum into $k - 1$ positive integers.",
+            "hint2": "Here's the key idea: instead of trying to compute $dp[n][k]$ directly, we can compute $dp[n][k]$ in terms of smaller subproblems. Specifically, we can compute $dp[n][k]$ by considering the number of ways to partition n into k positive integers when the first positive integer is $1$, when the first positive integer is $2$, and so on, up to when the first positive integer is $n$.\n\nTo see why this works, consider the case when we fix the first positive integer to be $1$. Then we need to partition the remaining sum $n-1$ into $k-1$ positive integers. This corresponds to the subproblem $dp[n-1][k-1]$. Similarly, if we fix the first positive integer to be $2$, then we need to partition the remaining sum $n-2$ into $k-1$ positive integers, which corresponds to the subproblem $dp[n-2][k-1]$. We can continue this process up to when the first positive integer is $n$, which corresponds to the subproblem $dp[0][k-1]$ (since the remaining sum is 0 in this case).\n\nSo, to compute $dp[n][k]$, we can sum up the values of $dp[n-1][k-1]$, $dp[n-2][k-1]$, ..., $dp[0][k-1]$, which gives us the total number of ways to partition n into k positive integers. Mathematically, we can write:\n\n$dp[n][k] = dp[n-1][k-1] + dp[n-2][k-1] + ... + dp[0][k-1]$\n\nTo compute the values of dp, we can use dynamic programming with a time complexity of O(NK).",
+            "solution_approach": "Let us consider {1,3,5}  a way of partitioning $9$, and permutations {3,1,5} , {5,1,3} ... etc are treated as same, so let us work for the sorted partition i.e {1,3,5}.\nwe can think of each number as a stack of **1's**.\nSo, {1,3,5} can be represented as -:\n```\n      1  -> number of 1's = 1 \n      1  -> number of 1's = 1 \n    1 1  -> number of 1's = 2 \n    1 1  -> number of 1's = 2 \n+ 1 1 1  -> number of 1's = 3\n---------\n  1 3 5\n---------\n```\nSo, on each level, the number of 1's is decreasing( not strictly ) as we move up.\nBy inserting the different decreasing numbers of 1's at each level we can generate any sorted permutation partition of the sum.\n$dp[n][k]$ - Number of ways to partition $n$ when inserting $k$ number of **1's** at the current level.\n\nOne can fix the number of ones in final partition:\n\n$0$ ones -- $dp[n - k][k]$ ways,\n\n$1$ one -- $dp[n - k][k - 1]$ ways,\n\n...\n\n$n$ ones -- $dp[n - k][0]$ ways.\n\nSo $dp[n][k] = \\Sigma_{j=0}^{k} dp[n-k][j]$.\n\n**Time Complexity** : $O(N*K)$ for pre-computation, O(1) per test case."
+        },
+        "id": 921,
+        "input_format": "First-line contains $T$ - the number of test cases.\nThe first line of each test case contains two integers - $N$ and $K$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, Output the number of unordered ways, $N$ can be partitioned into $K$ positive integers $ % 10^{9}+7 $.",
+        "samples": [
+            {
+                "input": "3\n1 1\n7 3\n4 5\n",
+                "output": "1\n4\n0\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Sum Partition",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

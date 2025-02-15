@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given **N** integers, the price of a given stock on each day. You can buy and sell at most **K** stocks. You cannot buy a stock before you sell the previous stock. You cannot sell a stock before you buy one. You have to find the maximum profit you can make by buying and selling stocks.",
+        "complete_approach": "",
+        "constraints": "<p>1\u2264 T \u2264 100</p><p>1 \u2264 K \u2264 N</p><p>1\u2264 N \u2264 10<sup>5</sup></p><p>0\u2264 Ai \u2264 10<sup>5</sup></p><p><span style=\"background-color:transparent;color:#000000;\">Sum of N*K across all test cases \u2264 10^8.</span></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                  \\\n    ios::sync_with_stdio(0); \\\n    cin.tie(0);              \\\n    cout.tie(0);\n\nlong long BuyAndSellStock(vector<int> &a, int k)\n{\n    int n = (int)a.size();\n    if (2 * k > n)\n    {\n        long long ans = 0;\n        for (long long i = 1; i < n; ++i)\n            ans += max(0, a[i] - a[i - 1]);\n        return ans;\n    }\n    else\n    {\n        long long dp[k + 1][n];\n        memset(dp, 0, sizeof(dp));\n        for (long long i = 1; i <= k; ++i)\n        {\n            long long m = -a[0];\n            for (long long j = 1; j < n; ++j)\n            {\n                dp[i][j] = max(dp[i][j - 1], a[j] + m);\n                m = max(m, dp[i - 1][j - 1] - a[j]);\n            }\n        }\n        return dp[k][n - 1];\n    }\n}\n\nint main()\n{\n    IOS int t;\n    cin >> t;\n    while (t--)\n    {\n        long long n, k;\n        cin >> n >> k;\n\n        vector<int> a(n);\n        for (long long i = 0; i < n; ++i)\n            cin >> a[i];\n\n        cout << BuyAndSellStock(a, k) << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:14:56.470035+00:00"
+        },
+        "hints": {
+            "hint1": "<p>A transaction consists of buying and selling. We need to find 2*K points in the stock line, K points for buying, and K points for selling. You can make two case for 2*K&gt;N and 2*K&lt;=N.</p><p>There are four possible actions we can do on a day: keep holding the stock, keep not holding the stock, buy the stock, or sell the stock.</p>",
+            "hint2": "<p>When 2*K&gt;N, iterate each day, and if the price of the current day is more than the price on the previous day, buy the stock on the previous day and sell it on the current day. We collect all possible increases in stock price.</p>",
+            "solution_approach": "We check the profit we would have made if we make 1 less transaction. If we bought a share on the previous day, then the profit will be the profit till that day minus cost of share on that day. The maximum profit for i-th day can be made by either not making any transaction on that day or selling on that day. If we don't sell our stock on the present day,the maximum profit for the day will be the same as the previous day or we sell on the present day and gain profit. To sell a stock we must have bought it on some previous day.\n\nTime Complexity per test case: O(N*K)"
+        },
+        "id": 279,
+        "input_format": "The first line of the input contains one integer **T** - the number of test cases. Then **T** test cases follow.\nThe first line of each test case contains two space-separated integers **N** and **K** - the length of the array the maximum number of stocks you can buy.\nThe second line of each test case contains **N** space-separated integers.\nSum of **N** x **K** across all test cases \u2264 10<sup>8</sup>.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, you can buy stock on day 2 and sell on day 3. Profit = 8-3 = 5\n\nFor the second test case, you can buy stock on day 2 and sell on day 3 and again buy on day 6 and sell on day 7. Profit = (8-3) + (2-0) = 5+2 = 7\n\nFor the third test case, you can buy stock on day 1 and sell on day 4. Profit = 4-1 = 3\n\nFor the fourth test case, you don\u2019t buy and sell any stock. Profit = 0",
+        "output_format": "For each test case, print the maximum profit you can make by buying and selling stocks.",
+        "samples": [
+            {
+                "input": "4\n7 1\n4 3 8 7 6 0 2\n7 4\n4 3 8 7 6 0 2\n4 3\n1 2 3 4\n4 1\n5 3 2 1",
+                "output": "5\n7\n3\n0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-Navi",
+            "company-Morgan Stanley",
+            "company-Arcesium"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                  \\\n    ios::sync_with_stdio(0); \\\n    cin.tie(0);              \\\n    cout.tie(0);\n</fix>\n\nlong long BuyAndSellStock(vector<int> &a, int k)\n{\n    // Complete the function\n}\n\n<fix>\nint main()\n{\n    IOS int t;\n    cin >> t;\n    while (t--)\n    {\n        long long n, k;\n        cin >> n >> k;\n\n        vector<int> a(n);\n        for (long long i = 0; i < n; ++i)\n            cin >> a[i];\n\n        cout << BuyAndSellStock(a, k) << \"\\n\";\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 2.0,
+        "title": "Buy and Sell Stock - 4",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

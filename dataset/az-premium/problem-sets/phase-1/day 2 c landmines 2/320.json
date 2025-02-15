@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an array A. One random element is removed from A to form array B and one random element is removed from B to form array C. You have to find the missing element in B and the missing element in C.",
+        "complete_approach": "",
+        "constraints": "1 \u2264 T \u2264 10<sup>6</sup>\n\n2 \u2264 N \u2264 10<sup>6</sup>\n\nIt is guaranteed that the sum of N over all the test cases does not exceed 10<sup>6</sup>.\n\n0 \u2264 Ai \u2264 10<sup>9</sup>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint main() {\n    IOS\n    int t;\n    cin >> t;\n    while (t--) {\n        int n;\n        cin >> n;\n        long long s1 = 0, s2 = 0, s3 = 0;\n        for (int i = 0; i < n; ++i) {\n            int x;\n            cin >> x;\n            s1 += x;\n        }\n        for (int i = 0; i < n-1; ++i) {\n            int x;\n            cin >> x;\n            s2 += x;\n        }\n        for (int i = 0; i < n-2; ++i) {\n            int x;\n            cin >> x;\n            s3 += x;\n        }\n        cout << s1 - s2 << \" \" << s2 - s3 << \"\\n\";\n    }\n    return 0;\n}\n```\n\n",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:24:39.965170+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "<p>Take the sum of the given three arrays. Sum of A - Sum of B would give the missing element in B and similarly Sum of B - Sum of C would give the missing element in C.</p><p>Time Complexity per test case: O(N)</p>"
+        },
+        "id": 320,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer N - the length of the array. \n\nThe second line of each test case contains N space-separated integers - array A.\n\nThe third line of each test case contains (N-1) space-separated integers - array B.\n\nThe fourth line of each test case contains (N-2) space-separated integers - array C.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, print the missing element in B and the missing element in C.",
+        "samples": [
+            {
+                "input": "3\n4\n1 3 5 2\n5 1 3\n5 1\n5\n1 3 5 1 0\n3 1 1 5\n1 1 5\n3\n1 2 3\n3 1\n1",
+                "output": "2 3\n0 3\n2 3"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "The Missing Number AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

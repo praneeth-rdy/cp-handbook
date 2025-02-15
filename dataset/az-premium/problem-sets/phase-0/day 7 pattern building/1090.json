@@ -1,0 +1,72 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Print the first $N$ rows where the $i^{\\text{th}}$ row contains the first $i$ capital letters.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 26$\n$1 \\leq N \\leq 26$",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nsigned main() {\n  ios_base::sync_with_stdio(false);\n  cin.tie(0);\n  cout.tie(0);\n  int t;\n  cin >> t;\n\n  for (int tt = 1; tt <= t; tt++) {\n    int rows;\n    cin >> rows;\n    for (int k = 0; k < rows; k++) {\n      for (int i = 0; i <= k; i++) {\n        cout << char('A' + i);\n      }\n      cout << \"\\n\";\n    }\n  }\n\n  return 0;\n}\n```\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\n```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int t = Integer.parseInt(br.readLine());\n        for (int tt = 1; tt <= t; tt++) {\n            int rows = Integer.parseInt(br.readLine());\n            for (int k = 0; k < rows; k++) {\n                for (int i = 0; i <= k; i++) {\n                    out.print((char)('A' + i));\n                }\n                out.println();\n            }\n        }\n        \n        out.flush();\n        out.close();\n    }\n}\n```\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\n```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n    for _ in range(t):\n        rows = int(data[idx])\n        idx += 1\n        for k in range(rows):\n            line = ''\n            for i in range(k + 1):\n                line += chr(ord('A') + i)\n            print(line)\n\nif __name__ == \"__main__\":\n    main()\n```\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:28:49.436653+00:00"
+        },
+        "hints": {
+            "hint1": "Consider using nested loops to construct each row by appending characters.",
+            "hint2": "In each row, output the capital letters from 'A' up to the $i^{\\text{th}}$ letter, which can be obtained using ASCII codes.",
+            "solution_approach": "To solve this problem, we can use two nested loops.\n\nFor each test case:\n\n- Loop from $k = 0$ to $N - 1$ (for each row)\n    - In each row, loop from $i = 0$ to $k$\n        - Output the character corresponding to ASCII code of 'A' plus $i$\n\nBy utilizing the ASCII values, we can generate consecutive capital letters.\n\n**Time Complexity per test case**: $O(N^2)$, because for each row $k$, the inner loop runs $k + 1$ times, summing up to $O(N^2)$ iterations.\n\n**Space Complexity per test case**: $O(1)$, as we are only using a fixed amount of extra space."
+        },
+        "id": 1090,
+        "input_format": "The first line contains the number $T$ of test cases.\nFor each test case:\nThere is only one line containing $N$, which is the number of rows in the pattern.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In Sample Input 1, $N = 1$, so we print one row containing the first $1$ capital letter: \"A\".\nIn Sample Input 2, $N = 5$, so we print five rows, each row $i$ contains the first $i$ capital letters.\nIn Sample Input 3, there are two test cases:\nFirst test case with $N = 4$, we print the pattern up to \"ABCD\".\nSecond test case with $N = 7$, we print the pattern up to \"ABCDEFG\".",
+        "output_format": "For each test case, print the pattern.",
+        "samples": [
+            {
+                "input": "1\n1",
+                "output": "A"
+            },
+            {
+                "input": "2\n4\n7",
+                "output": "A\nAB\nABC\nABCD\nA\nAB\nABC\nABCD\nABCDE\nABCDEF\nABCDEFG"
+            },
+            {
+                "input": "1\n5",
+                "output": "A\nAB\nABC\nABCD\nABCDE"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Adhoc"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Alphabetical Pattern",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

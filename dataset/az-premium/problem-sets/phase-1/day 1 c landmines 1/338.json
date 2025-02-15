@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an integer N and a decimal number M. M can be represented as Y.Z where . is the decimal point and N as X. You have to find (Z+X).(Y+X)",
+        "complete_approach": "",
+        "constraints": "<p>1\u2264 T \u2264 10<sup>6</sup></p><p>1\u2264 N, M \u2264 10<sup>9</sup></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp \n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0); \n\nint main() { // Correct the return type of main here\n    IOS int t; cin >> t;\n\n    string s;\n    // Add a dummy getline to clear the effect of cin.\n    getline(cin, s); \n    while (t--) {\n        // Take the full expression in string s\n        // s now contains N M\n        getline(cin, s);\n        // We make 3 part strings x, y, z so that N=x, M=y.z, z is the fractional part.\n        \n        string x, y, z;\n        bool doub = 0; // Flag to check if we have seen the space to know if we are now processing M.\n        bool dot = 0;  // Flag to check if we are now processing the z part.\n        for (int i = 0; i < s.size(); ++i) {\n            if(s[i] == ' ') { // If ' ' seen in s, now put things in y and z\n                doub = 1;\n            }\n            else if(s[i] == '.') { // If '.' seen in s, now put things in z.\n                dot = 1;\n            }\n            else if(!doub) { // If not seen ' ', keep adding at the end of x.\n                x += s[i];\n            }\n            else if(!dot) {\t// If seen ' ' and not '.', keep adding at the end of y.\n                y += s[i];\n            }\n            else { // If seen '.', keep adding at the end of z.\n                z += s[i];\n            }\n        }\n        int x1 = stoll(x), y1 = stoll(y), z1 = stoll(z); // Convert the strings into numbers\n        z1 += x1; // Do what is asked in the questions.\n        y1 += x1;\n        cout << z1 << \".\" << y1 << \"\\n\"; // Print two parts separately only, no need to create a float number.\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:24:50.810660+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Process the numbers in the string to get the floating-point.</p>",
+            "hint2": "Imagine you have two numbers. The first one is a whole number, which we'll call \"N\" (like 3, 4, 5, etc.), and the second one is a number with a decimal point, which we'll call \"M\". For example, if M is 12.34, it has two parts: the part before the decimal point is \"Y\" (which is 12 in our example), and the part after the decimal point is \"Z\" (which is 34 here).\n\nNow, the question asks you to do a little bit of math with these numbers. You're supposed to add the whole number \"N\" to both parts of the decimal number \"M\" separately and then combine them back into a new number with a decimal point. So, if we're adding N to Z and Y (following our example, let's say N is 5), you'd do this:\n\n1. Add N to Z: If Z is 34 and N is 5, you add them to get 39.\n2. Add N to Y: If Y is 12 and N is 5, you add them to get 17.\n3. Now, put them back together with a decimal point to get the new number, which in this example would be 39.17.\n\nThat's the essence of what you're being asked to do: take a whole number and a decimal number, add the whole number to both parts of the decimal number separately, and then put those results back together to form a new decimal number.\n\nTo make it a bit more formal:\n\n1. **Input:** The problem starts by telling you how many times (T) you're going to do this operation. For each time, you are given a whole number (N) and a decimal number (M, which is made up of Y and Z).\n\n2. **Process:** For each pair of numbers you're given, you do the math as described: (Z+N).(Y+N).\n\n3. **Output:** You write down the result for each pair of numbers after doing the calculation.\n\nIt's a bit like a recipe where you're given ingredients (N and M) and steps to follow (add N to parts of M), and in the end, you present the dish (the calculated result).",
+            "solution_approach": "Use stoll() to convert string to long long and getline(cin, string) to input string with spaces in a single line.\nTime Complexity per test case: O(1)\n\n*Note:* We must take the input in string format for the decimal number to solve this problem. Avoid using floating point numbers as much as possible, specifically when precision is important like in this problem. Because 2 can be stored as 1.99999999999 in the system. And it'll affect the logic."
+        },
+        "id": 338,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer N and a decimal number M.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, X = 14, Y = 1, Z = 2. So ans = (2+14).(1+14) = 16.15\n\nFor the second test case, X = 3, Y = 4, Z = 5. So ans = (5+3).(4+3) = 8.7\n\nFor the third test case, X = 31, Y = 0, Z = 143. So ans = (143+31).(0+31) = 174.31",
+        "output_format": "For each test case, print the value of (Z+X).(Y+X)",
+        "samples": [
+            {
+                "input": "3\n14 1.2\n3 4.5\n31 0.143\n",
+                "output": "16.15\n8.7\n174.31\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "IO Problem AZ101",
+        "video_editorial_id": 10687
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given an <i>array</i> of <i>N</i> positive integers. You can perform this operation any number of times, choose two indices x and y. If array[x] = a and array[y] = b, then after the operation</p><p>1. array[x] = a OR b, array[y] = a AND b.</p><p>Perform the operations optimally such that \u2211array[i]*array[i] for all 1&lt;=i&lt;=n is maximum. Print the largest sum of squares you can get after performing the operations greater than equal to zero times.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n//One of the another approach in which I am simulating the whole process.\n\n#include <bits/stdc++.h>\nusing namespace std;\ntypedef long long ll;\n\nsigned main()\n{\n   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);\n\n   int testcases;\n   cin>>testcases;\n   while(testcases--){\n\n       vector < ll > bit[20];\n       ll n;\n       cin>>n;\n       vector < ll > arr(n);\n       for(int i=0;i<n;i++)cin>>arr[i];\n       vector < ll > done(n+1,0);\n       for(int i=0;i<n;i++){\n           for(int j=0;j<20;j++){\n               if(arr[i]&(1<<j))\n                   bit[j].push_back(i);  // push in bit[i] all the index which have ith bit on.\n           }\n       }\n       ll k = 19;  \n       while(k>=0){   // Greedily increasing the value of every number, starting from the most significant digit\n           if(bit[k].size()){\n               ll x = bit[k][bit[k].size()-1]; // taking a element which may or may not have the kth bit set as it might be changed.\n               bit[k].pop_back();\n               if(done[x] or !((1<<k)&arr[x])) // if it is already done or bit is not set then continue\n                   continue;\n               done[x] = 1;  // trying to increase the value as much as I can using the lower bits.\n               for(int i = 0;i<k+1;i++){\n                   if(arr[x]&(1<<i)) // it bit is already set then continue\n                       continue;\n                   while(bit[i].size()){  // find a index which has this bet set, then apply the operation to increase the value of x.\n                       ll y = bit[i][bit[i].size()-1];\n                       bit[i].pop_back();\n                       if(done[y] or !((1<<i)&arr[y]))\n                           continue;\n\n                       ll temp = arr[y];\n                       arr[y] = arr[y]&arr[x];  // because of this operation the set bit of arr[y] can be unset.\n                       arr[x]|=temp;\n                       break;\n                   }\n               }\n           }\n           else\n               k--;\n\n       }\n       ll ans=0;\n       for(int i=0;i<n;i++)ans+=arr[i]*arr[i];\n       cout<<ans<<\"\\n\";\n   }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:39:08.945009+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Observe the operations, after the operation, a + b = a XOR b + 2*(a AND b) as well as a + b = a OR b + a AND b. So the sum is constant even after performing the operation.</p>",
+            "hint2": "<p>If the sum is constant and you have to maximize the sum of squares, then it is always optimal to increase the largest value as much as you can, then increase the 2nd largest value and so on.</p>",
+            "solution_approach": ""
+        },
+        "id": 52,
+        "input_format": "<p>The first line of the input contains a single integer <i>T</i> denoting the number of test cases, <i>(1&lt;=T&lt;=100)</i>.</p><p>The first line of each test case contains a single integer <i>N</i>, <i>(2&lt;=N&lt;=100000)</i>.</p><p>The second line contains <i>N</i> space-separated integers A<sub>1</sub>,A<sub>2</sub>,\u2026,A<sub>N</sub>, <i>(1&lt;=A<sub>i</sub>&lt;=10^6)</i>.</p><p>Sum of <i>N</i> over all test cases does not exceed <i>10^6</i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "",
+        "output_format": "<p>For each test case output a single integer representing the largest possible sum of squares that can be achieved after several (possibly zero) operations.</p>",
+        "samples": [
+            {
+                "input": "5\n2\n2 5\n3\n1 2 3\n5\n1 2 3 4 5\n1\n1234\n10\n2 5 234 3454 3423 34545 65433 654345 9876 76567",
+                "output": "49\n18\n99\n1522756\n448865876262"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Tricky",
+            "Bit Manipulation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Bitwise Operations",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

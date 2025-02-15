@@ -1,0 +1,61 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given two numbers $N$ and $M$ and a 2D array of size $N \\times M$. For each row, print the inverted array that appears in the mirror (i.e., reverse the elements of each row).",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10$\n$1 \\leq N, M \\leq 100$\n$1 \\leq A[i][j] \\leq 10^9$",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n\n    while (t--)\n    {\n        int n, m;\n        cin >> n >> m;\n\n        int A[n][m];\n        for (int i = 0; i < n; i++)\n        {\n            for (int j = 0; j < m; j++)\n            {\n                cin >> A[i][j];\n            }\n        }\n\n        for (int i = 0; i < n; i++)\n        {\n            for (int j = 0; j < m / 2; j++)\n            {\n                int t = A[i][j];\n                A[i][j] = A[i][m - j - 1];\n                A[i][m - j - 1] = t;\n            }\n            for (int j = 0; j < m; j++)\n            {\n                cout << A[i][j] << \" \";\n            }\n            cout << endl;\n        }\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int t = Integer.parseInt(br.readLine());\n        \n        while (t-- > 0) {\n            String[] nm = br.readLine().split(\" \");\n            int n = Integer.parseInt(nm[0]);\n            int m = Integer.parseInt(nm[1]);\n            \n            int[][] A = new int[n][m];\n            for (int i = 0; i < n; i++) {\n                String[] row = br.readLine().split(\" \");\n                for (int j = 0; j < m; j++) {\n                    A[i][j] = Integer.parseInt(row[j]);\n                }\n            }\n\n            for (int i = 0; i < n; i++) {\n                for (int j = 0; j < m / 2; j++) {\n                    int temp = A[i][j];\n                    A[i][j] = A[i][m - j - 1];\n                    A[i][m - j - 1] = temp;\n                }\n                for (int j = 0; j < m; j++) {\n                    out.print(A[i][j] + \" \");\n                }\n                out.println();\n            }\n        }\n        \n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n    \n    for _ in range(t):\n        n = int(data[idx])\n        idx += 1\n        m = int(data[idx])\n        idx += 1\n        \n        A = []\n        for _ in range(n):\n            row = [int(data[idx + j]) for j in range(m)]\n            idx += m\n            A.append(row)\n        \n        for i in range(n):\n            A[i] = A[i][::-1]\n            print(' '.join(map(str, A[i])))\n        \nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:31:31.491420+00:00"
+        },
+        "hints": {
+            "hint1": "We only need to reverse the elements in each row of the matrix.",
+            "hint2": "Can we reverse each row in place within the matrix?",
+            "solution_approach": "To solve this problem, we need to reverse the elements in each row of the given 2D array. This can be done by iterating through each row and swapping the elements from the two ends towards the center.\n\nFor each row, we can perform the following steps:\n\n1. Initialize two pointers, one at the start of the row and one at the end.\n2. Swap the elements at these two pointers.\n3. Move the start pointer forward and the end pointer backward.\n4. Repeat steps 2 and 3 until the start pointer is greater than or equal to the end pointer.\n\nAlternatively, in many programming languages, we can use built-in functions to reverse arrays or lists.\n\n**Time Complexity per test case:** $O(N \\times M)$, where $N$ is the number of rows and $M$ is the number of columns, since we need to traverse each element once.\n\n**Space Complexity per test case:** $O(1)$, as we can reverse the elements in place without using additional space."
+        },
+        "id": 1142,
+        "input_format": "The first line contains an integer $T$, the number of test cases.\nFor each test case:\nThe first line contains two space-separated integers $N$ and $M$.\nThen $N$ lines follow, each containing $M$ space-separated integers, representing the elements of the array.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the given array:\n2  3  5\n7  9 20\n35 1 12\nAfter reversing each row, the array becomes:\n5  3  2\n20 9  7\n12 1 35\nWe mirror each row by reversing the elements.",
+        "output_format": "For each test case, print the inverted array.\nSpecifically, for each row, print the elements in reverse order, with each row's elements printed on a new line, separated by spaces.",
+        "samples": [
+            {
+                "input": "1\n3 3\n2 3 5\n7 9 20\n35 1 12",
+                "output": "5 3 2 \n20 9 7 \n12 1 35"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Arrays"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Mirror Array",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an array A of size N. You need to find the number of pairs (i, j) , i != j, such that A[i]+A[j] \u2264 X.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^5$  \n\n$1 \\leq N \\leq 10^5$  \n\n$1 \\leq A_i \\leq 10^6$  \n\n$1 \\leq X \\leq 10^6$  \n\nIt is guaranteed that the sum of $N$ over all test cases does not exceed $10^5$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n#define int long long int\n\nsigned main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int n, x;\n    cin >> n >> x;\n    int a[n];\n    for (int i = 0; i < n; ++i) {\n      cin >> a[i];\n    }\n    sort(a, a + n);\n    int ans = 0;\n    for (int i = 0; i < n; ++i) {\n      int j = upper_bound(a, a + n, x - a[i]) - a;\n      if (a[i] <= x - a[i]) j--;\n      ans += j;\n    }\n    cout << ans << \"\\n\";\n  }\n  return 0;\n}\n```\n\n",
+                "language": "C++14"
+            },
+            {
+                "code": "\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nusing ll = long long;\nusing ld = long double;\n#define pb push_back\n#define pii pair<int, int>\n#define pll pair<ll, ll>\n#define output(x) cout << (x ? \"YES\\n\" : \"NO\\n\")\n#define int long long\nconst int inf = 1e8;\nconst int N = 3e6;\nconst int mod = 1e9 + 7;\nvoid solve() {\n  int n, x;\n  cin >> n >> x;\n  int arr[n];\n  for (int i = 0; i < n; i++) {\n    cin >> arr[i];\n  }\n  sort(arr, arr + n);\n  int i = 0, j = n - 1, cnt = 0;\n  while (i < j) {\n    if ((arr[i] + arr[j]) > x) {\n      j--;\n    } else {\n      cnt = cnt + 2 * (j - i);\n      i++;\n    }\n  }\n  cout << cnt << endl;\n}\nsigned main() {\n  ios::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n  int t;\n  cin >> t;\n  while (t--) solve();\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:31:42.948687+00:00"
+        },
+        "hints": {
+            "hint1": "Change the equation to: $A[j] \\leq X - A[i]$",
+            "hint2": "",
+            "solution_approach": "# Solution 1\nUse upper_bound to find the number of elements satisfying $A[j] \\leq X - A[i]$\nTime Complexity per test case: Sorting takes $O(N logN)$\n\n# Solution 2\nUsing 2 pointer type approach.\nWe initialize two pointers, i and j, that point to the first and last elements of the array, respectively.\nIn each iteration of the while loop, we check if the sum of the elements pointed by i and j is less than or equal to x. If yes, we add the number of pairs that sum up to a value less than or equal to x by incrementing the count cnt by $2\\times(j-i)$ and incrementing i by $1$.\nIf the sum of the elements pointed by i and j is greater than x, we decrement j by 1 as all the pairs with a higher sum would also be greater than x.\nRepeat the process until i becomes greater than or equal to j.\nFinally, we print the value of cnt, which is the number of pairs that sum up to a value less than or equal to x.\n\nTime Complexity per test case: Sorting takes $O(N logN)$"
+        },
+        "id": 396,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains two space-separated integers N  X.\n\nThe second line of each test case contains N space-separated integers.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, the following pairs have sum \u2264 4: (1,2), (1,2), (1,3), (2,1), (2,2), (2,1), (2,2), (3,1)\n\nFor the second test case, the following pairs have sum \u2264 10: (5,5), (5,5), (5,5), (5,5), (5,5), (5,5)",
+        "output_format": "For each test case, print the number of pairs (i, j) , i != j, such that A[i]+A[j] \u2264 X.",
+        "samples": [
+            {
+                "input": "2\n5 4\n1 2 2 3 4\n3 10\n5 5 5",
+                "output": "8\n6"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Count the Pairs",
+        "video_editorial_id": 10662
+    },
+    "details": "Problem Details"
+}

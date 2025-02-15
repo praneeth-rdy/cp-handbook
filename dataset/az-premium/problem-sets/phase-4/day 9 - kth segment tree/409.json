@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You've given an array <i>A</i> of length <i>N</i>. You've to answer <i>Q</i> queries. In each query, you'll be given three numbers <i>l, r, k</i>. Your task is to find the <i>k</i>th smallest elements in the subarray <i>A<sub>l</sub>, A<sub>l+1</sub>, \u2026, A<sub>r</sub></i>.<br>It is guaranteed that all elements in the array <i>A</i> will be distinct.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>N</i> \u2264 10<sup>5</sup><br>1 \u2264 <i>A<sub>i</sub></i> \u2264 10<sup>9</sup><br>1 \u2264 <i>Q</i> \u2264 5 x 10<sup>4</sup><br>1 \u2264 <i>l<sub>i</sub></i> \u2264 <i>r<sub>i</sub></i> \u2264 <i>N</i><br>1 \u2264 <i>k<sub>i</sub></i> \u2264 <i>r<sub>i</sub></i> - <i>l<sub>i</sub></i> + 1</p>",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nvector<int> tree[4 * N];\nint A[N];\n\nvoid build(int node, int start, int end) {\n    for(int i = start; i <= end; i++) tree[node].push_back(A[i]);\n    sort(tree[node].begin(), tree[node].end());\n    if(start == end) return;\n    int mid = (start + end) / 2;\n    build(2 * node, start, mid);\n    build(2 * node + 1, mid + 1, end);\n}\n\nint binary(vector<int> &a, int x) {\n    int L = 0, R = (int)a.size() - 1;\n    int ans = -1;\n    while(L <= R) {\n        int mid = (L + R) / 2;\n        if(a[mid] <= x) {\n            ans = mid;\n            L = mid + 1;\n        }\n        else R = mid - 1;\n    }\n    return ans + 1;\n}\n\nint query(int node, int start, int end, int l, int r, int x) {\n    if(start > r || end < l) return 0;\n    if(start >= l && end <= r) return binary(tree[node], x);\n    int mid = (start + end) / 2;\n    return query(2 * node, start, mid, l, r, x) + query(2 * node + 1, mid + 1, end, l, r, x);\n}\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int n, q; cin >> n >> q;\n\n    for(int i = 0; i < n; i++) cin >> A[i];\n\n    build(1, 0, n - 1);\n\n    while(q--) {\n        int l, r, k;\n        cin >> l >> r >> k;\n        l--; r--;\n        int L = 0, R = 1e9;\n        int ans = -1;\n        while(L <= R) {\n            int mid = (L + R) / 2;\n            if(query(1, 0, n - 1, l, r, mid) >= k) {\n                ans = mid;\n                R = mid - 1;\n            }\n            else L = mid + 1;\n        }\n        assert(ans != -1);\n        cout << ans << \"\\n\";\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:32:35.295340+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Merge Sort Tree\u2026 If you don't know the merge sort tree, it's basically a segment tree where each node maintains all elements belonging to the range for that node.</p>",
+            "hint2": "<p>Sort all elements for all nodes in the merge sort tree.</p>",
+            "solution_approach": "<p>Please read Hint 1 and 2 first.<br>Now the solution is to apply binary search on the answer. We can find the number of elements \u2264 <i>x </i>in the given range <i>l</i> to <i>r</i> in the O(logN * logN) time (we also have to do upperbound/lowerbound at each node belonging to that range).&nbsp;<br>With binary search, each query will be answered in O(log N * log N * log (1e9)).</p><p>Please go through the editorial code for more clarity.</p>"
+        },
+        "id": 409,
+        "input_format": "The first line of input contains two space-separated integers $N$ and $Q$ - the number of elements and queries.\n\nThe second line contains $N$ space-separated numbers $A_1, A_2, \\dots, A_N$.\n\nEach of the next $Q$ lines contains a pair of integers. The $i$-th line contains integers $l_i$, $r_i$, and $k_i$ \u2014 the description of the $i$-th query.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each query, print the answer on a new line.</p>",
+        "samples": [
+            {
+                "input": "7 3\n1 5 2 6 3 7 4\n2 5 3\n4 4 1\n1 7 3",
+                "output": "5\n6\n3"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Segment Tree",
+            "Merge Sort Tree"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "Little Tougher Queries",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have given an undirected graph <i>G</i> with <i>N</i> nodes, indexed from 1 to <i>N</i> and <i>M</i> edges, indexed from 1 to <i>M</i>.</p><p>There are two types of operations:<br><strong>1 X</strong>: Remove the edge numbered <i>X</i>.<br><strong>2</strong>: Print the number of connected components in the graph.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nclass wunionfind {\n  public:\n    int *id, *sz;\n    int cnt = 0;\n    wunionfind(int n = N) {\n        id = new int[n + 1];\n        sz = new int[n + 1];\n        for(int i = 0; i <= n; i++) {\n            id[i] = i;\n            sz[i] = 1;\n        }\n        cnt = n;\n    }\n    int root(int idx) {\n        int x = idx;\n        while(x != id[x]) {\n            id[x] = id[id[x]];\n            x = id[x];\n        }\n        return x;\n    }\n    bool uni(int a, int b) {\n        int x = root(a), y = root(b);\n        if(sz[x] < sz[y]) {\n            swap(x, y);\n        }\n        if (x != y) {\n            cnt--;\n            id[y] = x;\n            sz[x] += sz[y];\n            sz[y] = 0;\n            return false;\n        }\n        return true;\n    }\n};\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int n, m, q; cin >> n >> m >> q;\n\n    bool marked[m + 1];\n    memset(marked, false, sizeof(marked));\n\n    pair<int,int> query[q];\n    pair<int,int> edge[m + 1];\n\n    for(int i = 1; i <= m; i++) {\n        int u, v; cin >> u >> v;\n        edge[i] = {u, v};\n    }\n\n    for(int i = 0; i < q; i++) {\n        int t; cin >> t;\n        if(t == 2) query[i] = {2, -1};\n        else {\n            int x; cin >> x;\n            query[i] = {1, x};\n            marked[x] = true;\n        }\n    }\n\n    wunionfind W(n);\n\n    for(int i = 1; i <= m; i++) {\n        if(!marked[i]) {\n            int u = edge[i].first;\n            int v = edge[i].second;\n            W.uni(u, v);\n        }\n    }\n\n    vector<int> ans;\n\n    for(int i = q - 1; i >= 0; i--) {\n        if(query[i].first == 2) ans.push_back(W.cnt);\n        else {\n            int u = query[i].second;\n            W.uni(edge[u].first, edge[u].second);\n        }\n    }\n\n    reverse(ans.begin(), ans.end());\n\n    for(int u : ans) cout << u << \"\\n\";\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:30:51.765225+00:00"
+        },
+        "hints": {
+            "hint1": "<p>If the first query is about the addition of edge, then it is a simple <i>DSU</i>. But we can convert the removal query to an addition-type query by doing one small trick.<br><i>Can you guess it how?</i></p><p>&nbsp;</p>",
+            "hint2": "<p>Reverse all query operations. And instead of removing the edge, the query will be adding an edge in the graph.<br>Yes, now directly apply <i>DSU</i>.</p><p>&nbsp;</p>",
+            "solution_approach": "<p>The trick in the problem is to reverse the queries. Instead of addressing them online, we can solve them offline. First, we only add those edges in the graph, which have never occurred in any removal query.<br>Now after reversing the queries, the removal query is now an addition query. Add the edge in the graph for the first type of query.<br>For <i>2nd</i> type of query, find the number of connected components and stored it somewhere at the appropriate index, which is according to the original queries.<br>And print the answer in proper order. The time and space complexities are the same as <i>DSU</i>.</p><p><strong>Time complexity</strong>: Without path compression: <i>O(NlogN) &amp;</i> With path compression: <i>O(N)</i><br><strong>Space complexity</strong>: <i>O(N + M + Q)</i> extra space</p>"
+        },
+        "id": 41,
+        "input_format": "<p>The first line of contains three space-separated numbers <i>N, M, Q</i> (1 \u2264 <i>N, M, Q</i> \u2264 100000).</p><p>The next <i>M</i> lines contain <i>2</i> space-separated integers <i>u</i> and <i>v</i> which depicts an edge between nodes <i>u</i> and <i>v</i> (1 \u2264 <i>u, v</i> \u2264 <i>N</i>). ith line denotes the ith edge.</p><p>This is followed by <i>Q</i> lines, each describing an operation in the following format:<br><strong>1 X</strong>: Remove the edge numbered <i>X</i>.<br><strong>2</strong>: Print the number of connected components in the graph.</p><p>There are no self-loops or multiple edges in the graph.</p><p><i>Note</i>: If there are multiple queries for removal of the same edge, then the last such query should be considered. Also, the index of the edges does not change after the removal of any of the edges between the nodes.</p><p>&nbsp;</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>Initially, the graph is connected.<br>Even after the removal of the 2nd edge, the graph is connected. Now if we remove the 1st edge, node 2 is now isolated. And graph now contains 2 components as {2}, {1, 3}.</p>",
+        "output_format": "<p>The output should consist of the answer to each of the operations of the <i>2nd</i> type printed on a new line.</p>",
+        "samples": [
+            {
+                "input": "3 3 5\n1 2\n2 3\n3 1\n2\n1 2\n2\n1 1\n2",
+                "output": "1\n1\n2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Union Find",
+            "company-Gameskraft"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Edge Removals",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

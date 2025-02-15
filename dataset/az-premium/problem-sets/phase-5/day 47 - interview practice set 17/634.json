@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>An integer array is called arithmetic if it consists of <strong>at least three elements</strong> and if the difference between any two consecutive elements is the same.</p><p>For example, [1,3,5,7,9], [7,7,7,7], and [3,-1,-5,-9] are arithmetic sequences, whereas [1,2,4,5] is not an arithmetic sequence.</p><p>Given an integer array <i>A</i>, print <i>the number of arithmetic <strong>subsequences</strong> of</i> <i>A</i>. Since this number can be large print it modulo 10<sup>9</sup>+7.</p><p>A <strong>subsequence</strong> of any array can be formed by deleting several, possibly none, elements from the array.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264&nbsp; N \u2264 10<sup>3</sup></p><p>-10<sup>6</sup> \u2264 A[i] \u2264 10<sup>6</sup></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nlong long MOD = 1e9 + 7;\n\nlong long findArithmeticSeq(int a[], int n)\n{\n    unordered_map<int, int> cnt[n];\n    long long ans = 0;\n    for (int i = 0; i < n; i++)\n    {\n        for (int j = 0; j < i; j++)\n        {\n            long long d = a[i] - a[j];\n            if (cnt[j].find(d) != cnt[j].end())\n            {\n                (cnt[i][d] += cnt[j][d]) %= MOD;\n                (ans += cnt[j][d]) %= MOD;\n            }\n            (cnt[i][d] += 1) %= MOD;\n        }\n    }\n    return ans;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n;\n    cin >> n;\n    int a[n];\n    for (int i = 0; i < n; i++)\n    {\n        cin >> a[i];\n    }\n    cout << findArithmeticSeq(a, n) << '\\n';\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:19:24.235011+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "<p>Can you think of using Dynamic Programming? Consider the state dp(i, j) \u2192 represents the number of arithmetic sequences ending at <i>i<sup>th</sup></i> index with common difference equal to <i>j</i>. Think of transition.</p>",
+            "solution_approach": "<p>For every index <i>i</i> we iterate from indices <i>j = 0 \u2026 i - 1</i>, add update the value of dp[i][a[i] - a[j]]. The <i>dp</i> transition can be written as:</p><pre><code class=\"language-plaintext\">dp[i][d]+=dp[j][d] for all j&lt;i and d=a[i]-a[j]</code></pre><p>The answer will be the sum of all dp values. Since the value of common difference can be very large we maintain a hash map for every index which stores the count of arithmetic sequences for every value of common difference encountered. The time complexity will be <i>O(N<sup>2</sup>)</i> as the total number of differences cannot be more than N<sup>2</sup>.</p>"
+        },
+        "id": 634,
+        "input_format": "The first line contains a single integer N -  the size of the array.\nThe second line contains N integers - the elements of the array.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "All arithmetic subsequence slices are:\n[2,4,6]\n[4,6,8]\n[6,8,10]\n[2,4,6,8]\n[4,6,8,10]\n[2,4,6,8,10]\n[2,6,10]",
+        "output_format": "<p>Print <i>the number of arithmetic <strong>subsequences</strong> of</i> <i>A modulo 10<sup>9</sup>+7</i>.</p>",
+        "samples": [
+            {
+                "input": "5\n2 4 6 8 10",
+                "output": "7"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nlong long findArithmeticSeq(int a[], int n)\n{\n    //add code here\n\n}\n\n<fix>\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n;\n    cin >> n;\n    int a[n];\n    for (int i = 0; i < n; i++)\n    {\n        cin >> a[i];\n    }\n    cout << findArithmeticSeq(a, n) << '\\n';\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "SLICES-II",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

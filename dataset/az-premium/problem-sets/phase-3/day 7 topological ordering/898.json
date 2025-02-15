@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Among the sequences $P$ that are permutations of $(1,2,\u2026,N)$ and satisfy the condition below, find the lexicographically smallest sequence.\n\n- For each $i=1,\u2026,M$, $A_i$ appears earlier than $B_i$\u200b in $P$.\n\nIf there is no such $P$, print -1.",
+        "complete_approach": "",
+        "constraints": "$2 \\leq N \\leq 2\u00d710^{5}$\n$1 \\leq M \\leq 2\u00d710^{5}$\n$ 1\\leq$ $A_i$, $B_i \\leq $  $N$\n$A_i$ $\\ne$ $B_i$ \nAll values in input are integers.",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\n\nvoid solve() {\n\tint n, m;\n\tcin >> n >> m;\n\tvector<int> adj[n + 1], in_deg(n + 1, 0), ans;\n\tfor (int i = 0; i < m; i++) {\n\t\tint u, v;\n\t\tcin >> u >> v;\n\t\tadj[u].push_back(v);\n\t\tin_deg[v]++;\n\t}\n\tpriority_queue < int , vector<int>, greater<int>> pq;\n\tfor (int i = 1; i <= n; i++)if (in_deg[i] == 0)pq.push(i);\n\twhile (!pq.empty()) {\n\t\tint v = pq.top();\n\t\tpq.pop();\n\t\tans.push_back(v);\n\t\tfor (auto x : adj[v]) {\n\t\t\tin_deg[x]--;\n\t\t\tif (in_deg[x] == 0)pq.push(x);\n\t\t}\n\t}\n\tif (ans.size() != n) {\n\t\tcout << -1 << endl;\n\t\treturn;\n\t}\n\tfor (auto x : ans)cout << x << \" \";\n}\nint main() {\n\tios_base :: sync_with_stdio(0);\n\tcin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n\tfreopen(\"input.txt\", \"r\", stdin); \\\n\tfreopen(\"output.txt\", \"w\", stdout);\n#endif\n\tint t = 1;\n\t// int i = 1;\n\t// cin >> t;\n\twhile (t--) {\n\t\t// cout << \"Case #\" << i << \": \";\n\t\tsolve();\n\t\t// i++;\n\t}\n\treturn 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:17:50.409505+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Considering an $N$-vertex directed graph that has for each $i  ( 1 \u2264 i \u2264 M )$ an edge from Vertex $A_i$ to Vertex $B_i$, the answer is the lexicographically smallest sequence of topologically sorted vertices.\n\nOne of the common approaches for problems concerning the lexicographical order is to determine the elements in the order of appearances. For example, the following algorithm is possible to find the topologically sorted result in an order.\n\n1. Prepare an empty array $S$.\n2. While there exists a vertex with in-degree 0, repeat the following procedures.\n2.1 Choose a vertex with degree 0, denoted by $u$.\n2.2 Push $u$ to the tail of $S$.\n2.3 Remove $u$ and edges going out from $u$.\n3. When the algorithm has ended, if one or more vertices remain in the graph, then it is impossible to sort topologically. If no vertices remain, $S$ is the result of the topologically sorted vertex.\n\nIf we always choose the vertex with the smallest index and indegree 0, we obtain the lexicographically smallest $S$."
+        },
+        "id": 898,
+        "input_format": "Input is given from Standard Input in the following format:\n$N $  $ M$\n$A_1$  $B_1$ \n:\n:\n$A_M$ $B_M$",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print the answer.",
+        "samples": [
+            {
+                "input": "4 3\n2 1\n3 4\n2 4\n",
+                "output": "2 1 3 4\n"
+            },
+            {
+                "input": "2 3\n1 2\n1 2\n2 1\n",
+                "output": "-1\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Topological Ordering"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Smallest Permutation",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

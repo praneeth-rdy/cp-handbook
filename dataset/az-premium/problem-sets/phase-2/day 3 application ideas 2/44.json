@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given a binary array of length <strong>N</strong>. The score of an array is the length of the longest continuous subsegment consisting of only one.</p><p>Find the maximum score possible if you can change at most <strong>K</strong> elements of the array.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 T \u2264 10<sup>4</sup><br>1 <i>\u2264 </i>N <i>\u2264 </i>10<sup>5</sup><br>0<i> \u2264 </i>K <i>\u2264 </i>N<br>Sum of N across all test cases \u2264 10<sup>6</sup>.</p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nint arr[1000000];\nint n,k;\nbool check(int x)\n{\n   int cnt = 0,i;\n   for(i=0;i<x;i++)\n   {\n       if(arr[i]==0)\n           cnt++;\n   }\n   if(cnt<=k)\n       return true;\n   for(i=x;i<n;i++)\n   {\n       if(arr[i-x]==0)\n           cnt--;\n       if(arr[i]==0)\n           cnt++;\n       if(cnt<=k)\n           return true;\n   }\n   return false;\n}\nint main()\n{\n   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);\n   int testcases;\n   cin>>testcases;\n   while(testcases--){\n       int i;\n       cin>>n>>k;\n       for(i=0;i<n;i++)\n           cin>>arr[i];\n       int low = k;\n       int high = n;\n       int ans = low;\n       while(low<=high)\n       {\n           int mid=(low+high)/2;\n           if(check(mid))\n           {\n               ans = mid;\n               low=mid+1;\n           }\n           else\n               high = mid-1;\n       }\n       cout<<ans<<\"\\n\";\n   }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:44:34.753686+00:00"
+        },
+        "hints": {
+            "hint1": "If maximum score X is possible, then scores below X are also possible. That means this is a monotonic function. You can use this to apply binary search.\n",
+            "hint2": "<p>We would be doing binary search on the maximum score possible. We take the left pointer as L = 0 and the right pointer as R = N. We take mid = (L+R)/2. Find if it is possible to have mid number of consecutive ones, by changing at most K values in the array. This can be done by going through all the subarrays of size mid and counting the number of 0s in it. If any subarray has a count of 0s \u2264 K, then mid is a possible answer.</p><p>If it is possible, mid could be a possible answer and we continue binary search on L = mid+1 and R. Otherwise, any value above mid would also not be a possible answer(because if score mid is not possible, any score above mid would also not be possible), so we continue binary search on L and R = mid-1.</p><p>Time Complexity per test case: O(N*log<sub>2</sub>N)</p>",
+            "solution_approach": ""
+        },
+        "id": 44,
+        "input_format": "<p>The first line contains an integer <strong>T</strong>, the number of test cases.<br>The first line of each test case contains two space-separated integer <strong>N, K</strong> where&nbsp;<br>The next line contains <strong>N</strong> space-separated integers which are either 0 or 1.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case print the maximum score possible if you can change at most <strong>K</strong> elements of the array in a new line.</p>",
+        "samples": [
+            {
+                "input": "5\n10 2\n1 0 1 1 0 1 1 0 0 1\n10 1\n1 1 0 1 0 0 0 1 0 0\n10 3\n1 0 0 1 1 0 1 1 0 1\n10 3\n1 1 1 0 0 0 1 1 1 1\n10 3\n1 1 0 0 1 1 0 0 1 1",
+                "output": "7\n4\n8\n10\n7"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Two Pointers",
+            "Binary Search",
+            "company-DE Shaw",
+            "company-Wells Fargo",
+            "company-ByteDance"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Consecutive one",
+        "video_editorial_id": 10684
+    },
+    "details": "Problem Details"
+}

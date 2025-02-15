@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given a tree consisting of <i>n</i> nodes. The diameter of a tree is the maximum distance between two nodes. Your task is to determine the diameter of the tree.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n </i>\u2264 2 x 10<sup>5</sup><br>1 \u2264 <i>a</i>, <i>b </i>\u2264 <i>n</i></p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n \n#define ll long long int\n#define LD long double\n \nconst int N = 200010;\n \nint inf = 1e9;\nint mod = 1e9 + 7;\n \nvector<int> graph[N];\nint diameter = 0;\n \nint findDiameter(int cur, int prev) {\n    int maxi1 = 0, maxi2 = 0;\n    for(int u : graph[cur]) {\n        if(u == prev) continue;\n        int len = findDiameter(u, cur);\n        if(len >= maxi1) {\n            maxi2 = maxi1;\n            maxi1 = len;\n        }\n        else if(len > maxi2) {\n            maxi2 = len;\n        }\n    }\n    diameter = max(diameter, maxi1 + maxi2 + 1);\n    return maxi1 + 1;\n}\n \nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n \n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n \n    int n; cin >> n;\n    for(int i = 0; i < n - 1; i++) {\n        int u, v;\n        cin >> u >> v;\n        graph[u].push_back(v);\n        graph[v].push_back(u);\n    }\n \n    findDiameter(1, -1);\n \n    cout << diameter - 1 << \"\\n\";\n \n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:16:40.868910+00:00"
+        },
+        "hints": {
+            "hint1": "To determine the diameter of a tree, which is the maximum distance between any two nodes, you can use a depth-first search (DFS) algorithm.",
+            "hint2": "",
+            "solution_approach": "Choose any node in the tree as the starting point.\n\nPerform a DFS traversal from the starting node to find the farthest node from it. During the traversal, keep track of the maximum distance reached and the corresponding node.\n\nOnce you've reached the farthest node, perform another DFS traversal starting from that node. Again, keep track of the maximum distance reached and the corresponding node.\n\nThe maximum distance obtained from the second traversal is the diameter of the tree.\n\nTime Complexity : 2 dfs traversals, O(N)"
+        },
+        "id": 427,
+        "input_format": "<p>The first input line contains an integer <i>n</i>: the number of nodes. The nodes are numbered 1, 2, \u2026, <i>n</i>.<br>Then there are <i>n </i>\u2212 1 lines describing the edges. Each line contains two integers <i>a</i> and <i>b</i>: there is an edge between nodes <i>a</i> and <i>b</i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>The diameter corresponds to the path 2\u21921\u21923\u21925.</p>",
+        "output_format": "<p>Print the diameter of the tree.</p>",
+        "samples": [
+            {
+                "input": "5\n1 2\n1 3\n3 4\n3 5",
+                "output": "3"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Trees",
+            "Dfs"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Tree Diameter - I",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

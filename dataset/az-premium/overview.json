@@ -1,0 +1,22 @@
+{
+    "code": 200,
+    "data": {
+        "certificate_completion_percentage": 50,
+        "chapters_count": 7,
+        "course_image": "https://d3pdqc0wehtytt.cloudfront.net/courses/873361bc-911c-4fb8-ade9-7b9c4357438e.png",
+        "course_instructor_image_link": "https://d3pdqc0wehtytt.cloudfront.net/instructors/8bb7c8e7-27f9-40de-975b-0d3b801e91c6.jpg",
+        "course_instructor_name": null,
+        "course_instructor_username": "acraider",
+        "description": "**Unlock the World of Competitive Programming and Data Structures with Our Day Wise Course**\r\n\r\nEmbark on a transformative journey into the realm of competitive programming and data structures with our meticulously designed Day Wise CP & DSA course. Tailored to ignite the coder in you, this course paves your path from the basics to the complexities of algorithmic challenges. Here's what makes our course stand out:\r\n\r\n- **Brushing Up C++ Skills**: We begin with a solid foundation, refreshing your C++ skills to ensure you're well-prepared for the challenges ahead. Understanding syntax and semantics forms the bedrock of your coding journey.\r\n\r\n- **Foundation Maths & Prefix Sum**: Dive into the essentials of mathematical concepts critical for solving competitive programming problems efficiently. Learn how prefix sums can optimize data handling and manipulation.\r\n\r\n- **STL Basics**: Master the Standard Template Library (STL) with a focus on stacks, queues, and other fundamental data structures, empowering you to write more efficient and cleaner code.\r\n\r\n- **Binary Search & Two Pointers**: Explore the power of binary search and two-pointers technique, essential strategies for optimizing search and solve problems with elegance and efficiency.\r\n\r\n- **Gap Weeks**: Interspersed gap weeks encourage consolidation of learned concepts, practice, and rest, ensuring a balanced learning pace.\r\n\r\n- **Bit Manipulation & More Maths**: Unravel the mysteries of bit manipulation and advanced mathematical concepts, opening doors to optimized solutions and new problem-solving strategies.\r\n\r\n- **Recursion & Backtracking**: Delve into the elegance of recursion and backtracking, essential for solving complex problems by breaking them down into simpler, manageable sub-problems.\r\n\r\n- **Linked Lists & Binary Trees**: Gain a deep understanding of linked lists and binary trees, cornerstone data structures for representing hierarchical data and managing collections.\r\n\r\n- **Graph Foundations & Applications**: Traverse the fundamentals of graph theory, learning to represent and solve problems involving networks, relationships, and interconnected systems.\r\n\r\n- **Trees & Dynamic Programming (DP)**: Explore the nuanced world of trees and the dynamic programming framework, building a foundation for solving optimization problems and understanding complex relationships.\r\n\r\n- **DP Interesting Ideas & Optimizations**: Advance your DP skills with interesting ideas and optimizations, tackling challenging problems with innovative solutions.\r\n\r\n- **Greedy & Ad Hoc Ideas**: Learn to apply greedy algorithms for problems where local optimization leads to global solutions, and explore ad hoc problem-solving strategies for unique challenges.\r\n\r\nThis course is designed to be your companion in mastering competitive programming and data structures, with a curriculum that balances theory with practical, real-world problem solving. Whether you're a beginner looking to get started or an experienced coder aiming to sharpen your skills, our Day Wise CP & DSA course offers a comprehensive, structured approach to learning, ensuring you're well-equipped to tackle any coding challenge that comes your way.",
+        "difficulty": "Intermediate",
+        "enrolment_link": null,
+        "id": 99,
+        "is_certificate_enabled": true,
+        "name": "Premium Day Wise Course",
+        "resources_count": 746,
+        "syllabus": null,
+        "time_in_minutes": 28056,
+        "users_count": 4226
+    },
+    "details": "Course Details"
+}

@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given two rectangles with their lower-left and upper-right coordinates. You have to find the area of the intersection and union of the rectangles. Both rectangles are axis-aligned.</p>",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^5$  \n\n$-10^3 \\leq X_i, Y_i \\leq 10^3$  \n\nIt is guaranteed that $X_1 \\leq X_2$, $Y_1 \\leq Y_2$, $X_3 \\leq X_4$, and $Y_3 \\leq Y_4$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "\n\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint main() {\n    IOS\n    int t=1;\n    cin >> t;\n    while (t--) {\n        int x1, y1, x2, y2;\n        cin >> x1 >> y1 >> x2 >> y2;\n        int x3, y3, x4, y4;\n        cin >> x3 >> y3 >> x4 >> y4;\n        int a1 = max(x1, x3), b1 = max(y1, y3);\n        int a2 = min(x2, x4), b2 = min(y2, y4);\n        int ari = 0;\n        if(a1 <= a2 && b1 <= b2) {\n            ari = (a2 - a1) * (b2 - b1);\n        }\n        int ar1 = (x2 - x1) * (y2 - y1);\n        int ar2 = (x4 - x3) * (y4 - y3);\n        cout << ari << \" \" << ar1 + ar2 - ari << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:45:53.171746+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "- For finding the intersection of the rectangles, the following gives the endpoints of the diagonal:\n\n  $X_5 = \\max(X_1, X_3)$  \n  $Y_5 = \\max(Y_1, Y_3)$  \n  $X_6 = \\min(X_2, X_4)$  \n  $Y_6 = \\min(Y_2, Y_4)$\n\n- For the rectangle to exist, the conditions must hold:\n\n  $(X_5 \\leq X_6) \\quad \\text{and} \\quad (Y_5 \\leq Y_6)$\n\n- The area of union of rectangles would be:\n\n  $\\text{Area of union} = \\text{Sum of the area of rectangles} - \\text{Area of the intersection of rectangles}$\n\n**The time complexity per test case is:** \n$O(1)$"
+        },
+        "id": 330,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\n\nThe first line of each test case contains four space-separated integers $X_1, Y_1, X_2, Y_2$ - coordinates of the first rectangle.\n\nThe second line of each test case contains four space-separated integers $X_3, Y_3, X_4, Y_4$ - coordinates of the second rectangle.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>If the image is not visible please check this docs link - https://docs.google.com/document/d/126mU5E-f2FhaByhQ8xE3jeI7JrpCOwyT2Pnp1pAvAu0/</p><p>For the first test case,</p><figure class=\"image\"><img src=\"https://docs.google.com/drawings/u/0/d/sQFwdr--y5qlzdqO5qEqfXA/image?w=83&amp;h=110&amp;rev=40&amp;ac=1&amp;parent=15_PncQhkecHEs0DaYaVsBAhJduX6eDMDo2X52k9QyH8\"></figure><p>For the second test case,</p><figure class=\"image\"><img src=\"https://docs.google.com/drawings/u/0/d/syI9YsB7zXywECT7WwE1YlQ/image?w=86&amp;h=86&amp;rev=9&amp;ac=1&amp;parent=15_PncQhkecHEs0DaYaVsBAhJduX6eDMDo2X52k9QyH8\"></figure><p>For the third test case,</p><figure class=\"image\"><img src=\"https://docs.google.com/drawings/u/0/d/sO57LOqLiNzro1Bk2Kv22ow/image?w=90&amp;h=118&amp;rev=6&amp;ac=1&amp;parent=15_PncQhkecHEs0DaYaVsBAhJduX6eDMDo2X52k9QyH8\"></figure>",
+        "output_format": "<p>For each test case, print the area of intersection and union of the rectangles.</p>",
+        "samples": [
+            {
+                "input": "3\n0 0 2 2\n1 1 3 4\n0 0 3 3\n1 1 2 3\n1 2 3 4\n0 0 1 1\n",
+                "output": "1 9\n2 9\n0 5\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Intersection and Union of Two Rectangles AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

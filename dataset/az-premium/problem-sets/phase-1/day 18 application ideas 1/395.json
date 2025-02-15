@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an array `A` of size `N`. You have to answer the following queries:\n\n1. **`1 x`** - Find the smallest element `\u2265 x`.  \n2. **`2 x`** - Find the smallest element `> x`.  \n3. **`3 x`** - Find the number of elements `\u2264 x`.  \n4. **`4 x`** - Find the number of elements `< x`.\n\nIf the answer does not exist, print `-1`.",
+        "complete_approach": "",
+        "constraints": "1 \u2264 $T$ \u2264 $10^5$  \n1 \u2264 $N$, $Q$ \u2264 $10^5$  \n1 \u2264 $A_i$ \u2264 $10^6$  \n1 \u2264 $t$ \u2264 4  \n1 \u2264 $x$ \u2264 $10^6$  \n\nIt is guaranteed that the sum of $Q$ over all test cases does not exceed $10^5$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n\nint main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int n, q;\n    cin >> n >> q;\n    int a[n];\n    for (int i = 0; i < n; ++i) {\n      cin >> a[i];\n    }\n    sort(a, a + n);\n    while (q--) {\n      int t, x;\n      cin >> t >> x;\n      if (t == 1) {\n        int i = lower_bound(a, a + n, x) - a;\n        if (i == n)\n          cout << \"-1 \";\n        else\n          cout << a[i] << \" \";\n      } else if (t == 2) {\n        int i = upper_bound(a, a + n, x) - a;\n        if (i == n)\n          cout << \"-1 \";\n        else\n          cout << a[i] << \" \";\n      } else if (t == 3) {\n        auto it = upper_bound(a, a + n, x) - a;\n        cout << it << \" \";\n      } else {\n        auto it = lower_bound(a, a + n, x) - a;\n        cout << it << \" \";\n      }\n    }\n    cout << \"\\n\";\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:20:34.072310+00:00"
+        },
+        "hints": {
+            "hint1": "Use the STL functions, lower\\_bound() and upper\\_bound()",
+            "hint2": "",
+            "solution_approach": "`lower_bound()`\nFor finding the smallest element $> x$, use `upper_bound()`\nFor finding  the number of elements $\\leq x$, use `upper_bound()`\nFor finding  the number of elements $< x$, use `lower_bound()`\nTime Complexity per test case: $O(Q \\log N)$ where $\\log N$ is the time taken by `lower_bound` and `upper_bound` functions"
+        },
+        "id": 395,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains two space-separated integers N Q - the size of the given array and the number of queries\n\nThe second line of each test case contains N space-separated integers.\n\nEach of the next Q lines contains the queries in the form of t x.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, \n\n1. The smallest element \u2265 2 is 2\n2. The smallest element > 2 is 3\n3. The number of elements \u2264 4 is 5 (1, 2, 2, 3, 4)\n4. The number of elements \u2264 2 is 3 (1, 2, 2)",
+        "output_format": "For each test case, print the answer of the required queries.",
+        "samples": [
+            {
+                "input": "2\n5 4\n1 2 2 3 4\n1 2\n2 2\n3 4\n3 2\n3 2\n5 5 5\n3 5\n4 5\n",
+                "output": "2 3 5 3 \n3 0 \n"
+            },
+            {
+                "input": "1\n5 4\n1 2 3 4 5\n1 5\n1 6\n3 2\n3 0",
+                "output": "5 -1 2 0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "STL Searching",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

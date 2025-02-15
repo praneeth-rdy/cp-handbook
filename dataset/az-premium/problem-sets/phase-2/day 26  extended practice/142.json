@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Find the number of *Prime Cycles* with the permutation of the first $N$ positive integers. The cycle is called a *Prime Cycle* if all **neighbouring** pairs sum up to be a prime.\n\nThe two **distinct** prime cycles for *N = 6* are:\n\n1. 1, 4, 3, 2, 5, 6\n2. 1, 6, 5, 2, 3, 4\n\nThe permutation of `3, 2, 5, 6, 1, 4` is considered the same as the first sequence.",
+        "complete_approach": "",
+        "constraints": "<p>2 \u2264 <i>N</i> \u2264 19</p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n\nconst int N = 100;\n\nll ans = 0;\nbool isPrime[N];\nbool marked[N];\nvector<int> prime = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};\n\nvoid solve(int m, int n, int prev, int par)\n{\n    if (!m)\n    {\n        if (isPrime[prev + 1])\n        {\n            ans++;\n        }\n        return;\n    }\n    for (int i = 1 + par; i <= n; i += 2)\n    {\n        if (!marked[i] && isPrime[i + prev])\n        {\n            marked[i] = true;\n            solve(m - 1, n, i, 1 - par);\n            marked[i] = false;\n        }\n    }\n    return;\n}\n\nsigned main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    if (n % 2 == 1)\n    {\n        cout << \"0\\n\";\n        return 0;\n    }\n\n    memset(isPrime, false, sizeof(isPrime));\n    memset(marked, false, sizeof(marked));\n\n    for (int u : prime)\n    {\n        isPrime[u] = true;\n    }\n\n    marked[1] = true;\n    solve(n - 1, n, 1, 1);\n\n    cout << ans << \"\\n\";\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:42:30.683606+00:00"
+        },
+        "hints": {
+            "hint1": "Since we have to find a distinct number of cycles. Without loss of generality, we can assume that the cycle starts with number $1$.",
+            "hint2": "Observe that when the two consecutive numbers are of the same parity, then the sum will be definitely going to divisible by $2$.",
+            "solution_approach": "The brute force solution will be to generate all N! permutations and check for each whether it is a prime cycle or not. But this solution will not pass the limits. We have to perform some kind of optimizations.\n\nLet's note down some observations.\n\n1. Since we have to find a distinct number of cycles. Without loss of generality, we can assume that the cycle starts with number 1.\n2. Hence, the two neighbouring in numbers in the prime cycle has to be of opposite parity.\nUsing these observations we can optimize the brute force solution. \n### Level\nWe can use the length of the sequence as our level. Here we use the remaining number of items to be put to complete the sequence as our level. In addition we keep track of the previous element in the sequence, the parity of the current element we are expecting and the limiting value of the sequence.\n### Check\nCheck if the sequence length generated is as desired and if the summation of the last element and the first element of the sequence is a prime number too then we can increment our ans since its a valid solution.\n### Choice\nAt each recursive step we iterate through either even numbers or odd numbers whichever is required depending on the parity. While iterating for each element check if it has been already taken and if it along with the previous element sums up to a prime number. If YES, we take this element in our sequence and transition forward.\n### Transition\nWhen we take an element we update our previous element as the current element. This will serve as the previous element for the next recursion. We udpate our remaining number of numbers to fill the sequence and update the parity which we need in our next recursion."
+        },
+        "id": 142,
+        "input_format": "<p>The input contains only a single integer <i>N</i> - denoting the number of positive integers.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "**_Explanation 1:_**  \nOnly one Prime Cycle exists: `{1, 2}`.\n\n**_Explanation 2:_**  \nTwo Prime Cycles are: `{1, 2, 3, 4}` and `{1, 4, 3, 2}`.\n\n**_Explanation 3:_**  \nTwo Prime Cycles are: `{1, 4, 3, 2, 5, 6}` and `{1, 6, 5, 2, 3, 4}`.",
+        "output_format": "<p>Print the number of Prime Cycles that are possible to form from first <i>N</i> positive numbers.</p>",
+        "samples": [
+            {
+                "input": "2",
+                "output": "1"
+            },
+            {
+                "input": "4",
+                "output": "2"
+            },
+            {
+                "input": "6",
+                "output": "2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Recursion",
+            "Backtracking"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Prime Cycles",
+        "video_editorial_id": 8154
+    },
+    "details": "Problem Details"
+}

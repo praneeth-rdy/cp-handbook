@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Gotham is in ruins. After the destruction caused by the Joker's latest rampage, the city is in chaos. Bruce Wayne has returned as Batman and has neutralised most of the Joker's associates. However, the city needs to be rebuilt and most of the people need urgent medical attention. City's prominent Gotham General hospital has already been blown up by the Joker. Hence instead of building one large hospital which may easily become the next target for the Joker, Batman asks the mayor to build small clinics throughout the city.\nThe city consists of <i>N</i> blocks. The mayor also has to ensure that every block has access to at least one clinic. The connectivity is established by repairing the existing roads.\nThe cost to build a new clinic is <i>C</i> and to repair a road is <i>r</i>.&nbsp;\nSince you are working for the Mayor and want to help the Batman, your job is to find the minimum cost such that for every block in the city.&nbsp;\nEither there is a clinic in the block&nbsp;\nOr the block has a path via repaired roads to a block with a clinic.</span></li></ul>",
+        "complete_approach": "",
+        "constraints": "- $$ 1 \\leq T \\leq 10 $$\n- $$ 1 \\leq N \\leq 10^5 $$\n- $$ 0 \\leq R \\leq 10^5 $$  \n- $$ 1 \\leq x, y \\leq N, \\, x \\: != y $$  \n- $$ 0 \\leq c \\leq 10^9 $$  \n- $$ 0 \\leq r \\leq 10^9 $$",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n// the logic is:\n// if(c<r) build clinics in each hall\n// else build a clinic in any node and x-1 roads\n// in a connected component\n// where x is the number of nodes in that component.\n// USE DFS\n#include <bits/stdc++.h>\nusing namespace std;\ntypedef long long int lli;\nlli N, R, c, r, col;\nvector<vector<lli>> g;\nvector<lli> vis;\nvoid dfs(lli node) {\n  vis[node] = col;\n  for (auto i : g[node]) {\n    if (!vis[i])\n      dfs(i);\n  }\n}\nint main() {\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n  int t;\n  cin >> t;\n  while (t--) {\n    cin >> N >> R >> c >> r;\n    g.resize(N + 1);\n    vis.resize(N + 1);\n    for (int i = 1; i <= R; ++i) {\n      lli x, y;\n      cin >> x >> y;\n      g[x].push_back(y);\n      g[y].push_back(x);\n    }\n    lli ans = 0;\n    if (c < r)\n      ans = N * c;\n    else {\n      col = 1;\n      for (int i = 1; i <= N; ++i) {\n        if (!vis[i]) {\n          dfs(i);\n          col++;\n        }\n      }\n      lli comp_cnt = col - 1;\n      vector<lli> f(comp_cnt + 1);\n      for (int i = 1; i <= N; ++i) {\n        f[vis[i]]++;\n      }\n      for (int i = 1; i <= comp_cnt; ++i) {\n        ans += c;\n        ans += (r * (f[i] - 1));\n      }\n    }\n    cout << ans << '\\n';\n    g.clear();\n    vis.clear();\n  }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:36:36.145097+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Use DFS</p>",
+            "hint2": "<p>If(c&lt;r) build clinics in each hall, else build a clinic in any node and x-1 roads in a connected component where x is the number of nodes in that component.</p>",
+            "solution_approach": "<p>If <i>c&lt;r</i> =&gt; <strong>ans=N*c</strong>,</p><p>else, Do DFS and find the number of nodes in each connected component of the graph. Hence,</p><p>for each connected component,</p><p><strong>ans += c + (component.size() - 1) * r</strong></p><p><strong>Time Complexity : O(N)</strong></p><p><strong>Space Complexity : O(N)</strong></p>"
+        },
+        "id": 866,
+        "input_format": "First-line comprises T - the number of test cases.\n\nFor each test case, the first line comprises four space-separated integers N R c r - number of blocks, number of roads, the cost for building a clinic, the cost for repairing a road. \n\nNext R lines comprise 2 space-separated integers x, y - denoting road connection(undirected) between block x and block y.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "**Explanation**\n\n![Example Diagram](https://lh4.googleusercontent.com/Dg8LOVWKpRl4Bs3ZcX1LZWAdkIKq9rvn2BZimTXDltaWY8FuH30yOd5AtZRPZQRMSsJCFtypPXkTxIhveEvar1UUxdsE42shleqyfkQELis6neOrGdQathXOB68H-2_XuhmnG62p=s0)\n\nWe can build 2 clinics, let's say one clinic at block 2 and another at block 4, at the cost of $2 \\times 3 = 6$ and repair 3 roads, let's say roads 1-2, 2-3, and 4-5, at the cost of $3 \\times 2 = 6$. \n\nHence, the minimum cost = $6 + 6 = 12$.",
+        "output_format": "Output the minimum cost for each test case on a new line.",
+        "samples": [
+            {
+                "input": "1\n5 4 3 2\n1 2\n2 3\n3 1\n4 5",
+                "output": "12"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Dfs"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Gotham rises",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

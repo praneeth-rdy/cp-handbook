@@ -1,0 +1,62 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are in a building with **n** floors labeled from 1 to **n**. You have **k** identical eggs with you.  \n\nYou also know that there exists a floor **f** (0 \u2264 **f** \u2264 **n**) such that any egg dropped at a floor **higher** than **f** will break, and any egg dropped at floor **f** or below will not break.  \n\nIn one move, you can select an unbroken egg and drop it from any floor **x** (1 \u2264 **x** \u2264 **n**). If the egg breaks, you can no longer use it. However, if the egg does not break, you can **reuse** it in your further moves.  \n\nFind the minimum number of moves you need to make to determine with certainty the value of **f**.",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">1 &lt;= n &lt;= 10000\n1 &lt;= k &lt;= 100</code></pre>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint EggDrop(int N, int K)\n{\n    vector<int> dp(N + 1);\n    for (int i = 0; i <= N; i++)\n        dp[i] = i;\n    for (int k = 2; k <= K; k++)\n    {\n        vector<int> dp2(N + 1, 0);\n        int x = 1;\n        for (int n = 1; n <= N; n++)\n        {\n            while (x < n && max(dp[x - 1], dp2[n - x]) > max(dp[x], dp2[n - x - 1]))\n                x++;\n            dp2[n] = 1 + max(dp[x - 1], dp2[n - x]);\n        }\n        dp = dp2;\n    }\n    return dp[N];\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int N, K;\n    cin >> N >> K;\n\n    cout << EggDrop(N, K) << \"\\n\";\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:47:27.733925+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "\n### Method 1 - **Dynamic Programming with Binary Search**\n\nWe use dynamic programming to solve the problem. Our **dp** state is:  \n```\ndp[n][k] - moves required when k eggs and n floors are left.\n```\n\nWhen we drop an egg from floor **X**, it either:  \n- Survives and we go to state **dp[n-X][k]**, or  \n- Breaks and we go to state **dp[X-1][k-1]**.  \n\nThis approach leads to an $(O(K \\times N^2))$ algorithm, which is too slow for the given constraints. We can try to speed it up.  \n```\ndp[N][K] = min(max(dp[X-1][K-1], dp[N-X][K])) over all X in [1, N]\n```\n\n**Key Observation:**  \n- \\(dp[N][K]\\) is an increasing function on \\(N\\).  \n- The first term $(T_1 = dp[X-1][K-1])$ in our max expression is an increasing function on \\(X\\), and  \n- The second term $(T_2 = dp[N-X][K])$ is a decreasing function on \\(X\\).  \n\nThus, instead of checking for each \\(X\\), we can **binary search** for the most optimal value of \\(X\\).  \n\n**Time Complexity:**  \nThis gives us an overall time complexity of $(O(K \\times N \\log N))$.  \n\n---\n\n### Method 2 - **Dynamic Programming with Optimality Criterion**\n\n```\ndp[N][K] = min(max(dp[X-1][K-1], dp[N-X][K]))\n```\n\nLet the optimal value of \\(X\\) be \\(X\u2019\\). So,  \n```\ndp[N][K] = max(dp[X'-1][K-1], dp[N-X'][K])\n```\n\nLet \\(X\u2019 = opt[N][K]\\).  \n\n**Observation:**  \nThe important thing to notice here is that \\(opt[N][K]\\) is an increasing function on \\(N\\).  \n- $(T_1)$ is constant with respect to \\(N\\), but  \n- $(T_2)$ is increasing with respect to \\(N\\).  \n\nHence, the optimal value of \\(X\\) increases with an increase in \\(N\\).  \n\nWhen we want to find $(dp[N+1][K])$, instead of searching for \\(opt[N+1][K]\\) from $(1 \\leq X \\leq N)$, we only have to search $(opt[N][K] \\leq X \\leq N)$.  \n\n**Time Complexity:**  \nThis gives us an overall time complexity of $(O(K \\times N))$.  \n"
+        },
+        "id": 622,
+        "input_format": "The only line of input contains two space-separated integers **n** and **k**.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "Drop the egg from floor 1. If it breaks, we know that **f = 0**.  \n   Otherwise, drop the egg from floor 2. If it breaks, we know that **f = 1**.  \n   If it does not break, then we know **f = 2**.  \n\nHence, we need at minimum 2 moves to determine with certainty what the value of **f** is.",
+        "output_format": "Print the minimum number of moves you need to make.",
+        "samples": [
+            {
+                "input": "2 1",
+                "output": "2"
+            },
+            {
+                "input": "14 3",
+                "output": "4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-Hudson River Trading"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nint EggDrop(int N, int K)\n{\n    // Complete the function\n}\n\n<fix>\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int N, K;\n    cin >> N >> K;\n\n    cout << EggDrop(N, K) << \"\\n\";\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 2.0,
+        "title": "Egg Drop",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

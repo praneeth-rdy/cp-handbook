@@ -1,0 +1,56 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an $N \\times N$ chessboard and a knight with starting position $(Sx, Sy)$. You are given a final position $(Fx, Fy)$. You have to find the minimum number of moves required to reach the final position.\n\nComplete the function:\n\n```cpp\nint KnightWalk(int N, int Sx, int Sy, int Fx, int Fy);",
+        "complete_approach": "",
+        "constraints": "<p><i>1 \u2264 T \u2264 20</i><br><i>1 \u2264 N \u2264 1000</i><br><i>1 \u2264 Sx, Sy, Fx, Fy \u2264 N</i></p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint KnightWalk(int N, int Sx, int Sy, int Fx, int Fy)\n{\n\tSx--, Sy--, Fx--, Fy--;\n\n\tint ans = -1;\n\t\n\tpair<int, int> mv[] = {{1, 2}, {1, -2}, {2, 1}, {2, -1}, {-1, 2}, {-1, -2}, {-2, 1}, {-2, -1}};\n\t\n\tint vis[N][N];\n\tmemset(vis, -1, sizeof(vis));\n\t\n\tqueue<pair<int, int>> q;\n\t\n\tq.push({Sx, Sy});\n\tvis[Sx][Sy] = 0;\n\t\n\twhile (q.size())\n\t{\n\t\tauto a = q.front();\n\t\tq.pop();\n\t\t\n\t\tint x = a.first, y = a.second, curr = vis[x][y];\n\t\t\n\t\tif (x == Fx && y == Fy)\n\t\t{\n\t\t\tans = curr;\n\t\t\tbreak;\n\t\t}\n\t\t\n\t\tfor (auto i : mv)\n\t\t{\n\t\t\tint x1 = x + i.first, y1 = y + i.second;\n\t\t\t\n\t\t\tif (x1 < 0 || y1 < 0 || x1 >= N || y1 >= N || vis[x1][y1] != -1)\n\t\t\t\tcontinue;\n\t\t\t\n\t\t\tvis[x1][y1] = curr + 1;\n\t\t\tq.push({x1, y1});\n\t\t}\n\t}\n\n\treturn ans;\n}\n\nint main()\n{\n\tios_base::sync_with_stdio(0);\n\tcin.tie(NULL);\n\tcout.tie(NULL);\n\n\tint test_case;\n\tcin >> test_case;\n\n\twhile (test_case--)\n\t{\n\t\tint N, Sx, Sy, Fx, Fy;\n\t\tcin >> N >> Sx >> Sy >> Fx >> Fy;\n\n\t\tcout << KnightWalk(N, Sx, Sy, Fx, Fy) << \"\\n\";\n\t}\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:13:08.939231+00:00"
+        },
+        "hints": {
+            "hint1": "Convert this into a graph problem.",
+            "hint2": "Use BFS to find the shortest path between 2 squares.",
+            "solution_approach": "<p>This problem can be seen as a shortest path problem in an unweighted undirected graph. Consider a graph where the nodes represent the chessboard squares and there is an undirected edge between two nodes only if a knight can move between the corresponding squares. Now use <a href=\"https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/\">Breadth First Search(BFS)</a> to find the shortest path between the source and the destination.</span><br>We try all 8 possible positions where a knight can move to from its current position, if it is inside the board. Push this new position into the queue with distance 1 more than the current position. Repeat this process till you reach the desired position.<br>Time Complexity - <i>O(N<sup>2</sup>)</i></p>"
+        },
+        "id": 607,
+        "input_format": "The first line contains a single integer T - the number of test cases.\nThe first line of each test case contains five integers N Sx Sy Fx Fy - the size of the board, initial position and final position.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "The situation described in **test case 1** is:\n\n![Chessboard Knight Move](https://lh3.googleusercontent.com/sOy4y9cSf98V6NHFG_ATkvHQ-Rp9-B46v7QeUcOR8TG4lKyzjWy6RO5m1yInqI68s95kq9vTnBQRHpeFMpMbj2gS77mDqwGFy9QnW6HAwKbc3sjXuf_JQrRcQ-ikCGfKrnCrnXiA)\n\nThe minimum number of moves is **3**.",
+        "output_format": "For every test case print the minimum number of moves required. If it is not possible print -1.",
+        "samples": [
+            {
+                "input": "3\n6 4 5 1 1\n6 3 3 6 6\n6 6 1 1 6",
+                "output": "3\n2\n4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Bfs",
+            "Graphs"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nint KnightWalk(int N, int Sx, int Sy, int Fx, int Fy)\n{\n\t// Complete the function\n}\n\n<fix>\nint main()\n{\n\tios_base::sync_with_stdio(0);\n\tcin.tie(NULL);\n\tcout.tie(NULL);\n\n\tint test_case;\n\tcin >> test_case;\n\n\twhile (test_case--)\n\t{\n\t\tint N, Sx, Sy, Fx, Fy;\n\t\tcin >> N >> Sx >> Sy >> Fx >> Fy;\n\n\t\tcout << KnightWalk(N, Sx, Sy, Fx, Fy) << \"\\n\";\n\t}\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 4.0,
+        "title": "KWALK",
+        "video_editorial_id": 10667
+    },
+    "details": "Problem Details"
+}

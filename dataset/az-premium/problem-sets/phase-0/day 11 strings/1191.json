@@ -1,0 +1,69 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a string $S$. Determine how many times does each letter occur in $S$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq |S| \\leq 10^7$ where $|S|$ is the length of the string, and it consists of only $\\textbf{lowercase}$ English letters.",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include<bits/stdc++.h>\nusing namespace std;\n\nvoid solution() {\n    string s; cin >> s;\n    int n = s.size();\n    int arr[26] = {0}; // initializes whole array with zero\n    for (int i = 0; i < n; i++) {\n        arr[s[i] - 'a']++;\n    }\n    for (int i = 0; i < 26; i++) {\n        if (arr[i]) {\n            cout << (char)(i + 'a') << \" : \" << arr[i] << endl;\n        }\n    }\n}\n\nint main() {\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n    solution();\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        String s = br.readLine();\n        int n = s.length();\n        int[] arr = new int[26]; // initializes whole array with zero\n        for (int i = 0; i < n; i++) {\n            arr[s.charAt(i) - 'a']++;\n        }\n        for (int i = 0; i < 26; i++) {\n            if (arr[i] > 0) {\n                out.println((char)(i + 'a') + \" : \" + arr[i]);\n            }\n        }\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\n\ndef main():\n    s = sys.stdin.readline().strip()\n    n = len(s)\n    arr = [0]*26  # initializes whole array with zero\n    for i in range(n):\n        arr[ord(s[i]) - ord('a')] +=1\n    for i in range(26):\n        if arr[i]:\n            print(f\"{chr(i + ord('a'))} : {arr[i]}\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:34:06.720576+00:00"
+        },
+        "hints": {
+            "hint1": "Use hashing.",
+            "hint2": "Do you really need a hashmap to solve?",
+            "solution_approach": "Since the string consists of only lowercase English letters, we can use an array of size $26$ to count the frequency of each character.\n\n1. Initialize an array `arr` of size $26$ with all elements set to $0$.\n2. Iterate over each character in the string $S$:\n   - For each character `c`, increment `arr[c - 'a']` by $1$.\n3. After counting the frequencies, iterate over the array `arr` from index $0$ to $25$:\n   - If `arr[i] > 0`, output the character corresponding to `i + 'a'` and its frequency `arr[i]`.\n\nThis method avoids the need for a hashmap or dictionary since the possible characters are limited and known.\n\n**Time Complexity:** $\\mathcal{O}(|S|)$\n\n**Space Complexity:** $\\mathcal{O}(1)$ (Since the array size is constant, $26$)"
+        },
+        "id": 1191,
+        "input_format": "Only one line contains the string $S$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For each sample input, we count the occurrences of each letter in the given string.\n- In Sample Input 1, the string is \"aaabbc\". The counts are:\n  - 'a' occurs 3 times.\n  - 'b' occurs 2 times.\n  - 'c' occurs 1 time.\n- In Sample Input 2, the string is \"regff\". The counts are:\n  - 'e' occurs 1 time.\n  - 'f' occurs 2 times.\n  - 'g' occurs 1 time.\n  - 'r' occurs 1 time.\n- In Sample Input 3, the string is \"abcdef\". Each letter occurs exactly once.",
+        "output_format": "For each character that appears in $S$, print a single line containing the following format: $\"X : Y\"$ where $X$ is the letter and $Y$ is the number of times that letter $X$ occurred in $S$.",
+        "samples": [
+            {
+                "input": "aaabbc",
+                "output": "a : 3\nb : 2\nc : 1"
+            },
+            {
+                "input": "abcdef",
+                "output": "a : 1\nb : 1\nc : 1\nd : 1\ne : 1\nf : 1"
+            },
+            {
+                "input": "regff",
+                "output": "e : 1\nf : 2\ng : 1\nr : 1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Strings",
+            "Hashing"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Count Letters",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

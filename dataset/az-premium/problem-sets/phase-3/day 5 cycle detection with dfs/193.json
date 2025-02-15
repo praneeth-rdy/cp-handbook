@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": {
+        "body": "There are n students in AlgoZenith Course and m friendships between them. Your task is to divide the students into two teams in such a way that no two students in a team are friends. You can freely choose the sizes of the teams. The size of each team should be positive.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n</i> \u2264 10<sup>5</sup><br>1 \u2264 <i>m</i> \u2264 2 x 10<sup>5</sup><br>1 \u2264 <i>a, b</i> \u2264 <i>n</i></p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n\nconst int N = 100010;\n\nint mod = 1e9 + 7;\n\nvector<int> graph[N];\nint par[N];\n\nbool dfs(int u, int x)\n{\n    if (par[u] != -1)\n        return par[u] == x;\n    par[u] = x;\n    for (int v : graph[u])\n    {\n        if (!dfs(v, 1 - x))\n        {\n            return false;\n        }\n    }\n    return true;\n}\n\nsigned main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n, m;\n    cin >> n >> m;\n\n    for (int i = 0; i < m; i++)\n    {\n        int u, v;\n        cin >> u >> v;\n        graph[u].push_back(v);\n        graph[v].push_back(u);\n    }\n\n    for (int i = 1; i <= n; i++)\n    {\n        par[i] = -1;\n    }\n\n    for (int i = 1; i <= n; i++)\n    {\n        if (par[i] == -1 && !dfs(i, 0))\n        {\n            cout << \"NO\\n\";\n            return 0;\n        }\n    }\n\n    cout << \"YES\\n\";\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:40:14.247007+00:00"
+        },
+        "hints": {
+            "hint1": "Look to use some property of Bipartite Graphs.",
+            "hint2": "To divide the students into two teams such that no two students in a team are friends, we can use the concept of graph theory. We can represent the students as vertices in a graph, and the friendships between them as edges. Then, we need to find if the graph is bipartite or not.\n\nA bipartite graph is a graph whose vertices can be divided into two disjoint sets, say A and B, such that every edge connects a vertex in set A to a vertex in set B. If the graph is bipartite, we can divide the students into two teams by assigning one team to set A and the other team to set B.",
+            "solution_approach": "To check if the graph is bipartite, we can use graph coloring. We can start by assigning a color (say, red) to one vertex and then assign the opposite color (say, blue) to all its neighbors. We repeat this process for all uncolored vertices until all vertices are colored or we find a conflict, i.e., a vertex and its neighbor have the same color. If we find a conflict, it means that the graph is not bipartite and we cannot divide the students into two teams. Otherwise, we can divide the students into two teams based on their colors.\n\nIf the graph is not bipartite, we cannot divide the students into two teams such that no two students in a team are friends. In this case, we may need to form more than two teams or change the size of the teams.\n\nIn terms of complexity, the worst-case time complexity of graph coloring is $O(V + E)$, where $V$ is the number of vertices and $E$ is the number of edges in the graph. Therefore, the time complexity of dividing the students into two teams using graph coloring is $O(n + m)$."
+        },
+        "id": 193,
+        "input_format": "The first input line has two integers n and m: the number of students and friendships. The students are numbered 1, 2, \u2026, n.\nThen, there are m lines describing friendships. Each line has two integers a and b: students a and b are friends.\nEvery friendship is between two different students. You can assume that there is at most one friendship between any two students.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "",
+        "output_format": "<p>Print \u2018YES\u2019 if it's possible to divide students in two teams, otherwise print \u2018NO\u2019.</p>",
+        "samples": [
+            {
+                "input": "5 3\n1 2\n1 3\n4 5",
+                "output": "YES"
+            },
+            {
+                "input": "4 3\n1 2\n2 3\n1 3",
+                "output": "NO"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Dfs"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Creating Teams",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

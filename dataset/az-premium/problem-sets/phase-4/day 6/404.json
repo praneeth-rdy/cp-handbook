@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "There is an array consisting of n integers. Some values of the array will be updated, and after each update, your task is to report the maximum subarray sum in the array.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n</i>, <i>m </i>\u2264 2 x 10<sup>5</sup><br>\u221210<sup>9 </sup>\u2264 <i>x<sub>i </sub></i>\u2264 10<sup>9</sup><br>1 \u2264 <i>k </i>\u2264 <i>n</i><br>\u221210<sup>9 </sup>\u2264 <i>x </i>\u2264 10<sup>9</sup></p>",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 200010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nstruct ST\n{\n    ll maxi, lsum, rsum, sum;\n    ST(ll sum = 0, ll maxi = 0, ll lsum = 0, ll rsum = 0) : sum(sum), maxi(maxi), lsum(lsum), rsum(rsum) {}\n};\n\nST operator+(const ST &A, const ST &B)\n{\n    ST temp;\n    temp.lsum = max(A.lsum, A.sum + B.lsum);\n    temp.rsum = max(B.rsum, B.sum + A.rsum);\n    temp.sum = A.sum + B.sum;\n    temp.maxi = max(max(A.maxi, B.maxi), A.rsum + B.lsum);\n    return temp;\n}\n\nstruct segtree\n{\n    vector<ST> tree;\n    segtree(int n = N)\n    {\n        tree.resize(4 * n);\n    }\n\n    void update(int node, int start, int end, int idx, ll val)\n    {\n        if (start == end)\n        {\n            ll x = max(val, 0LL);\n            tree[node] = ST(val, x, x, x);\n        }\n        else\n        {\n            int mid = (start + end) >> 1;\n            if (idx <= mid)\n                update(2 * node, start, mid, idx, val);\n            else\n                update(2 * node + 1, mid + 1, end, idx, val);\n            tree[node] = tree[2 * node] + tree[2 * node + 1];\n        }\n    }\n\n    ll query()\n    {\n        return tree[1].maxi;\n    }\n};\n\nsigned main()\n{\n    // freopen(\"IN\", \"r\", stdin);\n    // freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n, q;\n    cin >> n >> q;\n\n    segtree T(n);\n\n    for (int i = 0; i < n; i++)\n    {\n        ll val;\n        cin >> val;\n        T.update(1, 0, n - 1, i, val);\n    }\n\n    for (int i = 0; i < q; i++)\n    {\n        int k;\n        ll x;\n        cin >> k >> x;\n        k--;\n        T.update(1, 0, n - 1, k, x);\n        cout << T.query() << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:15:59.345894+00:00"
+        },
+        "hints": {
+            "hint1": "The solution uses a segment tree data structure to efficiently handle updates and queries on the array.",
+            "hint2": "Each node of the segment tree stores the information about the maximum subarray sum within that range.",
+            "solution_approach": "The main idea is to divide the array into smaller segments recursively and calculate the maximum subarray sum for each segment.\nThe merge operation combines the results from child segments to calculate the maximum subarray sum for the parent segment.\nWhile merging we need to consider the maximum of three subarrays:\n1. maximum possible sum of left subarray\n2. maximum possible sum of right subarray\n3. maximum possible subarray by merging some suffix subarray sum of the left subarray and some prefix subarray sum of the right subarray.  \n\n\nThe update operation modifies the array and updates the corresponding nodes in the segment tree.\nThe query operation retrieves the maximum subarray sum from the root of the segment tree."
+        },
+        "id": 404,
+        "input_format": "The first input line contains integers n and m: the size of the array and the number of updates. The array is indexed 1, 2,\u2026, n.\nThe next line has n integers: x1, x2, \u2026, xn: the initial contents of the array.\nThen there are m lines describing the changes. Each line has two integers k and x: the value at position k becomes x.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "After each update, print the maximum subarray sum. Empty subarrays (with sum 0) are allowed.",
+        "samples": [
+            {
+                "input": "5 3\n1 2 -3 5 -1\n2 6\n3 1\n2 -2",
+                "output": "9\n13\n6"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Segment Tree"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Subarray Sum Queries",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

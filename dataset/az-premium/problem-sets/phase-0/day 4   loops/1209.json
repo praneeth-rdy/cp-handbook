@@ -1,0 +1,65 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given two numbers $A$ and $B$. Print all lucky numbers between $A$ and $B$ inclusive.\n\n**Note:**\n\nA lucky number is any positive number whose decimal representation contains only the digits $4$ and $7$.\n\nFor example: numbers $4$, $7$, $47$, and $744$ are lucky, whereas numbers $5$, $17$, and $174$ are not.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq A \\leq B \\leq 10^5$",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```c++\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n// O(logn) time\nbool lucky(int n)\n{\n    while (n > 0)\n    {\n        int d = n % 10;\n        if (d != 4 && d != 7)\n            return 0;\n        n /= 10;\n    }\n    return 1;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int a, b;\n    cin >> a >> b;\n    bool found = 0; // variable to check if we found a lucky number or notI\n    for (int i = a; i <= b; i++)\n    {\n        if (lucky(i))\n        {\n            found = 1;\n            cout << i << \" \";\n        }\n    }\n    if (!found)\n    {\n        cout << \"-1\\n\";\n    }\n\n    return 0;\n}\n```\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\n```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        StringTokenizer st = new StringTokenizer(br.readLine());\n        int a = Integer.parseInt(st.nextToken());\n        int b = Integer.parseInt(st.nextToken());\n        \n        boolean found = false;\n        StringBuilder sb = new StringBuilder();\n        for (int i = a; i <= b; i++) {\n            if (isLucky(i)) {\n                found = true;\n                sb.append(i).append(\" \");\n            }\n        }\n        if (!found) {\n            out.print(\"-1\");\n        } else {\n            out.print(sb.toString().trim());\n        }\n        \n        out.flush();\n        out.close();\n    }\n    \n    static boolean isLucky(int n) {\n        while (n > 0) {\n            int d = n % 10;\n            if (d != 4 && d != 7)\n                return false;\n            n /= 10;\n        }\n        return true;\n    }\n}\n```\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\n```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    a = int(data[idx])\n    idx += 1\n    b = int(data[idx])\n    idx += 1\n    \n    found = False\n    result = []\n    for i in range(a, b + 1):\n        if is_lucky(i):\n            found = True\n            result.append(str(i))\n    \n    if found:\n        stdout.write(' '.join(result))\n    else:\n        stdout.write('-1')\n\n\ndef is_lucky(n):\n    while n > 0:\n        d = n % 10\n        if d != 4 and d != 7:\n            return False\n        n //= 10\n    return True\n\nif __name__ == \"__main__\":\n    main()\n```\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:16:35.441552+00:00"
+        },
+        "hints": {
+            "hint1": "To check if a number is lucky, think about how to examine its digits.",
+            "hint2": "You can check each digit of the number to see if it is either $4$ or $7$.",
+            "solution_approach": "We need to check every number between $A$ and $B$ inclusive to determine if it's a lucky number.\n\nTo check if a number is lucky:\n\n- Extract each digit of the number by repeatedly dividing by $10$.\n- If all digits are either $4$ or $7$, the number is lucky.\n- If any digit is not $4$ or $7$, the number is not lucky.\n\nThis process takes $O(\\log_{10} N)$ time per number $N$.\n\nOverall, the time complexity is $O((B - A + 1) \\times \\log_{10} B)$.\n\nIf we find any lucky numbers, we print them in order, separated by spaces.\n\nIf no lucky numbers are found, we print $-1$.\n\n### Time Complexity\n- Time Complexity: $O((B - A + 1) \\times \\log_{10} B)$\n\n### Space Complexity\n- Space Complexity: $O(1)$"
+        },
+        "id": 1209,
+        "input_format": "A single line containing two integers $A$ and $B$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "**Sample Input 1:**\n- The lucky numbers between $4$ and $20$ are $4$ and $7$.\n**Sample Input 2:**\n- There are no lucky numbers between $8$ and $15$.",
+        "output_format": "Print all lucky numbers between $A$ and $B$ inclusive, separated by a space, in increasing order.\nIf there are no lucky numbers, print $-1$.",
+        "samples": [
+            {
+                "input": "4 20",
+                "output": "4 7"
+            },
+            {
+                "input": "8 15",
+                "output": "-1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Brute Force",
+            "Implementation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 0.5,
+        "title": "Lucky Numbers",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

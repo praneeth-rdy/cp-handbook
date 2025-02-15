@@ -1,0 +1,58 @@
+{
+    "code": 200,
+    "data": {
+        "body": "An *S-Queen* is a chess piece that combines the power of a knight and a queen.  \nFind the number of ways to place *N S-Queens* on an *N x N* chessboard.\n\n![S-Queen Chess Piece Example](https://lh3.googleusercontent.com/1j2qZhweBjmpmYfhO-V59ry2Lx5c-puKhKQz5pOFp5ri3t5foF5j3-_LkNPMAoOw7roXr2h2NwEXMdvjghGsUpp4sj5ND3s_cihO0xwtaMkEIgYXQvZNT9ygWKhWgcATrlFulcH5)",
+        "complete_approach": "",
+        "constraints": "<p>2 \u2264 <i>N \u2264 </i>14</p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n#define int long long int\nint n;\nint ans = 0;\nvector<int> v;\n\nint checker(int x, int y) {\n  for (int i = 0; i < x; i++) {\n    if (v[i] == y || (v[i] + i) == (x + y) || (v[i] - i) == (y - x)) return 0;\n  }\n  if ((x - 1) >= 0) {\n    if (v[x - 1] == y - 2 || v[x - 1] == y + 2) return 0;\n  }\n  if ((x - 2) >= 0) {\n    if (v[x - 2] == y - 1 || v[x - 2] == y + 1) return 0;\n  }\n  return 1;\n}\n\nvoid back_tracking(int level) {\n  if (level == n) {\n    ans++;\n    return;\n  }\n  for (int i = 0; i < n; i++) {\n    if (checker(level, i)) {\n      v.push_back(i);\n      back_tracking(level + 1);\n      v.pop_back();\n    }\n  }\n}\n\nvoid solve() {\n  cin >> n;\n  back_tracking(0);\n  cout << ans << \"\\n\";\n}\n\nsigned main() {\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n  // int t;cin>>t;while(t--)\n  solve();\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:47:45.949691+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Try to think in the track of N-Queens problems.</p>",
+            "hint2": "<p>You only have to maintain one more condition for the knight.</p>",
+            "solution_approach": "<p>Change the N-Queens solution discussed in the session.</p>"
+        },
+        "id": 143,
+        "input_format": "<p>The input contains only single integer <i>N </i>denoting the side of the chessboard.&nbsp;</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print the number of ways to place <i>N</i> <i>S-Queens </i>on the <i>N x N </i>chessboard.</p>",
+        "samples": [
+            {
+                "input": "3",
+                "output": "0"
+            },
+            {
+                "input": "10",
+                "output": "4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Frequently Asked Questions",
+            "Recursion",
+            "Backtracking"
+        ],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "N-Queens Revisited",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

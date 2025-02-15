@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given a weighted tree of <i>N</i> nodes. <i>D(u,v)</i> is defined as the minimum weight of edge in the simple path from <i>u</i> to <i>v</i>.&nbsp; Find the summation of <i>D(u,v)</i> for all <i>1\u2264u\u2264N, 1\u2264v\u2264N</i>, where <i>u&lt;v</i>.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nstruct UnionFind {\n  int n, set_size, *parent, *rank;\n  UnionFind() {}\n  UnionFind(int a) {\n    n = set_size = a;\n    parent = new int[n + 1];\n    rank = new int[n + 1];\n    for (int i = 1; i <= n; ++i) parent[i] = i, rank[i] = 1;\n  }\n  int find(int x) {\n    if (x != parent[x]) return parent[x] = find(parent[x]);\n    return x;\n  }\n  void merge(int x, int y) {\n    int xroot = find(x), yroot = find(y);\n    if (xroot != yroot) {\n      if (rank[xroot] >= rank[yroot]) {\n        parent[yroot] = xroot;\n        rank[xroot] += rank[yroot];\n      } else {\n        parent[xroot] = yroot;\n        rank[yroot] += rank[xroot];\n      }\n      set_size -= 1;\n    }\n  }\n  void reset() {\n    set_size = n;\n    for (int i = 1; i <= n; i++) parent[i] = i, rank[i] = 1;\n  }\n  int size() { return set_size; }\n  void print() {\n    for (int i = 1; i <= n; ++i) cout << i << \" -> \" << parent[i] << \"\\n\";\n  }\n};\nsigned main() {\n  ios_base::sync_with_stdio(false);\n  cin.tie(0);\n  cout.tie(0);\n  int testcases;\n  cin >> testcases;\n  while (testcases--) {\n    int n;\n    cin >> n;\n    vector<pair<int, pair<int, int>>> edges;\n    UnionFind uf(n);\n    for (int i = 1; i <= n - 1; i++) {\n      int u, v, weight;\n      cin >> u >> v >> weight;\n      edges.push_back(make_pair(weight, make_pair(u, v)));\n    }\n    sort(edges.begin(), edges.end());\n    reverse(edges.begin(), edges.end());\n    long long ans = 0;\n    for (auto edge : edges) {\n      int u = edge.second.first;\n      int v = edge.second.second;\n      int weight = edge.first;\n      int rootU = uf.find(u);\n      int rootV = uf.find(v);\n      assert(rootU != rootV);\n      ans = ans + 1LL * uf.rank[rootU] * uf.rank[rootV] * weight;\n      uf.merge(u, v);\n    }\n    cout << ans << \"\\n\";\n  }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:33:09.051240+00:00"
+        },
+        "hints": {
+            "hint1": "Try to find for each edge 'e' how many pairs of nodes $(u,v)$ exist such that $D(u,v)$ = weight of the edge e.",
+            "hint2": "The main idea behind this solution is to use a modified version of the Union-Find data structure to calculate the summation of $D(u,v)$ efficiently.",
+            "solution_approach": "Iterate over the sorted edges and process them one by one. For each edge (u, v) with weight w, we find the root of the tree that contains node u (rootU) and the root of the tree that contains node v (rootV) using the find operation of the Union-Find data structure.\n\nIf rootU and rootV are different (i.e., u and v belong to different trees), we calculate the contribution of this edge to the final answer. The contribution is equal to the product of the sizes of the trees rooted at rootU and rootV, multiplied by the weight of the edge. We add this contribution to the final answer.\n\nThe size of a tree is determined by the rank value in the Union-Find data structure. The rank represents an upper bound on the height of the tree. By merging smaller trees into larger trees, we can keep the height of the tree small.\nBy processing the edges in descending order of their weights and using the Union-Find data structure, we ensure that we are considering the minimum weight edge in the simple path between two nodes. This allows us to calculate the desired summation efficiently."
+        },
+        "id": 38,
+        "input_format": "<p>The first line of input contains one integer <i>T</i> (1 \u2264 <i>T</i> \u2264 10<sup>5</sup>) \u2014 the number of test cases. Then <i>T</i> test cases follow.<br>The first line of each test case contains an integer <i>N</i> - the number of nodes in the tree (1 \u2264 <i>N</i> \u2264 10<sup>5</sup>).<br>The next <i>N-1</i> line of each test case contains 3 space-separated integers <i>u, v, w<sub> &nbsp;</sub></i>denoting that there is an edge between node u and node v of weight w. (<i>1 \u2264 u,v<sub> </sub>\u2264 N</i>),&nbsp;(<i>1 \u2264 w \u2264 10<sup>9</sup></i> ).</p><p>It is guaranteed that the sum of <i>N </i>over all test cases does not exceed 10<sup>6</sup>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "**For the 1st test case:**\n\n$D(1,2) = D(1,3) = D(1,4) = D(1,5) = 1$  \n\n$D(2,3) = 5$, $D(2,4) = 3$, $D(2,5) = 2$  \n\n$D(3,4) = 3$, $D(3,5) = 2$  \n\n$D(4,5) = 2$  \n\nSummation = $21$  \n\n**For the second test case:**\n\n$D(1,2) = 5$, $D(1,3) = 4$, $D(1,4) = 1$, $D(1,5) = 2$  \n\n$D(2,3) = 4$, $D(2,4) = 1$, $D(2,5) = 2$  \n\n$D(3,4) = 1$, $D(3,5) = 2$  \n\n$D(4,5) = 1$  \n\nSummation = $23$",
+        "output_format": "<p>For each test case print the summation of <i>D(u,v)</i> for all <i>1\u2264u\u2264N, 1\u2264v\u2264N</i>, where <i>u&lt;v </i>in a new line.</p>",
+        "samples": [
+            {
+                "input": "5\n5\n1 2 1\n2 3 5\n3 4 3\n4 5 2\n5\n1 2 5\n1 3 4\n2 4 1\n3 5 2\n5\n1 2 3\n2 3 4\n2 4 6\n3 5 1\n8\n1 2 4\n2 3 6\n2 4 1\n2 5 3\n3 6 1\n3 7 3\n3 8 1\n10\n1 2 10\n1 3 5\n1 4 9\n1 5 7\n2 6 10\n2 7 11\n3 8 9\n3 9 11\n3 10 15",
+                "output": "21\n23\n27\n53\n316"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Trees",
+            "Union Find"
+        ],
+        "template_code": [],
+        "time_limit_sec": 4.0,
+        "title": "Min Edge Weight",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

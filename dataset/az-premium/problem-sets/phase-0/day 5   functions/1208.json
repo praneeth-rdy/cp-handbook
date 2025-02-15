@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a number $N$. Print all **prime** numbers between $1$ and $N$ inclusive.\n\nA **prime** number is a number that is greater than $1$ and has only two factors which are $1$ and **itself**. In other words, a **prime number is divisible only by $1$ and itself**. **Be careful that $1$ is not prime**.\n\nThe first few **prime** numbers are $2, 3, 5, 7, 11, \\dots$",
+        "complete_approach": "",
+        "constraints": "$2 \\leq N \\leq 10^3$",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include<bits/stdc++.h>\nusing namespace std;\n\nbool isPrime(int x){\n    for(int i=2;i<x;i++){\n        if(x%i==0)return 0;\n    }\n    return 1;\n}\n\nint main(){\n    int n;\n    cin>>n;\n    for(int i=2;i<=n;i++){\n        if(isPrime(i)){\n            cout<<i<<\" \";\n        }\n    }\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static boolean isPrime(int x) {\n        for (int i = 2; i < x; i++) {\n            if (x % i == 0) return false;\n        }\n        return true;\n    }\n    \n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int n = Integer.parseInt(br.readLine());\n        for (int i = 2; i <= n; i++) {\n            if (isPrime(i)) {\n                out.print(i + \" \");\n            }\n        }\n        \n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef is_prime(x):\n    for i in range(2, x):\n        if x % i == 0:\n            return False\n    return True\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    n = int(data[idx])\n    idx += 1\n    res = []\n    for i in range(2, n + 1):\n        if is_prime(i):\n            res.append(str(i))\n    stdout.write(' '.join(res))\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:34:47.188859+00:00"
+        },
+        "hints": {
+            "hint1": "Check each number in the range from $2$ to $N$ if it is prime or not.",
+            "hint2": "To check if a number is prime, check if it has any divisors other than $1$ and itself.",
+            "solution_approach": "We need to iterate from $2$ to $N$ and check each number if it is prime.\n\nTo check if a number $x$ is prime, we can check for any divisors from $2$ to $x -1$. If any number divides $x$, then it is not prime.\n\nHere's the logic to check:\n\n```cpp\nbool isPrime(int x){\n    for(int i=2;i<x;i++){\n        if(x%i==0)return false;\n    }\n    return true;\n}\n\nThen, iterate over the range and print the prime numbers.\n\n### Time Complexity\n\nFor each number up to $N$, we are performing up to $O(N)$ operations (since we are checking up to $x-1$). Therefore, overall time complexity is $O(N^2)$.\n\nGiven that $N \\leq 10^3$, this is acceptable.\n\n### Space Complexity\n\nWe are not using any extra space apart from loop variables. So space complexity is $O(1)$."
+        },
+        "id": 1208,
+        "input_format": "Only one line containing a number $N$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "The prime numbers between $1$ and $10$ are $2, 3, 5, 7$.",
+        "output_format": "Print all prime numbers between $1$ and $N$ (inclusive) separated by a space.",
+        "samples": [
+            {
+                "input": "10",
+                "output": "2 3 5 7"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Number Theory",
+            "Brute Force"
+        ],
+        "template_code": [],
+        "time_limit_sec": 0.5,
+        "title": "Primes from 1 to n",
+        "video_editorial_id": 10691
+    },
+    "details": "Problem Details"
+}

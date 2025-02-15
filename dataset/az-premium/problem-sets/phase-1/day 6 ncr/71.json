@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have given a grid of <i>N </i>x<i> M</i>. You are initially at position <i>A(0, 0)</i> and you want to reach <i>B(N, M)</i>. From the given cell (i, j), we are allowed to move to cells (i + 1, j) and (i, j + 1) only.<br>Find the number of different ways to reach <i>B</i> from <i>A</i>?<br>&nbsp;</p><figure class=\"image\"><img src=\"https://lh6.googleusercontent.com/CCALDGjC9FQv5ofh10hy6y3Pmc4cfRmiy4wFEVfSxRDmd0v8MdvdeoGvlsAgwTDejItDX_ajO8ZfDBRIoz5ovHadaLfA98FMFfflM-pRGK6YEV_siMKAyUPzwvOL5W6lL9xOBl71\"></figure>",
+        "complete_approach": "",
+        "constraints": "1 \u2264 T \u2264 100000\n\n\nN, M \u2264 10<sup>5</sup>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 200010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\ninline void add(int &a, int b) {\n  a += b;\n  if (a >= mod) a -= mod;\n}\n\ninline void sub(int &a, int b) {\n  a -= b;\n  if (a < 0) a += mod;\n}\n\ninline int mul(int a, int b) {\n  return (int) ((long long) a * b % mod);\n}\n\ninline int power(int a, long long b) {\n  int res = 1;\n  while (b > 0) {\n    if (b & 1) {\n      res = mul(res, a);\n    }\n    a = mul(a, a);\n    b >>= 1;\n  }\n  return res;\n}\n\ninline int inv(int a) {\n  a %= mod;\n  if (a < 0) a += mod;\n  int b = mod, u = 0, v = 1;\n  while (a) {\n    int t = b / a;\n    b -= t * a; swap(a, b);\n    u -= t * v; swap(u, v);\n  }\n  assert(b == 1);\n  if (u < 0) u += mod;\n  return u;\n}\n\nint fact[N];\n\nvoid pre() {\n    fact[0] = 1;\n    for(int i = 1; i < N; i++)\n        fact[i] = mul(fact[i - 1], i);\n    return;\n}\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    pre();\n\n    int T; cin >> T;\n    while(T--) {\n        int n, m; cin >> n >> m;\n        int ans = fact[n + m];\n        ans = mul(ans, inv(fact[n]));\n        ans = mul(ans, inv(fact[m]));\n        cout << ans << \"\\n\";\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:38:28.978921+00:00"
+        },
+        "hints": {
+            "hint1": "Suppose moves are U (up) and R (right). Any valid sequence of moves which reaches B has exactly N Us and M Rs.",
+            "hint2": "Initially we are at (0,0), we need to reach (N,M). We are only given the choices of moving right and up. So its obvious that we need to take N up movements and M right turns to reach the final destination of B. There will be a total of N+M moves.  \nIt reduces to a problem of this sort \"N red balls and M black balls, arrange all the balls in a straight line. How many distinct ways to arrange them\".  \nHere you can think of red balls as the \"movement Up\" and black balls as the \"movement Down\"",
+            "solution_approach": "Any valid sequence of moves contains exactly total $N + M$ moves. We can calculate the total number of ways as $N+M\\choose N$ = $N+M\\choose M$.  \n${(N+M)\\choose N} \\% 1000000007$ or ${(N+M)\\choose M} \\% 1000000007$.  \n\nTime complexity : $O(N+M)!$ which we need to precalculate at the beginning. For each test case we need to find the inv() values, which in the worst case would take $O(\\log N)$ time.\nSo we can assume overall time complexity to be around $O(N+M)!$"
+        },
+        "id": 71,
+        "input_format": "The first line contains T (1 \u2264 T \u2264 100000), the number of test cases.\nEach of the next T lines contains two positive integers N, M (1 \u2264 N, M \u2264 10<sup>5</sup>).",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case, print the number of ways to reach <i>B</i> from <i>A</i>. Since answer can be large, print it with modulo 1000000007.</p>",
+        "samples": [
+            {
+                "input": "2\n2 1\n3 2",
+                "output": "3\n10"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Number of Ways to Reach B",
+        "video_editorial_id": 8139
+    },
+    "details": "Problem Details"
+}

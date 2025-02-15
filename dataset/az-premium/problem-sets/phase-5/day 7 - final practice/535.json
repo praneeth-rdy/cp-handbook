@@ -1,0 +1,66 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given an array of <i>K </i>singly linked lists. <i>head[i]</i> is the head of <i>i</i>th linked list. Each linked list is sorted in ascending order.</p><p>Merge all the linked-lists into one sorted linked-list and return it.</p><p>Complete the function</p><pre><code class=\"language-plaintext\">ListNode* mergeKLists(vector&lt;ListNode*&gt; head)</code></pre><p>Do it in O(1) extra space.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>K</i> \u2264 10<sup>2</sup><br>0 \u2264 <i>N<sub>i</sub></i> \u2264 10<sup>3</sup><br>0 \u2264 Values of the node \u2264 10<sup>9</sup><br>It's guaranteed that each linked list is sorted.</p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode() : val(0), next(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next) {}\n};\n\nListNode *merge2List(ListNode *head1, ListNode *head2)\n{\n    if (!head1)\n        return head2;\n    if (!head2)\n        return head1;\n    if (head1->val < head2->val)\n    {\n        head1->next = merge2List(head1->next, head2);\n        return head1;\n    }\n    else\n    {\n        head2->next = merge2List(head1, head2->next);\n        return head2;\n    }\n}\n\nListNode *mergeKLists(vector<ListNode *> heads, int l, int r)\n{\n    if (l > r)\n        return NULL;\n    if (l == r)\n        return heads[l];\n    int mid = (l + r) / 2;\n    ListNode *head1 = mergeKLists(heads, l, mid);\n    ListNode *head2 = mergeKLists(heads, mid + 1, r);\n    return merge2List(head1, head2);\n}\n\nListNode *mergeKLists(vector<ListNode *> heads)\n{\n    int n = heads.size();\n    return mergeKLists(heads, 0, n - 1);\n}\n\nListNode* GetList(vector<int> &num) {\n    ListNode* head = nullptr;\n\n    if(num.empty()) {\n        return head;\n    }\n\n    ListNode* cur = head;\n    \n    for(int i  = 0; i < (int)num.size(); i++) {\n        ListNode* temp = new ListNode(num[i]);\n        if(!cur) {\n            cur = temp;\n            head = cur;\n        }\n        else {\n            cur->next = temp;\n            cur = temp;\n        }\n    }\n    \n    return head;\n}\n\nvector<ListNode*> GetList(int K, vector<vector<int>> &num) {\n    vector<ListNode*> head(K);\n    for(int i = 0; i < K; i++) {\n        head[i] = GetList(num[i]);\n    }\n    return head;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int K;\n    cin >> K;\n\n    vector<vector<int>> num(K);\n\n    for(int i = 0; i < K; i++) {\n        int n;\n        cin >> n;\n        for(int j = 0; j < n; j++) {\n            int x;\n            cin >> x;\n            num[i].push_back(x);\n        }\n    }\n\n    vector<ListNode*> head = GetList(K, num);\n\n    ListNode* mergeHead = mergeKLists(head);\n\n    while(mergeHead) {\n        cout << mergeHead->val << \" \";\n        mergeHead = mergeHead->next;\n    }\n    cout << \"\\n\";\n    \n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:38:26.952231+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "<h2><strong>Solution 1 (Extra Space)&nbsp;</strong></h2><p>Push all the node values in a vector and sort the vector. Make another linked list to store the sorted vector values as nodes and return them.<br><i>Time Complexity:</i> All the nodes are stored in a vector and sorted, the time complexity is O(n log(n)) where n is the total number of nodes in the linked list.<br><i>Space Complexity: </i>Since a vector of size n and a new linked list of n nodes is made, the space complexity is O(n) where n is the total number of nodes in the linked list.</p><h2><strong>Solution 2 (Extra Space)&nbsp;</strong></h2><p>The solution is similar to Solution 1, here  min-heap will be used to store the pair of values and the linked list pointer. Store the first number from each vector in the min-heap. Make a new linked list for storing the values from the priority queue</p><p><i>Time Complexity: </i>At most k nodes are present in the priority queue at a time, the time complexity is O(n log(k)) where n is the total number of nodes in the linked list and k is the number of linked lists.<br><i>Space Complexity: </i>Since a priority queue of at most k size and a new linked list of n nodes is made, the space complexity is O(n) where n is the total number of nodes in the linked list.</p><h2><strong>Solution 3&nbsp;</strong></h2><p>Merge the k linked lists by merging two linked lists at a time. This has to be done (k-1) times since there would be (k-1) pairs of linked lists.</p><p><i>Time Complexity: </i>The time complexity is O(k*n) where n is the number of nodes in the linked list and k is the number of lists.<br><i>Space Complexity: </i>Since constant extra memory is used, the space complexity is O(1).</p><h2><strong>Solution 4 (Optimal)&nbsp;</strong></h2><p>The approach here is a modification of Solution 3. Use divide and conquer. Recursively split the k lists into halves until the count becomes 1. Merge two lists to get the sorted list of twice the size.</p><p><i>Time Complexity: </i>The time complexity is O(n log(k)) where n is the number of nodes in the linked list and k is the number of lists.<br><i>Space Complexity: </i>Since constant extra memory is used, the space complexity is O(1).</p>"
+        },
+        "id": 535,
+        "input_format": "<p>The first line of input contains <i>K </i>- the number of linked lists.<br>2<i>i</i>th line contains <i>N<sub>i </sub></i>- the number of nodes in <i>i</i>th linked list.<br>(2<i>i</i> + 1)th line contains <i>N<sub>i</sub></i> space-separated integers denoting the nodes in the <i>i</i>th linked list in ascending order.</p><p>The following function parses the input</p><pre><code class=\"language-plaintext\">vector&lt;ListNode*&gt; GetList(int K, vector&lt;vector&lt;int&gt;&gt; &amp;num)</code></pre>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "",
+        "samples": [
+            {
+                "input": "3\n3\n3 5 6\n3\n1 2 9\n3\n4 7 8",
+                "output": "1 2 3 4 5 6 7 8 9"
+            },
+            {
+                "input": "3\n2\n1 5\n0\n\n1\n4",
+                "output": "1 4 5"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Linked List",
+            "Divide And Conquer",
+            "Heap",
+            "company-Amazon"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode() : val(0), next(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next) {}\n};\n</fix>\n\nListNode* mergeKLists(vector<ListNode*> head) {\n    //Complete the function\n}\n\n<fix>\nListNode* GetList(vector<int> &num) {\n    ListNode* head = nullptr;\n\n    if(num.empty()) {\n        return head;\n    }\n\n    ListNode* cur = head;\n    \n    for(int i  = 0; i < (int)num.size(); i++) {\n        ListNode* temp = new ListNode(num[i]);\n        if(!cur) {\n            cur = temp;\n            head = cur;\n        }\n        else {\n            cur->next = temp;\n            cur = temp;\n        }\n    }\n    \n    return head;\n}\n\nvector<ListNode*> GetList(int K, vector<vector<int>> &num) {\n    vector<ListNode*> head(K);\n    for(int i = 0; i < K; i++) {\n        head[i] = GetList(num[i]);\n    }\n    return head;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int K;\n    cin >> K;\n\n    vector<vector<int>> num(K);\n\n    for(int i = 0; i < K; i++) {\n        int n;\n        cin >> n;\n        for(int j = 0; j < n; j++) {\n            int x;\n            cin >> x;\n            num[i].push_back(x);\n        }\n    }\n\n    vector<ListNode*> head = GetList(K, num);\n\n    ListNode* mergeHead = mergeKLists(head);\n\n    while(mergeHead) {\n        cout << mergeHead->val << \" \";\n        mergeHead = mergeHead->next;\n    }\n    cout << \"\\n\";\n    \n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 2.0,
+        "title": "Merge K Sorted Lists",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,61 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Your task is to place eight queens on a chessboard so that no two queens are attacking each other. As an additional challenge, each square is either free ($.$) or reserved ($*$), and you can only place queens on the free squares. However, the reserved squares do not prevent queens from attacking each other.\n\nHow many possible ways are there to place the queens?",
+        "complete_approach": "",
+        "constraints": "- Each line contains exactly $8$ characters.\n- There are exactly $8$ lines.\n- Each character is either $.$ (free square) or $*$ (reserved square).",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\n#define lli long long int\n#define li long int\n#define ld long double\nusing namespace std;\nconst lli mod = 1e9 + 7;\nint ans = 0;\nbool takencols[8], takendiag1[16], takendiag2[16];\n\nvoid place(string board[8], int r, int &ans)\n{\n    if (r == 8)\n    {\n        ans++;\n        return;\n    }\n    for (int c = 0; c < 8; c++)\n    {\n        if (board[r][c] == '.')\n        {\n            if (!takencols[c] && !takendiag1[r - c + 8 - 1] && !takendiag2[r + c])\n            {\n                takencols[c] = takendiag1[r - c + 8 - 1] = takendiag2[r + c] = true;\n                place(board, r + 1, ans);\n                takencols[c] = takendiag1[r - c + 8 - 1] = takendiag2[r + c] = false;\n            }\n        }\n    }\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    string s;\n    string board[8];\n    int ans = 0;\n    for (int i = 0; i < 8; i++)\n    {\n        cin >> board[i];\n    }\n    place(board, 0, ans);\n    cout << ans;\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    private static int ans = 0;\n    private static boolean[] takencols = new boolean[8];\n    private static boolean[] takendiag1 = new boolean[16];\n    private static boolean[] takendiag2 = new boolean[16];\n\n    public static void place(char[][] board, int r) {\n        if (r == 8) {\n            ans++;\n            return;\n        }\n        for (int c = 0; c < 8; c++) {\n            if (board[r][c] == '.') {\n                if (!takencols[c] && !takendiag1[r - c + 7] && !takendiag2[r + c]) {\n                    takencols[c] = takendiag1[r - c + 7] = takendiag2[r + c] = true;\n                    place(board, r + 1);\n                    takencols[c] = takendiag1[r - c + 7] = takendiag2[r + c] = false;\n                }\n            }\n        }\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        char[][] board = new char[8][8];\n        for (int i = 0; i < 8; i++) {\n            board[i] = br.readLine().toCharArray();\n        }\n\n        place(board, 0);\n        out.println(ans);\n\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    board = []\n    for _ in range(8):\n        s = data[idx]\n        board.append(list(s))\n        idx += 1\n    ans = 0\n    takencols = [False] * 8\n    takendiag1 = [False] * 16\n    takendiag2 = [False] * 16\n\n    def place(r):\n        nonlocal ans\n        if r == 8:\n            ans += 1\n            return\n        for c in range(8):\n            if board[r][c] == '.':\n                if not takencols[c] and not takendiag1[r - c + 7] and not takendiag2[r + c]:\n                    takencols[c] = takendiag1[r - c + 7] = takendiag2[r + c] = True\n                    place(r + 1)\n                    takencols[c] = takendiag1[r - c + 7] = takendiag2[r + c] = False\n    place(0)\n    stdout.write(str(ans) + '\\n')\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:46:26.886421+00:00"
+        },
+        "hints": {
+            "hint1": "This is a classic problem of placing eight queens on a chessboard so that no two queens are attacking each other. In this variation, some squares are reserved, and queens can only be placed on the free squares.",
+            "hint2": "We can use backtracking to solve this problem. Try placing a queen in each row and backtrack if it conflicts with any of the previously placed queens. Keep track of the columns and diagonals to efficiently check for conflicts.",
+            "solution_approach": "To solve this problem, we can use recursion with backtracking. The idea is to place a queen on each row of the chessboard and ensure that no two queens attack each other.\n\n### Algorithm:\n1. **Initialization**: Set up arrays to keep track of occupied columns, and the two types of diagonals (from top-left to bottom-right and from top-right to bottom-left).\n2. **Recursion**: Start from the first row and try placing a queen in each column of that row.\n   - For each valid placement (i.e., the square is free and not under attack), mark the column and diagonals as occupied.\n   - Move to the next row and repeat the process.\n3. **Backtracking**: If a placement does not lead to a solution, backtrack by unmarking the column and diagonals and try the next column.\n4. **Counting Solutions**: When you reach row $8$, it means all queens are placed successfully. Increment the count of solutions.\n\n### Complexity Analysis:\n- **Time Complexity per test case**: $O(N!)$, where $N = 8$, but with pruning due to reserved squares, it is much less.\n- **Space Complexity per test case**: $O(N)$ due to recursive call stack and tracking arrays."
+        },
+        "id": 272,
+        "input_format": "The input has eight lines, and each of them has eight characters. Each square is either free ($.$) or reserved ($*$).",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "In this configuration, there are $65$ ways to place the $8$ queens on the chessboard without attacking each other, considering the reserved squares.",
+        "output_format": "Print one integer: the number of ways you can place the queens.",
+        "samples": [
+            {
+                "input": "........\n........\n..*.....\n........\n........\n.....**.\n...*....\n........",
+                "output": "65"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Recursion",
+            "Backtracking"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Queens On Chessboard",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

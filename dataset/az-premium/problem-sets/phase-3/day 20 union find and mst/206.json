@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "There are *n* cities and *m* roads between them. Unfortunately, the condition of the roads is so poor that they cannot be used. Your task is to repair some of the roads so that there will be a decent route between any two cities.\n\nFor each road, you know its reparation cost, and you should find a solution where the total cost is as small as possible.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n </i>\u2264 10<sup>5</sup><br>1 \u2264 <i>m </i>\u2264 2 x 10<sup>5</sup><br>1 \u2264 <i>a</i>, <i>b </i>\u2264 <i>n</i><br>1 \u2264 <i>c </i>\u2264 10<sup>9</sup></p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\n\ntypedef long long ll;\n\nint mod = 1e9 + 7;\n\nconst int N = 100010;\n\nvector<int> graph[N];\n\nclass wunionfind {\n public:\n  int *id, *sz;\n  wunionfind(int n = N) {\n    id = new int[n + 1];\n    sz = new int[n + 1];\n    for (int i = 0; i <= n; i++) {\n      id[i] = i;\n      sz[i] = 1;\n    }\n  }\n  int root(int idx) {\n    int x = idx;\n    while (x != id[x]) {\n      id[x] = id[id[x]];\n      x = id[x];\n    }\n    return x;\n  }\n  bool uni(int a, int b) {\n    int x = root(a), y = root(b);\n    if (sz[x] < sz[y]) {\n      swap(x, y);\n    }\n    if (x != y) {\n      id[y] = x;\n      sz[x] += sz[y];\n      sz[y] = 0;\n      return false;\n    }\n    return true;\n  }\n  bool check(int a, int b) { return (root(a) == root(b)); }\n};\n\nsigned main() {\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n\n  int n, m;\n  cin >> n >> m;\n\n  wunionfind W(n + 1);\n\n  pair<int, pair<int, int>> E[m];\n\n  for (int i = 0; i < m; i++) {\n    int a, b, c;\n    cin >> a >> b >> c;\n    E[i].first = c;\n    E[i].second.first = b;\n    E[i].second.second = a;\n  }\n\n  sort(E, E + m);\n\n  ll cost = 0;\n  int cnt = 0;\n\n  for (int i = 0; i < m; i++) {\n    int a = E[i].second.first;\n    int b = E[i].second.second;\n    if (!W.uni(a, b)) {\n      cost += E[i].first;\n      cnt++;\n    }\n  }\n\n  if (cnt == n - 1)\n    cout << cost << \"\\n\";\n  else\n    cout << \"IMPOSSIBLE\\n\";\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:14:02.791035+00:00"
+        },
+        "hints": {
+            "hint1": "To find a solution where the total cost of road repairs is minimized, we can use a minimum spanning tree algorithm, such as Kruskal's algorithm or Prim's algorithm. These algorithms are commonly used to find the minimum cost spanning tree in a connected graph.",
+            "hint2": "",
+            "solution_approach": "1. First, create a list of all the roads with their associated repair costs. Each road can be represented as a tuple or pair containing the cost and the two cities it connects.\n\n2. Sort the list of roads in ascending order based on their repair costs. This allows us to consider the roads with the lowest costs first.\n\n3. We can use \"union-find\" to keep track of the connectivity between cities. Initially, each city is considered as a separate component.\n\n4. Iterate through the sorted list of roads. For each road, check if the two cities it connects are already connected in the union-find data structure. If they are not connected, repair the road by adding its cost to the total cost and merge the two cities into the same component in the union-find.\n\n5. Repeat this process until all cities are connected or we have processed all the roads.\n\n6. The final total cost will be the sum of the repair costs of the roads that were repaired.\n\nBy using this approach, we will be able to find a solution where the total cost of road repairs is minimized, ensuring that there is a decent route between any two cities."
+        },
+        "id": 206,
+        "input_format": "The first input line has two integers *n* and *m*: the number of cities and roads. The cities are numbered 1, 2, \u2026, *n*.\n\nThen, there are *m* lines describing the roads. Each line has three integers *a*, *b*, and *c*: there is a road between cities *a* and *b*, and its reparation cost is *c*. All roads are two-way roads.\n\nEvery road is between two different cities, and there is at most one road between two cities.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print one integer: the minimum total reparation cost. However, if there are no solutions, print \"IMPOSSIBLE\".",
+        "samples": [
+            {
+                "input": "5 6\n1 2 3\n2 3 5\n2 4 2\n3 4 8\n5 1 7\n5 4 4",
+                "output": "14"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Union Find"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Road Reparation",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

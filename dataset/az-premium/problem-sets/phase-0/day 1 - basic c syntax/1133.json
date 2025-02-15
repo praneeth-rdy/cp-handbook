@@ -1,0 +1,71 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a name $S$. Print \"Hello, (name)\" without parentheses.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq |S| \\leq 100$",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    string s;\n    cin >> s;\n    cout << \"Hello, \" << s << \"\\n\";\n\n    return 0;\n}\n```\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\n```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        String s = br.readLine();\n        out.println(\"Hello, \" + s);\n        \n        out.flush();\n        out.close();\n    }\n}\n```\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\n```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    s = data[idx]\n    idx += 1\n    stdout.write(\"Hello, \" + s + \"\\n\")\n\nif __name__ == \"__main__\":\n    main()\n```\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:23:31.145330+00:00"
+        },
+        "hints": {
+            "hint1": "Consider how to read a string from the input.",
+            "hint2": "Read the name from the input and print \"Hello, \" followed by the name.",
+            "solution_approach": "To solve this problem, read the input string $S$ using the appropriate input method. Then, print \"Hello, \" concatenated with $S$.\n\nTime Complexity per test case: $O(1)$"
+        },
+        "id": 1133,
+        "input_format": "Only one line containing a string $S$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In each sample input, a name is provided. The program outputs \"Hello, \" followed by the provided name.",
+        "output_format": "Print \"Hello, \" without quotes, then print name.",
+        "samples": [
+            {
+                "input": "Jane",
+                "output": "Hello, Jane"
+            },
+            {
+                "input": "Bruce",
+                "output": "Hello, Bruce"
+            },
+            {
+                "input": "Peter",
+                "output": "Hello, Peter"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Strings"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Say Hello With C++",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

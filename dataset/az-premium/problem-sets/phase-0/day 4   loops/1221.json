@@ -1,0 +1,61 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given $N$ numbers. Count how many of these values are **even**, **odd**, **positive**, and **negative**.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq N \\leq 10^3$\n$-10^5 \\leq X_{i} \\leq 10^5$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "#include <bits/stdc++.h>\nusing namespace std;\n// O(n) time\n// O(1) space\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n    int n;\n    cin >> n;\n    int c1 = 0, c2 = 0, c3 = 0, c4 = 0;\n    // odd, even, pos, neg\n    for (int i = 0; i < n; i++)\n    {\n        int x;\n        cin >> x;\n        if (x % 2)\n            c1++;\n        else\n            c2++;\n        if (x > 0)\n            c3++;\n        else if (x < 0)\n            c4++;\n    }\n    cout << \"Even: \" << c2 << \"\\n\";\n    cout << \"Odd: \" << c1 << \"\\n\";\n    cout << \"Positive: \" << c3 << \"\\n\";\n    cout << \"Negative: \" << c4 << \"\\n\";\n    return 0;\n}",
+                "language": "C++14"
+            },
+            {
+                "code": "import sys\n\ndef main():\n    data = sys.stdin.read().split()\n    idx = 0\n    n = int(data[idx])\n    idx += 1\n\n    count_odd = 0\n    count_even = 0\n    count_positive = 0\n    count_negative = 0\n    # odd, even, pos, neg\n\n    for _ in range(n):\n        x = int(data[idx])\n        idx += 1\n        if x % 2 != 0:\n            count_odd += 1\n        else:\n            count_even += 1\n        if x > 0:\n            count_positive += 1\n        elif x < 0:\n            count_negative += 1\n\n    print(f\"Even: {count_even}\")\n    print(f\"Odd: {count_odd}\")\n    print(f\"Positive: {count_positive}\")\n    print(f\"Negative: {count_negative}\")\n\nif __name__ == \"__main__\":\n    main()",
+                "language": "Python3"
+            },
+            {
+                "code": "import java.io.*;\nimport java.util.*;\n\n// O(n) time\n// O(1) space\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        int n = Integer.parseInt(br.readLine());\n        int c1 = 0, c2 = 0, c3 = 0, c4 = 0;\n        // odd, even, pos, neg\n        StringTokenizer st = new StringTokenizer(br.readLine());\n        for (int i = 0; i < n; i++) {\n            int x = Integer.parseInt(st.nextToken());\n            if (x % 2 != 0)\n                c1++;\n            else\n                c2++;\n            if (x > 0)\n                c3++;\n            else if (x < 0)\n                c4++;\n        }\n        out.println(\"Even: \" + c2);\n        out.println(\"Odd: \" + c1);\n        out.println(\"Positive: \" + c3);\n        out.println(\"Negative: \" + c4);\n        out.flush();\n        out.close();\n    }\n}",
+                "language": "Java"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:36:56.015245+00:00"
+        },
+        "hints": {
+            "hint1": "A number can either be **even** or **odd**. Similarly it can either be **positive**, **negative** or **zero**.\n",
+            "hint2": "Iterate through the list of numbers and use counters to keep track of each category.\n",
+            "solution_approach": "We initialize four counters to zero: one each for counting even numbers, odd numbers, positive numbers, and negative numbers.\n\nWe then iterate through the input numbers:\n\n- If a number is divisible by 2 (i.e., $x \\% 2 == 0$), we increment the even counter; otherwise, we increment the odd counter.\n- If a number is greater than zero, we increment the positive counter.\n- If a number is less than zero, we increment the negative counter.\n\nZero is considered as an even number and is neither positive nor negative.\n\n**Time Complexity:** $O(N)$\n\n**Space Complexity:** $O(1)$\n"
+        },
+        "id": 1221,
+        "input_format": "First line contains one number $N$, number of values.\nSecond line contains $N$ numbers where $i^{th}$ number from start is called $X_i$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "Even Numbers are: **0, -4, 12**\nOdd Numbers are: **-5, -3**\nPositive Numbers are: **12**\nNegative Numbers are: **-5, -3, -4**",
+        "output_format": "Print four lines with the following format:\nFirst Line: \"Even: $X$\", where $X$ is the number of **even** numbers in the given input.\nSecond Line: \"Odd: $X$\", where $X$ is the number of **odd** numbers in the given input.\nThird Line: \"Positive: $X$\", where $X$ is the number of **positive** numbers in the given input.\nFourth Line: \"Negative: $X$\", where $X$ is the number of **negative** numbers in the given input.",
+        "samples": [
+            {
+                "input": "5\n-5 0 -3 -4 12",
+                "output": "Even: 3\nOdd: 2\nPositive: 1\nNegative: 3"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Arrays"
+        ],
+        "template_code": [],
+        "time_limit_sec": 0.5,
+        "title": "Even, Odd, Positive and Negative",
+        "video_editorial_id": 10690
+    },
+    "details": "Problem Details"
+}

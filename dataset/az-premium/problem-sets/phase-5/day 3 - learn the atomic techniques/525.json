@@ -1,0 +1,65 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>A number is represented in the form of a linked list, by storing its digit in the reverse order. Each node of the linked list stores one digit. The head of the linked list is pointed towards the least significant digit of the number.</p><p>Given two <strong>non-empty </strong>linked list representing two numbers, your task is to add them and return the sum as a linked list.</p><p>Complete the function</p><pre><code class=\"language-cpp\">ListNode* addTwoNumbers(ListNode* n1, ListNode* n2)</code></pre><p>n1 and n2 are head of the two numbers' linked lists. And the function returns the head of the linked list of the sum.</p>",
+        "complete_approach": "",
+        "constraints": "<p>Size of the linked list \u2264 10<sup>5</sup><br>Each node in the linked list stores values between 0 to 9.<br>It is guaranteed that the list represents a number that does not have leading zeros.</p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode() : val(0), next(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next) {}\n};\n\nListNode* addTwoNumbers(ListNode* n1, ListNode* n2) {\n    ListNode* head = NULL;\n    ListNode* newHead = NULL;\n\n    int carry = 0;\n    \n    while(n1 && n2) {\n        int temp = (n1->val + n2->val + carry);\n        ListNode* cur = new ListNode(temp % 10);\n        carry = temp / 10;\n        if(!head) {\n            head = cur;\n            newHead = cur;\n        }\n        else {\n            head->next = cur;\n            head = cur;\n        }\n        n1 = n1->next;\n        n2 = n2->next;\n    }\n\n    if(n2) swap(n1, n2);\n    \n    while(n1) {\n        int temp = (n1->val + carry);\n        ListNode* cur = new ListNode(temp % 10);\n        carry = temp / 10;\n        if(!head) {\n            head = cur;\n            newHead = cur;\n        }\n        else {\n            head->next = cur;\n            head = cur;\n        }\n        n1 = n1->next;\n    }\n    \n    if(carry) {\n        ListNode* cur = new ListNode(carry);\n        head->next = cur;\n    }\n\n    return newHead;\n}\n\nListNode* GetList(string &num) {\n    ListNode* n1 = nullptr;\n    ListNode* head = nullptr;\n    for(int i = (int)num.length() - 1; i >= 0; i--) {\n        ListNode* temp = new ListNode(num[i] - '0');\n        if(n1) {\n            n1->next = temp;\n            n1 = temp;\n        }\n        else {\n            n1 = temp;\n            head = n1;\n        }\n    }\n    return head;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    string num1, num2;\n    cin >> num1;\n    cin >> num2;\n\n    ListNode* n1 = GetList(num1);\n    ListNode* n2 = GetList(num2);\n\n    ListNode* sum = addTwoNumbers(n1, n2);\n\n    string ans = \"\";\n    while(sum) {\n        ans += ('0' + sum->val);\n        sum = sum->next;\n    }\n\n    reverse(ans.begin(), ans.end());\n\n    cout << ans << \"\\n\";\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:41:57.268786+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 525,
+        "input_format": "",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "",
+        "samples": [
+            {
+                "input": "200\n13421",
+                "output": "13621"
+            },
+            {
+                "input": "12\n0",
+                "output": "12"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Math",
+            "Linked List"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode() : val(0), next(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next) {}\n};\n</fix>\n\nListNode* addTwoNumbers(ListNode* n1, ListNode* n2) {\n    //Complete the function\n}\n\n<fix>\nListNode* GetList(string &num) {\n    ListNode* n1 = nullptr;\n    ListNode* head = nullptr;\n    for(int i = (int)num.length() - 1; i >= 0; i--) {\n        ListNode* temp = new ListNode(num[i] - '0');\n        if(n1) {\n            n1->next = temp;\n            n1 = temp;\n        }\n        else {\n            n1 = temp;\n            head = n1;\n        }\n    }\n    return head;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    string num1, num2;\n    cin >> num1;\n    cin >> num2;\n\n    ListNode* n1 = GetList(num1);\n    ListNode* n2 = GetList(num2);\n\n    ListNode* sum = addTwoNumbers(n1, n2);\n\n    string ans = \"\";\n    while(sum) {\n        ans += ('0' + sum->val);\n        sum = sum->next;\n    }\n\n    reverse(ans.begin(), ans.end());\n\n    cout << ans << \"\\n\";\n\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Add Two Numbers",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

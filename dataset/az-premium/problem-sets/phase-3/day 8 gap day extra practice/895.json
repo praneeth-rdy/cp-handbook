@@ -1,0 +1,56 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given an undirected graph, your task is to determine its girth, i.e., the length of its shortest cycle.",
+        "complete_approach": "",
+        "constraints": "$ 1 \u2264 n \u2264 2500$\n$ 1 \u2264 m \u2264 5000$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\r\nusing namespace std;\r\n\r\n#define ll int64_t\r\n#define endl '\\n'\r\nvector<int> d;\r\nint g;\r\nvoid bfs(vector<int> adj[], int s) {\r\n\tqueue<int> q;\r\n\tq.push(s);\r\n\r\n\td[s] = 0;\r\n\r\n\twhile (!q.empty()) {\r\n\t\tint v = q.front();\r\n\t\tq.pop();\r\n\r\n\t\tfor (auto x : adj[v]) {\r\n\t\t\tif (d[x] == INT_MAX) {\r\n\t\t\t\tq.push(x);\r\n\t\t\t\td[x] = d[v] + 1;\r\n\t\t\t}\r\n\t\t\telse if (d[v] <= d[x]) {\r\n\t\t\t\tg = min(g, d[v] + d[x] + 1);\r\n\t\t\t\tif (d[v] == d[x]) {   // optimisation.\r\n\t\t\t\t\treturn;\r\n\t\t\t\t}\r\n\t\t\t}\r\n\r\n\t\t}\r\n\t}\r\n}\r\n\r\nvoid solve() {\r\n\tint n, m, u, v;\r\n\tcin >> n >> m;\r\n\tvector<int> adj[n + 1];\r\n\tfor (int i = 0; i < m; i++) {\r\n\t\tcin >> u >> v;\r\n\t\tadj[u].push_back(v);\r\n\t\tadj[v].push_back(u);\r\n\t}\r\n\tg = INT_MAX;\r\n\tfor (int i = 1; i <= n; i++) {\r\n\t\td.assign(n + 1, INT_MAX);\r\n\t\tbfs(adj, i);\r\n\t}\r\n\tcout << ((g == INT_MAX) ? -1 : g);\r\n}\r\nint main() {\r\n\tios_base :: sync_with_stdio(0);\r\n\tcin.tie(nullptr); cout.tie(nullptr);\r\n\r\n#ifdef Mastermind_\r\n\tfreopen(\"input.txt\", \"r\", stdin); \\\r\n\tfreopen(\"output.txt\", \"w\", stdout);\r\n#endif\r\n\tint t = 1;\r\n\t// int i = 1;\r\n\t// cin >> t;\r\n\twhile (t--) {\r\n\t\t// cout << \"Case #\" << i << \": \";\r\n\t\tsolve();\r\n\t\t// i++;\r\n\t}\r\n\treturn 0;\r\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:23:22.266106+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Let's consider a simpler problem: given a graph, find the shortest cycle that\npasses through node 1.\n\nWhat does a cycle through node 1 look like? In any cycle through node 1, there\nexists two nodes $u$ and $v$ on that cycle such that there is a path from 1 to\n$u$ and 1 to $v$, and there is an edge between $u$ and $v$. The length of this\ncycle is $dist(1, u) + dist(1, v) + 1$.\n\nOne might now try to use BFS to find $dist(1, i)$ for each $i$ in\n$\\mathcal{O}(N + M)$ time and then check for each edge $(u, v)$ whether\n$dist(1, u) + dist(1, v) + 1$ is minimal.\n\nOf course, this means that we might count a \"cycle\" like\n$1 \\rightarrow x \\rightarrow u \\rightarrow v \\rightarrow x \\rightarrow 1$.\nHowever, this doesn't matter for our original problem, since the shortest cycle\nwill always be shorter than such a \"cycle\".\n\nThere's one problem with this approach though: if the edge $(u, v)$ is on the\npath from node 1 to node $v$, then $1 \\rightarrow u \\rightarrow v \\rightarrow 1$\nisn't a cycle! And this time, it does matter in our original problem!\n\nFortunately, there's a relatively simple fix.\n\nInstead of first finding all $dist(1, i)$ and then checking for the minimum, do\nboth at the same time during the BFS.\n\nNow to prevent \"backtracking\", we only consider $dist(1, u) + dist(1, v) + 1$ as\na minimum if we're currently at node $u$ and $dist(1, u) \\leq dist(1, v)$.\n\nThis algorithm runs in $\\mathcal{O}(N + M)$ time. Since $N$ and $M$ are so\nsmall, we can just apply this algorithm for all nodes instead of just node 1.\n\nThe final complexity of this solution is thus $\\mathcal{O}(N*(N + M))$."
+        },
+        "id": 895,
+        "input_format": "The first input line has two integers $n$ and $m$: the number of nodes and edges. The nodes are numbered $1,2,\u2026,n$.\n\nAfter this, there are $m$ lines describing the edges. Each line has two integers $a$ and $b$: there is an edge between nodes $a$ and $b$.\n\nYou may assume that there is at most one edge between every two nodes.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print one integer: the girth of the graph. If there are no cycles, print \u22121.",
+        "samples": [
+            {
+                "input": "5 6\n1 2\n1 3\n2 4\n2 5\n3 4\n4 5\n",
+                "output": "3\n"
+            },
+            {
+                "input": "10 9\n5 6\n4 5\n8 9\n9 10\n1 2\n6 7\n3 4\n2 3\n7 8\n",
+                "output": "-1\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Graph Girth",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

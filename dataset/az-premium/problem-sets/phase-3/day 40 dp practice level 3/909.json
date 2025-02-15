@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "We can scramble a string $s$ to get a string $t$ using the following algorithm:\n\n1. If the length of the string is $1$, stop.\n2. If the length of the string is $> 1$, do the following:\n    2.1 Split the string into two non-empty substrings at a random index, i.e., if the string is $s$, divide it to $x$ and $y$ where $s = x + y$.\n    2.2 Randomly decide to swap the two substrings or to keep them in the same order. i.e., after this step, $s$ may become $s = x + y$ or $s = y + x$.\n\n3. Apply step $1$ recursively on each of the two substrings $x$ and $y$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 100$\n$s1.length == s2.length$\n$1 <= s1.length <= 40$\n$s1$ and $s2$ consist of lower-case English letters.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nint dp[41][41][41];\nstring s1, s2;\nbool rec(int l, int r, int i) {\n    int j = i + r - l; // relationship... to reduce DP state.\n\n    // we are trying to match if s1[l...r] is scrable of s2[i...j].\n    // pruning\n    if (l > r || i > j)return false;\n    // basecase .. if single element, check if same.\n    if (l == r) {\n        if (s1[l] == s2[i])return true;\n        return false;\n    }\n    auto &ans = dp[l][r][i];\n    if (ans != -1)return ans;\n\n    ans = 0; // by default we asume false.\n\n    // if the two strings are same, trivially true.\n    if (s1.substr(l, r - l + 1) == s2.substr(i, j - i + 1))return ans = 1;\n\n\n    for (int k = l; k < r; k++) {\n    \t// try to take first [l.. k] and [i...k] and rest part.\n        ans |= (rec(l, k, i)&rec(k + 1, r, i + k - l + 1));\n        // try to take first [l.. k] and [same length of s1] and rest part.\n        ans |= (rec(l, k, j - (k - l + 1) + 1)&rec(k + 1, r, i));\n    }\n    return ans;\n}\nvoid solve() {\n    cin >> s1 >> s2;\n    memset(dp, -1, sizeof(dp));\n    if (rec(0, s1.size() - 1, 0)) {\n        cout << \"Yes\" << endl;\n    }\n    else {\n        cout << \"No\" << endl;\n    }\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:29:48.632533+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "#### Note -:\nFor this problem, the expected time complexity is $O(N^{4})$ per test case, where $N=|s1|$.\nSo, try to reduce trivial $O(N^{5})$ into $O(N^{4})$ time."
+        },
+        "id": 909,
+        "input_format": "The first-line contains $T$ - the number of test cases. \nEach test case contains two strings $s1$ and $s2$ of the same length.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For test case $3$,\nOne possible scenario applied on s1 is:\n- \"great\" --> \"gr/eat\" // divide at random index.\n- \"gr/eat\" --> \"gr/eat\" // random decision is not to swap the two substrings and keep them in order.\n- \"gr/eat\" --> \"g/r / e/at\" // apply the same algorithm recursively on both substrings. divide at ranom index each of them.\n- \"g/r / e/at\" --> \"r/g / e/at\" // random decision was to swap the first substring and to keep the second substring in the same order.\n- \"r/g / e/at\" --> \"r/g / e/ a/t\" // again apply the algorithm recursively, divide \"at\" to \"a/t\".\n- \"r/g / e/ a/t\" --> \"r/g / e/ a/t\" // random decision is to keep both substrings in the same order.\n\nThe algorithm stops now and the result string is \"rgeat\" which is $s2$.\nAs there is one possible scenario that led s1 to be scrambled to $s2$, we ouput \"Yes\".",
+        "output_format": "For each test case, output \"*Yes*\" if $s2$ is a scrambled string of $s1$, otherwise, output \"*No*\", in a newline.",
+        "samples": [
+            {
+                "input": "3\nabcde caebd\na a\ngreat rgeat\n",
+                "output": "No\nYes\nYes\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Scrambled String",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

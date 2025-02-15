@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>For each prefix of a given string <i><strong>S</strong></i> with <i><strong>N</strong></i> characters consisting of lowercase characters, we want to know whether the prefix is a periodic string. That is, for each <i><strong>i (2 &lt;= i &lt;= N)</strong></i> we want to know the largest <i><strong>K &gt; 1</strong></i> (if there is one) such that the prefix of <i><strong>S</strong></i> with length <i><strong>i </strong></i>can be written as <i><strong>A<sup>K</sup></strong></i> , that is <i><strong>A</strong></i> concatenated <i><strong>K</strong></i> times, for some string <i><strong>A</strong></i>. Of course, we also want to know the period <i><strong>K</strong></i>. If there are multiple A<sup>K </sup>print the <strong>maximum value of K.</strong></p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\n\nint abc = 1;\nint pi[100005];\n\nvoid prefix(string s) {\n    int n = s.size();\n    pi[0] = 0;\n    for (int i = 1; i < n; ++i) {\n        int j = pi[i-1];\n        while(j > 0 && s[i] != s[j]) {\n            j = pi[j-1];\n        }\n        if(s[i] == s[j]) {\n            j++;\n        }\n        pi[i] = j;\n    }\n}\n\nsigned main(){\n    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n    int t;\n    cin >> t;\n    while(t--) {\n        cout << \"Test case #\" << abc++ << \"\\n\";\n        int n;\n        cin >> n;\n        string s;\n        cin >> s;\n        prefix(s);\n        for (int i = 1; i < n; ++i) {\n            if((i+1)%(i+1-pi[i]) == 0 && (i+1)/(i+1-pi[i]) > 1) {\n                cout << i+1 << \" \" << (i+1)/(i+1-pi[i]) << \"\\n\";\n            }\n        }\n        cout << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:28:19.718412+00:00"
+        },
+        "hints": {
+            "hint1": "Use the KMP algorithm for finding prefix function for the given string.",
+            "hint2": "",
+            "solution_approach": "If the prefix function for substring with length i is p[i], we would consider the period length as (i - p[i]). If this value is a multiple of the length i, then K = i / (i - p[i]). We can combine the prefix of length (i - p[i]) K times to get the prefix of length i.\n\nTime complexity per test case: O(N)"
+        },
+        "id": 423,
+        "input_format": "<p>The first line contains an integer <i>T, ( 1 \u2264 T \u2264 10000)</i> - the number of test cases.</p><p>The first line of each test case contains an integer <i>N, ( 2 \u2264 N \u2264 100000).</i></p><p>The second line contains a string <i>S</i> of length <i>N</i>.</p><p><i><strong>Sum of N across all test cases \u2264 10^6.</strong></i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, output \u201cTest case #\u201d and the consecutive test case number on a single line; then, **for each prefix with length i that has a period K > 1, output the prefix size i and the largest period K separated by a single space**; the prefix sizes must be in increasing order. Print a blank line after each test case.",
+        "samples": [
+            {
+                "input": "2\n9\nabababaab\n6\nffffff",
+                "output": "Test case #1\n4 2\n6 3\n\nTest case #2\n2 2\n3 3\n4 4\n5 5\n6 6\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Strings",
+            "Kmp"
+        ],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "Period of a string",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

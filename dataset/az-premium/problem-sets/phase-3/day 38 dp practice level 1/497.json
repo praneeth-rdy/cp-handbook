@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a grid of size **n x m with integers, you need to find the maximum sum Subgrid.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 t \u2264 10<sup>5</sup><br>1 \u2264 n, m \u2264 10<sup>5</sup><br>-10<sup>5</sup> \u2264 a[i][j] \u2264 10<sup>5</sup></p><p>It is guaranteed that the sum of n x m over all test cases does not exceed 10<sup>5</sup>.</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nsigned main()\n{\n\tios::sync_with_stdio(0);\n\tcin.tie(0);\n\tcout.tie(0);\n\n\tint t;\n\tcin >> t;\n\n\twhile (t--)\n\t{\n\t\tint n, m;\n\t\tcin >> n >> m;\n\n\t\tint grid[n][m];\n\n\t\tfor (int i = 0; i < n; ++i)\n\t\t{\n\t\t\tfor (int j = 0; j < m; ++j)\n\t\t\t{\n\t\t\t\tcin >> grid[i][j];\n\t\t\t}\n\t\t}\n\n\t\tlong long ans = -2e18;\n\n\t\tif (n >= m)\n\t\t{\n\t\t\tfor (int l = 0; l < m; ++l)\n\t\t\t{\n\t\t\t\tlong long temp[n];\n\t\t\t\tbool allNeg = true;\n\t\t\t\tlong long num = -2e18;\n\n\t\t\t\tmemset(temp, 0, sizeof(temp));\n\n\t\t\t\tfor (int r = l; r < m; ++r)\n\t\t\t\t{\n\t\t\t\t\tfor (int k = 0; k < n; ++k)\n\t\t\t\t\t{\n\t\t\t\t\t\ttemp[k] += grid[k][r];\n\t\t\t\t\t\tnum = max(num, 1LL * grid[k][r]);\n\n\t\t\t\t\t\tif (grid[k][r] >= 0)\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tallNeg = false;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\n\t\t\t\t\tif (allNeg)\n\t\t\t\t\t{\n\t\t\t\t\t\tans = max(ans, num);\n\t\t\t\t\t}\n\t\t\t\t\telse\n\t\t\t\t\t{\n\t\t\t\t\t\tlong long maxSum = temp[0], curSum = 0;\n\n\t\t\t\t\t\tfor (int k = 0; k < n; ++k)\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tcurSum += temp[k];\n\t\t\t\t\t\t\tmaxSum = max(maxSum, curSum);\n\t\t\t\t\t\t\tcurSum = max(0ll, curSum);\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\tans = max(ans, maxSum);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\telse\n\t\t{\n\t\t\tfor (int l = 0; l < n; ++l)\n\t\t\t{\n\t\t\t\tlong long temp[m];\n\t\t\t\tbool allNeg = true;\n\t\t\t\tlong long num = -2e18;\n\n\t\t\t\tmemset(temp, 0, sizeof(temp));\n\n\t\t\t\tfor (int r = l; r < n; ++r)\n\t\t\t\t{\n\t\t\t\t\tfor (int k = 0; k < m; ++k)\n\t\t\t\t\t{\n\t\t\t\t\t\ttemp[k] += grid[r][k];\n\t\t\t\t\t\tnum = max(num, 1LL * grid[r][k]);\n\n\t\t\t\t\t\tif (grid[r][k] >= 0)\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tallNeg = false;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tif (allNeg)\n\t\t\t\t\t{\n\t\t\t\t\t\tans = max(ans, num);\n\t\t\t\t\t}\n\t\t\t\t\telse\n\t\t\t\t\t{\n\t\t\t\t\t\tlong long maxSum = temp[0], curSum = 0;\n\n\t\t\t\t\t\tfor (int k = 0; k < m; ++k)\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tcurSum += temp[k];\n\t\t\t\t\t\t\tmaxSum = max(maxSum, curSum);\n\t\t\t\t\t\t\tcurSum = max(0ll, curSum);\n\t\t\t\t\t\t}\n\t\t\t\t\t\t\n\t\t\t\t\t\tans = max(ans, maxSum);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tcout << ans << \"\\n\";\n\t}\n\treturn 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:34:01.928703+00:00"
+        },
+        "hints": {
+            "hint1": "If the left and right columns of the subgrid are fixed, think of an algorithm to find the consecutive rows which should be taken to maximise the sum.",
+            "hint2": "Kadane\u2019s Algorithm is used to find the maximum sum subarray. Same can be used for the grid.",
+            "solution_approach": "<p>In Kadane\u2019s algorithm, the maximum sum is found between two indexes. Here, the maximum sum between two rows can be found. Since the columns are fixed, a rectangle would be there. Consider the edge case when all elements in the grid are negative.</p><p>Time Complexity per test case: O(n x m<sup>2</sup>), if m \u2264 n</p>"
+        },
+        "id": 497,
+        "input_format": "<p>The first line of the input contains one integer <strong>t</strong> - the number of test cases. Then <strong>t</strong> test cases follow.<br>The first line of each test case contains two space-separated integers <strong>n</strong>, <strong>m</strong> - the size of the grid.<br>Each of the next <strong>n</strong> lines contains <strong>m</strong> space-separated integers, a[i][j] - the number at the cell (i, j).</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, the top left 2 x 2 subgrid, 10 + 2 - 4 + 5 = 13.\n\nFor the second test case, all cells have a maximum sum which is -1.\n\nFor the third test case, all cells are positive, maximum sum subgrid is the entire grid with sum 10.",
+        "output_format": "<p><span style=\"background-color:transparent;color:#000000;\">For each test case, print the maximum sum.</span></p>",
+        "samples": [
+            {
+                "input": "3\n2 3\n10 2 -1\n-4 5 -1\n2 2\n-1 -1\n-1 -1\n2 2\n1 2\n3 4",
+                "output": "13\n-1\n10"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Maximum Sum in Grid",
+        "video_editorial_id": 8214
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,558 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "course_name": "Day 2 - Practice Linked list",
+            "resource_id": 529
+        },
+        {
+            "course_name": "Day 2 - Practice Linked list",
+            "resource_id": 530
+        },
+        {
+            "course_name": "Day 2 - Practice Linked list",
+            "resource_id": 532
+        },
+        {
+            "course_name": "Day 3 - Learn the atomic techniques",
+            "resource_id": 525
+        },
+        {
+            "course_name": "Day 4 - Practice applications 1",
+            "resource_id": 533
+        },
+        {
+            "course_name": "Day 4 - Practice applications 1",
+            "resource_id": 537
+        },
+        {
+            "course_name": "Day 4 - Practice applications 1",
+            "resource_id": 526
+        },
+        {
+            "course_name": "Day 4 - Practice applications 1",
+            "resource_id": 527
+        },
+        {
+            "course_name": "Day 5 - Practice applications 2",
+            "resource_id": 534
+        },
+        {
+            "course_name": "Day 5 - Practice applications 2",
+            "resource_id": 528
+        },
+        {
+            "course_name": "Day 5 - Practice applications 2",
+            "resource_id": 531
+        },
+        {
+            "course_name": "Day 6 - Some more techniques",
+            "resource_id": 540
+        },
+        {
+            "course_name": "Day 7 - Final Practice",
+            "resource_id": 535
+        },
+        {
+            "course_name": "Day 7 - Final Practice",
+            "resource_id": 538
+        },
+        {
+            "course_name": "Day 7 - Final Practice",
+            "resource_id": 539
+        },
+        {
+            "course_name": "Day 8 - Binary Search Tree",
+            "resource_id": 573
+        },
+        {
+            "course_name": "Day 8 - Binary Search Tree",
+            "resource_id": 574
+        },
+        {
+            "course_name": "Day 9 - Traversals again",
+            "resource_id": 576
+        },
+        {
+            "course_name": "Day 9 - Traversals again",
+            "resource_id": 577
+        },
+        {
+            "course_name": "Day 9 - Traversals again",
+            "resource_id": 1048
+        },
+        {
+            "course_name": "Day 9 - Traversals again",
+            "resource_id": 585
+        },
+        {
+            "course_name": "Day 10 - BST and Balanced BST",
+            "resource_id": 671
+        },
+        {
+            "course_name": "Day 10 - BST and Balanced BST",
+            "resource_id": 646
+        },
+        {
+            "course_name": "Day 10 - BST and Balanced BST",
+            "resource_id": 667
+        },
+        {
+            "course_name": "Day 11 - Recovery Problem",
+            "resource_id": 663
+        },
+        {
+            "course_name": "Day 12 - Problems on BST",
+            "resource_id": 669
+        },
+        {
+            "course_name": "Day 12 - Problems on BST",
+            "resource_id": 672
+        },
+        {
+            "course_name": "Day 12 - Problems on BST",
+            "resource_id": 673
+        },
+        {
+            "course_name": "Day 12 - Problems on BST",
+            "resource_id": 1062
+        },
+        {
+            "course_name": "Day 13 - Interconversion Idea",
+            "resource_id": 675
+        },
+        {
+            "course_name": "Day 14 - LCA on Trees",
+            "resource_id": 674
+        },
+        {
+            "course_name": "Day 15 - More Advanced Traversal",
+            "resource_id": 575
+        },
+        {
+            "course_name": "Day 16 - Mixed Practice",
+            "resource_id": 651
+        },
+        {
+            "course_name": "Day 16 - Mixed Practice",
+            "resource_id": 668
+        },
+        {
+            "course_name": "Day 16 - Mixed Practice",
+            "resource_id": 676
+        },
+        {
+            "course_name": "Day 17 - Gap Day",
+            "resource_id": 1061
+        },
+        {
+            "course_name": "Day 17 - Gap Day",
+            "resource_id": 1049
+        },
+        {
+            "course_name": "Day 17 - Gap Day",
+            "resource_id": 1030
+        },
+        {
+            "course_name": "Day 31 - Interview Practice Set 1",
+            "resource_id": 572
+        },
+        {
+            "course_name": "Day 31 - Interview Practice Set 1",
+            "resource_id": 588
+        },
+        {
+            "course_name": "Day 31 - Interview Practice Set 1",
+            "resource_id": 869
+        },
+        {
+            "course_name": "Day 31 - Interview Practice Set 1",
+            "resource_id": 868
+        },
+        {
+            "course_name": "Day 32 - Interview Practice Set 2",
+            "resource_id": 863
+        },
+        {
+            "course_name": "Day 32 - Interview Practice Set 2",
+            "resource_id": 733
+        },
+        {
+            "course_name": "Day 32 - Interview Practice Set 2",
+            "resource_id": 810
+        },
+        {
+            "course_name": "Day 32 - Interview Practice Set 2",
+            "resource_id": 636
+        },
+        {
+            "course_name": "Day 33 - Interview Practice Set 3",
+            "resource_id": 597
+        },
+        {
+            "course_name": "Day 33 - Interview Practice Set 3",
+            "resource_id": 630
+        },
+        {
+            "course_name": "Day 33 - Interview Practice Set 3",
+            "resource_id": 632
+        },
+        {
+            "course_name": "Day 33 - Interview Practice Set 3",
+            "resource_id": 629
+        },
+        {
+            "course_name": "Day 34 - Interview Practice Set 4",
+            "resource_id": 600
+        },
+        {
+            "course_name": "Day 34 - Interview Practice Set 4",
+            "resource_id": 594
+        },
+        {
+            "course_name": "Day 34 - Interview Practice Set 4",
+            "resource_id": 604
+        },
+        {
+            "course_name": "Day 34 - Interview Practice Set 4",
+            "resource_id": 595
+        },
+        {
+            "course_name": "Day 35 - Interview Practice Set 5",
+            "resource_id": 175
+        },
+        {
+            "course_name": "Day 35 - Interview Practice Set 5",
+            "resource_id": 277
+        },
+        {
+            "course_name": "Day 35 - Interview Practice Set 5",
+            "resource_id": 611
+        },
+        {
+            "course_name": "Day 35 - Interview Practice Set 5",
+            "resource_id": 640
+        },
+        {
+            "course_name": "Day 36 - Interview Practice Set 6",
+            "resource_id": 605
+        },
+        {
+            "course_name": "Day 36 - Interview Practice Set 6",
+            "resource_id": 964
+        },
+        {
+            "course_name": "Day 36 - Interview Practice Set 6",
+            "resource_id": 554
+        },
+        {
+            "course_name": "Day 36 - Interview Practice Set 6",
+            "resource_id": 601
+        },
+        {
+            "course_name": "Day 37 - Interview Practice Set 7",
+            "resource_id": 616
+        },
+        {
+            "course_name": "Day 37 - Interview Practice Set 7",
+            "resource_id": 278
+        },
+        {
+            "course_name": "Day 37 - Interview Practice Set 7",
+            "resource_id": 279
+        },
+        {
+            "course_name": "Day 38 - Interview Practice Set 8",
+            "resource_id": 599
+        },
+        {
+            "course_name": "Day 38 - Interview Practice Set 8",
+            "resource_id": 461
+        },
+        {
+            "course_name": "Day 38 - Interview Practice Set 8",
+            "resource_id": 462
+        },
+        {
+            "course_name": "Day 38 - Interview Practice Set 8",
+            "resource_id": 351
+        },
+        {
+            "course_name": "Day 39 - Interview Practice Set 9",
+            "resource_id": 486
+        },
+        {
+            "course_name": "Day 39 - Interview Practice Set 9",
+            "resource_id": 586
+        },
+        {
+            "course_name": "Day 39 - Interview Practice Set 9",
+            "resource_id": 593
+        },
+        {
+            "course_name": "Day 39 - Interview Practice Set 9",
+            "resource_id": 590
+        },
+        {
+            "course_name": "Day 40 - Interview Practice Set 10",
+            "resource_id": 541
+        },
+        {
+            "course_name": "Day 40 - Interview Practice Set 10",
+            "resource_id": 587
+        },
+        {
+            "course_name": "Day 40 - Interview Practice Set 10",
+            "resource_id": 610
+        },
+        {
+            "course_name": "Day 40 - Interview Practice Set 10",
+            "resource_id": 603
+        },
+        {
+            "course_name": "Day 41 - Interview Practice Set 11",
+            "resource_id": 591
+        },
+        {
+            "course_name": "Day 41 - Interview Practice Set 11",
+            "resource_id": 596
+        },
+        {
+            "course_name": "Day 41 - Interview Practice Set 11",
+            "resource_id": 612
+        },
+        {
+            "course_name": "Day 41 - Interview Practice Set 11",
+            "resource_id": 608
+        },
+        {
+            "course_name": "Day 42 - Interview Practice Set 12",
+            "resource_id": 592
+        },
+        {
+            "course_name": "Day 42 - Interview Practice Set 12",
+            "resource_id": 642
+        },
+        {
+            "course_name": "Day 42 - Interview Practice Set 12",
+            "resource_id": 631
+        },
+        {
+            "course_name": "Day 42 - Interview Practice Set 12",
+            "resource_id": 496
+        },
+        {
+            "course_name": "Day 43 - Interview Practice Set 13",
+            "resource_id": 870
+        },
+        {
+            "course_name": "Day 43 - Interview Practice Set 13",
+            "resource_id": 860
+        },
+        {
+            "course_name": "Day 43 - Interview Practice Set 13",
+            "resource_id": 926
+        },
+        {
+            "course_name": "Day 43 - Interview Practice Set 13",
+            "resource_id": 927
+        },
+        {
+            "course_name": "Day 43 - Interview Practice Set 13",
+            "resource_id": 990
+        },
+        {
+            "course_name": "Day 44 - Interview Practice Set 14",
+            "resource_id": 991
+        },
+        {
+            "course_name": "Day 44 - Interview Practice Set 14",
+            "resource_id": 953
+        },
+        {
+            "course_name": "Day 44 - Interview Practice Set 14",
+            "resource_id": 981
+        },
+        {
+            "course_name": "Day 44 - Interview Practice Set 14",
+            "resource_id": 967
+        },
+        {
+            "course_name": "Day 45 - Interview Practice Set 15",
+            "resource_id": 984
+        },
+        {
+            "course_name": "Day 45 - Interview Practice Set 15",
+            "resource_id": 954
+        },
+        {
+            "course_name": "Day 45 - Interview Practice Set 15",
+            "resource_id": 760
+        },
+        {
+            "course_name": "Day 45 - Interview Practice Set 15",
+            "resource_id": 909
+        },
+        {
+            "course_name": "Day 46 - Interview Practice Set 16",
+            "resource_id": 910
+        },
+        {
+            "course_name": "Day 46 - Interview Practice Set 16",
+            "resource_id": 911
+        },
+        {
+            "course_name": "Day 46 - Interview Practice Set 16",
+            "resource_id": 915
+        },
+        {
+            "course_name": "Day 46 - Interview Practice Set 16",
+            "resource_id": 914
+        },
+        {
+            "course_name": "Day 47 - Interview Practice Set 17",
+            "resource_id": 633
+        },
+        {
+            "course_name": "Day 47 - Interview Practice Set 17",
+            "resource_id": 634
+        },
+        {
+            "course_name": "Day 47 - Interview Practice Set 17",
+            "resource_id": 589
+        },
+        {
+            "course_name": "Day 47 - Interview Practice Set 17",
+            "resource_id": 602
+        },
+        {
+            "course_name": "Day 48 - Interview Practice Set 18",
+            "resource_id": 609
+        },
+        {
+            "course_name": "Day 48 - Interview Practice Set 18",
+            "resource_id": 607
+        },
+        {
+            "course_name": "Day 48 - Interview Practice Set 18",
+            "resource_id": 637
+        },
+        {
+            "course_name": "Day 48 - Interview Practice Set 18",
+            "resource_id": 635
+        },
+        {
+            "course_name": "Day 49 - Interview Practice Set 19",
+            "resource_id": 613
+        },
+        {
+            "course_name": "Day 49 - Interview Practice Set 19",
+            "resource_id": 639
+        },
+        {
+            "course_name": "Day 49 - Interview Practice Set 19",
+            "resource_id": 606
+        },
+        {
+            "course_name": "Day 49 - Interview Practice Set 19",
+            "resource_id": 622
+        },
+        {
+            "course_name": "Day 50 - Interview Practice Set 20",
+            "resource_id": 913
+        },
+        {
+            "course_name": "Day 50 - Interview Practice Set 20",
+            "resource_id": 966
+        },
+        {
+            "course_name": "Day 50 - Interview Practice Set 20",
+            "resource_id": 965
+        },
+        {
+            "course_name": "Day 50 - Interview Practice Set 20",
+            "resource_id": 992
+        },
+        {
+            "course_name": "Day 51 - Interview Practice Set 21",
+            "resource_id": 975
+        },
+        {
+            "course_name": "Day 51 - Interview Practice Set 21",
+            "resource_id": 995
+        },
+        {
+            "course_name": "Day 51 - Interview Practice Set 21",
+            "resource_id": 996
+        },
+        {
+            "course_name": "Day 51 - Interview Practice Set 21",
+            "resource_id": 925
+        },
+        {
+            "course_name": "Day 52 - Interview Practice Set 22",
+            "resource_id": 906
+        },
+        {
+            "course_name": "Day 52 - Interview Practice Set 22",
+            "resource_id": 919
+        },
+        {
+            "course_name": "Day 52 - Interview Practice Set 22",
+            "resource_id": 917
+        },
+        {
+            "course_name": "Day 52 - Interview Practice Set 22",
+            "resource_id": 998
+        },
+        {
+            "course_name": "Day 53 - Interview Practice Set 22",
+            "resource_id": 974
+        },
+        {
+            "course_name": "Day 53 - Interview Practice Set 22",
+            "resource_id": 979
+        },
+        {
+            "course_name": "Day 53 - Interview Practice Set 22",
+            "resource_id": 563
+        },
+        {
+            "course_name": "Day 53 - Interview Practice Set 22",
+            "resource_id": 388
+        },
+        {
+            "course_name": "Day 54 - Interview Practice Set 23",
+            "resource_id": 902
+        },
+        {
+            "course_name": "Day 54 - Interview Practice Set 23",
+            "resource_id": 997
+        },
+        {
+            "course_name": "Day 54 - Interview Practice Set 23",
+            "resource_id": 337
+        },
+        {
+            "course_name": "Day 54 - Interview Practice Set 23",
+            "resource_id": 916
+        },
+        {
+            "course_name": "Day 55 - Interview Practice Set 24",
+            "resource_id": 922
+        },
+        {
+            "course_name": "Day 55 - Interview Practice Set 24",
+            "resource_id": 920
+        },
+        {
+            "course_name": "Day 55 - Interview Practice Set 24",
+            "resource_id": 921
+        },
+        {
+            "course_name": "Day 55 - Interview Practice Set 24",
+            "resource_id": 923
+        }
+    ],
+    "details": "Chapter 713 Problems"
+}

@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an integer N. You have to find the number of divisors of N.",
+        "complete_approach": "",
+        "constraints": "1 \u2264 T \u2264 1000\n\n1 \u2264 N \u2264 10<sup>7</sup>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n\nint main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int n;\n    cin >> n;\n    int ans = 0;\n    for (int i = 1; i * i <= n; ++i) {\n      if (n % i == 0) {\n        if (i * i == n) {\n          ans++;\n        } else {\n          ans += 2;\n        }\n      }\n    }\n    cout << ans << \"\\n\";\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:32:38.878585+00:00"
+        },
+        "hints": {
+            "hint1": "All the divisors are present in pairs i.e. if $x$ is a divisor of $N$, then $\\dfrac{N}{x}$ is also a divisor of $N$.",
+            "hint2": "",
+            "solution_approach": "If $x$ is a divisor of $N$, then $\\dfrac{N}{x}$ is also a divisor of $N$. Either $x \\leq \\sqrt(N)$ or $\\dfrac{N}{x} \\leq \\sqrt(N)$. So we iterate from $1$ to $\\sqrt(N)$ to find the number of divisors. For pairs where $x=\\dfrac{N}{x}$, you need to count the diviors only once.\n\nTime Complexity per test case: $O(\\sqrt(N))$"
+        },
+        "id": 322,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer N.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, the divisors of 12 are: 1, 2, 3, 4, 6, 12.\n\nFor the second test case, the divisors of 5 are: 1, 5.\n\nFor the third test case, the divisors of 9 are: 1, 3, 9.",
+        "output_format": "For each test case, print the number of divisors of N.",
+        "samples": [
+            {
+                "input": "3\n12\n5\n9\n",
+                "output": "6\n2\n3\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Number of Divisors AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

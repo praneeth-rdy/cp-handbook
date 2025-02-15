@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a positive integer N, count the total number of set bits in binary representation of all numbers from 1 to N.",
+        "complete_approach": "",
+        "constraints": "<p><i>1 \u2264 T \u2264 10<sup>5</sup></i></p><p><i>0 \u2264 N \u2264 10<sup>8</sup></i></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint countSetBits(int n)\n{\n    if (n == 0)\n        return 0;\n    int left;\n    for (left = 30; left >= 0; left--)\n    {\n        if (n & (1 << left))\n            break;\n    }\n    if ((1 << (left + 1)) - 1 == n)\n        return (left + 1) * (1 << left);\n    return n + 1 - (1 << left) + countSetBits(n ^ (1 << left)) + countSetBits((1 << left) - 1);\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n    while (t--)\n    {\n        int n;\n        cin >> n;\n        cout << countSetBits(n) << '\\n';\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:14:07.089475+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Can you come up with a recursive formula to count total bits?</p>",
+            "hint2": "<p>How many total bits are there if N = 2<sup>K</sup>-1, i.e, it has binary representation 1111\u2026.1111.</p>",
+            "solution_approach": "<p>The problem can be solved with recursion. The base case for the recursion can be:<br>1. If N=0: return 0<br>2. If N=2<sup>K </sup>- 1: The number of set bits and unset bits in all the numbers from 0 to N is equal. So the number of set bits can be (<i>len</i> + 1) * (N + 1) / 2, where <i>len</i> is the number of bits in <i>N.</i></p><p>If <i>N</i> is not of the form 2<sup>K </sup>- 1, let the leftmost bit be <i>left</i>, then the count of the <i>left</i> bit will be equal to <i>N + 1 - (1 &lt;&lt; left). </i>Now solve the subproblems for N = N ^ (1 &lt;&lt; <i>left</i>) and N = (1 &lt;&lt; left) - 1</p>"
+        },
+        "id": 639,
+        "input_format": "The first line contains a single integer T - the number of test cases.\nT lines follow each containing a single integer N.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>For <i>N</i> = 4:<br>1 : 001<br>2 : 010<br>3 : 011<br>4 : 100<br>Total number of set bits is 1+1+2+1 = 5</p>",
+        "output_format": "For each test case print the number of set bits in all numbers from 1 to N.",
+        "samples": [
+            {
+                "input": "4\n3\n4\n7\n8",
+                "output": "4\n5\n12\n13"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nint countSetBits(int n)\n{\n    //add code here\n}\n\n<fix>\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n    while (t--)\n    {\n        int n;\n        cin >> n;\n        cout << countSetBits(n) << '\\n';\n    }\n\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "COUNTBIT",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

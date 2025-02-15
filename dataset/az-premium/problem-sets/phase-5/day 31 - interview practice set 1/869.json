@@ -1,0 +1,69 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Find all valid combinations of <strong>k</strong> numbers that sum up to <strong>n</strong> such that the following conditions are true:</p><ul><li>Only numbers <strong>1</strong> through <strong>9</strong> are used.</li><li>Each number is used <strong>at most once</strong>.</li></ul><p>Return <i>a list of all possible valid combinations</i>. The list must not contain the same combination twice, and the combinations may be returned in any order.</p>",
+        "complete_approach": "",
+        "constraints": "<ul><li>2 \u2264 k \u2264 9</li><li>1 \u2264 n \u2264 60</li></ul>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nvector<int> temp;\nvector<vector<int>> ans;\nvoid solve(int i, int &k, int sum, int &n) {\n    if (sum > n)return ; // pruning.\n    if (i == 10) { // base\n        if (temp.size() == k && sum == n)ans.push_back(temp);\n        return;\n    }\n    // not taking i in the combination.\n    solve(i + 1, k, sum, n);\n\n    // taking i into combination.\n    temp.push_back(i);\n    solve(i + 1, k, sum + i, n);\n    temp.pop_back(); // backtracking.\n}\nvector<vector<int>> combinationSum(int k, int n) {\n    ans.clear();\n    solve(1, k, 0, n);\n    return ans;\n}\n\nvoid checker() {\n    int k, n;\n    cin >> k >> n;\n    vector<int> t;\n    auto v = combinationSum(k, n);\n    for (auto &x : v) {\n        sort(x.begin(), x.end());\n    }\n    sort(v.begin(), v.end());\n    for (auto x : v) {\n        for (auto y : x)cout << y << \" \";\n        cout << endl;\n    }\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n    int t = 1;\n    // int i = 1;\n    // cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        checker();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:44:07.718048+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 869,
+        "input_format": "<p>Complete the function <i><strong>combinationSum(k, n).</strong></i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Return <i>a list ( </i><strong>vector&lt;vector&lt;int&gt;&gt; </strong><i>) of all possible valid combinations</i>. The list must not contain the same combination twice, and the combinations may be returned in any order.</p>",
+        "samples": [
+            {
+                "input": "3 9",
+                "output": "1 2 6\n1 3 5\n2 3 4"
+            },
+            {
+                "input": "4 1",
+                "output": " "
+            },
+            {
+                "input": "9 45",
+                "output": "1 2 3 4 5 6 7 8 9"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Recursion",
+            "Backtracking"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n</fix>\n\n\nvector<vector<int>> combinationSum(int k, int n) {\n    // write code here.\n}\n\n<fix>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nvoid checker() {\n    int k, n;\n    cin >> k >> n;\n    vector<int> t;\n    auto v = combinationSum(k, n);\n    for (auto &x : v) {\n        sort(x.begin(), x.end());\n    }\n    sort(v.begin(), v.end());\n    for (auto x : v) {\n        for (auto y : x)cout << y << \" \";\n        cout << endl;\n    }\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n    int t = 1;\n    // int i = 1;\n    // cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        checker();\n        // i++;\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Combination Sum II",
+        "video_editorial_id": 8230
+    },
+    "details": "Problem Details"
+}

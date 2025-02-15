@@ -1,0 +1,56 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given two binary trees. We need to merge them into a new binary tree. The merge rule is that if two nodes overlap, then sum node values up as the new value of the merged node. Otherwise, the non-null node will be used as the node of new tree.",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "Editorial Code data is currently empty.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:47:05.799503+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 675,
+        "input_format": "<p>The first line contains an integer T, (1 \u2264 T \u2264 10^5), the number of test cases.</p><p>The first line of each test case contains an integer N, the length of the array representing the serialized representation of a tree1.</p><p>The next line contains N-space-separated distinct integers.&nbsp;</p><p>The next line contains an integer M, the length of the array representing the serialized representation of a tree2.</p><p>The next line contains M-space-separated distinct integers.&nbsp;</p><p>The input is given as a serialized representation of a tree.</p><p>The following function parses the input:</p><p><i>Node* getBinaryTree(vector&lt;int&gt; &amp;num, int*ind)</i></p><p><i>Sum of N across all test cases \u2264 10^7.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case return the new merged tree root node.&nbsp;</p>",
+        "samples": [
+            {
+                "input": "1\n11\n1496 5959 -1 -1 5566 1754 -1 -1 8678 -1 -1 \n9\n1358 5601 8697 -1 -1 8984 -1 -1 -1 ",
+                "output": "2854 11560 8697 -1 -1 8984 -1 -1 5566 1754 -1 -1 8678 -1 -1 "
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Binary Tree"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n\n</fix>\nNode *getMergedTree(Node * t1, Node * t2)\n{\n    // Complete the function.\n}\n<fix>\nNode* getBinaryTree(vector<int> &num, int*ind) {\n    if(num[*ind] == -1)\n        return NULL;\n    Node* node = new Node(num[*ind]);\n    (*ind)++;\n    node->left = getBinaryTree(num,ind);\n    (*ind)++;\n    node->right = getBinaryTree(num,ind);\n    return node;\n}\n\nvoid generateArray(Node* root, vector<int>&ans){\n    if(root==NULL){\n        ans.push_back(-1);\n        return;\n      }\n    ans.push_back(root->val);\n    generateArray(root->left,ans);\n    generateArray(root->right,ans);\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n;\n        cin>>n;\n        assert(n<=1000000);\n        vector<int>arr(n);\n        for(int i=0;i<n;i++)\n            cin>>arr[i];\n        int ind = 0;\n        Node* tree1 = getBinaryTree(arr,&ind);\n        arr.clear();\n        cin>>n;\n        assert(n<=1000000);\n        arr.resize(n);\n        for(int i=0;i<n;i++)\n            cin>>arr[i];\n        ind = 0;\n        Node* tree2 = getBinaryTree(arr,&ind);\n        Node* mergedTree = getMergedTree(tree1,tree2);\n        vector<int>ans;\n        generateArray(mergedTree,ans);\n        for(auto v:ans)cout<<v<<\" \";\n        cout<<\"\\n\";\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 3.0,
+        "title": "Merge Two Binary Tree",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

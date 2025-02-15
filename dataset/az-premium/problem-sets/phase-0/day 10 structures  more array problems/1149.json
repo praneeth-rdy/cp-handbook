@@ -1,0 +1,61 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given an integer $N$ and an array $A$ of $N$ distinct numbers. Your task is to find the $\\textbf{minimum}$ and $\\textbf{maximum}$ numbers among them, swap these two numbers, and then print the array after the swap.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10$\n$2 \\leq N \\leq 1000$\n$-10^5 \\leq A[i] \\leq 10^5$",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```c++\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n\n    while (t--)\n    {\n        int n;\n        cin >> n;\n\n        int arr[n];\n        for (int i = 0; i < n; i++)\n        {\n            cin >> arr[i];\n        }\n\n        int mi = 0, Mi = 0;\n        for (int i = 1; i < n; i++)\n        {\n            if (arr[mi] > arr[i]) {\n                mi = i;\n            }\n            if (arr[Mi] < arr[i]) {\n                Mi = i;\n            }\n        }\n\n        arr[mi] = arr[mi] + arr[Mi];\n        arr[Mi] = arr[mi] - arr[Mi];\n        arr[mi] = arr[mi] - arr[Mi];\n\n        for (int i = 0; i < n; i++)\n        {\n            cout << arr[i] << \" \";\n        }\n        cout << \"\\n\";\n    }\n\n    return 0;\n}\n```\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\n```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int t = Integer.parseInt(br.readLine());\n        for (int tc = 0; tc < t; tc++) {\n            int n = Integer.parseInt(br.readLine());\n            int[] arr = new int[n];\n            StringTokenizer st = new StringTokenizer(br.readLine());\n            for (int i = 0; i < n; i++) {\n                arr[i] = Integer.parseInt(st.nextToken());\n            }\n\n            int mi = 0, Mi = 0;\n            for (int i = 1; i < n; i++) {\n                if (arr[mi] > arr[i]) {\n                    mi = i;\n                }\n                if (arr[Mi] < arr[i]) {\n                    Mi = i;\n                }\n            }\n\n            arr[mi] = arr[mi] + arr[Mi];\n            arr[Mi] = arr[mi] - arr[Mi];\n            arr[mi] = arr[mi] - arr[Mi];\n\n            for (int i = 0; i < n; i++) {\n                out.print(arr[i] + \" \");\n            }\n            out.println();\n        }\n\n        out.flush();\n        out.close();\n    }\n}\n```\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\n```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n\n    t = int(data[idx])\n    idx += 1\n\n    for _ in range(t):\n        n = int(data[idx])\n        idx += 1\n        arr = [int(data[idx + i]) for i in range(n)]\n        idx += n\n\n        mi, Mi = 0, 0\n        for i in range(1, n):\n            if arr[mi] > arr[i]:\n                mi = i\n            if arr[Mi] < arr[i]:\n                Mi = i\n\n        arr[mi], arr[Mi] = arr[Mi], arr[mi]\n\n        output_line = ' '.join(map(str, arr)) + '\\n'\n        stdout.write(output_line)\n\nif __name__ == \"__main__\":\n    main()\n```\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:31:48.730825+00:00"
+        },
+        "hints": {
+            "hint1": "Try finding the indices of the minimum and maximum elements in the array.",
+            "hint2": "Once you have the indices, swap the elements at these positions.",
+            "solution_approach": "To solve this problem, we need to find the indices of the minimum and maximum elements in the array. We can iterate through the array and keep track of the positions where the minimum and maximum values occur.\n\nHere are the steps:\n\n1. Initialize two variables, say $min\\_idx$ and $max\\_idx$, to $0$.\n\n2. Iterate through the array from index $1$ to $N-1$:\n\n   - If the current element $A[i]$ is less than $A[min\\_idx]$, update $min\\_idx = i$.\n\n   - If the current element $A[i]$ is greater than $A[max\\_idx]$, update $max\\_idx = i$.\n\n3. After finding the indices, swap the elements at $min\\_idx$ and $max\\_idx$.\n\nTime Complexity per test case: $O(N)$\n\nSpace Complexity per test case: $O(N)$"
+        },
+        "id": 1149,
+        "input_format": "The first line contains $T$, the number of test cases.\nFor each test case:\nThe first line contains an integer $N$, the number of elements in the array.\nThe second line contains $N$ space-separated integers denoting the elements of the array.\nIt's $\\textbf{guaranteed}$ that all numbers are distinct.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "First, find the minimum and maximum numbers in the array $[4, 1, 3, 10, 8]$, which are $1$ and $10$ respectively. By swapping these two numbers, the array becomes $[4, 10, 3, 1, 8]$.",
+        "output_format": "Print the array after the $\\textbf{replacement}$ operation.",
+        "samples": [
+            {
+                "input": "1\n5\n4 1 3 10 8",
+                "output": "4 10 3 1 8"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Arrays"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Replace MinMax",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

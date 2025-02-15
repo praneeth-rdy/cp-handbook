@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a string $s$, find the minimum number of characters that need to be inserted into the string to make it a palindrome.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 100$\n$1 \\leq |s| \\leq 1000$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nint dp[1001][1001], n;\nstring s;\nint rec(int i, int j) {\n    if (i == -1)return n - j;\n    if (j == n)return i + 1;\n    auto &ans = dp[i][j];\n    if (ans != -1)return ans;\n    ans = 1e9;\n    if (s[i] == s[j])ans = min(ans, rec(i - 1, j + 1));\n    else ans = min({ans, 1 + rec(i - 1, j), 1 + rec(i, j + 1)});\n    return ans;\n}\nvoid solve() {\n    cin >> s;\n    n = s.size();\n    memset(dp, -1, sizeof(dp));\n    int ans = 1e9;\n    for (int i = 0; i < n; i++)ans = min({ans, rec(i - 1, i + 1), rec(i - 1, i), rec(i, i + 1)});\n    cout << ans << endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:23:29.307393+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "####Approach I\n\nThis question requires us to find the minimum number of insertions to create a palindrome from a given string.\n\n$DP[i][j]$ = Number if insertions required for the string $S[j..i]$.\n\nLet's say you have the string: \u201cxxa\u201d\n\nYou can either insert a character at the beginning, which will be the same character as the end, i.e \u201ca\u201d, or you can insert a character at the end, which will be the same character as at the beginning, i.e \u201cx\u201d. If you add an \u201ca\u201d at the beginning, then you have to see how many insertions are required to make \u201cxx\u201d a palindrome, otherwise, if you add \u201cx\u201d at the end, you will need to calculate how many insertions are required to make \u201cxa\u201d a palindrome. Hence, finding the answer for substrings, \u201cxx\u201d, and \u201cxa\u201d, are the smaller subproblems.\n\n####Approach II\n\nWe can easily get the number of chars not in the palindrome sequence by getting the inverse of the original string, finding out the Longest Common Substring, which makes a palindrome, and using the total length of the original string subtracting the length of LCS.\n\n**Time Complexity** : $O(N^{2})$ per test case."
+        },
+        "id": 915,
+        "input_format": "First line contains $T$ - the number of test cases.\nFirst line of each test case contains the string $s$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, output the minimum number of characters that need to be inserted into the string to make it a palindrome.",
+        "samples": [
+            {
+                "input": "4\nalgozenith\nabba\ngoomgle\nfft\n",
+                "output": "9\n0\n3\n1\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-az",
+            "company-Amazon"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Make Palindrome",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

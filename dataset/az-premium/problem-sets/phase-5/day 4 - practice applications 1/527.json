@@ -1,0 +1,69 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given a non-empty linked list, your task is to find the cycle in the linked list. Return starting node of the cycle and length of the cycle. If there is no cycle, then return <i>null</i> as node and <i>-1</i> as length.</p><p>Complete the function</p><pre><code class=\"language-plaintext\">pair&lt;ListNode*,int&gt; cycleInLinkedList(ListNode* head)</code></pre><p><i>head </i>is the pointer to the beginning node of the linked list.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 Length of the linked list \u2264 1000000<br>0 \u2264 Value in node \u2264 10<sup>9</sup><br>1 \u2264 <i>LastLink</i> \u2264 Length of the linked list -1</p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode() : val(0), next(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next) {}\n};\npair<ListNode*,int> cycleInLinkedList(ListNode* head) {\n    if(head->next == NULL) {\n        return {NULL, -1};\n    }\n    \n    ListNode* slow_p = head;\n    ListNode* fast_p = head;\n  \n    while(slow_p && fast_p && fast_p->next) {\n        slow_p = slow_p->next;\n        fast_p = fast_p->next->next;\n\n        if(slow_p == fast_p) {\n            break;\n        }\n    }\n\n    if(slow_p == fast_p) {\n        int len = 0;\n        ListNode* temp = slow_p->next;\n        len++;\n        while(temp != slow_p) {\n            len++;\n            temp = temp->next;\n        }\n\n        slow_p = head;\n        while(slow_p != fast_p) {\n            slow_p = slow_p->next;\n            fast_p = fast_p->next;\n        }\n        \n        return {slow_p, len};\n    }\n\n    return {NULL, -1};\n}\n\n\nListNode* GetList(int n, vector<int> &num, int lastLink) {\n    ListNode* head = nullptr;\n\n    if(num.empty()) {\n        return head;\n    }\n\n    ListNode* cur = head;\n    \n    for(int i  = 0; i < n; i++) {\n        ListNode* temp = new ListNode(num[i]);\n        if(!cur) {\n            cur = temp;\n            head = cur;\n        }\n        else {\n            cur->next = temp;\n            cur = temp;\n        }\n    }\n\n    if(lastLink) {\n        ListNode* temp = head;\n        for(int i = 0; i < lastLink - 1; i++) {\n            temp = temp->next;\n        }\n        cur->next = temp;\n    }\n    \n    return head;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    vector<int> num;\n    for(int i = 0; i < n; i++) {\n        int x;\n        cin >> x;\n        num.push_back(x);\n    }\n\n    int lastLink;\n    cin >> lastLink;\n\n    ListNode* head = GetList(n, num, lastLink);\n\n    pair<ListNode*,int> ans = cycleInLinkedList(head);\n\n    cout << (ans.first ? ans.first->val : -1) << \" \" << ans.second << \"\\n\";\n    \n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing"
+            ],
+            "last_updated": "2024-06-22T02:14:58.395705+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 527,
+        "input_format": "<p>The first line contains <i>n </i>- the length of the linked list.<br>The second line contains the sequence of elements in linked list nodes.<br>The third line contains an integer <i>LastLink -</i> denoting to which node from the starting position the last node connects. If it is 0, then there is no cycle.</p><p>The following function translates the input.</p><pre><code class=\"language-plaintext\">ListNode* GetList(int n, vector&lt;int&gt; &amp;num, int lastLink)</code></pre><p>&nbsp;</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><strong>Explanation 1:</strong></p><pre><code class=\"language-plaintext\">1 -----&gt; 2 -----&gt; 3\n         ^        |\n         |        |\n         ----------</code></pre><p><strong>Explanation 2:</strong></p><pre><code class=\"language-plaintext\">1 -------&gt; 2\n^          |\n|          |\n------------</code></pre><p><strong>Explanation 3:</strong></p><pre><code class=\"language-plaintext\">1 -------&gt; 2 ------&gt; 3</code></pre>",
+        "output_format": "",
+        "samples": [
+            {
+                "input": "3\n1 2 3\n2",
+                "output": "2 2"
+            },
+            {
+                "input": "2\n1 2\n1",
+                "output": "1 2"
+            },
+            {
+                "input": "3\n1 2 3\n0",
+                "output": "-1 -1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Linked List",
+            "Frequently Asked Questions",
+            "Two Pointers"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode() : val(0), next(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next) {}\n};\n</fix>\n\npair<ListNode*,int> cycleInLinkedList(ListNode* head) {\n    //Complete the function\n}\n\n<fix>\nListNode* GetList(int n, vector<int> &num, int lastLink) {\n    ListNode* head = nullptr;\n\n    if(num.empty()) {\n        return head;\n    }\n\n    ListNode* cur = head;\n    \n    for(int i  = 0; i < n; i++) {\n        ListNode* temp = new ListNode(num[i]);\n        if(!cur) {\n            cur = temp;\n            head = cur;\n        }\n        else {\n            cur->next = temp;\n            cur = temp;\n        }\n    }\n\n    if(lastLink) {\n        ListNode* temp = head;\n        for(int i = 0; i < lastLink - 1; i++) {\n            temp = temp->next;\n        }\n        cur->next = temp;\n    }\n    \n    return head;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    vector<int> num;\n    for(int i = 0; i < n; i++) {\n        int x;\n        cin >> x;\n        num.push_back(x);\n    }\n\n    int lastLink;\n    cin >> lastLink;\n\n    ListNode* head = GetList(n, num, lastLink);\n\n    pair<ListNode*,int> ans = cycleInLinkedList(head);\n\n    cout << (ans.first ? ans.first->val : -1) << \" \" << ans.second << \"\\n\";\n    \n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 2.0,
+        "title": "Cycle in Linked List",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

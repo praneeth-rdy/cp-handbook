@@ -1,0 +1,56 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an array of N integers. Find the longest subarray with distinct characters.",
+        "complete_approach": "",
+        "constraints": "1\u2264 T \u2264 10<sup>5</sup>\n\n1\u2264 N \u2264 10<sup>5</sup>\n\n1\u2264 A<sub>i</sub> \u2264 10<sup>9</sup>\n\nIt is guaranteed that the sum of N over all test cases does not exceed 10<sup>5</sup>.",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n// #include \"deb.h\"\n\nusing namespace std;\n\n#define int long long\n\nint freq[1000001] = {0};\n\nvoid solve()\n{\n    int n, k;\n    int distinct = 0;\n\n    cin >> n;\n\n    int arr[n];\n\n    for (int i = 0; i < n; i++)\n        cin >> arr[i];\n\n    int head = -1, tail = 0;\n    int ans = 0;\n\n    while (tail < n)\n    {\n        while (head + 1 < n && freq[arr[head + 1]] == 0)\n        {\n            head++;\n            freq[arr[head]]++;\n        }\n\n        ans = max(ans, head - tail + 1);\n\n        if (tail <= head)\n        {\n            freq[arr[tail]]--;\n            tail++;\n        }\n        else\n        {\n            tail++;\n            head = tail - 1;\n        }\n    }\n\n    cout << ans << '\\n';\n}\n\nsigned main()\n{\n    ios::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n    int _t = 1;\n    cin >> _t;\n    while (_t--)\n    {\n        solve();\n    }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:41:28.829906+00:00"
+        },
+        "hints": {
+            "hint1": "Maintain a map with the character frequency.",
+            "hint2": "",
+            "solution_approach": "Take a left pointer and whenever the frequency of the map is more than 1, increase the left pointer until the frequency is not equal to 1. Take the maximum of all the distinct subarrays.\n\nTime Complexity per test case: O(N log N)"
+        },
+        "id": 371,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer N - the length of the array. \n\nThe second line of each test case contains N space-separated integers.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>color:transparent;color:#000000;\">For the first test case: <strong>1 2</strong> 2 1 2</p><p>For the second test case: 3 3 <strong>3</strong> 3</p><p>For the third test case: 1<strong> 3 2 4 1</strong></p>",
+        "output_format": "For each test case, print the longest subarray with distinct characters.",
+        "samples": [
+            {
+                "input": "3\n5\n1 2 2 1 2\n4\n3 3 3 3\n5\n1 3 2 4 1\n",
+                "output": "2\n1\n4\n"
+            },
+            {
+                "input": "1\n7                   \n1 2 3 1 4 5 6\n",
+                "output": "6\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Two Pointers"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Longest Distinct Subarray AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

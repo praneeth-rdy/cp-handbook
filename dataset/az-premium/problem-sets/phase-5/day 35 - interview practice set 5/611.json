@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given N assignments and each assignment has a specific start time and end time within which you have to finish the assignment. Find the maximum number of assignments that you can finish. If an assignment finishes at a time x, you cannot start another assignment at the same time x.",
+        "complete_approach": "",
+        "constraints": "<p><i>1 \u2264 N \u2264 10<sup>5</sup></i></p><p><i>1 \u2264 s \u2264 t \u2264 10<sup>8</sup></i></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ii pair<int, int>\n#define ff first\n#define ss second\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int n;\n    cin >> n;\n    ii a[n];\n    for (int i = 0; i < n; i++)\n        cin >> a[i].ss >> a[i].ff;\n    sort(a, a + n); //sorting according to the end times\n    int ans = 0, curr = 0;\n    for (int i = 0; i < n; i++)\n    {\n        if (a[i].ss > curr)\n            ans++, curr = a[i].ff;\n    }\n    cout << ans << '\\n';\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:30:44.704304+00:00"
+        },
+        "hints": {
+            "hint1": "Greedily select the assignment which can be finished earliest.",
+            "hint2": "Sort according to the end times.",
+            "solution_approach": "We greedily choose the assignment whose end time is the least, and start time is more than the previously selected assignment. For this sort the assignments according to the end time. Select the first assignment. For the remaining ones, if the start time is greater than the end time of the previously selected one, select it and update the answer."
+        },
+        "id": 611,
+        "input_format": "The first line of each test case contains a single integer N - the number of assignments.\nN lines follow each containing a pair of integers s and t - the start and end time of each assignment.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "You can finish the assignments 1, 2, 4 and 5.",
+        "output_format": "Print the maximum number of assignments that you can finish.",
+        "samples": [
+            {
+                "input": "6\n1 2\n3 4\n0 6\n5 7\n8 9\n5 9",
+                "output": "4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Finish in Time",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

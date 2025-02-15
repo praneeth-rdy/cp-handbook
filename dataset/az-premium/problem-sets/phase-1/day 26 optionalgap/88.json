@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "There are N soldiers standing in a row, numbered 1 through N. The height of i-th soldier is Hi. For each non-empty contiguous segment of the line, strength is defined as the minimum height of the soldier in that segment.\nYou have to tell the maximum strength for each x size group, for all groups of size x between 1 to N.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 100$  \n\n$1 \\leq N \\leq 10^5$  \n\n$1 \\leq H_i \\leq 10^9$  \n\nThe sum of $N$ over all test cases doesn't exceed $5 \\times 10^5$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n \n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n \nint main() {\n    IOS\n    int t;\n    cin >> t;\n    while (t--) {\n        int n;\n        cin >> n;\n        int a[n];\n        for (int i = 0; i < n; ++i) {\n            cin >> a[i];\n        }\n        stack<int> s;\n        int l[n], r[n];\n        for (int i = 0; i < n; ++i) {\n            while(!s.empty() && a[s.top()] >= a[i]) {\n                s.pop();\n            }\n            if(s.empty()) {\n                l[i] = -1;\n            }\n            else {\n                l[i] = s.top();\n            }\n            s.push(i);\n        }\n        while (!s.empty()) {\n            s.pop();\n        }\n        for (int i = n-1; i >= 0; --i) {\n            while(!s.empty() && a[s.top()] >= a[i])\n                s.pop();\n            if(s.empty()) {\n                r[i] = n;\n            }\n            else {\n                r[i] = s.top();\n            }\n            s.push(i);\n        }\n \n        int ans[n] = {};\n        for (int i = 0; i < n; ++i) {\n            int x = r[i] - l[i] - 2;\n            ans[x] = max(ans[x], a[i]);\n        }\n        for (int i = n-2; i >= 0; --i) {\n            ans[i] = max(ans[i], ans[i+1]);\n        }\n        for (int i = 0; i < n; ++i) {\n            cout << ans[i] << \" \";\n        }\n        cout << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:13:01.018288+00:00"
+        },
+        "hints": {
+            "hint1": "Note that the answer is non-increasing.",
+            "hint2": "Try using a data structure to store the answers in groups.",
+            "solution_approach": "For each $i$, find the largest $j$ such that $a_j < a_i$ and $j < i$ (if there is no such $j$, then consider it as $-1$). Let this be $L_i$.  \nSimilarly, find the smallest $j$ such that $a_j < a_i$ and $j > i$ (if there is no such $j$, then consider it as $N$). Let this be $R_i$.\n\nYou can use a stack to compute this in $O(N)$. For each $i$, we know that it can be the minimum element in groups of size $1, 2, \\dots, R_i - L_i - 1$.  \nLet $ans_i$ be the answer for $i$ from $0$ to $N-1$, then $ans_1 \\geq ans_2 \\geq \\dots \\geq ans_N$.\n\n**See solution code.**\n\n**Time Complexity:** $O(N)$\n"
+        },
+        "id": 88,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\n\nThe first line of each test case contains one integer $N$ - the length of the array.\n\nThe second line of each test case contains $N$ space-separated integers - $H_1, H_2, \\dots, H_N$, the heights of the soldiers.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In the first test case of the example, for x=1, possible answers are 1, 5 and 3 (maximum of them is 5).\nFor x=2, possible answers are 1 and 3 (maximum of them is 3)\nFor x=3, the only possible answer is 1.\n\nIn the second test case of the example, for x=1, possible answers are 1, 6 and 8 (maximum of them is 8).\nFor x=2, possible answers are 1 and 6 (maximum of them is 6)\nFor x=3 and x=4, the only possible answer is 1.",
+        "output_format": "For each test case, print N integers in one line. For each x from 1 to N, print the maximum strength among all groups of size x.",
+        "samples": [
+            {
+                "input": "3\n3\n1 5 3\n4\n8 6 1 1\n7\n1 2 3 4 6 3 2",
+                "output": "5 3 1 \n8 6 1 1 \n6 4 3 3 2 2 1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Height of Soldiers",
+        "video_editorial_id": 8145
+    },
+    "details": "Problem Details"
+}

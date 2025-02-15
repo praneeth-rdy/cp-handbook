@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given an array of integers. find the maximum XOR subarray value in the given array.",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\n\nclass trieNode {\npublic:\n    int freq;\n    trieNode* left;\n    trieNode* right;\n    trieNode() {\n        freq = 0;\n        left = NULL;\n        right = NULL;\n    }\n};\n\nvoid insert(int n, trieNode* head) {\n    trieNode* cur = head;\n    for (int i = 31; i >= 0; --i) {\n        int bit = (n >> i)&1;\n        if(bit) {\n            if(!cur->right) {\n                cur->right = new trieNode();\n            }\n            cur = cur->right;\n            cur->freq++;\n        }\n        else {\n            if(!cur->left) {\n                cur->left = new trieNode();\n            }\n            cur = cur->left;\n            cur->freq++;\n        }\n    }\n}\n\nint findMaxXOR(int n, trieNode* head) {\n    trieNode* cur = head;\n    int ans = 0;\n    for (int j = 31; j >= 0; --j) {\n        int bit = (n >> j)&1;\n        if(bit) {\n            if(cur->left && cur->left->freq > 0) {\n                ans += (1<<j);\n                cur = cur->left;\n            }\n            else {\n                cur = cur->right;\n            }\n        }\n        else {\n            if(cur->right && cur->right->freq > 0) {\n                ans += (1<<j);\n                cur = cur->right;\n            }\n            else {\n                cur = cur->left;\n            }\n        }\n    }\n    return ans;\n}\n\nsigned main(){\n    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n    int t;\n    cin >> t;\n    while(t--) {\n        int n;\n        cin >> n;\n        vector<int> v(n);\n        for (int i = 0; i < n; ++i) {\n            cin >> v[i];\n        }\n        trieNode* head = new trieNode();\n        int pre = 0;\n        int ans = 0;\n        insert(0, head);\n        for (int i = 0; i < n; ++i) {\n            pre ^= v[i];\n            ans = max(ans, findMaxXOR(pre, head));\n            insert(pre, head);\n        }\n        cout << ans << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:16:33.613846+00:00"
+        },
+        "hints": {
+            "hint1": "If you make a prefix array of xors, prefix[r]^prefix[l-1] will give the xor of the subarray (l,r). This will take O(N^2) if we consider each subarray. Can you implement the same using tries?",
+            "hint2": "",
+            "solution_approach": "<p>You need to insert the prefix xors while traversing through the trie, at any i, the trie will have all the prefix xors till (i-1). So you can check the maximum xor you can get by taking the current number, a(i) with any number present in the trie. Do this for all the indexes and take the maximum from them.</p><p>Time Complexity per test case: O(N*max(A<sub>i</sub>))</p>"
+        },
+        "id": 420,
+        "input_format": "<p>The first line contains an integer T ( 1 \u2264 T \u2264 10), the number of test cases.</p><p>The first line of each test case contains 2 space-separated integers N,1 \u2264 N \u2264 10^5.</p><p>The second line of each test case contains N space-separated integers, 1\u2264 Ai \u2264 10^5</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case print the answer in a new line.</p>",
+        "samples": [
+            {
+                "input": "3\n5\n1 2 3 4 5\n6\n7 14 6 8 6 65\n5\n74 14 5 6 9",
+                "output": "7\n79\n78"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Tries"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "Max XOR Subarray",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

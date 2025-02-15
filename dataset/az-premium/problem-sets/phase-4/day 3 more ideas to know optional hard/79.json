@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Let us consider a set of fractions $x / y$, such that $0 \\leq x / y \\leq 1$, $y \\leq n$, and $\\text{gcd}(x, y) = 1$.\n\nFor example, say $n = 5$. Then we have the following set in increasing order:  \n$0/1, 1/5, 1/4, 1/3, 2/5, 1/2, 3/5, 2/3, 3/4, 4/5, 1/1$.\n\nYou are given $n$, $a$, and $b$. The task is to find the rank of $a / b$ in the set of fractions, as stated above, which is in increasing order.\n\n**Note:** Fractions should be finite.",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nll get_fractions_less_than_eq(ll n, ll a, ll b){\n    ll ans = 0,arr[n + 1];\n\n    for(ll i = 1; i <= n; i++)\n        arr[i] = (a * i) / b;\n\n    for(ll i = 1; i <= n; i++){\n        for(ll j = i * 2; j <= n;j += i)\n            arr[j] -= arr[i];\n        ans += arr[i];\n    }\n    return ans;\n}\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int T; cin >> T;\n    while(T--) {\n        int n, a, b;\n        cin >> n >> a >> b;\n        cout << get_fractions_less_than_eq(n, a, b) + 1 << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:47:29.752984+00:00"
+        },
+        "hints": {
+            "hint1": "One way to approach this problem is to count the number of fractions which are less than or equal to the given fraction $\\dfrac{a}{b}$ in the given set. Once we know the count of such fractions, we can easily find the rank of $\\dfrac{a}{b}$ in the set by adding 1 to this count.",
+            "hint2": "To count the number of fractions less than or equal to $\\dfrac{a}{b}$, we can make use of the following observation:\n\nFor any given denominator $y$, the fractions $\\dfrac{x}{y}$ which satisfy the condition $gcd(x,y)=1$ and $0\\leq \\dfrac{x}{y} \\leq 1$ form a Farey sequence of order $y$, denoted as $F_y$. The set of all fractions satisfying the given conditions can be obtained by taking the union of all Farey sequences of order $y$, where $1 \\leq y \\leq n$.  \n\nNow, we can count the number of fractions less than or equal to $\\dfrac{a}{b}$ in each Farey sequence of order $y$, and add them up to get the total count of fractions less than or equal to $\\dfrac{a}{b}$ in the given set. To count the number of fractions less than or equal to $\\dfrac{a}{b}$ in a Farey sequence of order $y$, we can make use of the following property:\n\nIf $\\dfrac{a}{b}$ is a fraction in a Farey sequence of order $y$, then the fractions $\\dfrac{2a}{2b}$, $\\dfrac{3a}{3b}$, ..., $\\dfrac{(y-1)a}{(y-1)b}$ are not in the sequence.\n\nUsing this property, we can count the number of fractions less than or equal to $\\dfrac{a}{b}$ in a Farey sequence of order $y$, by first calculating the number of fractions $\\dfrac{x}{y}$ in the sequence for each $y \\leq n$, and then subtracting the number of fractions which are not in the sequence using the property mentioned above.",
+            "solution_approach": "The above approach can be implemented using a simple algorithm as follows:\n\nInitialize $ans = 0$ and an array arr of size n+1 to store the count of fractions $\\dfrac{x}{y}$ less than or equal to $\\dfrac{a}{b}$ for each denominator y.\n\nFor each denominator y \u2264 n, calculate the number of fractions $\\dfrac{x}{y}$ less than or equal to $\\dfrac{a}{b}$, by setting $arr[y] = \u230a(ay)/b\u230b$, where \u230a.\u230b denotes the floor function. This is because the fraction $\\dfrac{x}{y}$ is less than or equal to $\\dfrac{a}{b}$ if and only if x \u2264 \u230a(ay)/b\u230b.\n\nFor each denominator $y \\leq n$, subtract the count of fractions which are not in the Farey sequence of order y, by iterating over all multiples of y less than or equal to n, and subtracting arr[i] for each such i.\n\nAdd up the counts of fractions less than or equal to $\\dfrac{a}{b}$ for each denominator$y \\leq n$ to get the total count, and add $1$ to get the rank of $\\dfrac{a}{b}$ in the given set.\n\nThe time complexity of the above algorithm is $O(n \\log n)$, since we need to iterate over all denominators $y \\leq n$, and for each denominator y, we need to subtract the counts of non-Farey fractions, which takes $O(\\log y)$ time using the above property.\n\nThus, the above algorithm efficiently solves the given problem."
+        },
+        "id": 79,
+        "input_format": "The first line contains a number $T$ ($1 \\leq T \\leq 20$) - the number of test cases. Then $T$ lines follow.  \n\nIn each of the $T$ lines, you are given $n$, $a$, $b$ ($1 \\leq n \\leq 100000$, $a \\leq b \\leq n$) such that $\\text{gcd}(a, b) = 1$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><i><strong>Explanation 1:</strong></i><br>For <i>n</i> = 5, we have the following set in increasing order: 0/1, 1/5, 1/4, 1/3, 2/5, 1/2, 3/5, 2/3, 3/4, 4/5, 1/1<br>So the rank of 3 / 4 is 9.</p>",
+        "output_format": "<p>Print <i>T</i> lines. The <i>i</i>th line contains the rank of a fraction <i>a / b</i> for a given <i>n, a</i> and <i>b</i> in the <i>(i + 1)</i>th line of input.</p>",
+        "samples": [
+            {
+                "input": "5\n5 3 4\n8 5 7\n123 23 32\n500 99 123\n1000 501 611",
+                "output": "9\n17\n3332\n61269\n249428"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Fraction Rank",
+        "video_editorial_id": 8142
+    },
+    "details": "Problem Details"
+}

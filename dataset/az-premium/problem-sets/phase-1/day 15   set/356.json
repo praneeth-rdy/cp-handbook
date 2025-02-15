@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given $Q$ queries and have to perform the following operations:\n\n1. **add x** - Add element $x$ to the set.  \n2. **erase x** - Delete the element with value $x$, if it exists.  \n3. **find x** - If $x$ is present, print \u201cYES\u201d; otherwise, print \u201cNO\u201d.  \n4. **print** - Print the values in the set.  \n5. **empty** - Empty the set.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^5$  \n\n$1 \\leq Q \\leq 10^5$  \n\n$1 \\leq X \\leq 10^6$  \n\nIt is guaranteed that the sum of $Q$ over all test cases does not exceed $10^5$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n\nint main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int q;\n    cin >> q;\n    set<int> st;\n    while (q--) {\n      string s;\n      cin >> s;\n      if (s == \"add\") {\n        int x;\n        cin >> x;\n        st.insert(x);\n      } else if (s == \"erase\") {\n        int x;\n        cin >> x;\n        auto it = st.find(x);\n        if (it != st.end()) {\n          st.erase(it);\n        }\n      } else if (s == \"find\") {\n        int x;\n        cin >> x;\n        if (st.find(x) != st.end()) {\n          cout << \"YES\\n\";\n        } else {\n          cout << \"NO\\n\";\n        }\n      } else if (s == \"print\") {\n        for (int i : st) {\n          cout << i << \" \";\n        }\n        cout << \"\\n\";\n      } else {  // empty\n        st.clear();\n      }\n    }\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:44:17.353731+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Use `insert(x)` for adding element to set\nUse `erase(x)` for deleting the element with value x, but first check using `find(x)` if the element x is in the set or not\nUse `find(x)` for finding the iterator to the element\nUse `clear()` for emptying the set\nTime Complexity per test case: $O(Q \\times \\log N)$ where N is the size of the set"
+        },
+        "id": 356,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\n\nThe first line of each test case contains one integer $Q$ - the number of queries.\n\nEach of the next $Q$ lines contains a query.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "1. Set becomes: [3]  \n2. Set becomes: [2, 3]  \n3. Set becomes: [2, 3, 7]  \n4. Set is: 2, 3, 7.  \n5. 2 exists in the set  \n6. Set becomes: [3, 7]  \n7. 2 does not exist in the set",
+        "output_format": "<p>For each test case, print the required queries.</p>",
+        "samples": [
+            {
+                "input": "1\n7\nadd 3\nadd 2\nadd 7\nprint\nfind 2\nerase 2\nfind 2\n",
+                "output": "2 3 7 \nYES\nNO\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Set AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

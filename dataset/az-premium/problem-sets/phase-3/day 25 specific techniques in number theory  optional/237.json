@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given the value of integer <i>N</i> how many solutions does the following equation have?</p><figure class=\"image\"><img src=\"https://lh5.googleusercontent.com/8lQWEknbwrsHZdMJaCyZDfCa77-DW1rTZCOTu_e8qFHHZPpwq8S5y3u6_3OTe7pm5zpc4iROkErQuMyxM_h5QtZdfBgh_CPbebvdo1gqodqojqj0HWpd2_EwgMlnnhnBgD7SzRS_\"></figure><p>If <i>x</i> and <i>y</i> are integers there is only a finite number of solutions but if <i>x</i> and <i>y</i> are real numbers then there can be an infinite number of solutions. What if <i>x</i> and <i>y</i> are floating-point numbers with limited size, e.g. <i>x</i> and <i>y</i> are floating point numbers with d digits after the decimal points, how many different solutions will be there?</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\ntypedef long long ll;\n\nll mod = 1e9 + 7;\n\nsigned main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n\n    while (true)\n    {\n        ll n, d;\n        cin >> n >> d;\n\n        if (!n && !d)\n            break;\n\n        map<ll, ll> M;\n\n        for (ll i = 2; i * i <= n; i++)\n        {\n            ll cnt = 0;\n            while (n % i == 0)\n            {\n                n /= i;\n                cnt++;\n            }\n            if (cnt)\n                M[i] += 2 * cnt;\n        }\n\n        if (n > 1)\n            M[n] += 2;\n\n        M[2] += 2 * d;\n        M[5] += 2 * d;\n\n        ll ans = 1;\n        bool sqr = true;\n\n        ll mod = 1000007;\n\n        for (auto it : M)\n        {\n            ans *= (it.second + 1);\n            ans %= mod;\n            if (ans < 0)\n                ans += mod;\n            if (it.second % 2)\n                sqr = false;\n        }\n\n        ans *= 2;\n        ans %= mod;\n        if (ans < 0)\n            ans += mod;\n\n        if (sqr)\n            ans = (ans - 1 + mod) % mod;\n\n        cout << ans << \"\\n\";\n    }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:48:03.387632+00:00"
+        },
+        "hints": {
+            "hint1": "Can you frame the given equation to this format? The task will be much easier then.\n$(x-n)(y-n)=n^2$",
+            "hint2": "$\\dfrac{1}{x} + \\dfrac{1}{y} = \\dfrac{1}{N}$  \n$xy-nx-ny=0$  \n$xy-nx-ny+n^2=n^2$    \n$x(y-n)-n(y-n)=n^2$ \n$(x-n)(y-n)=n^2$  \nReplace $x-n = a$, and  \n $y-n = b$  \n$a\\times b=n^2$\n\n**Note :**\nWe subtract $1$ at the end to take care of the case when $x=y=0$. Since that is not a valid option so we need to subtract $1$ from the final solution.",
+            "solution_approach": "$\\dfrac{1}{x} + \\dfrac{1}{y} = \\dfrac{1}{N}$  \n$xy-nx-ny=0$  \n$xy-nx-ny+n^2=n^2$    \n$x(y-n)-n(y-n)=n^2$ \n$(x-n)(y-n)=n^2$  \nReplace $x-n = a$, and  \n $y-n = b$  \n$a\\times b=n^2$\n\n**Note :**\nWe subtract $1$ at the end to take care of the case when $x=y=0$. Since that is not a valid option so we need to subtract $1$ from the final solution."
+        },
+        "id": 237,
+        "input_format": "<p>Input file contains at most 2000 lines of input. Each line contains two integers <i>N</i> (0 &lt; <i>N</i> \u2264 10000000000) and <i>d</i> (0 \u2264 <i>d</i> \u2264 1000), here <i>d</i> means that there can be maximum <i>d</i> digits after the decimal point. Input is terminated by a line containing two zeros. This line should not be processed.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each line of input, produce one line of output which contains an integer <i>T</i>. This line contains the number of different solutions the equation has for the given value of <i>N</i> and <i>d</i>. As the value of <i>T</i> can be very large so output <i><strong>T</strong></i><strong> modulo 1000007</strong>.</p>",
+        "samples": [
+            {
+                "input": "23 10\n10 2\n0 0",
+                "output": "2645\n97"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "How Many Solutions",
+        "video_editorial_id": 8172
+    },
+    "details": "Problem Details"
+}

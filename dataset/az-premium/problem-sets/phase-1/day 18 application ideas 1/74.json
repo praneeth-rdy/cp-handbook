@@ -1,0 +1,62 @@
+{
+    "code": 200,
+    "data": {
+        "body": "There are $N$ objects, and each object has some price. The price of the $i$-th object is $A_i$.\n\nYou have been asked $Q$ queries. In each query, you have been given total money $M$, and you need to find the maximum number of objects that you can buy.",
+        "complete_approach": "",
+        "constraints": "- $1 \\leq N, Q \\leq 10^5$\n- $1 \\leq A_i \\leq 10^8$\n- $1 \\leq M \\leq 10^8$",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\nvoid solve() {\n  int n, q;\n  cin >> n >> q;\n  vector<int> a(n);\n\n  for (int i = 0; i < n; i++) {\n    cin >> a[i];\n  }\n\n  sort(a.begin(), a.end());\n\n  for (int i = 1; i < n; i++) {\n    a[i] += a[i - 1];\n  }\n\n  for (int i = 0; i < q; i++) {\n    int m;\n    cin >> m;\n\n    int idx = upper_bound(a.begin(), a.end(), m) - a.begin();\n    cout << idx << \"\\n\";\n  }\n}\n\nsigned main() {\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n  int t = 1;\n  // cin >> t;\n  for (int i = 0; i < t; i++) {\n    solve();\n  }\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        String[] input = br.readLine().split(\" \");\n        int n = Integer.parseInt(input[0]);\n        int q = Integer.parseInt(input[1]);\n        \n        String[] aStr = br.readLine().split(\" \");\n        long[] a = new long[n];\n        for (int i = 0; i < n; i++) {\n            a[i] = Long.parseLong(aStr[i]);\n        }\n        \n        Arrays.sort(a);\n        for (int i = 1; i < n; i++) {\n            a[i] += a[i - 1];\n        }\n        \n        for (int i = 0; i < q; i++) {\n            long m = Long.parseLong(br.readLine());\n            int idx = upperBound(a, m);\n            out.println(idx);\n        }\n        \n        out.flush();\n        out.close();\n    }\n    \n    private static int upperBound(long[] a, long key) {\n        int low = 0;\n        int high = a.length;\n        while (low < high) {\n            int mid = (low + high) >>> 1;\n            if (a[mid] <= key) {\n                low = mid + 1;\n            } else {\n                high = mid;\n            }\n        }\n        return low;\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    idx = 0\n    n = int(data[idx])\n    idx += 1\n    q = int(data[idx])\n    idx += 1\n    \n    a = [int(data[idx + i]) for i in range(n)]\n    idx += n\n    a.sort()\n    for i in range(1, n):\n        a[i] += a[i - 1]\n    \n    for _ in range(q):\n        m = int(data[idx])\n        idx += 1\n        l, r = 0, n\n        while l < r:\n            mid = (l + r) // 2\n            if a[mid] <= m:\n                l = mid + 1\n            else:\n                r = mid\n        print(l)\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:44:20.865493+00:00"
+        },
+        "hints": {
+            "hint1": "Try to think greedily! Sort the objects with respect to price, and start greedily buying objects.",
+            "hint2": "By maintaining prefix sum of prices of objects in sorted order, and using upper_bound() or lower_bound(), you can answer each query in $O(\\log N)$. Can you do better?",
+            "solution_approach": "It's always optimal to buy objects with the smallest prices first. By sorting the prices in non-decreasing order, we ensure that we spend the least amount of money per object.\n\n### Solution 1\n\n- **Sort** the array $A$ of object prices in non-decreasing order.\n- **Compute** the prefix sums of the sorted array.\n- For each query with money $M$, use **binary search** (e.g., `upper_bound`) on the prefix sums to find the maximum number of objects you can buy without exceeding $M$.\n  \nTime Complexity per query: $O(\\log N)$\n\nOverall Time Complexity: $O(N \\log N + Q \\log N)$\n\nSpace Complexity: $O(N)$\n\n### Solution 2\n\nWe can process all queries more efficiently by sorting the queries and using a two-pointer technique.\n\n- **Sort** the array $A$ of object prices.\n- **Compute** the prefix sums.\n- **Sort** the queries in increasing order of $M$.\n- Initialize a pointer `ptr` to `-1`.\n- For each query with money $M$:\n  - While `ptr + 1 < N` and `prefix[ptr + 1] \\leq M`, increment `ptr`.\n  - The answer for this query is `ptr + 1`.\n\nThis method avoids performing a binary search for each query, reducing the total time complexity.\n\nOverall Time Complexity: $O(N \\log N + Q \\log Q + N + Q)$\n\nSpace Complexity: $O(N + Q)$"
+        },
+        "id": 74,
+        "input_format": "The first line contains two integers $N$, the number of objects, and $Q$, the total number of queries.\nThe second line contains $N$ space-separated integers $A_1, A_2, ..., A_N$.\nNext, $Q$ lines contain a number $M$, the total money.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first query with $M = 1$, you can buy the object with price $1$.\nFor the second query with $M = 5$, you can buy objects with prices $1$ and $4$.\nFor the third query with $M = 10$, you can buy objects with prices $1$, $2$, and $4$.\nFor the fourth query with $M = 25$, you can buy all objects with prices $1$, $2$, $4$, $6$, and $9$.",
+        "output_format": "For each query, print a single number in a new line representing the maximum number of objects that you can buy.",
+        "samples": [
+            {
+                "input": "5 4\n1 4 2 9 6\n1\n5\n10\n25",
+                "output": "1\n2\n3\n5"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Prefix And Partial Sums",
+            "Greedy",
+            "Sorting",
+            "Binary Search",
+            "Arrays"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Buy Maximum Objects II",
+        "video_editorial_id": 10665
+    },
+    "details": "Problem Details"
+}

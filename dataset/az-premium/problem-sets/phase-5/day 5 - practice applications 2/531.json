@@ -1,0 +1,65 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Sort a singly linked list in O(NlogN) using merge sort. Here, N is the length of the linked list.</p><p>Complete the function</p><pre><code class=\"language-plaintext\">ListNode* mergesort(ListNode* head)</code></pre><p><i>head </i>is the pointer to the beginning of the list.</p>",
+        "complete_approach": "",
+        "constraints": "<p>0 \u2264 N \u2264 10<sup>5</sup><br>0 \u2264 Values stored in nodes \u2264 10<sup>9</sup></p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode() : val(0), next(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next) {}\n};\n\nListNode* merge(ListNode* head1, ListNode* head2)\n{\n    ListNode* newhead = NULL;\n    ListNode* ans = NULL;\n    \n    while(head1 && head2) {\n        if(head1 -> val < head2 -> val) {\n            if(!newhead) {\n                newhead = head1;\n                ans = newhead;\n            }\n            else newhead -> next = head1, newhead = newhead -> next;\n            head1 = head1 -> next;\n            newhead -> next = NULL;\n        }\n        else {\n            if(!newhead) {\n                newhead = head2;\n                ans = newhead;\n            }\n            else newhead -> next = head2, newhead = newhead -> next;\n            head2 = head2 -> next;\n            newhead -> next = NULL;\n        }\n    }\n\n    while(head1) {\n        if(!newhead) {\n            newhead = head1;\n            ans = newhead;\n        }\n        else newhead -> next = head1, newhead = newhead -> next;\n        head1 = head1 -> next;\n        newhead -> next = NULL;\n    }\n\n    while(head2) {\n        if(!newhead) {\n            newhead = head2;\n            ans = newhead;\n        }\n        else newhead -> next = head2, newhead = newhead -> next;\n        head2 = head2 -> next;\n        newhead -> next = NULL;\n    }\n    return ans;\n}\n\nListNode* mergesort(ListNode* head) {\n    if(!head) return head;\n\n    ListNode *cur = head, *mid = head;\n    int cnt = 0;\n\n    while(cur) {\n        if(cnt & 1) mid = mid -> next;\n        cur = cur -> next;\n        cnt++;\n    }\n    \n    if(cnt == 1) return head;\n    \n    cur = head;\n    \n    while(cur -> next != mid) cur = cur -> next;\n    \n    cur -> next = NULL;\n    \n    ListNode *head1 = mergesort(head);\n    ListNode *head2 = mergesort(mid);\n    \n    return merge(head1, head2);\n}\n\nListNode* GetList(vector<int> &num) {\n    ListNode* head = nullptr;\n\n    if(num.empty()) {\n        return head;\n    }\n\n    ListNode* cur = head;\n    \n    for(int i  = 0; i < (int)num.size(); i++) {\n        ListNode* temp = new ListNode(num[i]);\n        if(!cur) {\n            cur = temp;\n            head = cur;\n        }\n        else {\n            cur->next = temp;\n            cur = temp;\n        }\n    }\n    \n    return head;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    vector<int> num;\n    for(int i = 0; i < n; i++) {\n        int x;\n        cin >> x;\n        num.push_back(x);\n    }\n\n    ListNode* head = GetList(num);\n\n    head = mergesort(head);\n\n    while(head) {\n        cout << head->val << \" \";\n        head = head->next;\n    }\n    cout << \"\\n\";\n    \n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:17:59.751741+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 531,
+        "input_format": "",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "",
+        "samples": [
+            {
+                "input": "1\n2",
+                "output": "2"
+            },
+            {
+                "input": "5\n1 3 6 1 7",
+                "output": "1 1 3 6 7"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Linked List",
+            "Sorting"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode() : val(0), next(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next) {}\n};\n</fix>\n\nListNode* mergesort(ListNode* head) {\n    //Complete the function\n}\n\n<fix>\nListNode* GetList(vector<int> &num) {\n    ListNode* head = nullptr;\n\n    if(num.empty()) {\n        return head;\n    }\n\n    ListNode* cur = head;\n    \n    for(int i  = 0; i < (int)num.size(); i++) {\n        ListNode* temp = new ListNode(num[i]);\n        if(!cur) {\n            cur = temp;\n            head = cur;\n        }\n        else {\n            cur->next = temp;\n            cur = temp;\n        }\n    }\n    \n    return head;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    vector<int> num;\n    for(int i = 0; i < n; i++) {\n        int x;\n        cin >> x;\n        num.push_back(x);\n    }\n\n    ListNode* head = GetList(num);\n\n    head = mergesort(head);\n\n    while(head) {\n        cout << head->val << \" \";\n        head = head->next;\n    }\n    cout << \"\\n\";\n    \n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Merge Sort on Linked List",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

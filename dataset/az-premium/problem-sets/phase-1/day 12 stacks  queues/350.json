@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Implement a queue using 2 stacks. You will be given the following type of Q queries:\n\n1. push x - add x to the queue\n2. pop - pop the front element of the queue, you also have to print the element you have popped.\n3. front - find the element at the front of the queue",
+        "complete_approach": "",
+        "constraints": "1\u2264 T \u2264 10<sup>6</sup>\n\n1\u2264 Q \u2264 10<sup>6</sup>\n\n1\u2264 X \u2264 10<sup>6</sup>\n\nIt is guaranteed that the sum of Q over all test cases does not exceed 10<sup>6</sup>.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid solve() {\n  int q;\n  cin >> q;\n  stack<int> s1, s2;\n  while (q--) {\n    string s;\n    cin >> s;\n    if (s == \"push\") {\n      int x;\n      cin >> x;\n      s1.push(x);\n    }\n    if (s == \"pop\") {\n      if (!s2.empty()) {\n        int a = s2.top();\n        s2.pop();\n        cout << a << endl;\n      } else {\n        while (!s1.empty()) {\n          s2.push(s1.top());\n          s1.pop();\n        }\n        int a = s2.top();\n        s2.pop();\n        cout << a << endl;\n      }\n    }\n    if (s == \"front\") {\n      if (!s2.empty()) {\n        int a = s2.top();\n        cout << a << endl;\n      } else {\n        while (!s1.empty()) {\n          s2.push(s1.top());\n          s1.pop();\n        }\n        int a = s2.top();\n        cout << a << endl;\n      }\n    }\n  }\n}\n\nsigned main() {\n  ios::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n  int _t = 1;\n  cin >> _t;\n  while (_t--) {\n    solve();\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:32:54.867498+00:00"
+        },
+        "hints": {
+            "hint1": "A queue is a data structure that follows the First-In-First-Out (FIFO) principle, meaning that the first element added to the queue is the first one to be removed.",
+            "hint2": "",
+            "solution_approach": "To implement a queue using two stacks, we can use the following idea:\nWe have two stacks, stack1 and stack2.\nTo add an element to the queue, we simply push it onto stack1.\nTo remove an element from the queue, we first check if stack2 is empty. If it is, we transfer all the elements from stack1 to stack2 in reverse order. This ensures that the elements are in the correct order for a queue (the first element added to stack1 becomes the last element in stack2, and so on). After that, we simply pop the top element from stack2.\nTo retrieve the front element of the queue without removing it, we work similarly to the pop method, but instead of popping the top element from stack2, we return it.\n\nFor Time complexity, It's difficult to see for each query. Try to see the number of operations on each element that is inserted at least once. 1. Push on S1, 2. Move from S1 to S2 (Pop and Push), 3. Pop from S2. So total amount of work done on each element is $O(1)$. So sum across all queries is bounded by $O(Q)$ [Armotization in action].\n\nTime Complexity per test case - $O(Q)$\nTherefore, the overall time complexity for processing all the test cases would be $O(TQ)$, where $T$ is the number of test cases."
+        },
+        "id": 350,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer Q - the number of queries\n\nEach of the next Q lines contain the queries.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "1. Queue becomes: [3]\n2. Queue becomes: [3, 5]\n3. Queue becomes [5] and element at front was 3\n4. Queue becomes [5]  and element at front is 5\n5. Queue becomes [5, 7]\n6. Queue becomes [7] and element at front was 5\n7. Queue becomes empty and element at front was 7",
+        "output_format": "For each test case, print the required queries.",
+        "samples": [
+            {
+                "input": "1\n7\npush 3\npush 5\npop\nfront\npush 7\npop\npop\n",
+                "output": "3\n5\n5\n7\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Queue using 2 Stacks AZ101",
+        "video_editorial_id": 8184
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a BST (Binary Search Tree), find the shortest range $[x, y]$, such that, at least one node of every level of the BST lies in the range.\nIf there are multiple ranges with the same gap (i.e. $(y-x)$) return the range with the smallest $x$.\nWe define the range $[a, b]$ is smaller than range $[c, d]$ if $b - a < d - c$ or $a < c$ if $b - a == d - c$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^4$ - the number of test cases.\n$1 \\leq n \\leq 10^5$ - number of nodes in binary search tree.\n$-10^6 \\leq value \\leq 10^6$ - value of nodes in binary search tree.\n- All node values are unique.\n- Sum of $n$ over all test cases is $\\leq 10^6$.",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nstruct TreeNode {\n    int data;\n    TreeNode*left;\n    TreeNode*right;\n    TreeNode(int x) {\n        this->data = x;\n        this->left = nullptr;\n        this->right = nullptr;\n    }\n};\n\n\nclass Solution {\npublic:\n    pair<int, int> shortestRangeBST(TreeNode *root) {\n        unordered_map<int, vector<int>> nums;\n        queue<pair<TreeNode*, int>> q;\n        q.push({root, 0});\n        while (!q.empty()) {\n            auto x = q.front(); q.pop();\n            nums[x.second].push_back(x.first->data);\n            if (x.first->left)q.push({x.first->left, x.second + 1});\n            if (x.first->right)q.push({x.first->right, x.second + 1});\n        }\n        int k = nums.size(), ans = 1e9;\n        pair<int, int> range = { -1e9, 1e9};\n        vector<int> ptr(k, 1);\n        multiset<array<int, 2>> s;\n        for (int i = 0; i < k; i++)s.insert({nums[i][0], i});\n        while (1) {\n            auto x = *s.begin(), y = *s.rbegin();\n            if (ans > y[0] - x[0])ans = y[0] - x[0], range = {x[0], y[0]};\n            else if (ans == y[0] - x[0])range = min(range, {x[0], y[0]});\n            if (ptr[x[1]] == nums[x[1]].size())break;\n            s.erase(s.find(x));\n            s.insert({nums[x[1]][ptr[x[1]]], x[1]});\n            ptr[x[1]]++;\n        }\n        return {range.first, range.second};\n    }\n};\n\nTreeNode *deserialize(string data) {\n    if (data.size() == 0)\n        return nullptr;\n    vector<string> dat;\n    string t;\n    for (auto c : data)\n    {\n        if (c == ',')\n        {\n            dat.push_back(t);\n            t.clear();\n        }\n        else\n            t.push_back(c);\n    }\n    dat.push_back(t);\n    int i = 0;\n    queue<TreeNode *> q;\n    TreeNode *root = new TreeNode(stoll(dat[0]));\n    q.push(root);\n    auto cur = root;\n    i++;\n    while (!q.empty())\n    {\n        auto x = q.front();\n        q.pop();\n        if (dat[i] != \"x\")\n        {\n            x->left = new TreeNode(stoll(dat[i]));\n            q.push(x->left);\n        }\n        i++;\n        if (dat[i] != \"x\")\n        {\n            x->right = new TreeNode(stoll(dat[i]));\n            q.push(x->right);\n        }\n        i++;\n    }\n    return root;\n}\n\nvoid solve() {\n    int n;\n    cin >> n;\n    string s;\n    cin >> s;\n    auto root = deserialize(s);\n    Solution sol;\n    auto ans = sol.shortestRangeBST(root);\n    cout << ans.first << \" \" << ans.second << endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:26:42.855704+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "First, store the values of the nodes level-wise in a ```vector<int> nums[K]```, where $K$ is the height of the binary search tree.\nFor each level, these values will be sorted.\nNow, we want the smallest range covering elements from these $K$ lists $nums$.\n\n##### Algorithm to find shortest K lists range:  \n\n1. Create a Min heap to store $k$ elements, one from each array and a variable minrange initialized to a maximum value and also keep a variable max to store the maximum integer.\n2. Initially put the first element of each element from each list and store the maximum value in max.\n3. Repeat the following steps until at least one list exhausts : \n    -   To find the minimum value or min, use the top or root of the Min heap which is the minimum element.\n    -   Now update the midrange if the current (max-min) is less than minrange.\n    -   Remove the top or root element from the priority queue and insert the next element from the list which contains the min element and update the max with the new element inserted.\n\n#### Complexity Analysis: \n**Time complexity:** $O(n * k *log k)$, where $k$ is the height of the tree.\n\nTo find the maximum and minimum in a Min Heap of length k the time required is $O(log k)$, and to traverse all the k arrays(lists) of length $n$ (in the worst case), the time complexity is $O(n*k)$, then the total time complexity is $O(n * k *log k)$.\n\n**Space complexity:** $O(n)$."
+        },
+        "id": 1062,
+        "input_format": "You don't need to read input or print anything. Complete the function ```pair<int,int> shortestRangeBST(TreeNode *root)``` which takes the root of the binary search tree as an input parameter and returns the pair having the shortest range.\n\nFor local testing of the sample, the first line contains $T$, the number of test cases. The first line of each test case contains $n$- number of nodes. The second line of each test case contains the level order traversal of the tree, where *'$x$'* denotes the *'nullptr'*.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For test case 1\n```\n            8\n          /   \\\n         3     10\n       /  \\      \\\n      2   |6|     14\n          / \\     /\n         4   7   12\n                /  \\\n             |11|   13\n```\nLevel order traversal of the tree is $[8], [3, 10], [2, 6, 14], [4, 7, 12], [11, 13]$. \nThe shortest range which satisfies the above-mentioned condition is $[6, 11]$.",
+        "output_format": "Returns the pair having the shortest range, such that, at least one node of every level of the BST lies in the range.\nIf there are multiple ranges with the same gap (i.e. $(y-x)$) return the range with the smallest $x$.",
+        "samples": [
+            {
+                "input": "2\n11\n8,3,10,2,6,x,14,x,x,4,7,12,x,x,x,x,x,11,13,x,x,x,x\n5\n12,x,13,x,14,x,15,x,16,x,x\n",
+                "output": "6 11\n12 16\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Binary Tree",
+            "Binary Search Tree"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nstruct TreeNode {\n    int data;\n    TreeNode*left;\n    TreeNode*right;\n    TreeNode(int x) {\n        this->data = x;\n        this->left = nullptr;\n        this->right = nullptr;\n    }\n};\n</fix>\n\n<fix>\nclass Solution {\n    </fix>\n    <fix>\npublic:\n    </fix>\n    <fix>\n    pair<int, int> shortestRangeBST(TreeNode *root) {\n        </fix>\n        // write code here.\n        return {0, 0};\n        <fix>\n    }\n    </fix>\n\n    <fix>\n};\n</fix>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<fix>\nTreeNode *deserialize(string data) {\n    if (data.size() == 0)\n        return nullptr;\n    vector<string> dat;\n    string t;\n    for (auto c : data)\n    {\n        if (c == ',')\n        {\n            dat.push_back(t);\n            t.clear();\n        }\n        else\n            t.push_back(c);\n    }\n    dat.push_back(t);\n    int i = 0;\n    queue<TreeNode *> q;\n    TreeNode *root = new TreeNode(stoll(dat[0]));\n    q.push(root);\n    auto cur = root;\n    i++;\n    while (!q.empty())\n    {\n        auto x = q.front();\n        q.pop();\n        if (dat[i] != \"x\")\n        {\n            x->left = new TreeNode(stoll(dat[i]));\n            q.push(x->left);\n        }\n        i++;\n        if (dat[i] != \"x\")\n        {\n            x->right = new TreeNode(stoll(dat[i]));\n            q.push(x->right);\n        }\n        i++;\n    }\n    return root;\n}\n\nvoid solve() {\n    int n;\n    cin >> n;\n    string s;\n    cin >> s;\n    auto root = deserialize(s);\n    Solution sol;\n    auto ans = sol.shortestRangeBST(root);\n    cout << ans.first << \" \" << ans.second << endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 3.0,
+        "title": "Shortest Range in a BST",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

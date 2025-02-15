@@ -1,0 +1,70 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a number $N$ corresponding to a person's age (in days). Print his age in years, months, and days, followed by its respective messages \"**years**\", \"**months**\", and \"**days**\".\n\n**Note:** Consider that a whole year has **365** days and **30** days per month.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10$\n$1 \\leq N \\leq 10^6$",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n\n    while (t--)\n    {\n        int n;\n        cin >> n;\n        int y = n/365;\n        n = n%365;\n        int m = n/30;\n        n = n%30;\n        int d = n;\n        cout << y << \" years\\n\" << m << \" months\\n\" << d << \" days\\n\";\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int t = Integer.parseInt(br.readLine());\n\n        while (t-- > 0) {\n            int n = Integer.parseInt(br.readLine());\n            int y = n / 365;\n            n = n % 365;\n            int m = n / 30;\n            n = n % 30;\n            int d = n;\n            out.println(y + \" years\");\n            out.println(m + \" months\");\n            out.println(d + \" days\");\n        }\n        \n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n\n    for _ in range(t):\n        n = int(data[idx])\n        idx += 1\n        y = n // 365\n        n = n % 365\n        m = n // 30\n        n = n % 30\n        d = n\n        stdout.write(f\"{y} years\\n\")\n        stdout.write(f\"{m} months\\n\")\n        stdout.write(f\"{d} days\\n\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:32:10.469011+00:00"
+        },
+        "hints": {
+            "hint1": "Try to divide and get the remainder.",
+            "hint2": "Consider sequentially calculating years, then months, then days using modular arithmetic.",
+            "solution_approach": "To solve this problem, we need to convert a given number of days into years, months, and days, considering specific durations for a year and a month as per the problem statement.\n\n**Algorithm:**\n\n1. For each test case:\n\n   a. Read the number of days $N$.\n\n   b. Calculate the number of years:\n\n      - Years ($Y$): $Y = \\left\\lfloor \\dfrac{N}{365} \\right\\rfloor$\n\n   c. Update the remaining days:\n\n      - $N = N \\mod 365$\n\n   d. Calculate the number of months from the remaining days:\n\n      - Months ($M$): $M = \\left\\lfloor \\dfrac{N}{30} \\right\\rfloor$\n\n   e. Update the remaining days:\n\n      - $N = N \\mod 30$\n\n   f. The remaining days are the days ($D$):\n\n      - Days ($D$): $D = N$\n\n2. Output the values of $Y$, $M$, and $D$ with their respective labels.\n\n**Explanation:**\n\n- We first divide the total number of days by 365 to find out how many full years there are.\n\n- The remainder after calculating years is used to calculate the number of months by dividing by 30.\n\n- The remainder after calculating months is the number of days left.\n\n**Time Complexity per test case:** $O(1)$\n\n**Space Complexity per test case:** $O(1)$"
+        },
+        "id": 1162,
+        "input_format": "The first line contains an integer $T$, the number of test cases.\nFor each test case:\nThe first line contains an integer $N$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "**Sample Input 1 Explanation:**\nFor the input $N = 400$:\n- Years: $Y = \\left\\lfloor \\dfrac{400}{365} \\right\\rfloor = 1$\n- Remaining days: $N = 400 \\mod 365 = 35$\n- Months: $M = \\left\\lfloor \\dfrac{35}{30} \\right\\rfloor = 1$\n- Days: $D = 35 \\mod 30 = 5$\nThus, the output is:\n1 years\n1 months\n5 days",
+        "output_format": "For each test case, print the output as shown in the sample examples.",
+        "samples": [
+            {
+                "input": "1\n400",
+                "output": "1 years\n1 months\n5 days"
+            },
+            {
+                "input": "1\n30",
+                "output": "0 years\n1 months\n0 days"
+            },
+            {
+                "input": "2\n800\n10",
+                "output": "2 years\n2 months\n10 days\n0 years\n0 months\n10 days"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Math",
+            "Implementation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Age in Days",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

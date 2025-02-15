@@ -1,0 +1,60 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given two strings $str1$ and $str2$, return the shortest string that has both $str1$ and $str2$ as subsequences. If there are multiple valid strings, return any of them.\n\nA string $s$ is a subsequence of string $t$ if deleting some number of characters from $t$ (possibly $0$) results in the string $s$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 100$\n$1 \\leq |str1| \\leq 1000$\n$1 \\leq |str2| \\leq 1000$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define endl '\\n'\n\nint dp[1001][1001];\nstring s1, s2;\nint rec(int i, int j) {\n    if (i == s1.size() || j == s2.size())return 0;\n    auto &ans = dp[i][j];\n    if (ans != -1)return ans;\n    ans = max(rec(i + 1, j), rec(i, j + 1));\n    if (s1[i] == s2[j])ans = max(ans, 1 + rec(i + 1, j + 1));\n    return ans;\n}\nstring ShortestCommonSupersequence(string &str1, string &str2) {\n    s1 = str1, s2 = str2;\n    memset(dp, -1, sizeof(dp));\n    string ans;\n    int i = 0, j = 0;\n    while (i < s1.size() && j < s2.size()) {\n        if (s1[i] == s2[j]) {\n            ans.push_back(s1[i]);\n            i++;\n            j++;\n        }\n        else {\n            if (rec(i + 1, j) > rec(i, j + 1)) {\n                ans.push_back(s1[i]);\n                i++;\n            }\n            else {\n                ans.push_back(s2[j]);\n                j++;\n            }\n        }\n    }\n    while (i < s1.size())ans.push_back(s1[i++]);\n    while (j < s2.size())ans.push_back(s2[j++]);\n    return ans;\n}\n\nvoid checker() {\n    string x, y;\n    cin >> x >> y;\n    auto s = ShortestCommonSupersequence(x, y);\n    cout << s.size() << endl;\n    bool f = 1;\n    int i = 0, j = 0;\n    while (i < x.size() && j < s.size()) {\n        if (x[i] == s[j])i++, j++;\n        else j++;\n    }\n    if (i != x.size())f = 0;\n    i = 0, j = 0;\n    while (i < y.size() && j < s.size()) {\n        if (y[i] == s[j])i++, j++;\n        else j++;\n    }\n    if (i != y.size())f = 0;\n    cout << f << endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        checker();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:18:02.929977+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Computing Shortest Common Supersequence is similar to computing longest common subsequence (LCS)\n\n**Idea**:The result string should contain all characters of $s1$ and $s2$, discarding the common ones.\n-> $S1+S2-LCS$\nbecause characters appearing in LCS are coming twice in the result. So count them only once.\n\nHere is the approach using dynamic programming:\n\n1. Compute the LCS using Dynamic Programming tabulation where each cell resturs the length of the cell upto $i$ characters of $str1$ and $j$ characters of $str2$.\n2. We will start processing the table using the last cell till $i>0$ or $j>0$\n    2.1 Check if $str1[i-1]==str2[j-1]$. If equal, we must add this character to the result string only once\n    2.2 If not equal, then find the maximum of $t[i-1][j]$ and $t[i][j-1]$ (this is how you had calculated LCS length first) , start moving in the max direction afte inserting the character to the result string. Moving in max direction means discarding that character of the string that has not contributed in LCS. But still inserting in the final string because it will contribute in SuperSequence.\n    2.3 Compute till $i>0$ $&&$ $j>0$. If any of the string is left i.e if $i>0$ or $j>0$ then add its characters to the result. This means that we copied 1 complete string but other is still remaining.\n\nWe have got the required string but stored all the characters in reverse order. So, just reverse the result and you will get the final answer.\n\n**Time Complexity** : $O(|str1|*|str2|)$."
+        },
+        "id": 914,
+        "input_format": "Given function **string ShortestCommonSupersequence( string &str1, string &str2)** with string $str1$ and $str2$ as input.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Complete the given function **string ShortestCommonSupersequence( string &str1, string &str2)** and return the shortest common supersequence of the $2$ input strings. If there are multiple valid strings, return any of them.",
+        "samples": [
+            {
+                "explanation": "$Test $ $ Case $ $ 1:$\nalgozenith\n$Test $ $ Case $ $ 2:$\nzzzzz\n$Test $ $ Case $ $ 3:$\ncabac\n$Test $ $ Case $ $ 4:$\nxyzabc",
+                "input": "4\nalgozenith az\nzzzzz zzzz\nabc caba\nabc xyz\n",
+                "output": "10\n1\n5\n1\n5\n1\n6\n1\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-NK Securities"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define endl '\\n'\n</fix>\n\nstring ShortestCommonSupersequence(string &str1, string &str2) {\n    // write code here.\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<fix>\nvoid checker() {\n    string x, y;\n    cin >> x >> y;\n    auto s = ShortestCommonSupersequence(x, y);\n    cout << s.size() << endl;\n    bool f = 1;\n    int i = 0, j = 0;\n    while (i < x.size() && j < s.size()) {\n        if (x[i] == s[j])i++, j++;\n        else j++;\n    }\n    if (i != x.size())f = 0;\n    i = 0, j = 0;\n    while (i < y.size() && j < s.size()) {\n        if (y[i] == s[j])i++, j++;\n        else j++;\n    }\n    if (i != y.size())f = 0;\n    cout << f << endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        checker();\n        // i++;\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 2.0,
+        "title": "Shortest Common Supersequence",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

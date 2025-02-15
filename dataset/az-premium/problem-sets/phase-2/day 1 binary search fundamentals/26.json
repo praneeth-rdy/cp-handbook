@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given two integers <i>N</i> and <i>S</i>. Find the number of positive integers <i>X</i> less than equal to <i>N</i>, such that the difference between <i>X</i> and the sum of its digits (in decimal representation) is not less than <i>S</i>.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\ntypedef long long ll;\nsigned main()\n{\n   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);\n   ll testcases;\n   cin>>testcases;\n   while(testcases--){\n       ll n,s;\n       cin>>n>>s;\n       ll low = 1,high = n;\n       ll ans = 0;\n       while(low<=high)\n       {\n           ll mid = (low+high)/2;\n           ll temp = mid;\n           ll sumOfDigit = 0;\n           while(temp>0)\n           {\n               sumOfDigit+=temp%10;\n               temp/=10;\n           }\n           if(mid-sumOfDigit>=s)\n               high = mid-1;\n           else\n               ans=mid,low = mid+1;\n       }\n       cout<<n-ans<<\"\\n\";\n   }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:45:32.466011+00:00"
+        },
+        "hints": {
+            "hint1": "If for a number X, the difference between X and the sum of its digits is not less than S, then for X+1 also difference will not be less than S. Can you prove it?\nIf this claim is true then use this monotone property.",
+            "hint2": "<p>Prove: Let F(X) represents the sum of digits of X.</p><p>Since F(X+1) is not greater than F(X)+1,&nbsp;<br>F(X+1) \u2264 F(X)+1<br>X + F(X+1) \u2264 F(X) + 1 + X , adding X both side<br>X - F(X) \u2264 X + 1 - F(X+1)</p><p>then X + 1 - F(X+1) \u2265 X - F(X).&nbsp;</p><p>and if X - F(X) \u2265 S,&nbsp;</p><p>then X + 1 - F(X+1) \u2265 S.</p>",
+            "solution_approach": "This observation allows us to use binary search to find the minimum number X, such that the difference between X and the sum of its digits is not less than S. It follows the monotone property that initially all numbers less than X have difference less than equal to S. So \u201cNO\u201d  instance holds for numbers less than X. Then for all numbers \u2265X \u201cYES\u201d instance hold. Using binary search we can find the smallest value X such that the \u201cYES\u201d instance holds. And if X\u2009\u2264\u2009N, then all numbers in the segment [X,\u2009N] have difference not less than S."
+        },
+        "id": 26,
+        "input_format": "<p>The first line of input contains one integer <i>T</i> (1 \u2264 <i>T</i> \u2264 10<sup>4</sup>) \u2014 the number of test cases. Then <i>T</i> test cases follow.</p><p>The first line of each test case contains two space-separated integer <i>N</i>, <i>S</i> where 1&lt;=<i>N</i>&lt;=10^18, 0&lt;=<i>S</i>&lt;=10^18.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case print the number of positive integers <i>X</i> in a new line.</p>",
+        "samples": [
+            {
+                "input": "10\n5 4\n100 5\n20 3\n40 19\n32 15\n69 12\n1000000000000000 0\n1000000000000000000 10000000\n9999999999999 9999999999882\n13465751690089037 981448507916936",
+                "output": "0\n91\n11\n11\n13\n50\n1000000000000000\n999999999989999991\n10\n12484303182172038"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Tricky",
+            "Binary Search"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Number & Sum of Digit",
+        "video_editorial_id": 10689
+    },
+    "details": "Problem Details"
+}

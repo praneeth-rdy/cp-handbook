@@ -1,0 +1,58 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>We have given an adjacency&nbsp;representation of a <strong>directed weighted graph</strong> and an array of vertices. At each iteration,&nbsp;a vertex is removed from the graph. Vertices are removed in the order given in the array. When the vertex is removed, all the edges that go in and out are also removed.&nbsp;</p><p>Print the sum of all pairs shortest path<i><strong>&nbsp;</strong></i><strong>just before each iteration</strong>.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>N</i> \u2264 500</p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\n#define ll long long int\n#define N 510\nusing namespace std;\n \nll inf=1e16;\nint main()\n{\n    int n;\n    ll A[N][N]; // the adjecency matrix\n    scanf(\"%d\",&n); // take n.\n    for(int i=0;i<n;i++) for(int j=0;j<n;j++) scanf(\"%lld\",&A[i][j]); // we take the graph in a 0 indexed manner.\n    vector<ll> ans; // the final answer array.\n    int x[N]; // the order of elements removed.\n    for(int i=0;i<n;i++) scanf(\"%d\",&x[i]),x[i]--;// take input, -- for 0 index\n    for(int i=n-1;i>=0;i--) // move from backward [x[i],x[i+1]...x[n-1]] are the active edges.\n    {\n        for(int j=0;j<n;j++) \n        \tfor(int k=0;k<n;k++) \n        \t\tA[j][k]=min(A[j][k],A[j][x[i]]+A[x[i]][k]); // relax the current node (Floyd washall)\n\n        // After the ith iteration. The matrix has relaxed nodes x[i],x[i+1]...x[n-1].\n        // So we these are the active nodes, and Floyd warshall ensures all those have correct shortest paths.\n        ll temp=0;\n        for(int j=i;j<n;j++) \n        \tfor(int k=i;k<n;k++)\n        \t\ttemp+=A[x[j]][x[k]]; // get the all pair distnce for all active nodes.\n        ans.push_back(temp); // add it to the ans.\n    }\n    for(int i=(int)ans.size()-1;i>=0;i--) printf(\"%lld \",ans[i]); // print in reverse order as we added instead of remove.\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:13:20.297214+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Use Floyd-Warshall Algorithm!</p>",
+            "hint2": "<p>Think about the order of loops in the Floyd-Warshall Algorithm.</p>",
+            "solution_approach": "<p>In Floyd-Warshall algorithm we do iterations like this:</p><p>for all k in (1, n) : D[i][j] = min(D[i][j], D[i][k] + D[k][j]).</p><p>When we do this we assume that from vertex <i>i</i> to <i>j</i> we already found the shortest path which has all intermediate vertices in the set {1, 2, \u2026, <i>k</i>-1}. After D[i][j] = min(D[i][j], D[i][k] + D[k][j]), we will get the shortest path from <i>i</i> to <i>j</i> which has all intermediate vertices in the set {1,2, \u2026, <i>k</i>}.</p><p>For solving the problem we will use this concept of Floyd-Warshall algorithm. Instead of going forward, we will add vertices from the backward of the array. So running time of the algorithm is as same as Floyd Warshall algorithm i.e. <i>O(n<sup>3</sup>)</i>.</p>"
+        },
+        "id": 431,
+        "input_format": "<p>The first line contains integer <i>n</i> (1\u2009\u2264\u2009<i>n</i>\u2009\u2264\u2009500) \u2014 the number of vertices in the graph.<br>Next <i>n</i> lines contain <i>n</i> integers each \u2014 the graph adjacency matrix: the <i>j</i>-th number in the <i>i</i>-th line <i>a<sub>ij</sub></i> (1\u2009\u2264\u2009<i>a<sub>ij</sub></i>\u2009\u2264\u200910<sup>5</sup>,\u2009<i>a<sub>ii</sub></i>\u2009=\u20090) represents the weight of the edge that goes from vertex <i>i</i> to vertex <i>j</i>.<br>The next line contains <i>n</i> distinct integers: <i>x</i><sub>1</sub>,\u2009<i>x</i><sub>2</sub>,\u2009...,\u2009<i>x<sub>n</sub></i> (1\u2009\u2264\u2009<i>x<sub>i</sub></i>\u2009\u2264\u2009<i>n</i>) \u2014 the order of vertices removed from the graph.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print <i>N </i>space-separated numbers, where <i>i</i>th number represents the sum of all pairs shortest path just before <i>i</i>th removal.</p>",
+        "samples": [
+            {
+                "input": "2\n0 5\n4 0\n1 2",
+                "output": "9 0"
+            },
+            {
+                "input": "4\n0 3 1 1\n6 0 400 1\n2 4 0 1\n1 1 1 0\n4 1 2 3",
+                "output": "17 23 404 0 "
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Floyd Warshall",
+            "All Pair Shortest Path"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "All Pairs Shortest Path",
+        "video_editorial_id": 8203
+    },
+    "details": "Problem Details"
+}

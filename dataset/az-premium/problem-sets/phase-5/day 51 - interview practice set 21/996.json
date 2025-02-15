@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given a directed graph with $n$ vertices and $m$ edges.\n\nYou need to find if there exists a mother vertex in the given graph. Output *\"Yes\"* if it exists, otherwise output *\"No\"*.\n\nA mother vertex is defined as a vertex from which all the vertices in the graph are accessible by a directed path.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^4$\n$1 \\leq n \\leq 10^5$\n$0 \\leq m \\leq 10^5$\n$1 \\leq u,v \\leq n$\nThere can be duplicate edges or self-loops in the input graph.\nThe Sum of $n$ over all test cases is $\\leq 10^6$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nvector<vector<int>> adj;\nvector<bool> vis;\nint cnt, mother;\nvoid dfs(int v) {\n\tvis[v] = true;\n\tcnt++;\n\tfor (auto x : adj[v]) {\n\t\tif (!vis[x])dfs(x);\n\t}\n\tmother = v;\n}\nbool motherVertex(int n, vector<vector<int> > &B) {\n\tvis.assign(n + 1, false);\n\tadj.assign(n + 1, vector<int>());\n\tfor (auto x : B) {\n\t\tadj[x[0]].push_back(x[1]);\n\t}\n\tfor (int i = 1; i <= n; i++) {\n\t\tif (!vis[i])dfs(i);\n\t}\n\tvis.assign(n + 1, false);\n\tcnt = 0;\n\tdfs(mother);\n\treturn cnt == n;\n}\nvoid solve() {\n\tint n, m;\n\tcin >> n >> m;\n\tvector<vector<int>> adj(m, vector<int>(2));\n\tfor (int i = 0; i < m; i++)cin >> adj[i][0] >> adj[i][1];\n\tint ans = motherVertex(n, adj);\n\tif (ans)cout << \"Yes\" << endl;\n\telse cout << \"No\" << endl;\n}\nint main() {\n\tios_base :: sync_with_stdio(0);\n\tcin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n\tfreopen(\"input.txt\", \"r\", stdin); \\\n\tfreopen(\"output.txt\", \"w\", stdout);\n#endif\n\tint t = 1;\n\t// int i = 1;\n\tcin >> t;\n\twhile (t--) {\n\t\t// cout << \"Case #\" << i << \": \";\n\t\tsolve();\n\t\t// i++;\n\t}\n\treturn 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:34:38.076137+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "We can find a mother vertex in $O(V+E)$ time. The idea is based on Kosaraju\u2019s Strongly Connected Component Algorithm. In a graph of strongly connected components, mother vertices are always vertices of the source component in the component graph. The idea is based on the below fact.\nIf there exists a mother vertex (or vertices), then one of the mother vertices is the last finished vertex in DFS. (Or a mother vertex has the maximum finish time in DFS traversal).\nA vertex is said to be finished in DFS if a recursive call for its DFS is over, i.e., all descendants of the vertex have been visited. \n\n**How does the above idea work?**\nLet the last finished vertex be $v$. Basically, we need to prove that there cannot be an edge from another vertex $u$ to $v$ if $u$ is not another mother vertex (Or there cannot exist a non-mother vertex u such that $u\u2192v$ is an edge). There can be two possibilities.\n\nRecursive DFS call is made for $u$ before $v$. If an edge $u\u2192v$ exists, then $v$ must have finished before $u$ because $v$ is reachable through $u$ and a vertex finishes after all its descendants.\nRecursive DFS call is made for $v$ before $u$. In this case also, if an edge $u\u2192v$ exists, then either $v$ must finish before $u$ (which contradicts our assumption that $v$ is finished at the end) OR $u$ should be reachable from $v$ (which means $u$ is another mother vertex).\n\n**Algorithm:** \n\n1. Do DFS traversal of the given graph. While doing traversal keep track of the last finished vertex \u2018v\u2019. This step takes $O(V+E)$ time.\n2. If there exists a mother vertex (or vertices), then $v$ must be one (or one of them). Check if $v$ is a mother vertex by doing DFS/BFS from $v$. This step also takes $O(V+E)$ time."
+        },
+        "id": 996,
+        "input_format": "First-line contains $T$ - the number of test cases.\nThe first line of each test case contains $n$ and $m$.\nThe next $m$ lines of each test case contain $m$ directed edges of the graph, each from $u$ to $v$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, Output *\"Yes\"* if Mother Vertex exists, otherwise output *\"No\"*.",
+        "samples": [
+            {
+                "input": "4\n5 5\n2 1\n1 4\n4 5\n1 3\n3 2\n3 3\n1 3\n2 3\n1 3\n3 3\n1 3\n2 3\n3 2\n1 0\n",
+                "output": "Yes\nNo\nYes\nYes\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Mother Vertex",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

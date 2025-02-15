@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Find the number of ways to Tile NxM rectangle with dominoes. A domino is 2 * <i>1 or 1 </i>* 2 rectangle.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\n\nint dp[13][(1<<12)];\nint n, m;\n\nvoid dfs(int x, int y, int vis, int nvis) {\n    if(x == n) {\n        return ;\n    }\n    if(y >= m) {\n        dp[x+1][nvis] += dp[x][vis];\n        return ;\n    }\n    int mask = 1<<y;\n    if(vis & mask) {\n        dfs(x, y+1, vis, nvis);\n    }\n    else {\n        dfs(x, y+1, vis, nvis | mask);\n        if(y + 1 < m && !(vis & mask) && !(vis & (mask << 1))) {\n            dfs(x, y+2, vis, nvis);\n        }\n    }\n}\n\nsigned main(){\n    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n    int t;\n    cin >> t;\n    while(t--) {\n        cin >> n >> m;\n        memset(dp, 0, sizeof(dp));\n        dp[0][0] = 1;\n        for (int i = 0; i < n; ++i) {\n            for (int j = 0; j < (1<<m); ++j) {\n                dfs(i, 0, j, 0);\n            }\n        }\n        cout << dp[n][0] << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:16:51.449054+00:00"
+        },
+        "hints": {
+            "hint1": "If the number of columns and number of rows is odd, the answer would be 0 since each domino occupies an area of 2. You can consider each column as a binary number which gives the information whether the i-th bit in that column is filled with a domino or not.",
+            "hint2": "We make the DP array as DP[pos][vis] (1-based indexing for pos) which denotes the number of ways to fill the grid where pos is the current row and vis denotes the blocks filled in the current row. All the blocks before the pos row must be completely filled. One way to make the transition would be to find DP[pos][vis] from DP[pos-1][n_vis] by using the different possible values of n_vis for which there exists a filling of pos-th row with the same set of filled blocks. But you will get TLE in this since the time complexity will be O(N * 2^(2*M))",
+            "solution_approach": "<p>Instead of finding all the different possible masks of the previous rows, we can find the different possible masks for the current row to get the answer. This means that we need to find the number of ways to fill the current row with blocks filled as vis. We can make the following cases:</p><p>1. If the current block is already filled, we go on to the next block.</p><p>2. If the current block is not filled, we can place the block as either 1*2 or 2*1 form and go on to the next block after updating the blocks visited for the current row and the next row (for 1*2 domino)</span></p><p>Whenever we fill the current row completely, a new set of blocks are marked in the next row because of the 1*2 dominos, so we need to add that to the answer for the next row. For i = 0, filling 0 cells is possible so the base case is DP[0][0] = 1. We need to fill all the n rows such that the columns visited for the next row is 0 and all rows before n are completely filled, so the final answer would be DP[n][0].</p><p>Time Complexity per test case: O(N^2 * M * 2^M)</p>"
+        },
+        "id": 455,
+        "input_format": "<p>The first line contains an integer T (1 \u2264 T \u2264 100) - the number of testcases.</p><p>The first line of each test case contains two space-separated integers N, M. 1 \u2264 N, M \u2264 12.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "",
+        "samples": [
+            {
+                "input": "7\n10 3\n10 5\n2 3\n10 1\n2 4\n5 4\n9 11",
+                "output": "571\n185921\n3\n1\n5\n95\n0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Dynamic Programming",
+            "Bitmask"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "Tiling",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

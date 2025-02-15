@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given a grid of size n*m with integers, you need to find the maximum sum of a subgrid.</p><p>Example:</p><figure class=\"image\"><img src=\"https://docs.google.com/drawings/u/0/d/sn89H9-es56rO4VoHHP8wmw/image?w=168&amp;h=127&amp;rev=191&amp;ac=1&amp;parent=1VjM_9wDxQyjvaQpycTQ7qD0SUFpPC-ji4wYYfoYsXVU\"></figure><p>The subgrid coloured in yellow has the maximum sum which is 15.</p><p>&nbsp;</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 t \u2264 10<sup>5</sup></p><p>1 \u2264 n, m \u2264 200</p><p>-10<sup>5</sup> \u2264 a<sub>ij </sub>\u2264 10<sup>5</sup></p><p>It is guaranteed that the sum of n*m over all test cases does not exceed 10<sup>5</sup>.</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\n\nsigned main(){\n    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n    int t;\n    cin >> t;\n    while(t--) {\n        int n, m;\n        cin >> n >> m;\n        int grid[n][m];\n        for (int i = 0; i < n; ++i) {\n            for (int j = 0; j < m; ++j) {\n                cin >> grid[i][j];\n            }\n        }\n        int ans = -2e18;\n        if(n <= m) {\n            for (int l = 0; l < m; ++l) {\n                int temp[n];\n                bool allNeg = true;\n                int num = -2e18;\n                memset(temp, 0, sizeof(temp));\n                for (int r = l; r < m; ++r) {\n                    for (int k = 0; k < n; ++k) {\n                        temp[k] += grid[k][r];\n                        num = max(num, grid[k][r]);\n                        if(grid[k][r] >= 0) {\n                            allNeg = false;\n                        }\n                    }\n                    if(allNeg) {\n                        ans = max(ans, num);\n                    }\n                    else {\n                        int maxSum = temp[0], curSum = 0;\n                        for (int k = 0; k < n; ++k) {\n                            curSum += temp[k];\n                            maxSum = max(maxSum, curSum);\n                            curSum = max(0ll, curSum);\n                        }\n                        ans = max(ans, maxSum);\n                    }\n                }\n            }\n        }\n        else {\n            for (int l = 0; l < n; ++l) {\n                int temp[m];\n                bool allNeg = true;\n                int num = -2e18;\n                memset(temp, 0, sizeof(temp));\n                for (int r = l; r < n; ++r) {\n                    for (int k = 0; k < m; ++k) {\n                        temp[k] += grid[r][k];\n                        num = max(num, grid[k][r]);\n                        if(grid[k][r] >= 0) {\n                            allNeg = false;\n                        }\n                    }\n                    if(allNeg) {\n                        ans = max(ans, num);\n                    }\n                    else {\n                        int maxSum = temp[0], curSum = 0;\n                        for (int k = 0; k < m; ++k) {\n                            curSum += temp[k];\n                            maxSum = max(maxSum, curSum);\n                            curSum = max(0ll, curSum);\n                        }\n                        ans = max(ans, maxSum);\n                    }\n                }\n            }\n        }\n        cout << ans << \"\\n\";\n    }\n    return 0;\n}```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-04-08T01:28:11.704348+00:00"
+        },
+        "hints": {
+            "hint1": "If the left and right columns of the subgrid are fixed, think of an algorithm to find the consecutive rows which should be taken to maximize the sum.\n",
+            "hint2": "Kadane\u2019s Algorithm is used to find the maximum sum subarray. Same can be used for the grid.",
+            "solution_approach": "<p>In Kadane\u2019s algorithm, maximum sum is found between two indexes. Here, maximum sum between two rows can be found. Since the columns are fixed, a rectangle would be there. Consider the edge case when all elements in the grid are negative.</p><p>Time Complexity per test case: O(n*m<sup>2</sup>), if m \u2264 n</p>"
+        },
+        "id": 496,
+        "input_format": "<p>The first line of the input contains one integer t - the number of test cases. Then t test cases follow.</p><p>The first line of each test case contains two space-separated integers n, m - the size of the grid.</p><p>Each of the next n lines contains m space-separated integers, aij - the number at that cell.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, the top-left $2 \\times 2$ subgrid, $10 + 2 - 4 + 5 = 13$.\n\nFor the second test case, all cells have a maximum sum which is $-1$.\n\nFor the third test case, all cells are positive, and the maximum sum subgrid is the entire grid with sum $10$.",
+        "output_format": "For each test case, print the maximum sum.",
+        "samples": [
+            {
+                "input": "3\n2 3\n10 2 -1\n-4 5 -1\n2 2\n-1 -1\n-1 -1\n2 2\n1 2\n3 4",
+                "output": "13\n-1\n10"
+            }
+        ],
+        "status": "CREATED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Maximum Sum in Grid",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

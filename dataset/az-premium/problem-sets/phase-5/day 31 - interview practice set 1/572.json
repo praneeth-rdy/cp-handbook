@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a string `s`, determine if it can be made a palindrome by deleting at most one of its characters. \n\nIf `s[i]` is deleted, the resulting string is the concatenation of `s[0 : i - 1]` and `s[i + 1 : n - 1]`, where *n* is the size of `s`. \n\nIf yes, print `Y`, else print `N`.",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\nbool isPossible(std::string s) {\n int n = s.size();\n int i = 0, j = n - 1;\n\n bool mismatched = false;\n while (i < j) {\n   if (s[i] == s[j]) {\n     i++;\n     j--;\n     continue;\n   } else {\n     mismatched = true;\n     break;\n   }\n }\n\n if (!mismatched) {\n   return true;\n }\n\n //length of substrings (i .. j - 1 and i + 1 .. j)\n int len = j - i;\n\n bool mismatched1 = false;\n //check if substring (i .. j - 1) is a palindrome\n for (int left = 0; left < len / 2; ++left) {\n   int right = i + len - left - 1;\n   if (s[i + left] != s[right]) {\n     mismatched1 = true;\n   }\n }\n\n bool mismatched2 = false;\n //check if substring (i + 1 .. j) is a palindrome\n for (int left = 0; left < len / 2; ++left) {\n   int right = i + len - left;\n   if (s[i + left + 1] != s[right]) {\n     mismatched2 = true;\n   }\n }\n return !(mismatched1 && mismatched2);\n}\nsigned main() {\n ios_base::sync_with_stdio(false);\n cin.tie(0);\n cout.tie(0);\n int testCases;\n cin >> testCases;\n while (testCases--) {\n   string s;\n   cin >> s;\n   if (isPossible(s))\n     cout << \"Y\\n\";\n   else\n     cout << \"N\\n\";\n }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:18:33.030704+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Given a string <code>s</code>, we try to check if it can be converted into a palindrome in the following naive way -</p><p>First, we check if <code>s</code> itself is a palindrome, which can be done in O(<code>|s|</code>) time. If yes, we return <code>true</code> here. If not, we check if <code>s</code> can be made a palindrome by deleting exactly one of its characters.</p><p>For each character in <code>s</code>, we delete that character and concatenate the rest of the string. This can be done in O(<code>|s|</code>) time by constructing a new string by appending each character of <code>s</code> to an empty string but skipping the deleted character. We can check if the resulting string is a palindrome in O(<code>|s|</code>) time. If at least one of the resulting strings is a palindrome, we return <code>true</code>. If none of them are palindromes, we return <code>false</code>.</p><p>However, since we do this for each character of <code>s</code>, this approach takes O(<code>|s|<sup>2</sup></code>) time. As this is slow, we use the following more efficient solution -</p>",
+            "hint2": "\nWe place two pointers - *i*, at the first character, and *j*, at the last character. If `s[i] != s[j]`, we call it a mismatch. \n\nIf there is no mismatch, we increment *i*, decrement *j*, and repeat the process. If there is a mismatch, we have two options:\n- Delete the *i*-th character (increment *i*).\n- Delete the *j*-th character (decrement *j*).\n\nWe are allowed to do this only for the first mismatch (as we are allowed to delete at most `1` character). This means that we can check both strings:\n- The one obtained by deleting `s[i]`.\n- The one obtained by deleting `s[j]`.\n\nIf either of these is a palindrome, we can conclude that `s` can be made a palindrome.\n\nThe process ends when `i >= j`. When this happens, we conclude that `s` can be made a valid palindrome. If we find more than one mismatch before this occurs, we can conclude that `s` cannot be made a palindrome.\n",
+            "solution_approach": ""
+        },
+        "id": 572,
+        "input_format": "<p>The first line contains an integer T, the number of test cases. (1 \u2264 T \u2264 10000)</p><p>The first line of each test case contains a string S, 1 \u2264 |S| \u2264 10^5.</p><p>Sum of |S| across all test cases \u2264 10^6.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print \u2018Y/\u2019N' for each test case in a new line.</p>",
+        "samples": [
+            {
+                "input": "2\nabcfdcba\nnitix",
+                "output": "Y\nN"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-az"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Palindrome",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

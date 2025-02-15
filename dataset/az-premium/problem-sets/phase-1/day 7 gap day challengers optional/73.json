@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have given an equation of the form &nbsp;<i><strong>(a op1 b op2 c) mod p</strong></i><br><i>op1</i>, <i>op2</i> are operators which can be {+, -, *, /}.<br>Consider the example: <i>(a * b / c) mod p</i>. Here <i>op1 = * and op2 = /</i>.<br>It is guaranteed that <i>(a, p) = (b, p) = (c, p) = 1</i> and <i>p</i> is a prime number.<br>Compute the value of the equation.</p><p><i>Note:&nbsp;</i></p><ol><li>(<i>a, b</i>) = 1, means <i>a</i> and <i>b</i> are coprime numbers.</li><li>Operators follow the same precedence rules as in mathematics.</li></ol>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n#define ll long long\n\nll mod = 1000000007;\n\nll add(ll a, ll b) { return ((a % mod) + (b % mod)) % mod; }\nll sub(ll a, ll b) {\n  ll ans = ((a % mod) - (b % mod)) % mod;\n  ans %= mod;\n  ans = (ans + mod) % mod;\n  return ans;\n}\nll mul(ll a, ll b) { return ((a % mod) * (b % mod)) % mod; }\nll power(ll a, ll b) {\n  ll ans = 1;\n  while (b) {\n    if (b % 2) {\n      ans = ((ans % mod) * (a % mod)) % mod;\n    }\n    a = ((a % mod) * (a % mod)) % mod;\n    b /= 2;\n  }\n  return ans;\n}\nll res(char op, ll a, ll b) {\n  if (op == '+')\n    return add(a, b);\n  else if (op == '-')\n    return sub(a, b);\n  else if (op == '*')\n    return mul(a, b);\n  else\n    return mul(a, power(b, mod - 2));\n}\n\nsigned main() {\n  IOS ll t;\n  cin >> t;\n  ll a, b, c;\n  string s;\n  getline(cin, s);\n  while (t--) {\n    char op1, op2;\n    string s1, s2, s3;\n    cin >> s1 >> op1 >> b >> op2 >> s2 >> s3 >> mod;\n    a = stoi(s1.substr(1));\n    s2.pop_back();\n    c = stoi(s2);\n    ll ans = 0;\n    if ((op1 == '+') || (op1 == '-')) {\n      if ((op2 == '+') || (op2 == '-')) {\n        ans = res(op1, a, b);\n        ans = res(op2, ans, c);\n      } else {\n        ans = res(op2, b, c);\n        ans = res(op1, a, ans);\n      }\n    } else {\n      ans = res(op1, a, b);\n      ans = res(op2, ans, c);\n    }\n    cout << ans << \"\\n\";\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:38:25.301211+00:00"
+        },
+        "hints": {
+            "hint1": "Parse the string properly, and do the operations correctly. This is the Implementation Problem, with a flavour of modulus maths.",
+            "hint2": "",
+            "solution_approach": "The given solution is a C++ program that reads input from standard input and prints output to standard output. The input consists of several test cases, each containing an equation of the form (a op1 b op2 c) mod p, where op1 and op2 are operators that can be $+$, $-$, $*$, or $/$. The program reads each equation, evaluates it, and prints the result.\n\nThe program uses several helper functions to perform arithmetic operations modulo mod = $1000000007$. The add, sub, and mul functions perform addition, subtraction, and multiplication modulo mod, respectively. The power function calculates $a^b$ modulo mod using binary exponentiation. The res function takes an operator op and two integers a and b, performs the operation a op b modulo mod, and returns the result.\n\nThe main function reads the input and processes each test case. It reads the values of a, b, c, op1, op2, and mod from the input string, using stoi to convert the strings to integers. It then evaluates the equation by performing the operations in the correct order, depending on the operators op1 and op2. Finally, it prints the result.\n\nIn summary, the program reads an equation of the form (a op1 b op2 c) mod p, evaluates it using modular arithmetic, and prints the result. It uses several helper functions to perform arithmetic operations modulo mod.  \nThe time complexity of the above code is $O(T \\log P)$, where $T$ is the number of test cases and $P$ is the value of mod. The power function, which performs binary exponentiation to calculate $a^b$ modulo mod, has a time complexity of $O(\\log b)$, where $b$ is the exponent. In the main function, the res function is called twice, and each call performs at most one arithmetic operation and one exponentiation. Therefore, the time complexity of each test case is $O(\\log P)$. Since there are $T$ test cases, the overall time complexity is $O(T \\log P)$."
+        },
+        "id": 73,
+        "input_format": "The first line contains T (1 \u2264 T \u2264 100000), the number of test cases.\nEach of the next T lines contains an equation in the form (a op1 b op2 c) mod p (1 \u2264 a, b, c, p \u2264 10<sup>9</sup>).\nIt is guaranteed that (a, p) = (b, p) = (c, p) = 1 and p is a prime number.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><i><strong>Explanation 1:</strong></i><br>(1 + 2 / 1) mod 3 = 3 mod 3 = 0.</p><p><i><strong>Explanatino 2:</strong></i><br>(2 * 3 - 8) mod 5 = -2 mod 5 = 3.</p>",
+        "output_format": "<p>For each test case, print a single number denoting the value of the equation. Since it is <i>mod p</i>, the value must belong to <i>0</i> to <i>p - 1</i>.</p>",
+        "samples": [
+            {
+                "input": "2\n(1 + 2 / 1) mod 3\n(2 * 3 - 8) mod 5",
+                "output": "0\n3"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Solve the Equation",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

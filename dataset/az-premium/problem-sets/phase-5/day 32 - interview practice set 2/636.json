@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given a date and you have to print the corresponding day of the week for that date.\nYou have to take in three numbers d, m, and y representing the day, month, and year respectively.\nReturn the answer as one of the following values {\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\"}.\n\nCan you solve this problem in O(1) time complexity?",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">The given dates are valid dates between the years 1971 and 2100.</code></pre>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nstring WeekDay(int day, int month, int year) {\n\tvector<string> days = {\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\"};\n\tif (month < 3) {\n\t\tmonth += 12;\n\t\tyear--;\n\t}\n\tint c = year / 100;\n\tyear = year % 100;\n\tint w = (c / 4 - 2 * c + year + year / 4 + 13 * (month + 1) / 5 + day - 1) % 7;\n\treturn days[(w + 7) % 7];\n}\n\nint main()\n{\n\tios_base::sync_with_stdio(0);\n\tcin.tie(0);\n\tcout.tie(0);\n\n\tint day, month, year;\n\tcin >> day >> month >> year;\n\t\n\tcout << WeekDay(day, month, year);\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:19:29.145068+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "<p>Zeller's Algorithm we can use to find the day in O(1). <a href=\"https://en.wikipedia.org/wiki/Zeller%27s_congruence\">https://en.wikipedia.org/wiki/Zeller%27s_congruence</a></p>"
+        },
+        "id": 636,
+        "input_format": "Implement the WeekDay function that takes in the date. (d,m and y)",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Return the string representing the day of the week for the date given.",
+        "samples": [
+            {
+                "input": "25 11 2095",
+                "output": "Friday"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Tricky"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nstring WeekDay(int day, int month, int year)\n{\n\t// Complete the function\n}\n\n<fix>\nint main()\n{\n\tios_base::sync_with_stdio(0);\n\tcin.tie(0);\n\tcout.tie(0);\n\n\tint day, month, year;\n\tcin >> day >> month >> year;\n\t\n\tcout << WeekDay(day, month, year);\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "WeekDay",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

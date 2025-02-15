@@ -1,0 +1,65 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given a non-empty singly linked list, find a middle node of the linked list.</p><p>Complete the function</p><pre><code class=\"language-cpp\">ListNode* middleNode(ListNode* head)</code></pre><p><i>head </i>is the pointer to the beginning of the linked list.</p><p>If there are even nodes, then there would be two middle nodes, find the second middle element.</p>",
+        "complete_approach": "",
+        "constraints": "<p>Size of linked list \u2264 100000<br>Each node in the linked list stores values between 0 to 10<sup>9</sup>.</p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode() : val(0), next(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next) {}\n};\n\nListNode* middleNode(ListNode* head) {\n    if(head->next == NULL) {\n        return head;\n    }\n\t\n    ListNode* fast = head->next;\n    \n    while(true) {\n        head = head->next;\n        fast = fast->next;\n        if(fast == NULL || fast->next == NULL) {\n            break;\n        }\n        fast = fast->next;\n    }\n\n    return head;\n}\n\nListNode* GetList(vector<int> &num) {\n    ListNode* head = nullptr;\n\n    if(num.empty()) {\n        return head;\n    }\n\n    ListNode* cur = head;\n    \n    for(int i  = 0; i < (int)num.size(); i++) {\n        ListNode* temp = new ListNode(num[i]);\n        if(!cur) {\n            cur = temp;\n            head = cur;\n        }\n        else {\n            cur->next = temp;\n            cur = temp;\n        }\n    }\n    \n    return head;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    vector<int> num;\n    for(int i = 0; i < n; i++) {\n        int x;\n        cin >> x;\n        num.push_back(x);\n    }\n\n    ListNode* head = GetList(num);\n\n    ListNode* mid = middleNode(head);\n\n    cout << mid->val << \"\\n\";\n    \n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:17:46.853663+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 526,
+        "input_format": "",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "",
+        "samples": [
+            {
+                "input": "1\n5",
+                "output": "5"
+            },
+            {
+                "input": "2\n1 8",
+                "output": "8"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Linked List",
+            "Two Pointers"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode() : val(0), next(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next) {}\n};\n</fix>\n\nListNode* middleNode(ListNode* head) {\n    //Complete the function\n}\n\n<fix>\nListNode* GetList(vector<int> &num) {\n    ListNode* head = nullptr;\n\n    if(num.empty()) {\n        return head;\n    }\n\n    ListNode* cur = head;\n    \n    for(int i  = 0; i < (int)num.size(); i++) {\n        ListNode* temp = new ListNode(num[i]);\n        if(!cur) {\n            cur = temp;\n            head = cur;\n        }\n        else {\n            cur->next = temp;\n            cur = temp;\n        }\n    }\n    \n    return head;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    vector<int> num;\n    for(int i = 0; i < n; i++) {\n        int x;\n        cin >> x;\n        num.push_back(x);\n    }\n\n    ListNode* head = GetList(num);\n\n    ListNode* mid = middleNode(head);\n\n    cout << mid->val << \"\\n\";\n    \n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Middle of the Linked List",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

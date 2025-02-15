@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a tree of $n$ nodes, your task is to find a *centroid*, i.e., a node such that when it is appointed the root of the tree, each subtree has at most $\u230an/{2}\u230b$ nodes.",
+        "complete_approach": "",
+        "constraints": "$ 1 \u2264 n \u2264 2\u22c510^{5}$\n$ 1 \u2264 a , b \u2264 n $",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nint n;\nvector<vector<int>> adj;\nvector<int> cnt, centroids;\nvoid dfs(int v, int p) {\n    cnt[v] = 1;\n    bool is_centroid = true;\n    for (auto x : adj[v]) {\n        if (p == x)continue;\n        dfs(x, v);\n        cnt[v] += cnt[x];\n        if(cnt[x]>n/2)is_centroid=false;\n    }\n    // the nodes in the subtree are all now computed.\n\tif(n-cnt[v]>n/2) is_centroid = false;\n    if(is_centroid) centroids.push_back(v);\n}\n\nvoid solve() {\n    cin >> n;\n    adj.assign(n + 1, vector<int>());\n    cnt.assign(n + 1, 0);\n    int u, v;\n    for (int i = 0; i < n - 1; i++) {\n        cin >> u >> v;\n        adj[u].push_back(v);\n        adj[v].push_back(u);\n    }\n    dfs(1, -1);\n    cout<< *min_element(centroids.begin(),centroids.end())<<endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n    int t = 1;\n    // int i = 1;\n    // cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:40:16.261365+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "We can find a centroid in a tree by starting at the root. Each step, loop through all of its children. If all of its children have subtree size less than or equal to $\\frac{N}{2}$, then it is a centroid. Otherwise, move to the child with a subtree size that is more than $\\frac{N}{2}$ and repeat until you find a centroid.\n\nTime Complexity : DFS ~ $O(N+M)$"
+        },
+        "id": 896,
+        "input_format": "The first input line contains an integer n: the number of nodes. The nodes are numbered 1,2,\u2026,n.\n\nThen there are $n\u22121$ lines describing the edges. Each line contains two integers $a$ and $b$: there is an edge between nodes $a$ and $b$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print one integer: a centroid node. If there are several possibilities, print the smallest one.",
+        "samples": [
+            {
+                "input": "5\n1 2\n2 3\n3 4\n3 5\n",
+                "output": "3\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Centroid",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

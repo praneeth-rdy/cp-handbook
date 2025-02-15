@@ -1,0 +1,58 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given the $root$ of a binary tree, Find the vertical order traversal of the binary tree.\n\nFor each node at position $(r, c)$, its left and right children will be at positions $(r + 1, c - 1)$ and $(r + 1, c + 1)$ respectively. The root of the tree is at $(0, 0)$.\n\nThe vertical order traversal of a binary tree is a list of top-to-bottom orderings for each column index starting from the leftmost column and ending on the rightmost column. There may be multiple nodes in the same row and same column. In such a case, sort these nodes by their values.\n\nReturn the vertical order traversal of the binary tree.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^4$ - the number of test cases.\n$1 \\leq n \\leq 10^5$ - number of nodes in binary tree.\n$1 \\leq value \\leq 10^5$ - value of nodes in binary tree.\nSum of $n$ over all test cases is $\\leq 10^6$.",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nstruct TreeNode {\n    int data;\n    TreeNode* left;\n    TreeNode* right;\n    TreeNode(int x) : data(x), left(nullptr), right(nullptr) {}\n};\n\nclass Solution {\npublic:\n    vector<vector<int>> verticalTraversal(TreeNode* root) {\n        map<int, vector<pair<int, int>>> mpr;\n        queue<pair<TreeNode*, pair<int, int>>> q;\n        q.push(make_pair(root, make_pair(0, 0)));\n\n        while (!q.empty()) {\n            auto itr = q.front();\n            q.pop();\n\n            int hlev = itr.second.first, vlev = itr.second.second;\n            if (itr.first != NULL) {\n                mpr[hlev].push_back(make_pair(vlev, itr.first->data));\n                q.push(make_pair(itr.first->left, make_pair(hlev - 1, vlev + 1)));\n                q.push(make_pair(itr.first->right, make_pair(hlev + 1, vlev + 1)));\n            }\n        }\n\n        vector<vector<int>> ans;\n        for (auto itr = mpr.begin(); itr != mpr.end(); itr++) {\n            vector<int> temp;\n            sort(itr->second.begin(), itr->second.end());\n            for (int i = 0; i < itr->second.size(); i++) {\n                temp.push_back(itr->second[i].second);\n            }\n            ans.push_back(temp);\n        }\n\n        return ans;\n    }\n};\n\nTreeNode* deserialize(string data) {\n    if (data.empty())\n        return nullptr;\n    stringstream ss(data);\n    string item;\n    vector<string> dat;\n    while (getline(ss, item, ',')) {\n        dat.push_back(item);\n    }\n    int i = 0;\n    queue<TreeNode*> q;\n    TreeNode* root = new TreeNode(stoi(dat[0]));\n    q.push(root);\n    i++;\n    while (!q.empty()) {\n        auto x = q.front();\n        q.pop();\n        if (i < dat.size() && dat[i] != \"x\") {\n            x->left = new TreeNode(stoi(dat[i]));\n            q.push(x->left);\n        }\n        i++;\n        if (i < dat.size() && dat[i] != \"x\") {\n            x->right = new TreeNode(stoi(dat[i]));\n            q.push(x->right);\n        }\n        i++;\n    }\n    return root;\n}\n\nvoid solve() {\n    string tr;\n    cin >> tr;\n    Solution sol;\n    auto root = deserialize(tr);\n    auto ans = sol.verticalTraversal(root);\n    for (auto& x : ans) {\n        for (auto& y : x) cout << y << \" \";\n        cout << endl;\n    }\n    cout << endl;\n}\n\nint main() {\n    ios_base::sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n    int t = 1;\n    cin >> t;\n    while (t--) {\n        solve();\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:43:04.954327+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "This question can be solved by assigning horizontal distance in the order of X coordinate.\n\nNOTE: \n- Distance of the root is considered 0.\t\n- Number written inside the parenthesis denotes the horizontal distance of that node.\n\nNode has distance:    d\nLeft Children:\t           d - 1\nRight Children:\t   d + 1\n\t\t\n\t\n\t\t\t\t1(0)\n\t\t\t  /     \\\n\t\t (-1)2       3(1)\t\n\t\t   /  \\\t\t/   \\\n\t  (-2)4   5(0) 6(0) 7(2)\n\nThe catch point of this question is If two nodes have the same position, then the value of the node that is reported first is the value that is smaller.\n\t\nWhat it means: If two nodes have the same position and both are present on the same level.\n\t\nFor such type of cases, the nodes having smaller value comes first. Like in the above tree 5 and 6 have the same position and are present in the second level. Since 5 is smaller than 6 so there fore 5 should come first.\n\nTo handle it, we maintained the level number along with the node value of a node by using vector<pair<int, int>>.\n\t\nTo get horizontal distances in sorted order we can maintain a map data structure.\n\nContent of _map for the above tree is : map<int, vector<pair<int, int>>> _map\n\t\n     hori_dist(key)     [levl_number, element]    \n\t\t\n\t-2     -->      [(2, 4)]\n\t-1     --> \t\t[(1, 2)]\n\t0      --> \t\t[(0, 1), (2, 5), (2, 6)]\n\t1      --> \t\t[(1, 3)]\n\t2      --> \t\t[(2, 7)]\n\t\nWhile getting the content of _map from top to bottom sort the vector associated with the key based on level number. If levels are the same for the two-element then sort based on values.\n\nWe don't need to pass a custom comparator to the sort function because the sort function will automatically do it.\n\n**Time Complexity:** $O(n*log(n))$.\n**Space Complexity:** $O(n)$."
+        },
+        "id": 1048,
+        "input_format": "Complete the function ```vector<vector<int>> verticalTraversal(TreeNode* root)``` that takes the root of the binary tree as input and returns vertical order traversal of the binary tree.\n\nFor local testing of the sample, the first line contains $T$, the number of test cases. The first line of each test case contains  the level order traversal of the tree, where *'$x$'* denotes the *'nullptr'*.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For test case 1, \n```\n           1\n         /   \\\n       2       3\n     /   \\   /   \\\n   4      6  5     7\n              \\     \\\n               8     9 \n```\nOutput\n```\n[[4],[2],[1,5,6],[3,8],[7],[9]]\n```\nSince nodes 5 and 6 are in the same location and should be ordered by their values. \n\nFor test case 2,\n```\n           3\n         /   \\\n       1       4\n     /   \\   /   \n   7      2  2   \n```\nOutput\n```\n[[7],[1],[3,2,2],[4]]\n```",
+        "output_format": "Return vertical order traversal of the binary tree as ```vector<vector<int>>```.\nIn such a case, sort these nodes by their values.",
+        "samples": [
+            {
+                "input": "2\n1,2,3,4,6,5,7,x,x,x,x,x,8,x,9,x,x,x,x\n3,1,4,7,2,2,x,x,x,x,x,x,x\n",
+                "output": "4 \n2 \n1 5 6 \n3 8 \n7 \n9 \n\n7 \n1 \n3 2 2 \n4 \n\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Binary Tree"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nstruct TreeNode {\n    int data;\n    TreeNode* left;\n    TreeNode* right;\n    TreeNode(int x) {\n        this->data = x;\n        this->left = nullptr;\n        this->right = nullptr;\n    }\n};\n\nclass Solution {\n</fix>\n\n<fix>\npublic:\n</fix>\n\n<fix>\n    vector<vector<int>> verticalTraversal(TreeNode *root) {\n</fix>\n        // write code here.\n        return {{}};\n<fix>\n    }\n</fix>\n<fix>\n};\n</fix>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<fix>\nTreeNode *deserialize(string data)\n{\n    if (data.size() == 0)\n        return nullptr;\n    vector<string> dat;\n    string t;\n    for (auto c : data)\n    {\n        if (c == ',')\n        {\n            dat.push_back(t);\n            t.clear();\n        }\n        else\n            t.push_back(c);\n    }\n    dat.push_back(t);\n    int i = 0;\n    queue<TreeNode *> q;\n    TreeNode *root = new TreeNode(stoll(dat[0]));\n    q.push(root);\n    auto cur = root;\n    i++;\n    while (!q.empty())\n    {\n        auto x = q.front();\n        q.pop();\n        if (dat[i] != \"x\")\n        {\n            x->left = new TreeNode(stoll(dat[i]));\n            q.push(x->left);\n        }\n        i++;\n        if (dat[i] != \"x\")\n        {\n            x->right = new TreeNode(stoll(dat[i]));\n            q.push(x->right);\n        }\n        i++;\n    }\n    return root;\n}\n\nvoid solve() {\n    string tr;\n    cin >> tr;\n    Solution sol;\n    auto root = deserialize(tr);\n    auto ans = sol.verticalTraversal(root);\n    for (auto x : ans) {\n        for (auto y : x)cout << y << \" \";\n        cout << endl;\n    }\n    cout << endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 2.0,
+        "title": "Vertical Order Traversal",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

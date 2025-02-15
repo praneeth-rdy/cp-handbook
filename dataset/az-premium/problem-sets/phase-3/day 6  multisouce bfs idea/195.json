@@ -1,0 +1,62 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You and some monsters are in a matrix. When taking a step to some direction in the matrix, each monster may simultaneously take one as well. Your goal is to reach one of the boundary squares without ever sharing a square with a monster.\nYour task is to find out if your goal is possible, and if it is, print the shortest length of the path that you can follow. Your plan has to work in any situation; even if the monsters know your path beforehand.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n, m</i> \u2264 1000</p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n\nconst int N = 1010;\n\nint mod = 1e9 + 7;\n\nint dx[4] = {-1, 1, 0, 0};\nint dy[4] = {0, 0, -1, 1};\n\nbool grid[N][N];\nint distA[N][N];\nqueue<pair<int, int>> monsterOcc, AOcc;\npair<int, int> par[N][N];\nint distMon[N][N];\n\nsigned main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n, m;\n    cin >> n >> m;\n\n    memset(grid, false, sizeof(grid));\n\n    memset(distMon, -1, sizeof(distMon));\n    memset(distA, -1, sizeof(distA));\n\n    for (int i = 0; i < n; i++)\n    {\n        string s;\n        cin >> s;\n        for (int j = 0; j < m; j++)\n        {\n            grid[i][j] = true;\n            if (s[j] == '#')\n                grid[i][j] = false;\n            else if (s[j] == 'M')\n            {\n                distMon[i][j] = 0;\n                monsterOcc.push({i, j});\n            }\n            else if (s[j] == 'A')\n            {\n                distA[i][j] = 0;\n                AOcc.push({i, j});\n                par[i][j] = {-1, -1};\n            }\n        }\n    }\n\n    while (!monsterOcc.empty())\n    {\n        auto it = monsterOcc.front();\n        monsterOcc.pop();\n        int x = it.first, y = it.second;\n\n        for (int i = 0; i < 4; i++)\n        {\n            int xx = x + dx[i], yy = y + dy[i];\n            if (xx < 0 || xx >= n || y < 0 || yy >= m)\n                continue;\n            if (grid[xx][yy] && distMon[xx][yy] == -1)\n            {\n                distMon[xx][yy] = distMon[x][y] + 1;\n                monsterOcc.push({xx, yy});\n            }\n        }\n    }\n\n    while (!AOcc.empty())\n    {\n        auto it = AOcc.front();\n        AOcc.pop();\n        int x = it.first, y = it.second;\n\n        for (int i = 0; i < 4; i++)\n        {\n            int xx = x + dx[i], yy = y + dy[i];\n            if (xx < 0 || xx >= n || y < 0 || yy >= m)\n                continue;\n            if (grid[xx][yy] && distA[xx][yy] == -1)\n            {\n                distA[xx][yy] = distA[x][y] + 1;\n                AOcc.push({xx, yy});\n                par[xx][yy] = {x, y};\n            }\n        }\n    }\n\n    int finx = -1, finy = -1, findist = 1e9;\n\n    for (int i = 0; i < n; i++)\n    {\n        if (grid[i][0] && distA[i][0] >= 0 && (distA[i][0] < distMon[i][0] || distMon[i][0] == -1))\n        {\n            finx = i;\n            finy = 0;\n            findist = min(findist, distA[i][0]);\n        }\n        if (grid[i][m - 1] && distA[i][m - 1] >= 0 && (distA[i][m - 1] < distMon[i][m - 1] || distMon[i][m - 1] == -1))\n        {\n            finx = i;\n            finy = m - 1;\n            findist = min(findist, distA[i][m - 1]);\n        }\n    }\n\n    for (int i = 0; i < m; i++)\n    {\n        if (grid[0][i] && distA[0][i] >= 0 && (distA[0][i] < distMon[0][i] || distMon[0][i] == -1))\n        {\n            finx = 0;\n            finy = i;\n            findist = min(findist, distA[0][i]);\n        }\n        if (grid[n - 1][i] && distA[n - 1][i] >= 0 && (distA[n - 1][i] < distMon[n - 1][i] || distMon[n - 1][i] == -1))\n        {\n            finx = n - 1;\n            finy = i;\n            findist = min(findist, distA[n - 1][i]);\n        }\n    }\n\n    if (finx == -1)\n        cout << \"NO\\n\";\n    else\n    {\n        cout << \"YES\\n\";\n        cout << findist << \"\\n\";\n        /*****************************************\n        ----PRINTING PATH---\n        string path = \"\";\n        int x = finx, y = finy;\n        while(true) {\n            int prex = par[x][y].first;\n            int prey = par[x][y].second;\n            if(prex == -1 && prey == -1) break;\n            if(y - prey == 1) path += 'R';\n            else if(y - prey == -1) path += 'L';\n            else if(x - prex == 1) path += 'D';\n            else path += 'U';\n            x = prex; y = prey;\n        }\n        reverse(path.begin(), path.end());\n        cout << path << \"\\n\";\n        ******************************************/\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:44:13.694465+00:00"
+        },
+        "hints": {
+            "hint1": "Apply Multisource BFS.",
+            "hint2": "All the monsters will together form the source set to find smallest time in which any one of them can reach anywhere.",
+            "solution_approach": "Suppose we have a grid that represents a map, where some cells are empty, some are walls, and some contain monsters and a person. The goal is to determine whether the person can reach any boundary cell without being caught by the monsters, and if so, what is the minimum number of steps required to do so.\n\nTo solve this problem, we can use a combination of multisource BFS and plain BFS algorithms. The steps involved in the solution are as follows:\n\n1. Identify all the monster cells in the grid and perform a multisource BFS from each of these cells to compute the minimum distance of any monster to the boundary. This can be done by starting from each monster cell and exploring its neighboring cells one by one. For each empty cell visited, mark it as visited and store its distance from the nearest boundary cell.\n\n2. After performing the multisource BFS, we can use plain BFS from the person cell to compute the minimum distance of any boundary cell to the person. This can be done by starting from the person cell and exploring its neighboring cells one by one. For each empty cell visited, mark it as visited and store its distance from the person cell.\n\n3. Finally, we can compare the distances computed in steps 1 and 2 to find if there is any boundary cell that can be reached by the person without being caught by the monsters. To do this, we need to iterate over all the empty cells that are adjacent to the boundary cells and check if the distance of that cell from the person is less than or equal to the minimum distance of any monster to the boundary. If we find such a cell, then the person can reach a boundary cell without being caught by the monsters, and the minimum distance required is the distance of that cell from the person. Otherwise, it is not possible to reach a boundary cell without being caught by the monsters.\n\nIn summary, we use multisource BFS to compute the minimum distance of any monster to the boundary, plain BFS to compute the minimum distance of any boundary cell to the person, and then compare the distances to determine if the person can reach a boundary cell without being caught by the monsters. The time complexity of this approach is $O(n*m)$, where $n$ and $m$ are the dimensions of the grid."
+        },
+        "id": 195,
+        "input_format": "The first input line has two integers n and m: the height and width of the matrix.\nAfter this, there are n lines of m characters describing the matrix. Each character is \u2018.\u2019 (floor), \u2018#\u2019 (wall), \u2018A\u2019 (start), or \u2018M\u2019 (monster). There is exactly one \u2018A\u2019 in the input.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "",
+        "output_format": "First, print \"YES\" if your goal is possible, and \"NO\" otherwise.\nIf your goal is possible, also print the length of the shortest path that you'll follow.",
+        "samples": [
+            {
+                "input": "5 8\n########\n#M..A..#\n#.#.M#.#\n#M#..#..\n#.######",
+                "output": "YES\n5"
+            },
+            {
+                "input": "3 3\n###\n#A#\n#M.",
+                "output": "NO"
+            },
+            {
+                "input": "1 3\n##A",
+                "output": "YES\n0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Bfs",
+            "Graphs",
+            "Shortest Path"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Save Yourself",
+        "video_editorial_id": 8166
+    },
+    "details": "Problem Details"
+}

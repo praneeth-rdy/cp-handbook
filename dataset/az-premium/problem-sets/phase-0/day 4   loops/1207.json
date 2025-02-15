@@ -1,0 +1,61 @@
+{
+    "code": 200,
+    "data": {
+        "body": "",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10$\n$0 \\leq N \\leq 10^{9}$",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\n//O(T*log(N_max)) time complexity\n//O(1) space complexity\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n\n    while (t--)\n    {\n        int n;\n        cin >> n;\n        // printing number in reverse order\n        if (n == 0) // corner case if n==0\n        {\n            cout << \"0\";\n        }\n        while (n > 0)\n        {\n            cout << n % 10 << \" \";\n            n /= 10;\n        }\n        cout << \"\\n\"; // linefeed after each case\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\n// O(T*log(N_max)) time complexity\n// O(1) space complexity\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        int t = Integer.parseInt(br.readLine());\n\n        while (t-- > 0) {\n            int n = Integer.parseInt(br.readLine());\n            // printing number in reverse order\n            if (n == 0) { // corner case if n==0\n                out.print(\"0\");\n            }\n            while (n > 0) {\n                out.print(n % 10 + \" \");\n                n /= 10;\n            }\n            out.println(); // linefeed after each case\n        }\n\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\n# O(T*log(N_max)) time complexity\n# O(1) space complexity\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    t = int(data[idx]); idx +=1\n\n    outputs = []\n\n    for _ in range(t):\n        n = int(data[idx]); idx +=1\n        # printing number in reverse order\n        if n == 0:  # corner case if n==0\n            output_line = '0'\n        else:\n            digits = []\n            while n > 0:\n                digits.append(str(n % 10))\n                n //= 10\n            output_line = ' '.join(digits) + ' '\n        outputs.append(output_line)\n        # linefeed after each case\n    stdout.write('\\n'.join(outputs))\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:42:37.911672+00:00"
+        },
+        "hints": {
+            "hint1": "Can you do it while **extracting digits** of a number?",
+            "hint2": "Try repeatedly taking the remainder when dividing by $10$ and then divide the number by $10$ to get the next digit.",
+            "solution_approach": "For each test case, we can extract the digits of the number by repeatedly taking the remainder when dividing by $10$ (using the modulus operation) and then dividing the number by $10$ to remove the last digit. This process naturally gives us the digits from right to left.\n\nSince we obtain the digits in the required order during extraction, there is no need to store them or reverse them. We can print each digit immediately as we extract it.\n\n**Time Complexity per test case**: $O(\\log_{10} N)$, where $N$ is the number in that test case.\n\n**Space Complexity per test case**: $O(1)$"
+        },
+        "id": 1207,
+        "input_format": "First line contains a number $T$ \u2014 number of test cases.\nNext $T$ lines will contain a number $N$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In the sample input, there are $4$ test cases.\n- For the first test case, $N = 121$, the digits from right to left are $1\\ 2\\ 1$.\n- For the second test case, $N = 39$, the digits are $9\\ 3$.\n- For the third test case, $N = 123456$, the digits are $6\\ 5\\ 4\\ 3\\ 2\\ 1$.\n- For the fourth test case, $N = 1200$, the digits are $0\\ 0\\ 2\\ 1$.",
+        "output_format": "For each test case, print a single line containing the **digits of the number** separated by space.",
+        "samples": [
+            {
+                "input": "4\n121\n39\n123456\n1200",
+                "output": "1 2 1 \n9 3 \n6 5 4 3 2 1 \n0 0 2 1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Math",
+            "Implementation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 0.5,
+        "title": "Digits",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

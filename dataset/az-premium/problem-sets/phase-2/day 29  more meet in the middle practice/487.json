@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>We are given two equal-length strings S and T. Figure out if we can get string T starting from string S and applying 4 substring reversal operations.</p>",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">1 \u2264 TC \u2264 10^2\n1 \u2264 |S| \u2264 40\n|T|=|S|</code></pre>",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\n\nusing namespace std;\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\nusing lli =  int long long;\nlli n,n2;\nlli tot = 1e9+10;\nset<string> gen;\n\nstring reverse1(string s , int l ,int r){\n    reverse(s.begin()+l,s.begin()+r+1);\n    return s;\n}\n\n\n// generates all posible strings from substring reversal with k moves left\nvoid brute(string st , int k){\n\n    if(k==0){ \n        gen.insert(st);\n        return;\n    }\n    int l=0;int r = st.length()-1;\n\n   for(int i=0;i<=r;i++){\n        for(int j=i;j<=r;j++){\n            string s2 = st;\n            s2 = reverse1(st,i,j);\n            brute(s2,k-1);\n        }   \n    }\n    \n}\n\n\nint main()\n{\n    #ifndef ONLINE_JUDGE\n    // for getting input from input.txt\n    freopen(\"input.txt\", \"r\", stdin);\n    // for writing output to output.txt\n    freopen(\"output.txt\", \"w\", stdout);\n    #endif\n    \n    IOS\n    lli t;\n    \n    cin>>t;\n    while(t--){\n        string s,t;\n        cin >> s >> t;\n        set<string> gen1;\n        set<string> gen2;\n        \n        brute(s,2);\n        gen1=gen;      //Stores all possible values of S2 after 2 step substring reversal from S\n        gen.clear();\n     \n        brute(t,2);\n        gen2=gen;       //Stores all possible values of S2 after 2 step substring reversal from T\n        gen.clear();\n        \n        //Check if any S2 value from the 2 sets are same.\n        int c=0;\n        for(auto it:gen1){\n            if(gen2.find(it)!=gen2.end()){\n                cout << \"YES\" <<\"\\n\";\n                c=1;\n                break;\n            }\n            \n        }\n        if(!c)\n            cout << \"NO\" << \"\\n\";\n    }\n    return 0;\n}\n\n//TIME COMPLEXITY\n// O(N^5 logN)```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:47:33.665916+00:00"
+        },
+        "hints": {
+            "hint1": "For a string of length N, you have to consider all strings obtained by reversal of any substring of that string. Of all such strings generated, check if any one of them is the target string. This is the Brute Force approach to the problem. ",
+            "hint2": "For a string of length N, how many substrings are possible? N^2 different strings are possible by their substring reversal. In total there has to be 4 transitions taking place. In the first step, N^2 different strings are formed, then for each of these strings, another set of N^2 different strings is obtained. This process is repeated four times in total, till you get one string the same as the original string. \n\nS \u2192 S1 \u2192 S2 \u2192 S3 \u2192 T\n\nAt each of the four recursion stacks, there are N^2 choices of strings. Each of these steps takes O(N^2 ) time. So total Time Complexity becomes O(N*(N^2)^k ) . where k is the total number of steps (i.e. k=4 ). Additional O(N) is because of the reversal of the string, in the recursion stack.\n\nHence, by using Brute Force total time complexity becomes O(N^9). This is too big even with the given constraints. Can you do better than this?",
+            "solution_approach": "Here, the above brute force logic can be optimized to a great extent using the Meet in the Middle concept. One crucial observation to the problem is that, from **S**, by reversing some substring, we can obtain **S1**; similarly, by reversing some substring of **S1**, we can obtain **S** again.  \n\nHence, **S \u2194 S1**.  \n\nGenerally, in the meet in the middle concept, we try to divide the element in half. So here we are dividing the recursion level (or the number of moves left) in half. From each string, we are going to apply 2 moves to reach a certain **S2** string:  \n**S \u2192 S1 \u2192 S2**  \n\nAgain, starting from the target string **T**, we are applying two moves to reach **S2**:  \n**S2 \u2190 S3 \u2190 T**  \n\nGenerate all possible values of **S2** from both **S** and **T** strings, and check if there are any two components similar.  \n\n### How does this reduce the Time Complexity?\n\nTo generate all distinct **S2** from **S** will take \\(O((N^2)^k)\\) with \\(k=2\\), i.e., \\(O(N^4)\\) time. Similarly, to generate all **S2** from the **T** string will also take \\(O(N^4)\\) time.  \n\nThey are stored in sets **gen1** and **gen2**, respectively. Also, the reversal of strings in all recursion stacks will be \\(O(N)\\) in total.  \n\nFinally, the sets will contain \\(O(N^4)\\) elements. Checking the set for the presence of the same **S2** string will take \\(O(N^4 \\log N)\\).  \n\nHence, the final time complexity becomes \\(O(N^5 \\log N)\\). Thus, Meet in the Middle greatly reduces the time complexity of the code.  \n\n---\n\n### EXAMPLE RUN:\n\n1  \n**S = abdec**  \n**T = bdaec**  \n\nFrom **S = abdec**, there are two reversals to obtain:  \n**S2 = aecbd**  \n\\[ abdec \u2192 abced and abced \u2192 aecbd \\]  \n\nFrom **T = bdaec**, there are two reversals to obtain:  \n**S2 = aecbd**  \n\\[ bdaec \u2192 bcead and bcead \u2192 aecbd \\]\n"
+        },
+        "id": 487,
+        "input_format": "<p>The first line contains an integer TC (number of test cases),</p><p>The next line contains a string S.&nbsp;</p><p>The next line contains a string T.&nbsp;</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "### TEST CASE 1:\n\n**S = prqs**  \n**T = psrq**  \n\n4 transitions are:  \n1. prqs \u2192 pqrs  \n2. pqrs \u2192 srqp  \n3. srqp \u2192 srpq  \n4. srpq \u2192 psrq  \n\n---\n\n### TEST CASE 2:\n\n**S = abdec**  \n**T = bdaec**  \n\n4 transitions are:  \n1. abdec \u2192 abced  \n2. abced \u2192 aecbd  \n3. aecbd \u2192 bcead  \n4. bcead \u2192 bdaec",
+        "output_format": "<p>For each test case print \u201cYES\u201d if it is possible to form a square fence, else print \u201cNO\u201d without double quotes in a new line.</p>",
+        "samples": [
+            {
+                "input": "2\nabacde\nbeacda\nabcdef\nabdefc",
+                "output": "YES\nYES"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Meet In The Middle"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "4 Reversals",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

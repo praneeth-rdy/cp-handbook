@@ -1,0 +1,62 @@
+{
+    "code": 200,
+    "data": {
+        "body": "",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 200$\n$1 \\leq n \\leq 200$\n$0 \\leq nums[i] \\leq 100$",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nvector<vector<int>> dp;\nint rec(int i, int j, vector<int>&nums) {\n\tif (i > j)return 0;\n\tauto &ans = dp[i][j];\n\tif (ans != -1)return ans;\n\tans = 0;\n\tfor (int k = i + 1; k < j; k++) {\n\t\tans = max(ans, rec(i, k, nums) + rec(k, j, nums) + nums[k] * nums[i] * nums[j]);\n\t}\n\treturn ans;\n}\nint maxCoins(vector<int>& nums) {\n\tint n = nums.size();\n\tdp.assign(n + 2, vector<int>(n + 2, -1));\n\tvector<int> nums2(n + 2);\n\tnums2[0] = nums2[n + 1] = 1;\n\tfor (int i = 0; i < n; i++)nums2[i + 1] = nums[i];\n\treturn rec(0, n + 1, nums2);\n}\nvoid solve() {\n\tint n;\n\tcin >> n;\n\tvector<int> v(n);\n\tfor (int i = 0; i < n; i++)cin >> v[i];\n\tcout << maxCoins(v) << endl;\n}\nint main() {\n\tios_base :: sync_with_stdio(0);\n\tcin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n\tfreopen(\"input.txt\", \"r\", stdin); \\\n\tfreopen(\"output.txt\", \"w\", stdout);\n#endif\n\tint t = 1;\n\t// int i = 1;\n\tcin >> t;\n\twhile (t--) {\n\t\t// cout << \"Case #\" << i << \": \";\n\t\tsolve();\n\t\t// i++;\n\t}\n\treturn 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    static int[][] dp;\n\n    public static int rec(int i, int j, int[] nums) {\n        if (i > j) return 0;\n        if (dp[i][j] != -1) return dp[i][j];\n        int ans = 0;\n        for (int k = i + 1; k < j; k++) {\n            ans = Math.max(ans, rec(i, k, nums) + rec(k, j, nums) + nums[k] * nums[i] * nums[j]);\n        }\n        dp[i][j] = ans;\n        return ans;\n    }\n\n    public static int maxCoins(int[] nums) {\n        int n = nums.length;\n        dp = new int[n + 2][n + 2];\n        for (int[] row : dp) Arrays.fill(row, -1);\n        int[] nums2 = new int[n + 2];\n        nums2[0] = nums2[n + 1] = 1;\n        for (int i = 0; i < n; i++) nums2[i + 1] = nums[i];\n        return rec(0, n + 1, nums2);\n    }\n\n    public static void solve(BufferedReader br, PrintWriter out) throws IOException {\n        int n = Integer.parseInt(br.readLine());\n        String[] parts = br.readLine().split(\" \");\n        int[] v = new int[n];\n        for (int i = 0; i < n; i++) {\n            v[i] = Integer.parseInt(parts[i]);\n        }\n        out.println(maxCoins(v));\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        int t = 1;\n        t = Integer.parseInt(br.readLine());\n        while (t-- > 0) {\n            solve(br, out);\n        }\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nimport threading\n\ndef main():\n    sys.setrecursionlimit(1 << 25)\n    data = sys.stdin.read().split()\n    idx = 0\n    T = int(data[idx])\n    idx += 1\n    for _ in range(T):\n        n = int(data[idx])\n        idx += 1\n        nums = [int(data[idx + i]) for i in range(n)]\n        idx += n\n        print(maxCoins(nums))\n\ndef maxCoins(nums):\n    n = len(nums)\n    nums2 = [1] + nums + [1]\n    dp = [[-1] * (n + 2) for _ in range(n + 2)]\n\n    def rec(i, j):\n        if i > j:\n            return 0\n        if dp[i][j] != -1:\n            return dp[i][j]\n        ans = 0\n        for k in range(i + 1, j):\n            ans = max(ans, rec(i, k) + rec(k, j) + nums2[i] * nums2[k] * nums2[j])\n        dp[i][j] = ans\n        return ans\n\n    return rec(0, n + 1)\n\nif __name__ == \"__main__\":\n    threading.Thread(target=main).start()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:24:45.601574+00:00"
+        },
+        "hints": {
+            "hint1": "Consider using Dynamic Programming to solve the problem efficiently.",
+            "hint2": "Define a recursive function with memoization that calculates the maximum coins between a range of indices.",
+            "solution_approach": "We can solve this problem using Dynamic Programming with memoization. The idea is to think in terms of ranges. Define a function $dp(i, j)$ which represents the maximum coins that can be obtained by bursting all the bubbles between indices $i$ and $j$, not including $i$ and $j$ themselves.\n\nTo compute $dp(i, j)$, we try all possible positions $k$ between $i+1$ and $j-1$ as the last bubble to burst in the range $(i, j)$. The coins obtained by bursting bubble $k$ is $nums[i] \\times nums[k] \\times nums[j]$, and we need to add the coins obtained from bursting bubbles in the ranges $(i, k)$ and $(k, j)$.\n\nSince the original problem doesn't handle the edges well, we pad the original array with $1$ at both ends. This way, when we are at the boundaries, we multiply by $1$, which doesn't affect the product.\n\n**State Definition:**\n\n$dp[i][j] =$ Maximum coins obtainable by bursting all bubbles between $i$ and $j$ (excluding $i$ and $j$).\n\n**Transition:**\n\n$dp[i][j] = \\max_{k \\in (i, j)} \\left( dp[i][k] + dp[k][j] + nums[i] \\times nums[k] \\times nums[j] \\right)$\n\n**Base Case:**\n\nIf $i \\geq j - 1$, there are no bubbles to burst between $i$ and $j$.\n\n**Complexity Analysis:**\n\n- **Time Complexity per test case:** $O(n^3)$, where $n$ is the number of bubbles.\n- **Space Complexity per test case:** $O(n^2)$, for storing the memoization table."
+        },
+        "id": 975,
+        "input_format": "The first line contains $T$ - the number of test cases.\nThe first line of each test case contains $n$.\nThe second line of each test case contains $n$ elements of the array $nums$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case:\nBy bursting the bubbles in the order $[3, 1, 5, 8]$, we get:\n- Burst bubble at index $1$: coins = $3 \\times 1 \\times 5 = 15$\n- Burst bubble at index $2$: coins = $3 \\times 5 \\times 8 = 120$\n- Burst bubble at index $0$: coins = $1 \\times 3 \\times 8 = 24$\n- Burst bubble at index $3$: coins = $1 \\times 8 \\times 1 = 8$\nTotal coins = $15 + 120 + 24 + 8 = 167$",
+        "output_format": "For each test case, output the maximum coins you can collect by bursting the bubbles wisely.",
+        "samples": [
+            {
+                "input": "4\n4\n3 1 5 8\n2\n1 5\n1\n10\n3\n5 0 5",
+                "output": "167\n10\n10\n30"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Dynamic Programming",
+            "Recursion"
+        ],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "Bubbles",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

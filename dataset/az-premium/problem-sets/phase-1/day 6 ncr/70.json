@@ -1,0 +1,58 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given a convex $N$-gon. Draw all the diagonals of the convex $N$-gon. Suppose that no three diagonals pass through the same point. Into how many parts is the $N$-gon divided?",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^5$\n$3 \\leq N \\leq 10^9$",
+        "difficulty": 2,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n#define endl '\\n'\n#define int long long int\nconst int mod = 1e9 + 7;\n\nint inv(int a, int b = mod - 2) {\n  int ans = 1;\n  while (b) {\n    if (b & 1) ans = (ans * a) % mod;\n    a = (a * a) % mod;\n    b /= 2;\n  }\n  return ans;\n}\n\nint inv2 = inv(2);\nint inv24 = inv(24);\n\nvoid solve() {\n  int n;\n  cin >> n;\n  int ans = 1;\n  for (int i = 0; i < 4; i++) ans = (ans * (n - i)) % mod;\n  ans = (ans * inv24) % mod;\n  int temp = (n * (n - 1)) % mod;\n  ans = (ans + 1 + (temp * inv2) % mod);\n  ans -= n;\n  cout << (ans % mod + mod) % mod << endl;\n}\n\nsigned main() {\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n  int t;\n  cin >> t;\n  while (t--) solve();\n  return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    static final int mod = 1_000_000_007;\n    static long inv2;\n    static long inv24;\n    \n    static long inv(long a, long b) {\n        long ans = 1;\n        while (b > 0) {\n            if ((b & 1) == 1) {\n                ans = (ans * a) % mod;\n            }\n            a = (a * a) % mod;\n            b >>= 1;\n        }\n        return ans;\n    }\n    \n    static {\n        inv2 = inv(2, mod - 2);\n        inv24 = inv(24, mod - 2);\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n    \n        int t = Integer.parseInt(br.readLine());\n        for (int i = 0; i < t; i++) {\n            solve(br, out);\n        }\n    \n        out.flush();\n        out.close();\n    }\n    \n    static void solve(BufferedReader br, PrintWriter out) throws IOException {\n        long n = Long.parseLong(br.readLine());\n        long ans = 1;\n        for (int i = 0; i < 4; i++) {\n            ans = (ans * (n - i)) % mod;\n        }\n        ans = (ans * inv24) % mod;\n        long temp = (n * (n - 1)) % mod;\n        ans = (ans + 1 + (temp * inv2) % mod);\n        ans = (ans - n) % mod;\n        ans = (ans + mod) % mod; // Ensure non-negative\n        out.println(ans);\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    idx = 0\n    mod = 10 ** 9 + 7\n    inv2 = pow(2, mod -2, mod)\n    inv24 = pow(24, mod -2, mod)\n    T = int(data[idx])\n    idx +=1\n    for _ in range(T):\n        n = int(data[idx])\n        idx +=1\n        ans = 1\n        for i in range(4):\n            ans = (ans * (n - i)) % mod\n        ans = (ans * inv24) % mod\n        temp = (n * (n - 1)) % mod\n        ans = (ans + 1 + (temp * inv2) % mod)\n        ans = (ans - n) % mod\n        ans = (ans + mod) % mod\n        sys.stdout.write(str(ans) + '\\n')\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:17:56.443437+00:00"
+        },
+        "hints": {
+            "hint1": "Start with one part, the $N$-gon itself. One part is added for each diagonal, and one more part is added for each intersection point of two diagonals.",
+            "hint2": "Initially, we have only $1$ part. We know how to calculate the number of diagonals, which is ${N \\choose 2} - N$, and the number of intersection points of diagonals (inside the polygon), which is ${N \\choose 4}$.",
+            "solution_approach": "Initially, there is only $1$ part (the $N$-gon itself). For each diagonal, a new part is formed. The total number of diagonals is $x = {N \\choose 2} - N$. Therefore, we have $x$ new parts from the diagonals.\n\nWhen diagonals intersect, they create additional regions. The number of intersection points of the diagonals inside the polygon is ${N \\choose 4}$ because any four vertices can be connected by two crossing diagonals at a common interior point.\n\nFor each intersection point of two diagonals, an additional part is added.\n\nTherefore, the total number of parts is:\n\n$$\n1 + \\left( \\dbinom{N}{2} - N \\right) + \\dbinom{N}{4}\n$$\n\nCalculate this value modulo $10^9 + 7$.\n\n**Time Complexity per test case**: $O(1)$"
+        },
+        "id": 70,
+        "input_format": "The first line contains $T$ ($1 \\leq T \\leq 10^5$), the number of test cases.\nEach of the next $T$ lines contains a positive integer $N$ ($3 \\leq N \\leq 10^9$), denoting the number of sides of a convex polygon.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For $N = 4$, the quadrilateral is divided into $4$ regions after drawing its diagonals.\nFor $N = 5$, the pentagon is divided into $11$ regions after drawing all its diagonals.",
+        "output_format": "For each test case, print a single number denoting the number of parts the convex $N$-gon is divided into. Since the answer can be large, print it modulo $10^9 + 7$.",
+        "samples": [
+            {
+                "input": "2\n4\n5",
+                "output": "4\n11"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Combinatorics"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Number of Parts in Convex Polygon",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

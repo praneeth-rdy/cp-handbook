@@ -1,0 +1,58 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given an array of size $N$, and $Q$ queries, for each query, you need to get the indices of the elements of the array whose subset-sum is equal to the queried sum $sum_{i}$, if possible, else return $-1$.\n\nComplete the Function **subset_queries( vector<int> &arr, vector<int> &queries )** that takes vector $a$ and $queries$ vector as input.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq N \\leq 100$   , size of **vector < int > arr**\n$1 \\leq Q \\leq 10^{5}$   ,  size of **vector < int > queries**\n$1 \\leq arr[i] \\leq 10^{5}$\n$1 \\leq sum_{i} \\leq 10^{5}$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n\n#define ll int64_t\n\n#define endl '\\n'\n\nconst int mx = 1e5 + 10;\nint n, q, dp[100][mx], a[100];\nbool rec(int i, int sum) {\n    if (sum < 0)return 0;\n    if (i == -1) {\n        if (sum == 0)return 1;\n        return 0;\n    }\n    auto &ans = dp[i][sum];\n    if (ans != -1)return ans;\n    ans = (rec(i - 1, sum) | rec(i - 1, sum - a[i]));\n    return ans;\n}\nvector<vector<int>> subset_queries(vector<int> &arr, vector<int> &queries) {\n    n = arr.size(), q = queries.size();\n    for (int i = 0; i < n; i++)a[i] = arr[i];\n    memset(dp, -1, sizeof(dp));\n    vector<vector<int>> ans;\n    for (auto x : queries) {\n        if (rec(n - 1, x)) {\n            vector<int> t;\n            int i = n - 1;\n            while (x) {\n                if (rec(i-1, x - a[i]))x -= a[i], t.push_back(i);\n                i--;\n            }\n            reverse(t.begin(), t.end());\n            ans.push_back(t);\n        }\n        else {\n            ans.push_back({ -1});\n        }\n    }\n    return ans;\n}\n\n\n\nvoid solve() {\n    int N, Q;\n    cin >> N >> Q;\n    vector<int> arr(N);\n    for (int i = 0; i < N; i++)cin >> arr[i];\n    vector<int> queries(Q);\n    for (int i = 0; i < Q; i++)cin >> queries[i];\n    auto ans = subset_queries(arr, queries);\n\n    // checker.\n    if (ans.size() != Q) {\n        cout << 101 << endl;\n        return;\n    }\n    for (int i = 0; i < Q; i++) {\n        auto x = ans[i];\n        if (x.size() == 0) {\n            cout << 101 << endl;\n            continue;\n        }\n        if (x.size() == 1 && x[0] == -1) {\n            cout << -1 << endl;\n            continue;\n        }\n        ll sum = 0, p = -10;\n        for (auto y : x) {\n            if (y < 0 || y >= N || p >= y ) { // valid 0-indexed.\n                sum = -1111;\n                break;\n            }\n            p = y;\n            sum += arr[y];\n        }\n        if (sum == queries[i]) {\n            cout << 1 << endl;\n        }\n        else cout << 101 << endl;\n    }\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    // cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Editorial code is not passing the Sample cases.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:21:45.565630+00:00"
+        },
+        "hints": {
+            "hint1": "To solve this problem efficiently, we can use the technique of Dynamic Programming. We can pre-compute all the possible subset sums for each index of the array using a 2D boolean array, let's call it dp.\n\nSpecifically, $dp[i][j]$ will be true if there is a subset of the elements from the array $arr[0]$ to $arr[i]$ whose sum is equal to $j$",
+            "hint2": "We can compute dp[i][j] for all i and j using the following recurrence:  \n$dp[i][j] = dp[i-1][j] || dp[i-1][j-arr[i]]$",
+            "solution_approach": "$dp[i-1][j]$ for when we dont take the $i^{th}$ element into our subset.\n$dp[i-1][j-arr[i]]$ to consider the case when we take the $i^{th}$ element into our subset and check if it is possible to form a subset in the first $i-1$ elements to form a sum of $j-arr[i]$\n\nThe base cases are $dp[0][0] =$ true and $dp[0][j] =$ false for all $j > 0$.\n\nOnce we have pre-computed all the possible subset sums using the above recurrence, we can answer each query in constant time by checking if $dp[N-1][sum]$ is true or false. If it is true, we can find the indices of the elements that contribute to the subset sum using a simple backtracking technique."
+        },
+        "id": 760,
+        "input_format": "The first line of input contains two integers - $N$, $Q$ where $N$ is the size of the array and $Q$ is a number of queries.\nThe second line of input contains $N$ space-separated integers, which are array elements.\nThe third line of input contains $Q$ space-separated integers, which are queries.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Return a **vector < vector < int > >** having $0$-based indices of the elements of the array whose subset-sum is equal to the queried sum $sum_{i}$ for each $i^{th}$ query, if possible, else return vector { $-1$ }.\nIf the returned **vector < vector < int > >** from the function **subset_queries( vector<int> &arr, vector<int> &queries )** is valid, then the program prints 1. Otherwise, prints -1.",
+        "samples": [
+            {
+                "input": "5 3\n1 2 3 4 5\n7 16 3\n",
+                "output": "1\n-1\n1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-Sprinklr"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\n#define ll int64_t\n\nvector<vector<int>> subset_queries(vector<int> &arr, vector<int> &queries) {\n    // Write code here.\n    return {};\n}\n\n<fix>\nvoid solve() {\n    int N, Q;\n    cin >> N >> Q;\n    vector<int> arr(N);\n    for (int i = 0; i < N; i++)cin >> arr[i];\n    vector<int> queries(Q);\n    for (int i = 0; i < Q; i++)cin >> queries[i];\n    auto ans = subset_queries(arr, queries);\n\n    // checker.\n    if (ans.size() != Q) {\n        cout << 101 << endl;\n        return;\n    }\n    for (int i = 0; i < Q; i++) {\n        auto x = ans[i];\n        if (x.size() == 0) {\n            cout << 101 << endl;\n            continue;\n        }\n        if (x.size() == 1 && x[0] == -1) {\n            cout << -1 << endl;\n            continue;\n        }\n        ll sum = 0, p = -10;\n        for (auto y : x) {\n            if (y < 0 || y >= N || p >= y ) { // valid 0-indexed.\n                sum = -1111;\n                break;\n            }\n            p = y;\n            sum += arr[y];\n        }\n        if (sum == queries[i]) {\n            cout << 1 << endl;\n        }\n        else cout << 101 << endl;\n    }\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    // cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Subset Sum Queries",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

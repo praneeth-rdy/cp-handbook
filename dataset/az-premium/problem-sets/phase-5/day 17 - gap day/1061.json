@@ -1,0 +1,61 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Scientists have discovered a new solvent that has some unique properties. When atoms of different elements (with varying atomic weights) are introduced into the solvent, they form bonds with each other, resulting in the formation of a large crystal-like structure\nThe solvent seems to assign magnetic properties to the atoms, because of the way the atoms formed bonds: atoms with higher atomic weights were always pushed to the right, while the lower weight atoms were pushed to the left. An atom can bond with only one atom in the right direction, and one atom in the left direction. The atoms are introduced into the solvent one after the other gradually, and the bonding also happens in sequence.\nThe first atom remains stable in the solvent by itself and forms the center of the crystal. Once the second atom is introduced, it is pushed to the right (if its weight is more than the first atom) or to the left (if its weight is lesser) and a bond is formed between the two atoms. When the third atom is introduced, it tries to bond with the first element (the center of the crystal) and is pushed either to the right or the left (depending on its atomic weight). In case the second atom is already in that same direction, then the third atom cannot bond with the first atom, and so forms a bond with the second atom (and is pushed to the right or left of the second atom). All subsequent atoms also follow this pattern and keep bonding within the crystal and growing it.\nThe solvent also causes the crystal to be *' self-balancing'* i.e. if it grows too much in one direction (say right), it immediately reorients itself such that proper balance is maintained. If the absolute size difference between the right and left directions for any atom becomes larger than 1 , then a rebalancing occurs at that stage, to bring down the absolute difference to 0 or 1 . Rebalancing always happens at the smallest size possible i.e. if there is an imbalance in one corner of the crystal, only that part is rebalanced to restore balance. Rebalancing happens by rotation either in the clockwise or anti-clockwise directions. \n\nFor more clarity, see the examples below to understand how rebalancing works.\n\nGiven the sequence of introduction of atoms into the solvent, write a program to determine the final stable structure of the crystal.\n\nRead the input from STDIN and print the output to STDOUT. Do not write arbitrary strings anywhere in the program, as these contribute to the standard output and test cases will fail.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^4$\n$1 \\leq n \\leq 10^5$ - Number of atoms. \n$1 \\leq w \\leq 10^6$ - Atomic Weight.\n\n- Atomic weights are unique.\n- Sum of $n$ across all test cases is $\\leq 10^6$.",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nstruct Node {\npublic:\n    int64_t key;\n    Node *left;\n    Node *right;\n    int depth;\n    Node(int64_t x) {\n        this->key = x;\n        this->left = nullptr;\n        this->right = nullptr;\n        this->depth = 1; // initially set to 1.\n    }\n};\nclass AVLTree { // For Balanced BST\npublic:\n\n    // Node *root;\n    // A utility function to get the depth of the tree\n    int depth(Node *v) {\n        if (v == nullptr)return 0;\n        return v->depth;\n    }\n\n    // A utility function to right rotate subtree rooted with y.\n    Node *rightRotate(Node *y) {\n        Node *x = y->left;\n        Node *T2 = x->right;\n\n        // Perform rotation\n        x->right = y;\n        y->left = T2;\n\n        // Update depths\n        y->depth = max(depth(y->left), depth(y->right)) + 1;\n        x->depth = max(depth(x->left), depth(x->right)) + 1;\n\n        // Return new root\n        return x;\n    }\n\n    // A utility function to left rotate subtree rooted with x\n    Node *leftRotate(Node *x) {\n        Node *y = x->right;\n        Node *T2 = y->left;\n\n        // Perform rotation\n        y->left = x;\n        x->right = T2;\n\n        // Update depths\n        x->depth = max(depth(x->left), depth(x->right)) + 1;\n        y->depth = max(depth(y->left), depth(y->right)) + 1;\n\n        // Return new root\n        return y;\n    }\n\n    // Get Balance factor of node v\n    int getBalance(Node *v) {\n        if (v == nullptr)return 0;\n        return depth(v->left) - depth(v->right);\n    }\n\n    // Recursive function to insert a key in the subtree rooted with node and returns the new root of the subtree.\n    Node *insert(Node *v, int key) {\n        /* 1. Perform the normal BST insertion */\n        if (v == nullptr)return (new Node(key));\n\n        if (key < v->key)v->left = insert(v->left, key);\n        else if (key > v->key)v->right = insert(v->right, key);\n        else return v; // Equal keys are not allowed in BST\n\n        /* 2. Update depth of this ancestor v */\n        v->depth = 1 + max(depth(v->left), depth(v->right));\n\n        /* 3. Get the balance factor of this ancestor\n            v to check whether this v became\n            unbalanced */\n        int balance = getBalance(v);\n\n        // If this v becomes unbalanced, then\n        // there are 4 cases\n\n        // Left Left Case\n        if (balance > 1 && key < v->left->key)return rightRotate(v);\n\n        // Right Right Case\n        if (balance < -1 && key > v->right->key)return leftRotate(v);\n\n        // Left Right Case\n        if (balance > 1 && key > v->left->key) {\n            v->left = leftRotate(v->left);\n            return rightRotate(v);\n        }\n\n        // Right Left Case\n        if (balance < -1 && key < v->right->key) {\n            v->right = rightRotate(v->right);\n            return leftRotate(v);\n        }\n        /* return the (unchanged) v pointer */\n        return v;\n    }\n    void dfs(Node* root) {\n        if (root == nullptr)return;\n        cout << root->key << \" \";\n        dfs(root->left);\n        dfs(root->right);\n    }\n};\n\n\nvoid solve() {\n    AVLTree tr;\n    int x = 1;\n    Node * root = nullptr;\n    while (x) {\n        cin >> x;\n        root = tr.insert(root, x);\n        cin >> x;\n    }\n    tr.dfs(root);\n    cout << endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:41:32.397574+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Refer to the working of AVL tree ( Self Balancing Binary Tree), specifically the 'Insertion' operation with balancing using left and right rotation.\n\nRefer to the Editorial's Code, for the implementation details."
+        },
+        "id": 1061,
+        "input_format": "First-line contains $T$ - the number of test cases.\nThe first line of each test case has integers which are the atomic weights of atoms that are being introduced into the solvent (in sequence). alternating with a $flag$ ( $1$ or $0$ ) which indicates the introduction of more atoms ($1 =$ next atom present, $0 =$ next atom absent), each separated by a single white space.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "Explanation Sample 1:\nThe first atom introduced into the solvent has an atomic weight of 12 which becomes the center of the crystal. The next digit is 1 which suggests that another atom is being introduced into the solvent. The second atom has a weight of 25, and as it is heavier than the first atom, it is pushed in the right direction, and a bond is formed between the two atoms, shown as \n```\n12\n  \\\n   25\n```\n\nThe next atom has a weight of 26 and it tries to bond with the crystal center which is the atom with a weight of 12. Since it is heavier, it is pushed to the right side. However, there are already 25 on the right side, so 26 cannot form a bond with 12 and has to form a bond with 25. The crystal now has the structure \n```\n12\n  \\\n   25\n     \\\n      26\n```\n \nThe crystal is now imbalanced as the difference between the right (2 atoms) and left (0 atoms) directions of 12 is more than 1. The rebalancing occurs by changing the center of the crystal to 25 such that it has one atom to the right ( 26 ) and one to the left (12). \n```\n   25\n  /  \\\n12    26\n```\n\nAfter atoms with weights 32 and 28 are processed, the crystal structure will be as \n```\n   25\n  /  \\\n12    26\n        \\\n        32\n       /\n      28 \n```\nwhich will again need rebalancing as the longest imbalanced chain is on the right side (of the crystal center) with 3 atoms and only 1 atom on the left side, an absolute difference of more than 1. The rebalancing will be done to the sub-structure of 26-32-28 by making 28 the local center. The crystal structure now looks like\n```\n   25\n  /  \\\n12    28\n     /  \\\n   26    32\n```\nThe next atoms 11 and 10 will make the structure as \n```\n         25\n        /  \\\n      12    28\n     /     /  \\\n   11    26    32\n  /\n10\n```\nmaking it imbalanced for atom 12 as it has 2 atoms to the left and none to the right. The rebalancing is achieved by making 11 the local center for the sub-structure with one element to the right (12) and one to the left (10). The structure is stable at the center level too as there is 1 bond each on the left and right sides of the center atom.\n```\n          25\n        /     \\\n      11       28\n     /  \\     /  \\\n   10    12  26   32\n```\nThe next input is 0 which means no more atoms are being introduced, and hence this is the final stable structure of the crystal. The final structure is printed with the Crystal center atom first i.e. 25 followed by its left bond atom 11, whose left and right atoms are 10 and 12, followed by 28 (right of the center), 26, and 32 (left and right of 28 ).\n\nThe Pre-order of the above binary search tree is 25 11 10 12 28 26 32.",
+        "output_format": "For each test case, in a new line, a single line of output has the final structure of the crystal as a sequence of integers, each separated by a single white space, where the integers are atomic weights of atoms in the final stabilized crystal. They are printed in the order: the center atom first, the left side atom next, and then the right side atom. If the left side atom has its own bonds, then they are printed (again left first and right next) before printing the right side atom. This goes on until all the atoms in the crystal are printed. ( Pre-order Traversal )",
+        "samples": [
+            {
+                "input": "1\n12 1 25 1 26 1 32 1 28 1 11 1 10 0\n",
+                "output": "25 11 10 12 28 26 32\n"
+            },
+            {
+                "input": "1\n31 1 6 1 82 1 5 1 4 1 41 1 53 0\n",
+                "output": "31 5 4 6 53 41 82\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Binary Tree",
+            "Binary Search Tree",
+            "company-Sprinklr",
+            "company-Goldman Sachs",
+            "company-Graviton"
+        ],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "Self Balancing",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

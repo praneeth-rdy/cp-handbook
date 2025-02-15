@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given Q queries and have to perform the following operations:\n\n1. add x - add element x at the end of vector\n2. remove - delete last element of the vector, if vector is not empty\n3. print x - print the x-th character of the vector, if it exists, otherwise print 0. (0-indexing)\n4. clear - empty the vector",
+        "complete_approach": "",
+        "constraints": "1 \u2264 $T$ \u2264 $10^6$  \n1 \u2264 $Q$ \u2264 $10^6$  \n1 \u2264 $X$ \u2264 $10^6$  \n\nIt is guaranteed that the sum of $Q$ over all test cases does not exceed $10^6$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nsigned main() {\n  // freopen(\"IN\", \"r\", stdin);\n  // freopen(\"OUT\", \"w\", stdout);\n\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n\n  int t;\n  cin >> t;\n  while (t--) {\n    int q;\n    cin >> q;\n    vector<int> v;\n    while (q--) {\n      string s;\n      cin >> s;\n      if (s == \"add\") {\n        int x;\n        cin >> x;\n        v.push_back(x);\n      } else if (s == \"remove\") {\n        if (!v.empty()) v.pop_back();\n      } else if (s == \"print\") {\n        int x;\n        cin >> x;\n        if (x < (int)v.size())\n          cout << v[x] << \"\\n\";\n        else\n          cout << \"0\\n\";\n      } else if (s == \"clear\") {\n        v.clear();\n      }\n    }\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:21:43.807202+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "* Use `push_back(x)` for inserting at the end of the vector.\n* Use `pop_back()` for deleting the last element of the vector. `v.size()` can be used to obtain the size of the vector and check if the vector is empty or not. Also, `vector.empty()` can be used to check if the vector is empty or not, which returns true if the vector is empty.\n* Use `v.size()` to obtain the size of the vector. If it is greater than `x`, use `v[x]` to access the `x^{th}` element of the vector.\n* Use `v.clear()` for emptying the vector.\n\nTime Complexity per test case : $O(Q)$ where $Q$ is the number of queries.\nFor each query, if it is an \"add\" or \"remove\" operation, the time complexity is $O(1)$, as these operations can be performed in constant time. If it is a \"print\" operation, the time complexity is $O(1)$, as it only involves accessing an element at a specific index, which is also a constant-time operation. If it is a \"clear\" operation, the time complexity is $O(n)$, where $n$ is the number of elements in the vector, as this operation involves deallocating the memory occupied by the elements in the vector.\n\nTherefore, the overall time complexity of this problem would be $O(Q)$, where $Q$ is the number of queries performed in each test case. This is because the number of operations performed in each query is constant, so the total time taken would depend linearly on the number of queries."
+        },
+        "id": 344,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer Q - the number of queries.\n\nEach of the next Q ines contains queries.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "1. Vector becomes: `[3]`  \n2. Vector becomes: `[3, 4]`  \n3. `V[1] = 4`  \n4. Vector becomes: `[3]`  \n5. Vector becomes: `[3, 7]`  \n6. Vector becomes: `[3, 7, 2]`  \n7. `V[0] = 3`  \n8. Vector becomes: `[]`  \n9. Vector is empty, hence no element at 0 index.",
+        "output_format": "For each test case, print the required queries.",
+        "samples": [
+            {
+                "input": "1\n9\nadd 3\nadd 4\nprint 1\nremove\nadd 7\nadd 2\nprint 0\nclear\nprint 0\n",
+                "output": "4\n3\n0\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Vector AZ101",
+        "video_editorial_id": 10671
+    },
+    "details": "Problem Details"
+}

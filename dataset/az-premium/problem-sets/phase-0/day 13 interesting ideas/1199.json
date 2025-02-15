@@ -1,0 +1,70 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a number $N$ and a string $S$ of size $N$ consisting of $5$ different uppercase characters only $\\textbf{(V, W, X, Y, Z)}$.\n\n1. $\\textbf{V}$: Adds to the score $5$ points.\n\n2. $\\textbf{W}$: Adds to the score $2$ points.\n\n3. $\\textbf{X}$: Removes the next consecutive character from the string.\n\n4. $\\textbf{Y}$: Moves the next consecutive character to the end of the string.\n\n5. $\\textbf{Z}$: If the next consecutive character is $V$ it divides the total score by $5$, but if it is $W$ it divides the total score by $2$. Then it removes the next consecutive character from the string if and only if the next character is $V$ or $W$.\n\n**Note:** In case the string ends with $X$, $Y$, or $Z$, ignore their operations. The score is calculated from left to right and starts with $0$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq N \\leq 10^6$",
+        "difficulty": 2,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include<bits/stdc++.h>\nusing namespace std;\n\nvoid solution() {\n    int n; cin >> n;\n    string s; cin >> s;\n    int score = 0;\n    for (int i = 0; i < n; i++) {\n        char c = s[i];\n        switch (c) {\n        case 'V':\n            score += 5;\n            break;\n        case 'W':\n            score += 2;\n            break;\n        case 'Z':\n            if (i != n - 1) {\n                if (s[i + 1] == 'W') {\n                    score /= 2;\n                    s[i + 1] = '0';\n                } else if (s[i + 1] == 'V') {\n                    score /= 5;\n                    s[i + 1] = '0';\n                }\n            }\n            break;\n        case 'Y':\n            if (i != n - 1) {\n                s.push_back(s[i + 1]);\n                n++;\n                s[i + 1] = '0';\n            }\n            break;\n        case 'X':\n            if (i != n - 1) {\n                s[i + 1] = '0';\n            }\n        }\n    }\n    cout << score;\n}\n\nint main() {\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n    solution();\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int n = Integer.parseInt(br.readLine());\n        String s_input = br.readLine();\n        StringBuilder s = new StringBuilder(s_input);\n        int score = 0;\n        int i = 0;\n        while (i < s.length()) {\n            char c = s.charAt(i);\n            switch (c) {\n                case 'V':\n                    score += 5;\n                    break;\n                case 'W':\n                    score += 2;\n                    break;\n                case 'Z':\n                    if (i != s.length() - 1) {\n                        char nextChar = s.charAt(i + 1);\n                        if (nextChar == 'W') {\n                            score /= 2;\n                            s.setCharAt(i + 1, '0');\n                        } else if (nextChar == 'V') {\n                            score /= 5;\n                            s.setCharAt(i + 1, '0');\n                        }\n                    }\n                    break;\n                case 'Y':\n                    if (i != s.length() - 1) {\n                        s.append(s.charAt(i + 1));\n                        s.setCharAt(i + 1, '0');\n                    }\n                    break;\n                case 'X':\n                    if (i != s.length() - 1) {\n                        s.setCharAt(i + 1, '0');\n                    }\n                    break;\n            }\n            i++;\n        }\n        \n        out.println(score);\n        \n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    n = int(data[idx])\n    idx += 1\n    s = list(data[idx])\n    idx += 1\n    i = 0\n    score = 0\n    while i < len(s):\n        c = s[i]\n        if c == 'V':\n            score += 5\n        elif c == 'W':\n            score += 2\n        elif c == 'Z':\n            if i != len(s) - 1:\n                nextChar = s[i + 1]\n                if nextChar == 'W':\n                    score //= 2\n                    s[i + 1] = '0'\n                elif nextChar == 'V':\n                    score //= 5\n                    s[i + 1] = '0'\n        elif c == 'Y':\n            if i != len(s) - 1:\n                s.append(s[i + 1])\n                s[i + 1] = '0'\n        elif c == 'X':\n            if i != len(s) - 1:\n                s[i + 1] = '0'\n        i += 1\n    print(score)\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:34:30.379323+00:00"
+        },
+        "hints": {
+            "hint1": "Process the string from left to right, applying the operations as specified.",
+            "hint2": "For operations that modify the string (like removing or moving characters), simulate them by modifying your string or using flags.",
+            "solution_approach": "We can simulate the operations as we traverse the string from left to right. Since some operations modify the string (like removing or moving characters), we need a data structure that allows modifications, such as a list or a mutable string.\n\nFor each character in the string:\n\n- If the character is $'V'$, add $5$ to the score.\n- If the character is $'W'$, add $2$ to the score.\n- If the character is $'X'$ and it is not the last character, remove the next character from the string.\n- If the character is $'Y'$ and it is not the last character, move the next character to the end of the string.\n- If the character is $'Z'$ and it is not the last character:\n  - If the next character is $'V'$, divide the score by $5$ and remove that character.\n  - If the next character is $'W'$, divide the score by $2$ and remove that character.\n- If the string ends with $'X'$, $'Y'$, or $'Z'$, ignore their operations.\n\nImplementing the removal or movement can be achieved by marking the characters as processed or using a data structure that supports deletions.\n\n**Time Complexity:** $O(N)$, where $N$ is the length of the string.\n\n**Space Complexity:** $O(N)$, due to the mutable data structure used for the string."
+        },
+        "id": 1199,
+        "input_format": "The first line contains a number $N$, the length of the string.\nThe second line contains a string $S$.\n**It's guaranteed that $S$ consists of only $(V, W, X, Y, Z)$ letters.**",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "**Sample Input 1 Explanation:**\n\nString $S = \"VYWZW\"$ and score initially $= 0$.\nFirst character is $'V'$, so add $5$ to score, score becomes $5$.\nSecond character is $'Y'$, then move $'W'$ to end of string, it becomes $\"VYZWW\"$, and score is still $5$.\nThird character is $'Z'$, then divide total score by $2$ because next character is $'W'$, and remove $'W'$ from string, so string becomes $\"VYZW\"$ and score becomes $2$.\nFourth character is $'W'$, so add $2$ to score, score becomes $4$.\nSo the final answer is $4$.",
+        "output_format": "Print the total score of the string.",
+        "samples": [
+            {
+                "input": "5\nVYWZW",
+                "output": "4"
+            },
+            {
+                "input": "5\nVVVVW",
+                "output": "22"
+            },
+            {
+                "input": "6\nWZYVXW",
+                "output": "7"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Strings"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "String Score",
+        "video_editorial_id": 10651
+    },
+    "details": "Problem Details"
+}

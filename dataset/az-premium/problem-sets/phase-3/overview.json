@@ -1,0 +1,342 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "description": "Premium Day Wise Phase 3",
+            "id": 3560,
+            "name": "Live Sessions",
+            "resources_count": 16,
+            "time_in_minutes": 1341,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 3",
+            "id": 3544,
+            "name": "Day 1: Graph Terminologies",
+            "resources_count": 2,
+            "time_in_minutes": 130,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 3",
+            "id": 3545,
+            "name": "Day 2: DFS Algorithm",
+            "resources_count": 3,
+            "time_in_minutes": 152,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 3",
+            "id": 3546,
+            "name": "Day 3: Flood Fill DFS Idea",
+            "resources_count": 2,
+            "time_in_minutes": 60,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 3",
+            "id": 3547,
+            "name": "Day 4: BFS Algorithm",
+            "resources_count": 4,
+            "time_in_minutes": 187,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 3",
+            "id": 3548,
+            "name": "Day 5: Cycle Detection with DFS",
+            "resources_count": 4,
+            "time_in_minutes": 180,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 3",
+            "id": 3549,
+            "name": "Day 6 : Multisouce BFS Idea",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 3",
+            "id": 3550,
+            "name": "Day 7: Topological Ordering",
+            "resources_count": 4,
+            "time_in_minutes": 110,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 3",
+            "id": 3551,
+            "name": "Day 8: Gap Day [Extra Practice]",
+            "resources_count": 3,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 3",
+            "id": 3552,
+            "name": "Day 9: Shortest Path Algo",
+            "resources_count": 1,
+            "time_in_minutes": 114,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 3",
+            "id": 3553,
+            "name": "Day 10: 0-1 BFS",
+            "resources_count": 4,
+            "time_in_minutes": 109,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3594,
+            "name": "Day 11: Dijkstra",
+            "resources_count": 5,
+            "time_in_minutes": 104,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3595,
+            "name": "Day 12: Bellman Ford",
+            "resources_count": 2,
+            "time_in_minutes": 42,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3596,
+            "name": "Day 13: Floyd Warshal",
+            "resources_count": 4,
+            "time_in_minutes": 96,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3597,
+            "name": "Day 14: Shortest Path Modeling Recap",
+            "resources_count": 3,
+            "time_in_minutes": 130,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3598,
+            "name": "Day 15: Graph Formulation 1",
+            "resources_count": 3,
+            "time_in_minutes": 133,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3599,
+            "name": "Day 16: Graph Formulation 2",
+            "resources_count": 3,
+            "time_in_minutes": 122,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 3",
+            "id": 3845,
+            "name": "Day 17 - Gap Day",
+            "resources_count": 1,
+            "time_in_minutes": 1,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3600,
+            "name": "Day 18: Trees Diameter",
+            "resources_count": 4,
+            "time_in_minutes": 178,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3601,
+            "name": "Day 19: Tree Centroid and Contribution Ideas",
+            "resources_count": 3,
+            "time_in_minutes": 131,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3602,
+            "name": "Day 20: Union Find and MST",
+            "resources_count": 5,
+            "time_in_minutes": 124,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3603,
+            "name": "Day 21: Tree Challengers",
+            "resources_count": 2,
+            "time_in_minutes": 60,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3604,
+            "name": "Day 22: Gap Day [Optional]",
+            "resources_count": 3,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3605,
+            "name": "Day 23: Number Theory Ideas to know",
+            "resources_count": 5,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3606,
+            "name": "Day 24: More ideas to know [Optional]",
+            "resources_count": 6,
+            "time_in_minutes": 151,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3607,
+            "name": "Day 25: Specific Techniques in Number Theory [ Optional ]",
+            "resources_count": 4,
+            "time_in_minutes": 72,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3608,
+            "name": "Day 26: Recursion to DP",
+            "resources_count": 4,
+            "time_in_minutes": 30,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3609,
+            "name": "Day 27: Foundation building",
+            "resources_count": 2,
+            "time_in_minutes": 158,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3610,
+            "name": "Day 28: Form 1 - Knapsack Style",
+            "resources_count": 5,
+            "time_in_minutes": 31,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3611,
+            "name": "Day 29: Form 2 - Ending at i",
+            "resources_count": 3,
+            "time_in_minutes": 56,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3612,
+            "name": "Day 30 : Form 2 Practice",
+            "resources_count": 3,
+            "time_in_minutes": 94,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3613,
+            "name": "Day 31: Form 2 - Grid based",
+            "resources_count": 6,
+            "time_in_minutes": 131,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3614,
+            "name": "Day 32: Form 3 - MultiSequence",
+            "resources_count": 5,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3615,
+            "name": "Day 33: Form 4 - Interval or LR DP",
+            "resources_count": 3,
+            "time_in_minutes": 153,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3616,
+            "name": "Day 34: Form 4 - More practice",
+            "resources_count": 3,
+            "time_in_minutes": 72,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3617,
+            "name": "Day 35: Form 5 - Game DP",
+            "resources_count": 2,
+            "time_in_minutes": 31,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3618,
+            "name": "Day 36: Learning more ideas - 1",
+            "resources_count": 5,
+            "time_in_minutes": 169,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3619,
+            "name": "Day 37: Learning more ideas - 2",
+            "resources_count": 5,
+            "time_in_minutes": 119,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3620,
+            "name": "Day 38: DP practice level 1",
+            "resources_count": 5,
+            "time_in_minutes": 121,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3621,
+            "name": "Day 39: DP practice level 2",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3622,
+            "name": "Day 40: DP practice level 3",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Daywise Phase 3",
+            "id": 3623,
+            "name": "Day 41: DP optional practice",
+            "resources_count": 5,
+            "time_in_minutes": 150,
+            "type": "COURSE_MATERIALS"
+        }
+    ],
+    "details": "Chapter Playlists"
+}

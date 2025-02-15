@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "There are $n$ Jobs you can do. For each Job, you know its starting and ending days and the amount of money you would get as reward. You can only do one Job during a day.\n\nWhat is the maximum amount of money you can earn?",
+        "complete_approach": "",
+        "constraints": "$1$ $\\leq$ $n$ $\\leq$ $2\\times10^{5}$\n$1$ $\\leq$ $a_{i}$ $\\leq$ $b_{i}$ $\\leq$ $10^{9}$\n$1$ $\\leq$ $p_{i}$ $\\leq$ $10^{9}$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\r\nusing namespace std;\r\n\r\n#define ll int64_t\r\n#define endl '\\n'\r\n\r\nint n;\r\nvector<array<ll, 3>> v; // { b, a, p }\r\nvector<ll> dp;\r\nint binsearch(int i) {\r\n\tint l = 0, r = i - 1, ans = -1;\r\n\twhile (l <= r) {\r\n\t\tint mid = (l + r) / 2;\r\n\t\tif (v[mid][0] < v[i][1])ans = mid, l = mid + 1;\r\n\t\telse r = mid - 1;\r\n\t}\r\n\treturn ans;\r\n}\r\nvoid solve() {\r\n\tcin >> n;\r\n\tv.resize(n, array<ll, 3>());\r\n\tfor (int i = 0; i < n; i++)cin >> v[i][1] >> v[i][0] >> v[i][2];\r\n\tsort(v.begin(), v.end()); // sorting according to ending time.\r\n\tdp.resize(n);\r\n\tdp[0] = v[0][2];\r\n\tfor (int i = 1; i < n; i++) {\r\n\t\tdp[i] = dp[i - 1]; // not choosing current job ending at v[i][0].\r\n\t\tint idx = binsearch(i);\r\n\t\tif (idx != -1)dp[i] = max(dp[i], v[i][2] + dp[idx]); // choosing job ending at v[i][0].\r\n\t\telse dp[i] = max(dp[i], v[i][2]); // choosing only current Job.\r\n\t}\r\n\tcout << dp[n - 1] << endl;\r\n\tassert(dp[n-1]>=0);\r\n}\r\nint main() {\r\n\tios_base :: sync_with_stdio(0);\r\n\tcin.tie(nullptr); cout.tie(nullptr);\r\n\r\n#ifdef Mastermind_\r\n\tfreopen(\"input.txt\", \"r\", stdin); \\\r\n\tfreopen(\"output.txt\", \"w\", stdout);\r\n#endif\r\n\tint t = 1;\r\n\t// int i = 1;\r\n\t// cin >> t;\r\n\twhile (t--) {\r\n\t\t// cout << \"Case #\" << i << \": \";\r\n\t\tsolve();\r\n\t\t// i++;\r\n\t}\r\n\treturn 0;\r\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:44:32.739323+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "- Let's create a jobs array that zips $startTime, endTime, profit$ together.\n- Let's sort our jobs in increasing order of $endTime$.\n- Let $dp[i]$ denote the maximum profit-taking jobs in $jobs[0...i]$ such that there is no overlapping time range.\n- For the current $jobs[i]$, we have 2 choices -:\n    - Don't pick $i^{th}$ job: $dp(i-1)$.\n    - Pick $i^{th}$ job: We earn $profit[i]$ and the next job must have the $endTime < arr[i].startTime$ to avoid time overlapping.\n      So we have to find $j$ from $[0, i-1]$ so that $arr[j].endTime < arr[i].startTime$.\n    - Since our jobs is already sorted in increasing order by $endTime$. So we can binary search to find the job next $j$, so that $arr[j].endTime < arr[i].startTime$.\n    - Then we have choice $dp(j) + profit[i]$.\n- Choose the choice which leads to maximum profits between the 2 above choices.\n- Finally, $dp(n-1)$ is our result.\n\n#####Complexity\n\nTime: $O(NlogN)$, where $N$ is the number of jobs.\nSpace: $O(N)$"
+        },
+        "id": 906,
+        "input_format": "The first input line contains an integer $n$: the number of Jobs.\n\nAfter this, there are $n$ lines. Each such line has three integers $a_{i}$, $b_{i}$, and $p_{i}$: the starting day, the ending day, and the reward.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print one integer: the maximum amount of money you can earn.",
+        "samples": [
+            {
+                "input": "4\n2 4 4\n3 6 6\n6 8 2\n5 7 3\n",
+                "output": "7\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-Jaguar Land Rover",
+            "company-APT Portfolio"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Weighted Job Scheduling",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

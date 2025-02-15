@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given an integer <strong>N</strong>, find its factorial.</p>",
+        "complete_approach": "",
+        "constraints": "<ul><li>1 \u2264 N \u2264 1000</li></ul>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\nvector<int> factorial(int N) {\n    vector<int> ans = {1}; // initialised factorial value as 1.\n    for (int i = 1; i <= N; i++) {\n\n        // multipliying current ans = (i-1)! with i, to get ans = i!\n        int carry = 0;\n        for (int j = 0; j < ans.size(); j++) { //multiplying each digit of ans with i and carrying the value.\n            int p = ans[j] * i + carry;\n            carry = p / 10;\n            ans[j] = p % 10;\n        }\n        // adding the last over carry value.\n        while (carry) {\n            int r = carry % 10;\n            carry /= 10;\n            ans.push_back(r);\n        }\n        // now ans = i!\n    }\n    reverse(ans.begin(), ans.end()); // N! will be stored in reversed way in ans vector.\n    return ans;\n}\nvoid solve() {\n    int n;\n    cin >> n;\n    auto v = factorial(n);\n    for (auto x : v)cout << x;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n    int t = 1;\n    // int i = 1;\n    // cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:22:56.392505+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 860,
+        "input_format": "<p>Given an integer <strong>N&nbsp;</strong> in a single line<strong>.</strong></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Output <strong>N! </strong>in a single line.</p>",
+        "samples": [
+            {
+                "input": "5",
+                "output": "120"
+            },
+            {
+                "input": "21",
+                "output": "51090942171709440000"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Big Factorial",
+        "video_editorial_id": 8227
+    },
+    "details": "Problem Details"
+}

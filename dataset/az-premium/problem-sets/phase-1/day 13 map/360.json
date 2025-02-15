@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Being the site administrator, you need to register the people on the website. A person registers with his name, S. If the name does not occur in the records, the person gets registered on the website and \u201cOK\u201d is shown. Otherwise, if the record already exists, print the name along with the number of times the person has registered on the website before, without any spaces.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1\u2264 T \u2264 10<sup>5</sup></p><p>1\u2264 N \u2264 10<sup>5</sup></p><p>1\u2264 |S| \u2264 30</p><p>t is guaranteed that the sum of N over all test cases does not exceed 10<sup>6</sup>.</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n\nint main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int n;\n    cin >> n;\n    map<string, int> m;\n    for (int i = 0; i < n; ++i) {\n      string s;\n      cin >> s;\n      if (!m.count(s)) {\n        cout << \"OK\\n\";\n      } else {\n        cout << s << m[s] << \"\\n\";\n      }\n      m[s]++;\n    }\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:27:23.061560+00:00"
+        },
+        "hints": {
+            "hint1": "Save the number of times a person registers in a map.",
+            "hint2": "The program uses a map mp to store the name of each person who registers and the number of times they have registered.\nFor each person, the program checks if the name exists in the map mp using the `mp.count()`.  If name not present in map it returns $0$ , In this case, the program outputs \"OK\".\nIf the name already exists in the map, the `mp.count()` returns 1, program outputs the name along with the number of times the person has registered before.\nThe program increments the value of the name in the map by 1.",
+            "solution_approach": "The time complexity of the program is $O(n \\log n)$, where n is the total number of people who register in all test cases. This is because the map uses a balanced binary tree (usually a red-black tree) to store the elements, and the `find()` and `insert()` operations have a time complexity of $O(\\log n)$."
+        },
+        "id": 360,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer N - the number of people who register. \n\nEach of the next N lines contains a string S - the name in lower case alphabets.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, harry registers again, so his name along with the name of times is printed.\n\nFor the second test case, abc registers thrice, so his name along with the name of times is printed.",
+        "output_format": "<p>For each test case, print \u201cOK\u201d if the person registers for the first time. Otherwise, print the name along with the number of times the person has registered on the website before, without any spaces.</p>",
+        "samples": [
+            {
+                "input": "2\n4\nharry\nron\nharry\nhermione\n3\nabc\nabc\nabc\n",
+                "output": "OK\nOK\nharry1\nOK\nOK\nabc1\nabc2\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Registration AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

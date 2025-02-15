@@ -1,0 +1,62 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given $Q$ queries and have to perform the following operations:\n\n1. **add x** - add element $x$ at the top of the stack\n\n2. **remove** - delete the top element of the stack if the stack is not empty\n\n3. **print** - print the element at the top, if the stack is not empty, otherwise print $0$",
+        "complete_approach": "",
+        "constraints": "- $1 \\leq T \\leq 10^6$\n- $1 \\leq Q \\leq 10^6$\n- $1 \\leq X \\leq 10^6$\nIt is guaranteed that the sum of $Q$ over all test cases does not exceed $10^6$.",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n\nint main() {\n  IOS\n  int t;\n  cin >> t;\n  while (t--) {\n    int q;\n    cin >> q;\n    stack<int> st;\n    while (q--) {\n      string s;\n      cin >> s;\n      if (s == \"add\") {\n        int x;\n        cin >> x;\n        st.push(x);\n      } else if (s == \"remove\") {\n        if (!st.empty()) {\n          st.pop();\n        }\n      } else {\n        if (!st.empty()) {  // print\n          cout << st.top() << \"\\n\";\n        } else {\n          cout << \"0\\n\";\n        }\n      }\n    }\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int t = Integer.parseInt(br.readLine());\n        \n        while (t-- > 0) {\n            int q = Integer.parseInt(br.readLine());\n            Stack<Integer> st = new Stack<>();\n            for (int i = 0; i < q; i++) {\n                String s = br.readLine();\n                if (s.startsWith(\"add\")) {\n                    String[] parts = s.split(\" \");\n                    int x = Integer.parseInt(parts[1]);\n                    st.push(x);\n                } else if (s.equals(\"remove\")) {\n                    if (!st.isEmpty()) {\n                        st.pop();\n                    }\n                } else if (s.equals(\"print\")) {\n                    if (!st.isEmpty()) {\n                        out.println(st.peek());\n                    } else {\n                        out.println(\"0\");\n                    }\n                }\n            }\n        }\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n    outputs = []\n    for _ in range(t):\n        q = int(data[idx])\n        idx += 1\n        st = []\n        for _ in range(q):\n            cmd = data[idx]\n            idx += 1\n            if cmd == 'add':\n                x = int(data[idx])\n                idx += 1\n                st.append(x)\n            elif cmd == 'remove':\n                if st:\n                    st.pop()\n            elif cmd == 'print':  # print\n                if st:\n                    outputs.append(str(st[-1]))\n                else:\n                    outputs.append('0')\n    print('\\n'.join(outputs))\n\nif __name__ == '__main__':\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:15:25.446530+00:00"
+        },
+        "hints": {
+            "hint1": "Consider using a stack data structure to efficiently implement the required operations.",
+            "hint2": "Use a stack to perform the operations. Be careful to check if the stack is empty before performing 'remove' and 'print' operations to avoid errors.",
+            "solution_approach": "To efficiently perform the given operations, we use a stack data structure:\n\n- **add x**: Push element $x$ onto the stack.\n\n- **remove**: If the stack is not empty, pop the top element.\n\n- **print**: If the stack is not empty, print the element at the top. Otherwise, print $0$.\n\nWhile processing the queries, we need to handle the case when the stack is empty before performing 'remove' and 'print' operations.\n\n**Time Complexity per test case**: $O(Q)$, where $Q$ is the number of queries.\n\n**Space Complexity per test case**: $O(Q)$, due to the stack."
+        },
+        "id": 347,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\nThe first line of each test case contains one integer $Q$ - the number of queries.\nEach of the next $Q$ lines contains a query.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "1. **add 3**: Stack becomes [3]\n2. **add 4**: Stack becomes [3, 4]\n3. **print**: Element at top = 4 (Output: 4)\n4. **remove**: Stack becomes [3]\n5. **print**: Element at top = 3 (Output: 3)",
+        "output_format": "For each test case, print the results of the \"print\" queries in the order they occur.",
+        "samples": [
+            {
+                "input": "1\n5\nadd 3\nadd 4\nprint\nremove\nprint",
+                "output": "4\n3"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Data Structures"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Stack AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given an array of <i>N</i> integers, find the sum of <i>XOR</i> of all pairs of numbers in the array, sum of <i>XOR</i> of all subset of numbers in the array, sum of <i>AND</i> of all pairs of numbers in the array, sum of <i>AND</i> of all subset of numbers in the array. Calculate it %1000000007.&nbsp;<br>For pair you should select two index <i>i, j</i> such that <i>i&lt;j</i>.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\ntypedef long long ll;\n#define mod 1000000007\nconst ll N = 100001;\nconst ll BITS = 31;\n\nll addMod(ll a,ll b){\n   a = a+b;\n   if(a>=mod)\n       a-=mod;\n   return a;\n}\nll nc2(ll x){\n   return ((x*(x-1))/2)%mod;\n}\nsigned main()\n{\n   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);\n   ll powerOfTwo[N];\n   powerOfTwo[0] = 1;\n   for(ll i=1;i<N;i++){\n       powerOfTwo[i] = addMod(powerOfTwo[i-1],powerOfTwo[i-1]);\n   }\n\n   ll testCase;\n   cin>>testCase;\n   while(testCase--){\n       ll n;\n       cin>>n;\n       ll arr[n];\n       for(ll i=0;i<n;i++)\n           cin>>arr[i];\n\n       ll sumPairXor = 0;\n       ll sumSubsetXor = 0;\n       ll sumPairAnd = 0;\n       ll sumSubsetAnd = 0;\n\n       for(ll i=0;i<BITS;i++){\n           ll cnt = 0;\n           for(ll j=0;j<n;j++){\n               if(arr[j]&(1LL<<i))  \n                   cnt++;\n           }\n\n           sumPairXor = addMod(sumPairXor , (1LL<<i)*cnt%mod*(n-cnt)%mod);\n           if(cnt)\n               sumSubsetXor = addMod(sumSubsetXor, (1LL<<i)*powerOfTwo[n-1]%mod);\n\n           sumPairAnd = addMod(sumPairAnd, (1LL<<i)*nc2(cnt)%mod);\n           sumSubsetAnd = addMod(sumSubsetAnd, (1LL<<i)*(powerOfTwo[cnt]-1+mod)%mod);\n\n       }\n       cout<<sumPairXor<<\" \"<<sumSubsetXor<<\" \"<<sumPairAnd<<\" \"<<sumSubsetAnd<<\"\\n\";\n   }\n\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:20:59.155765+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Try to calculate the contribution of every bit of a number. In how many possible pairs or subset the bit is set. If ith bit is set in 'x' possible pair or subset then the contribution of this bit in the total answer will be x*(1LL&lt;&lt;i).</p><p>So find the contribution of every bit, then sum it.</p>",
+            "hint2": "<p>Property of XOR, 1^1 = 0, 1^1^1 = 1, 1^1^1^1 = 0, 1^1^1^1^1 = 1.</p><p>For ith bit to be set while taking XOR, ith bit should be set an odd number of times. So when you take a pair of numbers then in one of the numbers the ith bit should be set and in the other number it should be unset. So calculate in how many numbers ith bit is set (cnt), then the total number of pairs with ith bit set in the XOR of the pair is cnt*(n-cnt).</p><p>So total contribution if ith bit = cnt*(n-cnt)*(1LL&lt;&lt;i).</p><p>For AND, the bit should be set in both the numbers. So if ith bit is set in 'cnt' numbers, then the total possible pair in which ith bit will be set after doing AND is <sup>cnt</sup>C<sub>2</sub> = (cnt*(cnt-1))/2, choosing any two number with ith bit set. So contribution of ith bit = (1LL&lt;&lt;i) * ((cnt*(cnt-1))/2).</p><p>Now try to solve for all the subset.</p>",
+            "solution_approach": "<p>If ith bit is set in 'cnt' numbers, then choosing 1 or 3 or 5..... basically odd numbers from cnt in the subset and any number from the 'n-cnt' in the subset, then after doing XOR of the subset we will have ith bit set. So total number of subset which will have ith bit set = (cntC1 + cntC3 + cntC5 + \u2026.)) * (2^(n-cnt)). You can simplify the summation of (cntC1 + cntC3 + cntC5 + \u2026.)) = 2^(cnt-1), if cnt&gt;0 otherwise 0. So total contribution of ith bit &nbsp;= (1LL&lt;&lt;i) * 2^(n-1), if cnt&gt;0.</p><p>For AND, the ith bit is set if and only if all the numbers in the subset have ith bit set. So the total number of subset with ith bit set after doing AND of all the numbers in the subset = (2^cnt)-1. So total contribution of ith bit &nbsp;= (1LL&lt;&lt;i) * ((2^cnt)-1).</p><p>Take % properly and check for overflow.</p>"
+        },
+        "id": 49,
+        "input_format": "<p>The first line of the input contains a single integer <i>T</i> denoting the number of test cases, <i>(1&lt;=T&lt;=100)</i>.</p><p>The first line of each test case contains a single integer <i>N</i>, <i>(2&lt;=N&lt;=100000)</i>.</p><p>The second line contains <i>N</i> space-separated integers A<sub>1</sub>,A<sub>2</sub>,\u2026,A<sub>N</sub>, <i>(1&lt;=A<sub>i</sub>&lt;=10^9)</i>.</p><p>Sum of <i>N</i> over all test cases does not exceed 10^6.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "<p><strong>1st test case:</strong> all pairs and corresponding XOR and AND value:<br>(1,2) - 3, 0<br>(1,3) - 2, 1<br>(1,4) - 5, 0<br>(1,5) - 4, 1<br>(2,3) - 1, 2<br>(2,4) - 6, 0<br>(2,5) - 7, 0<br>(3,4) - 7, 0<br>(3,5) - 6, 1<br>(4,5) - 1, 4<br>Sum of XOR of all pairs = 42, Sum of AND of all pairs = 9</p><p><strong>3rd test case:</strong> all subset XOR and AND values:<br>(1) - 1, 1<br>(1,2) - 3, 0<br>(1,3) - 2, 1<br>(2,3) - 1, 2<br>(2) - 2, 2<br>(3) - 3, 3<br>(1,2,3) - 0, 0<br>Sum of XOR of all subset = &nbsp;12, Sum of AND of all subset = 9</p>",
+        "output_format": "<p>For each test case output, 4 space-separated integers in a new line in the order the sum of XOR of all pairs of numbers in the array, sum of XOR of all subset of numbers in the array, sum of AND of all pairs of numbers in the array, sum of AND of all subset of numbers in the array. Since these numbers may be very large, compute them modulo 1000000007 (10^9+7)</p>",
+        "samples": [
+            {
+                "input": "6\n5\n1 2 3 4 5\n5\n1 1 2 3 5\n3\n1 2 3\n4\n1 2 2 4\n10\n989098 987656790 989098765 234543 3456543 234567543 1234567 5678 56789 8909876\n10\n123 1234543 2345 6776 8787 8765467 234567 98765444 1234 4561",
+                "output": "42 112 9 25\n32 112 8 25\n6 12 3 9\n23 56 2 11\n378768679 755809533 328561458 769714220\n962949537 271171227 9132543 118419489"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Bit Manipulation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "XOR and AND",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

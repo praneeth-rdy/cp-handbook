@@ -1,0 +1,61 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given a directed acyclic graph with $n$ vertices and $m$ edges. There are no self-loops or multiple edges between any pair of vertices. The graph can be disconnected.\n\nYou should assign labels to all vertices in such a way that:\n\n- Labels form a valid permutation of length $n$ \u2014 an integer sequence such that each integer from $1$ to $n$ appears exactly once in it.\n- If there exists an edge from vertex $v$ to vertex $u$ then $label_{v}$ should be smaller than $label_{u}$.\n- Permutation should be lexicographically smallest among all suitable.\n\nFind such a sequence of labels to satisfy all the conditions.",
+        "complete_approach": "",
+        "constraints": "- $2 \u2264 n \u2264 10^{5}$\n- $1 \u2264 m \u2264 10^{5}$\n- $1 \u2264 v, u \u2264 n,  v \u2260 u$",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nint n, m;\nvector<vector<int>> adj;\nvoid solve()\n{\n    cin >> n >> m;\n    adj.assign(n + 1, vector<int>());\n    vector<int> out_deg(n + 1, 0);\n    for (int i = 0; i < m; i++)\n    {\n        int u, v;\n        cin >> u >> v;\n        adj[v].push_back(u); // reverse edge.\n        out_deg[u]++;        // out-degree\n    }\n    int t = n;\n    vector<int> ans(n + 1);\n    priority_queue<int> pq; // labelling higher node with higher label.\n    for (int i = 1; i <= n; i++)\n        if (out_deg[i] == 0)\n            pq.push(i);\n    while (!pq.empty())\n    {\n        int v = pq.top();\n        pq.pop();\n        ans[v] = t--; // labelling from n to 1.( decreasing order )\n        for (auto x : adj[v])\n        {\n            out_deg[x]--;\n            if (out_deg[x] == 0)\n                pq.push(x);\n        }\n    }\n    for (int i = 1; i <= n; i++)\n        cout << ans[i] << \" \";\n    cout << endl;\n}\nint main()\n{\n    ios_base ::sync_with_stdio(0);\n    cin.tie(nullptr);\n    cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin);\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    // cin >> t;\n    while (t--)\n    {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:15:43.347529+00:00"
+        },
+        "hints": {
+            "hint1": "This is topological ordering problem with some lexicographical twist.\n\nThink of this input:\n$4$ $2$  \n$4$ $1$  \n$2$ $3$",
+            "hint2": "In this problem, the following approach won't work !\n\n1. pick vertex with zero in-degree (and with minimum node number, in case of a tie in degree)\n2. remove this vertex from the graph and update the degree of all other nodes attached to this.\n3. assign label to this removed vertex\n4. repeat the above steps while there are nodes in the graph labels are assigned from 1 to N\n\nTry both algorithms for the input :-\n\n$4$ $2$  \n$4$ $1$  \n$2$ $3$\n\nThe output according to your algorithm would be giving the output will be :-\n$4$ $1$ $2$ $3$\n\nCorrect output should be :-\n$2$ $3$ $4$ $1$",
+            "solution_approach": "Let's set labels in descending order starting from label $N$ to label $1$. Look at the first step. Vertex with label $\ud835\udc41$\n should have an out-degree equal to zero. Among all such vertices, we should put the label on the one that has the largest index. Ok, but why will this produce the lexicographically smallest labeling?\n\nWe can prove this by contradiction. \nTo see why this is true, suppose there exists a labeling where \n1. a vertex with label \ud835\udc4b (\ud835\udc4b<\ud835\udc41) is assigned the label \ud835\udc41.\n2. The algorithm then changes the label of this vertex to \ud835\udc41 and, \n3. re-labels all vertices with labels between \ud835\udc4b+1 and \ud835\udc41 to labels between \ud835\udc4b and \ud835\udc41-1. \n4. This re-labeling leads to a lexicographically smaller labeling, contradicting the assumption that the original labeling was lexicographically smallest.\n\nThe algorithm repeats this process for each label in descending order until all vertices are labeled. To efficiently find vertices with out-degree equal to zero, the algorithm maintains a set of vertices with minimal out-degree. \nThe overall time complexity of the algorithm is $\ud835\udc42((n+m)*\\log n)$, where $n$ is the number of vertices and $m$ is the number of edges in the graph."
+        },
+        "id": 392,
+        "input_format": "The first line contains two integer numbers $n$, $m$.\n\nNext $m$ lines contain two integer numbers $v$ and $u$ \u2014 edges of the graph. Edges are directed, the graph doesn't contain loops or multiple edges.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In Sample Test 2, Assigning $label_{1}=4$ , $label_{2}=1$, $label_{3}=2$ and $label_{4}=3$ will give the lexicographically smallest correct permutation of labels of vertices which will be $4$ $1$ $2$ $3$.",
+        "output_format": "Print $n$ numbers \u2014 lexicographically smallest correct permutation of labels of vertices.",
+        "samples": [
+            {
+                "input": "3 3\n1 2\n1 3\n3 2\n",
+                "output": "1 3 2 \n"
+            },
+            {
+                "input": "4 5\n3 1\n4 1\n2 3\n3 4\n2 4\n",
+                "output": "4 1 2 3 \n"
+            },
+            {
+                "input": "5 4\n3 1\n2 1\n2 3\n4 5\n",
+                "output": "3 1 2 4 5 \n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Topological Ordering",
+            "company-Google",
+            "company-Hudson River Trading"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Topological Labelling",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

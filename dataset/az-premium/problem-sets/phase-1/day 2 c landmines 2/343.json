@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given the marks of a student in mid-term, final-term and the make-up examinations. If the student does not attend an exam, marks are assigned as -1. You have to find the grade of the student according to the following guidelines:\n\n1. If the student does not take the mid-term or the final-term exam, grade is F\n2. If the total score in mid-term and final-term is greater than or equal to 80, grade is A.\n3. If the total score in mid-term and final-term is greater than or equal to 65 and less than 80, grade is B.\n4. If the total score in mid-term and final-term is greater than or equal to 50 and less than 65, grade is C.\n5. If the total score in mid-term and final-term is greater than or equal to 30 and less than 50, grade is D. However,  if the score of the make-up examination is greater than or equal to 50, the grade will be C.\n6. If the total score in mid-term and final-term is less than 30, grade is F.",
+        "complete_approach": "",
+        "constraints": "- $1 \\leq T \\leq 10^5$  \n- $1 \\leq M, F \\leq 50$  \n- $1 \\leq R \\leq 100$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nsigned main() {\n    IOS\n    int t;\n    cin >> t;\n    while (t--) {\n        int m, f, r;\n        cin >> m >> f >> r;\n        char grade;\n        if(m == -1 || f == -1)\n            grade = 'F';\n        else if(m + f >= 80)\n            grade = 'A';\n        else if(m + f >= 65)\n            grade = 'B';\n        else if(m + f >= 50)\n            grade = 'C';\n        else if(m + f >= 30) {\n            grade = 'D';\n            if(r >= 50)\n                grade = 'C';\n        }\n        else\n            grade = 'F';\n        cout << grade << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:17:05.265641+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Time Complexity per test case: O(1)"
+        },
+        "id": 343,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains three space-separated integers M, F, R - the marks of the student in the mid-term, final-term and the make-up examinations.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, print the grade of the student.",
+        "samples": [
+            {
+                "input": "4\n41 48 76\n-1 48 100\n20 25 61\n21 5 20\n",
+                "output": "A\nF\nC\nF\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Grading System AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

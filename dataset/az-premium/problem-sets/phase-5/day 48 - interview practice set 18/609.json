@@ -1,0 +1,58 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given an array consisting of <strong>n </strong>integers and a number <strong>k</strong>.<br>You need to determine if you can divide the array into sets of <strong>k </strong>consecutive integers. Each set must contain <strong>k </strong>integers and each element of the array must be present in 1 set. One element cannot be present in more than 1 set.</p>",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">1 &lt;= n &lt;= 100000\n1 &lt;= k &lt;= n\n1 &lt;= v[i] &lt;= 100000</code></pre>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nusing ll = long long;\nusing ii = pair<ll, ll>;\n#define len(x) ((ll)(x).size())\n#define rep(i, x) for (ll(i) = 0; (i) < (x); ++(i))\n#define F first\n#define S second\n#define pb push_back\n\nvoid solve() {\n  ll n, k;\n  cin >> n >> k;\n  vector<ii> v;\n  map<ll, ll> mp;\n  rep(i, n) {\n    ll x;\n    cin >> x;\n    mp[x]++;\n  }\n  if (n % k) {\n    cout << \"No\\n\";\n    return;\n  }\n  for (auto x : mp) {\n    v.pb(x);\n  }\n  rep(i, len(v)) {\n    if (v[i].S == 0) continue;\n    for (ll j = i + 1; j < i + k; j++) {\n      if (v[j].S < v[i].S) {\n        cout << \"No\" << endl;\n        return;\n      } else {\n        v[j].S -= v[i].S;\n      }\n    }\n    v[i].S = 0;\n  }\n  cout << \"Yes\" << endl;\n  return;\n}\nint main() {\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n  solve();\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:37:39.424367+00:00"
+        },
+        "hints": {
+            "hint1": "The minimum number must be the start of some set of k consecutive integers.",
+            "hint2": "For any number x present in the array if x-1 is not present, x must be the start of some set of k consecutive integers.",
+            "solution_approach": "<p>Using the above observation, we can start from any number x and come down till the current number x is not present in the array. If x is not present, x+1 must be the start of some streak of consecutive integers. To have all occurrences of the number x+1 in some set, we must have at least that many occurrences of the next k-1 numbers.<br>So we decrease the frequency of all the numbers in the range [x+1, x+k] by the frequency of x+1, and if any number in this range has a frequency less than that of x+1, we print No.<br>Each number can be visited utmost twice, once while coming down and the other while going up and decreasing the frequency. So the complexity is O(n).</p>"
+        },
+        "id": 609,
+        "input_format": "<p>The first line of input contains two integers <strong>n </strong>and <strong>k</strong>.<br>The second line contains <strong>n</strong> integers denoting the input array.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<ol><li>We can divide the array into two sets:<br>[1, 2, 3, 4]<br>[6, 7, 8, 9]</li><li>We cannot divide 4 integers into sets of size 3.</li><li>Two sets are: [1, 2, 3, 4] and [3, 4, 5, 6]</li></ol>",
+        "output_format": "<p>Print <strong>\u2018Yes\u2019</strong> if you can divide the array into sets of <strong>k</strong> consecutive integers. If you cannot, print <strong>\u2018No\u2019</strong>.</p>",
+        "samples": [
+            {
+                "input": "8 4\n2 3 1 4 9 8 7 6",
+                "output": "Yes"
+            },
+            {
+                "input": "4 3\n5 6 7 8",
+                "output": "No"
+            },
+            {
+                "input": "8 4\n1 2 3 3 4 4 5 6",
+                "output": "Yes"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-Sprinklr"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Consecutive Numbers",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

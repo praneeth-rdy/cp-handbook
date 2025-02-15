@@ -1,0 +1,254 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "description": "Premium Day wise Phase 4",
+            "id": 3759,
+            "name": "Day 1: More of Combinatorial Numbers",
+            "resources_count": 4,
+            "time_in_minutes": 83,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day wise Phase 4",
+            "id": 3760,
+            "name": "Day 2: Inclusion Exclusion Ideas",
+            "resources_count": 3,
+            "time_in_minutes": 182,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day wise Phase 4",
+            "id": 3761,
+            "name": "Day 3: More Ideas to know [Optional Hard]",
+            "resources_count": 3,
+            "time_in_minutes": 95,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day wise Phase 4",
+            "id": 3762,
+            "name": "Day 4: Segment Tree basics",
+            "resources_count": 5,
+            "time_in_minutes": 87,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day wise Phase 4",
+            "id": 3763,
+            "name": "Day 5",
+            "resources_count": 4,
+            "time_in_minutes": 154,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day wise Phase 4",
+            "id": 3764,
+            "name": "Day 6",
+            "resources_count": 4,
+            "time_in_minutes": 105,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day wise Phase 4",
+            "id": 3765,
+            "name": "Day 7",
+            "resources_count": 3,
+            "time_in_minutes": 32,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day wise Phase 4",
+            "id": 3766,
+            "name": "Day 8 - Lazy Segment Tree",
+            "resources_count": 3,
+            "time_in_minutes": 48,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3825,
+            "name": "Day 9 - Kth Segment Tree",
+            "resources_count": 4,
+            "time_in_minutes": 97,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3826,
+            "name": "Day 10 - More ideas for Segment tree",
+            "resources_count": 2,
+            "time_in_minutes": 60,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3827,
+            "name": "Day 11 - Mixed Ideas for Segment Tree",
+            "resources_count": 2,
+            "time_in_minutes": 122,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3828,
+            "name": "Day 12 - Gap Day [Optional]",
+            "resources_count": 2,
+            "time_in_minutes": 122,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3829,
+            "name": "Day 13 - String Algorithms",
+            "resources_count": 3,
+            "time_in_minutes": 183,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3830,
+            "name": "Day 14 - Manacher\u2019s Algorithm",
+            "resources_count": 3,
+            "time_in_minutes": 60,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3831,
+            "name": "Day 15 - String Trie Fundamentals",
+            "resources_count": 4,
+            "time_in_minutes": 64,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3832,
+            "name": "Day 16 - More practice on String Trie",
+            "resources_count": 2,
+            "time_in_minutes": 117,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3833,
+            "name": "Day 17 - Bit Trie",
+            "resources_count": 3,
+            "time_in_minutes": 52,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3834,
+            "name": "Day 18 - More Bit Trie Ideas",
+            "resources_count": 3,
+            "time_in_minutes": 77,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3835,
+            "name": "Day 19 - Digit DP",
+            "resources_count": 3,
+            "time_in_minutes": 182,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3836,
+            "name": "Day 20 - More Digit DP practice",
+            "resources_count": 2,
+            "time_in_minutes": 60,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3837,
+            "name": "Day 21 - Gap Day!",
+            "resources_count": 1,
+            "time_in_minutes": 1,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3838,
+            "name": "Day 22 - DP on Tree",
+            "resources_count": 3,
+            "time_in_minutes": 162,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3839,
+            "name": "Day 23 - DP on Tree 2",
+            "resources_count": 2,
+            "time_in_minutes": 55,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3840,
+            "name": "Day 24 - DP on Tree 3",
+            "resources_count": 3,
+            "time_in_minutes": 302,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3841,
+            "name": "Day 25 - DP Bitmask 1",
+            "resources_count": 5,
+            "time_in_minutes": 111,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3842,
+            "name": "Day 26 - DP Bitmask 2",
+            "resources_count": 4,
+            "time_in_minutes": 96,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3843,
+            "name": "Day 27 - DP Bitmask 3",
+            "resources_count": 3,
+            "time_in_minutes": 56,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Phase 4",
+            "id": 3844,
+            "name": "Day 28 - Gap Day",
+            "resources_count": 3,
+            "time_in_minutes": 266,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3877,
+            "name": "Day 28: Iterative Decomposition",
+            "resources_count": 2,
+            "time_in_minutes": 241,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3878,
+            "name": "Day 29: Iterative Decomposition - 2",
+            "resources_count": 2,
+            "time_in_minutes": 195,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3879,
+            "name": "Day 30: Iterative Decomposition - 3",
+            "resources_count": 1,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        }
+    ],
+    "details": "Chapter Playlists"
+}

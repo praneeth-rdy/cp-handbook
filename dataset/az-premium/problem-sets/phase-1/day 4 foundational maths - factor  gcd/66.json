@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Let us see the following equation,</p><p style=\"text-align:center;\"><i><strong>Ax + By = C</strong></i></p><p>Given three positive integers <i>A</i>, <i>B</i> and <i>C</i>.</p><p>You have to determine whether there exists at least one solution for some integers value of <i>x</i> and <i>y</i> where <i>x, y</i> may be negative or non-negative integers.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int T; cin >> T;\n    while(T--) {\n        int A, B, C;\n        cin >> A >> B >> C;\n        int G = __gcd(A, B);\n        if(C % G == 0) cout << \"Yes\\n\";\n        else cout << \"No\\n\";\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:44:42.418729+00:00"
+        },
+        "hints": {
+            "hint1": "Try to think in terms of GCD of A and B.",
+            "hint2": "The reason why we need to find the GCD of A and B to determine the existence of integer solutions for the equation $Ax + By = C$ is based on Bezout's identity.\n\nBezout's identity states that for any two integers a and b, their greatest common divisor (GCD) can be expressed as the smallest positive integer that can be expressed as a linear combination of a and b, that is:\n\n$gcd(a, b) = ax + by$ where $x$ and $y$ are integers.\n\nThis shows that if the GCD of A and B divides C, then there exists a solution for the equation $Ax + By = C$ in integers.\n\nConversely, if the GCD of A and B does not divide C, then there cannot be a solution for the equation $Ax + By = C$ in integers.\n\nThus, by finding the GCD of A and B and checking whether it divides C, we can determine the existence of integer solutions for the equation $Ax + By = C$.",
+            "solution_approach": "If $C\\mod GCD(A, B) ==0$, then answer is \"Yes\". Otherwise \"No\"."
+        },
+        "id": 66,
+        "input_format": "The first line contains $T$ ($1 \\leq T \\leq 100000$), the number of test cases.  \nEach of the next $T$ lines contains three positive integers $A, B, C$ ($1 \\leq A, B, C \\leq 10^9$).",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><i><strong>Explanation 1:</strong></i><br>For <i>x = 1, y = 3, 6 * 1 + 9 * 3 = 33</i>. The equation is satisfied for (<i>1, 3</i>).</p><p><i><strong>Explanation 2:</strong></i><br>No solution exists in this case. Observe that <i>A</i> and <i>B</i> are even numbers. So <i>Ax + By</i> is always even number, irrespective of the value of <i>x</i> and <i>y</i>.<br>But <i>C</i> is an odd number. So no solution exists in this case.</p>",
+        "output_format": "<p>Print \"<i>Yes</i>\" (without quotes) if at least one solution exits, otherwise print \"<i>No</i>\" (without quotes).</p>",
+        "samples": [
+            {
+                "input": "2\n6 9 33\n2 8 1",
+                "output": "Yes\nNo"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Can You Make C",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

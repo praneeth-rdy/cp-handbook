@@ -1,0 +1,58 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an array A of size N, consisting of elements between 1 and N-1, in random order, with only one number being repeated. Find this number.\n\nTry to solve this using O(1) extra space.",
+        "complete_approach": "",
+        "constraints": "<p>2 \u2264 <i>N</i> \u2264 10<sup>6</sup><br>1 \u2264 A[i] \u2264 <i>N</i> - 1</p>",
+        "difficulty": 2,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint FindRepeated(vector<int> &a)\n{\n    int n = (int)a.size();\n\n    int x = 0;\n\n    for (int i = 1; i <= n - 1; i++)\n        x ^= i;\n\n    for (int i = 0; i < n; i++)\n        x ^= a[i];\n\n    return x;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(NULL);\n    cin.tie(NULL);\n    cout.tie(NULL);\n\n    int n;\n    cin >> n;\n\n    vector<int> a(n);\n\n    for (int i = 0; i < n; i++)\n        cin >> a[i];\n\n    cout << FindRepeated(a) << \"\\n\";\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:45:55.031083+00:00"
+        },
+        "hints": {
+            "hint1": "Can you find what the sum of all elements will be?",
+            "hint2": "The difference between the sum of numbers from 1\u2026.n-1 and the array sum is the answer.",
+            "solution_approach": "There are multiple ways to solve this problem like hashing, sorting, etc.\nHere we discuss two ways which will not require any extra space.\nYou can find the sum of all numbers till N-1 by the formula (N-1)*N / 2. The difference between the calculated sum and the sum of the array is the repeated number. Calculating the sum can result in overflow. You can avoid that by solving the problem with XOR. Find out the XOR of all numbers till N-1 and the XOR of all elements of the array. The XOR of these two will give the repeated number as all other numbers will cancel out."
+        },
+        "id": 588,
+        "input_format": "The first line contains an integer N - the size of the array A.\nThe next line contains N integers the elements of the array A.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print the repeated number.",
+        "samples": [
+            {
+                "explanation": "2 is the only number repeated in the array.",
+                "input": "5\n3 1 2 4 2",
+                "output": "2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Math",
+            "Bit Manipulation",
+            "company-az"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nint FindRepeated(vector<int> &a)\n{\n    // Complete the function\n}\n\n<fix>\nint main()\n{\n    ios_base::sync_with_stdio(NULL);\n    cin.tie(NULL);\n    cout.tie(NULL);\n\n    int n;\n    cin >> n;\n\n    vector<int> a(n);\n\n    for (int i = 0; i < n; i++)\n        cin >> a[i];\n\n    cout << FindRepeated(a) << \"\\n\";\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "ONLYREP",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

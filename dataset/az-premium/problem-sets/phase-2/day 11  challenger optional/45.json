@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given an array of <i>N</i> integers <i>A</i>. The score of a subarray is the sum of all integers in the subarray. Mr.X calculated the score of all <i>N*(N+1))/2</i> subarray. Mr.X wants you to find the median of the array containing the score of all the subarray.</p><p>&nbsp;</p><p><strong>Note:</strong> The median of a sequence is the value that is in the middle when the sequence is sorted. If the length of the sequence is even, there are two values in the middle and the median is the smaller of these values (or either when they are equal).</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\ntypedef long long ll;\nll n;\nll arr[100001];\nll func(ll x){ // count number of subarray with sum<=x\n   ll cnt = 0;\n   ll currSum = 0;\n   ll start = 0;\n   ll current = 0;\n   while(current<n){\n       currSum+=arr[current];\n       while(start<=current and currSum>x){\n           currSum-=arr[start];\n           start++;\n       }\n       cnt+=(current-start+1);\n       current++;\n   }\n   return cnt;\n}\nsigned main()\n{\n   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);\n   int testcases;\n   cin>>testcases;\n   while(testcases--){\n       cin>>n;\n       ll low = 0,high = 0;\n       for(ll i=0;i<n;i++){\n           cin>>arr[i];\n           high+=arr[i];\n       }\n       ll ans = -1;\n       ll total = (n*(n+1))/2;\n       ll median = (total+1)/2;\n       while(low<=high){\n           ll mid = (low+high)/2;\n           ll cntSub = func(mid);\n           if(cntSub>=median)\n               high = mid-1,ans = mid;\n           else\n               low = mid+1;\n       }\n       cout<<ans<<\"\\n\";\n   }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:21:16.406414+00:00"
+        },
+        "hints": {
+            "hint1": "<p>If X is a possible value of the median of the new array, then it should exist in the array and it should have (M+1)/2 elements lesser than or equal to X in the array. Here, M is the size of the new array, i.e. M = N*(N+1)/2.</p>",
+            "hint2": "<p>If we get the number of elements lesser than or equal to X as \u2265 (M+1)/2. The possible value of median could X or any value lesser than X. Otherwise, it would be greater than X. This is a monotonic function and hence we can use binary search in this problem. Here M = N*(N+1)/2.</p>",
+            "solution_approach": "<p>We would be doing binary search on the possible values of the median. Here, we would be using the array which has the subarray sums of the original array. We take the left pointer as L = 0 or L = minimum value present in the new array and we take the right pointer as R = sum of all the numbers in the original array. We take mid = (L+R)/2. We need to find the number of values \u2264 mid.</p><p>It would not be possible to create the new array since N \u2264 10<sup>5</sup> and the new array would be of size N*(N+1)/2. To avoid making the new array, we will use two pointers to calculate the subarray sums. If a sum from i to j is \u2264 mid, that means all sums from i to (values than j) is \u2264 mid.</p><p>If the number of values \u2264 mid is greater than or equal to (M + 1)/2, that means mid can be a possible value of the median or it would be lesser than mid, so we continue binary search on L to R = mid - 1. Otherwise, the value of median would be &gt; mid and so we continue binary search on L = mid+1 to R. Here, M = N*(N+1)/2.</p><p>Time Complexity per test case: O(N * log2(\u03a3Ai))</p>"
+        },
+        "id": 45,
+        "input_format": "<p>The first line contains an integer <i>T</i>, the number of test cases <i>(1&lt;=T&lt;=10000)</i>.</p><p>The first line of each test case contains an integer <i>N</i> where <i>(1&lt;=N&lt;=10^5)</i>.</p><p>Next line contains <i>N</i> space-separated integers <i>(0&lt;=A<sub>i</sub>&lt;=1e9).</i></p><p>Sum of <i>N</i> across all test cases \u2264 10^6.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "<p><strong>1st test case:</strong><br>Subarray and score:<br>1 -&gt; 1<br>1,2 -&gt; 3<br>1,2,3 -&gt; 6<br>2 -&gt; 2<br>2,3 -&gt; 5<br>3 -&gt; 3<br>New array = {1,2,3,3,5,6}, median = 3</p><p><strong>2nd test case:</strong><br>Subarray and Score:<br>5 -&gt; 5<br>New array = {5}, median = 5</p><p><strong>3rd test case:</strong><br>Subarray and score<br>1 -&gt; 1<br>1,5 -&gt; 5<br>5 -&gt; 5<br>New array = {1,5,5}, median = 5.</p>",
+        "output_format": "<p>For each test case output the median of the array containing the score of all the subarray in a new line.</p>",
+        "samples": [
+            {
+                "input": "5\n3\n1 2 3\n1\n5\n2\n1 5\n10\n1 2 2 3 3 4 5 4 6 7\n15\n100 222 333 511 555 232 444 555 777 888 999 1000 1112 12345 123456",
+                "output": "3\n5\n5\n13\n3629"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Binary Search"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Median of Subarray Sum",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

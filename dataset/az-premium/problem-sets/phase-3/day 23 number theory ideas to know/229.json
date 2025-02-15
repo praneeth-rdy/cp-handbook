@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have given <i>n</i> positive integers <i>A<sub>1</sub>, A<sub>2</sub>, \u2026, A<sub>n</sub>.</i> Your task is to find the number of pairs <i>(i, j)</i> such that <i>A<sub>i</sub> * A<sub>j</sub></i> is a <strong>cube number</strong>.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n</i> \u2264 10<sup>5</sup><br>1 \u2264 <i>A<sub>i</sub></i> \u2264 10<sup>6</sup></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\ntypedef long long ll;\n\n\nsigned main()\n{\n   ios_base::sync_with_stdio(0);\n   cin.tie(0); cout.tie(0);\n\n   int n; cin >> n;\n\n   map <ll,int> M;\n\n   ll ans = 0;\n\n   for(int i = 0; i < n; i++) {\n      int x; cin >> x;\n      ll norm = 1;\n      ll tar = 1;\n      for(int j = 2; j * j <= x; j++) {\n         int cnt = 0;\n         while(x % j == 0) {\n            x /= j;\n            cnt++;\n         }\n         cnt %= 3;\n         for(int k = 0; k < cnt; k++) {\n            norm *= j;\n         }\n         if(cnt) {\n            for(int k = 0; k < 3 - cnt; k++) {\n               tar *= j;\n            }\n         }\n      }\n      if(x > 1) {\n         norm *= x;\n         tar *= (x * x);\n      }\n      ans += M[tar];\n      M[norm]++;\n   }\n\n   cout << ans << \"\\n\";\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:46:28.616567+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "<p>Consider the number n = p<sub>1</sub><sup>a</sup><sub><sup>1</sup></sub> &nbsp;p<sub>2</sub><sup>a</sup><sub><sup>2</sup></sub> &nbsp;p<sub>3</sub><sup>a</sup><sub><sup>3</sup></sub> &nbsp;\u2026. &nbsp;p<sub>m</sub><sup>a</sup><sub><sup>m</sup></sub>. Lets define normal value of n as norm(n) = p<sub>1</sub><sup>a</sup><sub><sup>1</sup></sub><sup>%3</sup> &nbsp;p<sub>2</sub><sup>a</sup><sub><sup>2</sup></sub><sup>%3</sup> &nbsp;p<sub>3</sub><sup>a</sup><sub><sup>3</sup></sub><sup>%3</sup> &nbsp;\u2026. &nbsp;p<sub>m</sub><sup>a</sup><sub><sup>m</sup></sub><sup>%3 </sup>and inverse-normal of n as invnorm(n) = p<sub>1</sub><sup>(3 - a</sup><sub><sup>1</sup></sub><sup>%3) % 3</sup> &nbsp;p<sub>2</sub><sup>(3 -&nbsp;a</sup><sub><sup>2</sup></sub><sup>%3) % 3</sup> &nbsp;\u2026. &nbsp;p<sub>m</sub><sup>(3 -&nbsp;a</sup><sub><sup>m</sup></sub><sup>%3) % 3</sup>.&nbsp;</p><p>Observe that if products of two numbers x and y is a cube number iff norm(x * y) = 1. That means all powers of prime numbers in xy is multiple of 3. Again observe that norm(n) * invnorm(n) is a cube number.<br>Using these properties we can conclude that the norm(x) = invnorm(y) OR norm(y) = invnorm(x). Se if we maintain the count of norm(x) for all values, to find the number of numbers when multiply by y gives a cube number is basically the count of invnorm(y) in the count table.&nbsp;</p><p><i>These mathematical notations might be confusing, but the main motive behind is to make all powers of prime numbers to a multiple of 3.</i></p><p>For more clarification, see the editorial code.</p>"
+        },
+        "id": 229,
+        "input_format": "<p>The first line of input contains <i>n</i> - the size of the array.<br>The second line of input contains <i>n</i> space-separated integers <i>A<sub>1</sub>, A<sub>2</sub>, \u2026, A<sub>n</sub>.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>The pairs are (1, 8), (2, 4), (1, 27), (8, 27).</p>",
+        "output_format": "<p>Print the answer on a new line.</p>",
+        "samples": [
+            {
+                "input": "5\n1 2 4 8 27",
+                "output": "4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-Agoda"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Paired Cubes",
+        "video_editorial_id": 8171
+    },
+    "details": "Problem Details"
+}

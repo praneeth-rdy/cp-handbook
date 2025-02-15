@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "A transformation sequence from word $src$ to word $target$ using a dictionary $wordList$ is a sequence of words $src \\rightarrow s_1 \\rightarrow s_2 \\rightarrow ... \\rightarrow target$ such that:\n\n- Every adjacent pair of words differs by a single letter.\n- Every $s_i$ for $1 \\leq i \\leq n$ is in $wordList$. Note that $src$ does not need to be in $wordList$.\n\nGiven two words, $src$ and $target$, and a dictionary $wordList$, Output the number of the shortest transformation sequences, followed by all the shortest transformation sequences from $src$ to $target$, transformation sequences must be lexicographically sorted relatively, or Output 0 if no such sequence exists. \n\nEach sequence should be output as a sequence of the words $[src, s1, s2, ..., target]$, sequences must be **relatively lexicographically sorted**.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 100$\n$1 \\leq n \\leq 10^4$\n$1 \\leq |src|==|target|==|wordList[i]| \\leq 5$\n$src$, $target$ and $wordList[i]$ consist of lowercase English letters.\n$src \\neq target$. \nAll the words in $wordList$ are unique.\nThe Sum of $n$ over all test cases is $\\leq 10^5$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nvector<vector<string>> findLadders(string src, string tar, vector<string>& wordList) {\n\tqueue<vector<string>> q;\n\tvector<vector<string>> ans;\n\tunordered_set<string> st(wordList.begin(), wordList.end()), visited;\n\tq.push({src});\n\tst.erase(src);\n\tint mn_lvl = 1e9, f = 1;\n\twhile (!q.empty() && f) {\n\t\tint sz = q.size();\n\t\twhile (sz--) {\n\t\t\tauto path = q.front();\n\t\t\tq.pop();\n\t\t\tif (path.size() >= mn_lvl) { // optimisation.\n\t\t\t\tf = 0;\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tstring last = path.back();\n\t\t\tfor (auto i = 0; i < last.size(); i++) {\n\t\t\t\tfor (auto c = 'a'; c <= 'z'; c++ ) {\n\t\t\t\t\tstring news = last;\n\t\t\t\t\tnews[i] = c;\n\t\t\t\t\tif (st.find(news) != st.end()) {\n\t\t\t\t\t\tvisited.insert(news);\n\t\t\t\t\t\tvector<string> new_path = path;\n\t\t\t\t\t\tnew_path.push_back(news);\n\t\t\t\t\t\tif (news == tar)ans.push_back(new_path), mn_lvl = new_path.size();\n\t\t\t\t\t\telse q.push(new_path);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tfor (auto x : visited)st.erase(x);\n\t\tvisited.clear();\n\t}\n\tsort(ans.begin(), ans.end());\n\treturn ans;\n}\nvoid solve() {\n\tstring a, b;\n\tint n;\n\tcin >> a >> b;\n\tcin >> n;\n\tvector<string> s(n);\n\tfor (int i = 0; i < n; i++)cin >> s[i];\n\tauto ans = findLadders(a, b, s);\n\tsort(ans.begin(), ans.end());\n\tcout << ans.size() << endl;\n\tfor (auto v : ans) {\n\t\tfor (auto s : v)cout << s << \" \";\n\t\tcout << endl;\n\t}\n\tcout << endl;\n}\nint main() {\n\tios_base :: sync_with_stdio(0);\n\tcin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n\tfreopen(\"input.txt\", \"r\", stdin); \\\n\tfreopen(\"output.txt\", \"w\", stdout);\n#endif\n\tint t = 1;\n\t// int i = 1;\n\tcin >> t;\n\twhile (t--) {\n\t\t// cout << \"Case #\" << i << \": \";\n\t\tsolve();\n\t\t// i++;\n\t}\n\treturn 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:44:22.852179+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "The requirement of this question is to output all the shortest paths, which means if we find one path using the BFS, then all the other shortest paths must also be in this level, so the search will stop once this level ends.\n\nWe need to output the exact path, so we need one way to store the paths.\n\nFor each word in the BFS queue, we still need to use the previous way to generate the valid words in the ducts (from 1st to last, change every char from 'a' to 'z' ).\n\nDuplicates are permitted within a level. e.g.,\n      $hem -> hex -> tex -> ted$\n      $hem->  tem -> tex -> ted$,  are all valid paths.\n      Draw this into a tree structure:\n```\n                        hem\n                       /  \\\n                    hex   tem\n                      \\   /\n                       tex    \n                        |     \n                       ted    \n```     \nA solution is to erase all the words in the previous level, instead of erasing words for each word in the level.\n\nWe want to prove that in the shortest path from source to target, one word will never be used twice.\nLet us consider a path which we claim to be the shortest path with duplicate words. Let that path be \"$start$, $a_2$ ,... $a_p$ ,$a_{p+1}$,......,$a_q$,$a_{q+1}$....$end$\".\nHere $a_p = a_q$ and $p < q$. It is easy to see we can cut the part of the path $a_{q+1}$....$end$ and paste it after $a_p$ which will cause a reduction of length $(q-p)$. Since $q-p$ is at least $1$, we have a shorter path than what we started. Thus our hypothesis is incorrect and we can never have the shortest path with duplicate words.\nNow let us extend this argument to multiple paths.\nLet us have a path that $p$ that uses word $w$ at level $l_2$ which was used at level $l_1$ by path $q$. let $l_2$ > $l_1$. By the above argument, $p$ can never be the shortest path because we would get a shorter path by extending $q$ from $w$.\n\n\nThis problem can be solved with a very standard BFS process, The only tricky thing you need to remember is this is a BFS of paths, not words!, So the element in the queue is a vector that represents the current path from $src$ word. That's it.\n\nIn BFS, The next level words are generated from the current level. During the generation of valid words, the path can be stored at the same time. When the next level words are all generated, if the end string is included, we can output the paths, otherwise, we can erase the words in the current level, and search for the next level. This erasing step is helping reduce the dict, and eliminate the case that a cycle exists in the path as we are going level by level. The dict and BFS queue can contain a max of $10^4$ words.\nWe can stop BFS once we reached the target word and the current level becomes more than the minimum level.\nRefer to the editorial's code for more details.\n\nTime Complexity : Approx. Worst $O(n*26*5)$ per test case."
+        },
+        "id": 997,
+        "input_format": "The First line contains $T$ - the number of test cases.\nThe first line of each test case contains the word $src$.\nThe second line of each test case contains the word $target$.\nThe third line of each test case contains $n$ - the size of the $wordList$.\nNext $n$ lines contains $n$ words of the $wordList$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, output the number of the shortest transformation sequences, followed by all the shortest transformation sequences from $src$ to $target$, transformation sequences must be lexicographically sorted relatively, or Output $0$ if no such sequence exists.\n\nEach sequence should be output as a sequence of the words $[src, s1, s2, ..., target]$, sequences must be **relatively lexicographically sorted**.\n\nAlso, print a new line after every test case.",
+        "samples": [
+            {
+                "input": "3\n\nlol\nuwu\n7\nlou\nlwl\nuwl\nlwu\nuou\nuol\nuwu\n\nhit\ncog\n6\nhot \ndot \ndog \nlot \nlog \ncog\n\nhit\ncog\n5\nhot \ndot \ndog \nlot \nlog \n",
+                "output": "6\nlol lou lwu uwu \nlol lou uou uwu \nlol lwl lwu uwu \nlol lwl uwl uwu \nlol uol uou uwu \nlol uol uwl uwu \n\n2\nhit hot dot dog cog \nhit hot lot log cog \n\n0\n\n\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-ByteDance"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Shortest Transformation Sequences",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

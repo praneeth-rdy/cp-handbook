@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given an array of <i>N</i> integers, find the length of the smallest sub-array that contains all the distinct elements of the array.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\ntypedef long long ll;\nsigned main()\n{\n    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);\n    ll testcases;\n    cin>>testcases;\n    while(testcases--){\n        ll n;\n        cin>>n;\n        ll arr[n];\n        ll freq[100001] = {0};\n        for(ll i=0;i<n;i++)cin>>arr[i],freq[arr[i]]++;\n        ll distinctElement = 0;\n        for(ll i=0;i<=100000;i++){\n            distinctElement+=(freq[i]>0);\n            freq[i] = 0;\n        }\n        ll ans = n;\n        ll start = 0;\n        ll current = 0;\n        ll currSum = 0;\n        while(current<n){\n            freq[arr[current]]++;\n            if(freq[arr[current]]==1)\n                currSum++;\n            while(start<=current and currSum==distinctElement){\n                ans = min(ans,current-start+1);\n                if(freq[arr[start]]==1)\n                    currSum--;\n                freq[arr[start]]--;\n                start++;\n            }\n            current++;\n        }\n        cout<<ans<<\"\\n\";\n    }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:13:06.980798+00:00"
+        },
+        "hints": {
+            "hint1": "First, find the number of distinct elements in the entire subarray and then find the shortest subarray with that number of distinct elements.",
+            "hint2": "If a subarray from L to R has K number of distinct elements, it is possible that a shorter subarray from X to R (L < X) also has K number of distinct elements.",
+            "solution_approach": "We would be using two pointers to solve this problem. We start both the pointers from the beginning i.e. L = 0 and R = 0. We would be maintaining a frequency count array for the elements in the current subarray. To find the number of distinct elements in the current subarray, when increasing the frequency, if we get it as 1, that means a new element has been added to the current subarray,  the number of distinct elements in the subarray increases, and when decreasing the frequency, if we get it as 0, that means the element is no more present in the subarray and the number of distinct elements in the subarray decreases.\n\nWe start from the beginning of the array and keep increasing the right pointer, R till the number of distinct elements is less than or equal to K. If the subarray from L to R has a number of distinct elements = K, it is possible that a shorter subarray from X to R (L < X) also has K number of distinct elements. Find the length of this subarray, i.e. the penalty, and take the minimum of all such penalties. When the number of distinct elements becomes equal to K, we start moving the left pointer, until the number of distinct elements is less than K. We continue doing this till R < N.\n\nTime Complexity per test case: O(N)"
+        },
+        "id": 57,
+        "input_format": "<p>The first line contains <i>T</i>, the number of test cases <i>(1&lt;=T&lt;=10)</i>.</p><p>The first line contains an integer <i>N, 1&lt;=N&lt;=10^5</i>.</p><p>Next line contains <i>N</i> space-separated integers <i>(0&lt;=Ai&lt;=1e5)</i>.</p><p>&nbsp;</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "<p>For first test case \u2192 smallest subarray -&gt; (1,3,2).</p><p>For second test case \u2192 smallest subarray -&gt; (1,2,3,4,5).</p><p>For third test case \u2192 smallest subarray -&gt; (1 2 2 3 3 4).</p>",
+        "output_format": "<p>For each test case print length of the smallest sub-array that contains all the distinct elements of array in a newline.</p>",
+        "samples": [
+            {
+                "input": "6\n5\n1 1 3 2 3\n5\n1 2 3 4 5\n6\n1 2 2 3 3 4\n6\n1 2 1 3 2 4\n5\n1 1 1 1 1\n1\n1",
+                "output": "3\n5\n6\n4\n1\n1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Two Pointers",
+            "company-Adobe"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Shortest Subarray",
+        "video_editorial_id": 8134
+    },
+    "details": "Problem Details"
+}

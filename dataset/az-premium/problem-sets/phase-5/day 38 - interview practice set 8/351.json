@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p><span style=\"background-color:transparent;color:#000000;\">You have a top-secret message which is coded in the following manner:</span><br><span style=\"background-color:transparent;color:#000000;\">A -&gt; 1</span><br><span style=\"background-color:transparent;color:#000000;\">B -&gt; 2</span><br><span style=\"background-color:transparent;color:#000000;\">\u2026.</span><br><span style=\"background-color:transparent;color:#000000;\">Z -&gt; 26.</span></p><p><span style=\"background-color:transparent;color:#000000;\">So the string <strong>AXRY</strong> is coded as <strong>1241825</strong>. (A -&gt; 1, X -&gt; 24, R -&gt; 18, Y -&gt; 25)</span><br><span style=\"background-color:transparent;color:#000000;\">You are given the coded string <strong>s</strong>. The task is to output the number of ways in which this string can be decoded, i.e, the number of strings which when coded using the above rules give the string <strong>s</strong>. Since the answer can be huge, output it modulo 10<sup>9</sup> + 7.</span><br>It is guaranteed that there is at least one way to decode the string.</p>",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">1 &lt;= |s| &lt;= 100000\n( |s| = length of the string )</code></pre>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n#define ll long long int\n\nconst ll mod = 1e9 + 7;\nstring s;\nvector <ll> dp;\nll n;\n\nll solve(ll i) {\n\tif (dp[i] != -1)\n\t\treturn dp[i];\n\tif (i == n - 1) {\n\t\tif (s[i] == '0')\n\t\t\treturn dp[i] = 0;\n\t\telse\n\t\t\treturn dp[i] = 1;\n\t}\n\tif (s[i] == '0')\n\t\treturn dp[i] = 0;\n\tll ans = 0;\n\tans = (ans + solve(i + 1)) % mod;\n\tll x = s[i] - '0';\n\tx = x * 10;\n\tx = x + (s[i + 1] - '0');\n\tif (x >= 1 && x <= 26) {\n\t\tif (i == n - 2)\n\t\t\tans = (ans + 1) % mod;\n\t\telse\n\t\t\tans = (ans + solve(i + 2)) % mod;\n\t}\n\treturn dp[i] = ans;\n}\n\nint main() {\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL);\n\tcin >> s;\n\tn = s.length();\n\tdp.resize(n);\n\tfor (ll i = 0; i < n; i++)\n\t\tdp[i] = -1;\n\tll ans = solve(0);\n\tcout << ans << \"\\n\";\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:29:09.581422+00:00"
+        },
+        "hints": {
+            "hint1": "<p><span style=\"background-color:transparent;color:#000000;\">Can you think of a recursive solution?</span></p>",
+            "hint2": "<p><span style=\"background-color:transparent;color:#000000;\">Can the problem be reduced into sub-problems that can be solved recursively?</span></p>",
+            "solution_approach": "This problem can be solved using dynamic programming.\nThis problem is recursive and can be broken into sub-problems. We start from the beginning of the given digit sequence. We initialize the total count of decodings as 0. We recur for two subproblems. \n\n1. If the current digit is non-zero, recur for the remaining (n-1) digits and add the result to the total count. \n2. If the first two digits form a valid character (or smaller than 27), recur for the remaining (n-2) digits and add the result to the total count.\n\nWe use memoization to store the results of the sub-problems and solve the problem in **O(n)** time complexity."
+        },
+        "id": 351,
+        "input_format": "<p><span style=\"background-color:transparent;color:#000000;\">The only line of input contains the string <strong>s.</strong></span></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><span style=\"background-color:transparent;color:#000000;\">BFAG - (2, 6, 1, 7)</span><br><span style=\"background-color:transparent;color:#000000;\">ZQ -&gt; (26, 17)</span><br><span style=\"background-color:transparent;color:#000000;\">ZAG -&gt; (26, 1, 7)</span><br><span style=\"background-color:transparent;color:#000000;\">BFQ -&gt; (2, 6, 17)</span></p>",
+        "output_format": "<p><span style=\"background-color:transparent;color:#000000;\">Print the number of ways in which the string can be decoded.</span></p>",
+        "samples": [
+            {
+                "input": "2617",
+                "output": "4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Message Decoding",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given three strings X, Y, and Z. You need to determine if string Z is an interleaving of X and Y. String Z is said to be interleaving X and Y if all the characters of X and Y are present in Z and the order of characters in the individual strings is preserved.\nSee the sample explanation for more details.",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">1 &lt;= n &lt;= 1000 (length of X)\n1 &lt;= m &lt;= 1000 (length of Y)\nLength of Z = n + m</code></pre>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint dp[1001][1001];\nstring x, y, z;\nint n, m;\n\nint solve(int i, int j) {\n\tif (dp[i][j] != -1)\n\t\treturn dp[i][j];\n\tif (i == n && j == m)\n\t\treturn dp[i][j] = 1;\n\tif (i == n) {\n\t\tint ans;\n\t\tif (y[j] == z[i + j])\n\t\t\tans = solve(i, j + 1);\n\t\telse\n\t\t\tans = 0;\n\t\treturn dp[i][j] = ans;\n\t}\n\tif (j == m) {\n\t\tint ans;\n\t\tif (x[i] == z[i + j])\n\t\t\tans = solve(i + 1, j);\n\t\telse\n\t\t\tans = 0;\n\t\treturn dp[i][j] = ans;\n\t}\n\tint ans = 0;\n\tif (x[i] == z[i + j])\n\t\tans = solve(i + 1, j);\n\tif (y[j] == z[i + j])\n\t\tans |= solve(i, j + 1);\n\treturn dp[i][j] = ans;\n}\n\nint main() {\n\tcin >> x >> y >> z;\n\tn = x.length();\n\tm = y.length();\n\tfor (int i = 0; i <= n; i++) {\n\t\tfor (int j = 0; j <= m; j++)\n\t\t\tdp[i][j] = -1;\n\t}\n\tint ans = solve(0, 0);\n\tif (ans)\n\t\tcout << \"Yes\\n\";\n\telse\n\t\tcout << \"No\\n\";\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:19:01.795069+00:00"
+        },
+        "hints": {
+            "hint1": "Greedy will not work here as there can be many cases. Can we use Dynamic Programming?",
+            "hint2": "We will try to reduce the problem into subproblems.",
+            "solution_approach": "Let $dp[i][j]$ represent whether the first $i$ characters of $X$ and $j$ characters of $Y$ have been found in $Z$.\n\n- If the remaining part of $Z$ interleaves the remaining part of $X$ and $Y$, then $dp[i][j] = 1$.  \n- Otherwise, $dp[i][j] = 0$.\n\nSo, the answer to the problem is $dp[0][0]$.\n\nWe use **memoization** to solve the problem.  \nThe current character in $Z$ will always be $i + j$, so we do not need to maintain another state for that.\n\n### Base Cases:\n1. $i == n$ and $j == m$:  \n   Both strings $X$ and $Y$ have been found, so we return $1$.\n   \n2. $i == n$ and $j \\neq m$:  \n   String $X$ has been used up. So the next character in $Z$ must be equal to $Y[j]$.  \n   - If it is equal, we go to $dp[n][j+1]$.  \n   - If it is not equal, we return $0$.\n\n3. $i \\neq n$ and $j == m$:  \n   String $Y$ has been used up. So the next character in $Z$ must be equal to $X[i]$.  \n   - If it is equal, we go to $dp[i+1][m]$.  \n   - If it is not equal, we return $0$.\n\n### Transitions:\n1. If $X[i] == Z[i+j]$, we use the $i$-th index of $X$ and go to $dp[i+1][j]$.  \n2. If $Y[j] == Z[i+j]$, we use the $j$-th index of $Y$ and go to $dp[i][j+1]$.\n\nIf in any case we get $1$, then $dp[i][j] = 1$.  \nOtherwise, $dp[i][j] = 0$.\n\nSo, if the string $Z$ is an interleaving of $X$ and $Y$, $dp[0][0] = 1$.\n\n### Time Complexity:\nThe overall time complexity is $O(n \\cdot m)$.\n"
+        },
+        "id": 602,
+        "input_format": "The first line of input contains the string X.\nThe second line of input contains the string Y.\nThe third line of input contains the string Z.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "1. The order of characters is not maintained.\n\n2. **DA**AC**S**A  \n   The characters in bold are from string $Y$, and the others are from string $X$.  \n   The order is maintained, so $Z$ is an interleaving of $X$ and $Y$.",
+        "output_format": "Print \u2018Yes\u2019 is the string Z is an interleaving of X and Y, and \u2018No\u2019 otherwise.",
+        "samples": [
+            {
+                "input": "A\nAB\nBAA",
+                "output": "No"
+            },
+            {
+                "input": "ACA\nDAS\nDAACSA",
+                "output": "Yes"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-Sprinklr"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Interleaved Strings",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

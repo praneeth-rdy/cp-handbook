@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a directed graph with $N$ vertices and $M$ edges.\n\nWhat is the minimum number of edges needed to reverse in order to have at least one path from vertex $1$ to vertex $N$, where the vertices are numbered from $1$ to $N$ ?",
+        "complete_approach": "",
+        "constraints": "$1 \u2264 T \u2264 10$\n$1 \u2264 N, M \u2264 10^{5}$\n1 \u2264 $X_i$, $Y_i$ \u2264 $N$\nThere can be multiple edges connecting the same pair of vertices, There can be self-loops too i.e. $X_i$ = $Y_i$",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nint n, m;\nvector<vector<array<int, 2>>> adj;\nvoid solve() {\n\tcin >> n >> m;\n\tadj.assign(n + 1, vector<array<int, 2>>());\n\tfor (int i = 0; i < m; i++) {\n\t\tint u, v;\n\t\tcin >> u >> v;\n\t\tadj[u].push_back({v, 0}); // normal edge having weight 0.\n\t\tadj[v].push_back({u, 1}); // reverse edge having weight 1.\n\t}\n\tdeque<int> dq;\n\tvector<int> dist(n + 1, 1e9);\n\tdist[1] = 0;\n\tdq.push_front(1);\n\twhile (!dq.empty()) {\n\t\tauto v = dq.front();\n\t\tdq.pop_front();\n\t\tfor (auto x : adj[v]) {\n\t\t\tif (dist[x[0]] > dist[v] + x[1]) {\n\t\t\t\tdist[x[0]] = dist[v] + x[1];\n\t\t\t\tif (x[1])dq.push_back(x[0]);\n\t\t\t\telse dq.push_front(x[0]);\n\t\t\t}\n\t\t}\n\t}\n\tif (dist[n] == 1e9)cout << -1<<endl;\n\telse cout << dist[n]<<endl;\n}\nint main() {\n\tios_base :: sync_with_stdio(0);\n\tcin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n\tfreopen(\"input.txt\", \"r\", stdin); \\\n\tfreopen(\"output.txt\", \"w\", stdout);\n#endif\n\tint t = 1;\n\t// int i = 1;\n\tcin >> t;\n\twhile (t--) {\n\t\t// cout << \"Case #\" << i << \": \";\n\t\tsolve();\n\t\t// i++;\n\t}\n\treturn 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:26:19.185583+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Add a reverse edge of each original edge in the graph. Give reverse edge a weight=1 and all original edges a weight of 0. Now, the length of the shortest path will give us the answer.\n\nHow?\n\nIf the shortest path length is $k$: it means we used $k$ reverse edges in the shortest path. So, it will give us the answer.\nThe shortest path algorithm will always try to use as few reverse paths as possible because they have a higher weight than the original edges.\n\nTo find the shortest path, we can use Dijkstra\u2019s Algorithm which works in $O(|E| log |V|)$ if implemented using adjacency lists and priority queue.\nAlso, since there are only 0 and 1 weight edges, we can also do this by $0/1$ **BFS** in $O(N+M)$: maintain a deque instead of a queue and add a vertex to the front of the deque if 0 edges are used and to the back of the deque otherwise.\n\n**Note**: Intended time complexity for this problem is $O(N+M)$ per test case."
+        },
+        "id": 900,
+        "input_format": "The first line contains $T$ - the number of test cases.\n\nThe first line of each test case contains two space-separated integers $N$ and $M$, denoting the number of vertices and the number of edges in the graph respectively. \nThe $i^{th}$ line of the next $M$ lines of each test case contains two space-separated integers $X_i$ and $Y_i$, denoting that the $i^{th}$ edge connects vertices from $X_i$ to $Y_i$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "We can consider two paths from 1 to 7:\n\n$1-2-3-4-7$\n$1-2-6-5-7$\n\nIn the first one we need to revert edges $(3-2), (7-4)$. In the second one - $(6-2), (5-6), (7-5)$. So the answer is $min(2, 3) = 2$.",
+        "output_format": "For each test case, In a single line, print the minimum number of edges we need to revert. If there is no way of having at least one path from $1$ to $N$, print -1.",
+        "samples": [
+            {
+                "input": "1\n7 7\n1 2 \n3 2\n3 4\n7 4\n6 2\n5 6\n7 5\n",
+                "output": "2\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Shortest Path",
+            "0-1 Bfs"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Edge Reverse",
+        "video_editorial_id": 8236
+    },
+    "details": "Problem Details"
+}

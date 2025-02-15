@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Through a railway station, N trains pass each having a particular arrival and departure time. Find the minimum number of platforms required such that no train is kept waiting. If a train arrives at time x and other leaves at the same time x then they cannot use the same platform.",
+        "complete_approach": "",
+        "constraints": "<p><i>1 \u2264 N \u2264 10<sup>5</sup></i><br><i>1 \u2264 s \u2264 t \u2264 10<sup>8</sup></i></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n\nint MinimumPlatforms(vector<pair<int, int>> &trains)\n{\n    int n = (int)trains.size();\n\n    vector<pair<int, int>> v;\n\n    for (int i = 0; i < n; i++)\n    {\n        int s = trains[i].first, t = trains[i].second;\n        v.push_back({s, 0});\n        v.push_back({t, 1});\n    }\n\n    sort(v.begin(), v.end());\n\n    int ans = 0, curr = 0;\n    for (auto i : v)\n    {\n        if (i.second)\n            curr--;\n        else\n            curr++;\n        ans = max(ans, curr);\n    }\n\n    return ans;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    cin >> n;\n\n    vector<pair<int, int>> trains;\n\n    for (int i = 0; i < n; i++)\n    {\n        int s, t;\n        cin >> s >> t;\n        trains.push_back({s, t});\n    }\n\n    cout << MinimumPlatforms(trains) << '\\n';\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:32:14.408804+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Assume arrival and departure are two different events. Sort combine of them in ascending order. Can we make use of this information?</p>",
+            "hint2": "<p>If it's arrival, then one train is added to the station. And if it's departure one train is subtracted from the station. We need to find the max of all time.</p>",
+            "solution_approach": "We store all the arrival and departure times in a single vector and sort it in ascending order. We maintain a count of the number of trains present at the station at the same time. To do this we iterate on our vector and if the current event is arrival we increment the count by 1 and if it is departure we decrement it by 1. The answer is the maximum value of the count."
+        },
+        "id": 612,
+        "input_format": "The first line of each test case contains a single integer N - the number of trains.\nN lines follow each containing two integers s and t - the arrival and departure time of each of these trains.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "At time 1110 3 trains are present simultaneously, so 3 platforms are required to accommodate all the trains in the first test case.",
+        "output_format": "Print the minimum number of platforms required in a new line.",
+        "samples": [
+            {
+                "input": "6\n900 910\n940 1200\n950 1120\n1100 1130\n1500 1900\n1800 2000",
+                "output": "3"
+            },
+            {
+                "input": "3\n900 1000\n1100 1200\n1235 1240",
+                "output": "1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nint MinimumPlatforms(vector<pair<int, int>> &trains)\n{\n    // Complete the function\n}\n\n<fix>\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    cin >> n;\n\n    vector<pair<int, int>> trains;\n\n    for (int i = 0; i < n; i++)\n    {\n        int s, t;\n        cin >> s >> t;\n        trains.push_back({s, t});\n    }\n\n    cout << MinimumPlatforms(trains) << '\\n';\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Minimum Platforms",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

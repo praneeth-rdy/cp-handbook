@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>A number N is said to be D-Magic if digit D appears in the decimal representation of the number on only even positions. You have to tell the number of D-Magic numbers in the range A to B(both inclusive) that are multiple of M. Since the answer can be large, print the number of integers modulo 10<sup>9</sup> + 7.</p><p><strong>It is given that the number of digits in A and B is the same and A \u2264 B.</strong></p><p>&nbsp;</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 T \u2264 5</p><p>1 \u2264 M \u2264 2000</p><p>0 \u2264 D \u2264 9</p><p>1 \u2264 A \u2264 B \u2264 10<sup>2000</sup></p>",
+        "difficulty": 5,
+        "editorial_code": [],
+        "health_check": {
+            "issues": [
+                "Editorial Code data is currently empty."
+            ],
+            "last_updated": "2024-06-22T02:14:45.391644+00:00"
+        },
+        "hints": {
+            "hint1": "Make a DP array, $DP[\\text{index}][\\text{sum}][\\text{smaller\\_already}]$ - the number of ways to choose digits so far such that the \u2018sum\u2019 tells if the number is divisible by $M$ (gives modulo $M$) and \u2018smaller\\_already\u2019 says whether we have already chosen some digits smaller than the corresponding digit in $K$.\n",
+            "hint2": "You should not subtract $A$ by $1$. That would only make your implementation tougher.\n\nStress on the given condition that the number of digits in $A$ and $B$ is the same.\n",
+            "solution_approach": "For each possible digit in the $i$-th position of the given number, the DP transition will be:\n\n$$\nDP[i][\\text{sum}][\\text{smaller}] += DP[i+1][(10 \\times \\text{sum} + \\text{digit}) \\% M][\\text{smaller} \\, || \\, (\\text{digit} < t)]\n$$\nwhere $t$ is the corresponding digit in $K$.\n\n**Time Complexity:** $O(N \\times M \\times 20)$ where $N$ is the number of digits in $A$ and $B$ (equal).\n"
+        },
+        "id": 302,
+        "input_format": "<p>The first line of the input contains one integer T - the number of test cases. Then T test cases follow.</p><p>The first line of each test case contains two space-separated integers M and D.</p><p>The second line of each test case contains one integer A.</p><p>The third line of each test case contains one integer B.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, the following are the 12 numbers between 10 and 90 which are 2-Magic Numbers: 14, 24, 34, 54, 64, 74, 84.\n\nFor the second test case, the following are the 7 numbers between 200 and 300 which are 9-Magic Numbers: 291, 294, 297.\n\nFor the third test case, there are no 1-Magic Numbers between 10 and 90.",
+        "output_format": "<p>Print single integer denoting the number of D-Magic numbers in the range A to B(both inclusive) that are multiple of M, modulo 10<sup>9</sup> + 7.</p>",
+        "samples": [
+            {
+                "input": "3\n2 4\n10\n90\n3 9\n200\n300\n2 1\n10 \n90",
+                "output": "7\n3\n0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Dynamic Programming",
+            "Digit Dp"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "D-Magic Number",
+        "video_editorial_id": 10695
+    },
+    "details": "Problem Details"
+}

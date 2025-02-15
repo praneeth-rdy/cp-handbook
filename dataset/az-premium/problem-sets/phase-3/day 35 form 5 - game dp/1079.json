@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Vivek and Abhishek are playing a game of chips, taking turns alternatively. Initially, there are $x$ chips on the table. On each turn, a player can pick up $2^m$ chips such that $m\\geq0$ and $x\\geq2^m$. A player loses the game if he has no chips to pick from the table.\n\nGiven that Vivek starts the game, Predict the winner of the game.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^6$.\n$0 \\leq x \\leq 2\\times10^5$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nvector<int> dp;\nint rec(int x) {\n    if (x == 0)return 0;\n    if (__builtin_popcount(x) == 1)return 1;\n    auto &ans = dp[x];\n    if (ans != -1)return ans;\n    ans = 1;\n    for (int j = 0; (1 << j) <= x; j++) {\n        ans &= rec(x - (1 << j));\n    }\n    ans ^= 1;\n    return ans;\n}\nvoid solve() {\n    dp.assign((int)2e5 + 10, -1);\n    int t;\n    cin >> t;\n    while (t--) {\n        int n;\n        cin >> n;\n        auto ans = rec(n);\n        if (ans)cout << \"Vivek\" << endl;\n        else cout << \"Abhishek\" << endl;\n    }\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n    solve();\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:38:07.178761+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Refer to the Game DP video by Vivek: https://www.youtube.com/watch?v=0RMrTojwPxs"
+        },
+        "id": 1079,
+        "input_format": "The first line contains $T$ - the number of test cases.\nThe next $T$ lines contain an integer $x$, - the number of chips on the table.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, Predict the winner of the chip game. Output \"Vivek\" if Vivek wins; else output \"Abhishek\", on a new line.",
+        "samples": [
+            {
+                "input": "5\n0 \n2\n12783\n1001\n33\n",
+                "output": "Abhishek\nVivek\nAbhishek\nVivek\nAbhishek\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Subtraction Game",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

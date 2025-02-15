@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>There are <i>N</i> Ranks and <i>M</i> students in a class. Each student has a happiness value for the rank in the class he gets. The i th Student gets <i>happy[i][j]</i> on getting a rank <i>j</i>. It's ok to not keep all students in the ranks (They get 0 happiness). At most one student can be assigned to a rank. The total happiness of the assignment can be calculated as Sum of Happiness of each of the students in the class. Find the best way to calculate.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n \n#define int long long\n \nint happy[50][10];\nint dp[50][(1<<10)];\nint n, m;\n \nint dfs(int pos, int vis) {\n    if(pos == m) {\n        return 0;\n    }\n    if(dp[pos][vis] != -1) {\n        return dp[pos][vis];\n    }\n    int ans = dfs(pos+1, vis);\n    for (int i = 0; i < n; ++i) {\n        if((vis & (1<<i)) == 0) {\n            int temp = happy[pos][i] + dfs(pos+1, vis | (1<<i));\n            ans = max(ans, temp);\n        }\n    }\n    dp[pos][vis] = ans;\n    return ans;\n}\n \nsigned main(){\n    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n    int t;\n    cin >> t;\n    while(t--) {\n        cin >> n >> m;\n        for (int i = 0; i < m; ++i) {\n            for (int j = 0; j < (1<<n); ++j) {\n                dp[i][j] = -1;\n            }\n        }\n        for (int i = 0; i < m; ++i) {\n            for (int j = 0; j < n; ++j) {\n                cin >> happy[i][j];\n            }\n        }\n        cout << dfs(0, 0) << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:41:44.198923+00:00"
+        },
+        "hints": {
+            "hint1": "<p>The brute force approach would be to find the answer for every possible solution. Since one student can be assigned only one rank, the first student will have M choices, the second student will have (M-1) choices and so on. The time complexity would be O(M*(M-1)*..(M-N+1)) when N &lt;= M. Otherwise it would be O(M!).</p>",
+            "hint2": "While assigning the ranks to the students starting from 1 to i, it can be noticed that the happiness of the i+1-th rank is independent of the ranks assigned to the first i persons. So we can use DP with bit masking in this problem. We would be iterating on the list of students (M) and make a set to store the ranks (N) which have already been assigned.",
+            "solution_approach": "<p>We would make the DP array as DP[pos][vis] which denotes the maximum happiness that can be made by taking pos number of students and vis is the subset of ranks assigned. The subset of ranks assigned can be stored by using bit masking by using 2^N possible cases. For student pos, there can be two cases: we can either assign a rank to him, for this case we would iterate through all the possible ranks, that have not been assigned earlier and perform a recursive solution by adding the happiness for student pos with the particular rank and add it to the subset. For the second case, we don\u2019t have to assign any rank to the student and just perform the recursive solution for the next student. Note that you need to use memoization otherwise the answer will result in TLE. The base case would be when we have processed all the M students, the happiness would be 0 in this case.</p><p>Time Complexity per test case: O(M * N * 2^N)</p>"
+        },
+        "id": 452,
+        "input_format": "<p>The first line contains an integer T (1 \u2264 T \u2264 200) - the number of testcases.</p><p>The first line of each test case contains two space-separated integers N, M. 1 \u2264 N \u2264 10, 1 \u2264 M \u2264 50.</p><p>The next M lines contain N integers, 0 \u2264 happy[i][j] \u2264 10^5.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case print the maximum sum of happiness possible in a new line.</p>",
+        "samples": [
+            {
+                "input": "4\n6 11\n49 78 23 100 29 2\n11 28 39 27 77 45\n24 52 18 45 84 41\n85 88 75 21 98 100\n59 24 27 21 94 90\n88 0 0 16 89 54\n63 24 100 23 18 75\n26 34 54 14 28 11\n68 61 40 14 67 14\n16 62 17 70 29 52\n97 53 0 98 90 75 \n1 2\n8\n6 \n5 9\n6 0 7 9 3\n10 0 1 1 4\n0 2 4 6 1\n7 1 5 5 10\n0 3 3 1 10\n9 8 6 9 1\n0 10 6 0 2\n4 9 2 4 9\n4 10 10 3 7 \n4 5\n10 2 4 0\n10 1 6 7\n6 3 2 0\n2 3 5 1\n10 4 7 6 ",
+                "output": "564\n8\n49\n27"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Dynamic Programming",
+            "Bitmask"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Students Happiness",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

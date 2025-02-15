@@ -1,0 +1,294 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3456,
+            "name": "Live sessions",
+            "resources_count": 15,
+            "time_in_minutes": 1033,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3420,
+            "name": "Problem Solving Strategy",
+            "resources_count": 1,
+            "time_in_minutes": 94,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3421,
+            "name": "Day 1: C++ Landmines 1",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3422,
+            "name": "Day 2: C++ Landmines 2",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3423,
+            "name": "Day 3: C++ Landmines 3",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3424,
+            "name": "Day 4: Foundational Maths - Factor & GCD",
+            "resources_count": 6,
+            "time_in_minutes": 150,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3425,
+            "name": "Day 5:  Modulo Arithmetic",
+            "resources_count": 2,
+            "time_in_minutes": 159,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3426,
+            "name": "Day 6: nCr",
+            "resources_count": 4,
+            "time_in_minutes": 106,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3427,
+            "name": "Day 7 Gap Day [Challengers, Optional]:",
+            "resources_count": 3,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3428,
+            "name": "Day 8 : Prefix Sums",
+            "resources_count": 4,
+            "time_in_minutes": 68,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3429,
+            "name": "Day 9: 2D Versions",
+            "resources_count": 5,
+            "time_in_minutes": 99,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3435,
+            "name": "Day 10: STL Basics",
+            "resources_count": 7,
+            "time_in_minutes": 174,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3436,
+            "name": "Day 11:STL Usages",
+            "resources_count": 2,
+            "time_in_minutes": 60,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3437,
+            "name": "Day 12: Stacks & Queues",
+            "resources_count": 4,
+            "time_in_minutes": 96,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3438,
+            "name": "Day 13: Map",
+            "resources_count": 5,
+            "time_in_minutes": 127,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3439,
+            "name": "Day 14: Priority Queue",
+            "resources_count": 5,
+            "time_in_minutes": 125,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3440,
+            "name": "Day 15 :  Set",
+            "resources_count": 4,
+            "time_in_minutes": 93,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3441,
+            "name": "Day 16:  Multiset",
+            "resources_count": 3,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3442,
+            "name": "Day 17:  Deque & Ordered set",
+            "resources_count": 2,
+            "time_in_minutes": 60,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3443,
+            "name": "Day 18: Application Ideas 1",
+            "resources_count": 4,
+            "time_in_minutes": 219,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3444,
+            "name": "Day 19: Application Ideas 2",
+            "resources_count": 2,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3445,
+            "name": "Day 20: Application Ideas 3",
+            "resources_count": 2,
+            "time_in_minutes": 113,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3446,
+            "name": "Day 21: Application Ideas 4",
+            "resources_count": 4,
+            "time_in_minutes": 205,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3447,
+            "name": "Day 22: Application Ideas 5",
+            "resources_count": 3,
+            "time_in_minutes": 148,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3448,
+            "name": "Day 23: Application Ideas 6",
+            "resources_count": 3,
+            "time_in_minutes": 201,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3449,
+            "name": "Day 24: Application Ideas 7",
+            "resources_count": 2,
+            "time_in_minutes": 129,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3450,
+            "name": "Day 25: Stack Mastery",
+            "resources_count": 3,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3451,
+            "name": "Day 26: [Optional/Gap]",
+            "resources_count": 5,
+            "time_in_minutes": 142,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3452,
+            "name": "Day 27: [Optional/Gap]",
+            "resources_count": 4,
+            "time_in_minutes": 116,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3453,
+            "name": "Day 28: [Optional /Gap]",
+            "resources_count": 5,
+            "time_in_minutes": 172,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3454,
+            "name": "Day 29: STL internals",
+            "resources_count": 2,
+            "time_in_minutes": 155,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3455,
+            "name": "Day 30: STL Recap",
+            "resources_count": 3,
+            "time_in_minutes": 39,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course June: Phase 1",
+            "id": 4367,
+            "name": "STL Application Idea (Optional)",
+            "resources_count": 1,
+            "time_in_minutes": 0,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium B9 Assignment",
+            "id": 4655,
+            "name": "Contribution Technique Practice",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "ASSIGNMENTS"
+        },
+        {
+            "description": null,
+            "id": 4661,
+            "name": "Brute Force: Iterative Assignment",
+            "resources_count": 1,
+            "time_in_minutes": 180,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 4670,
+            "name": "Recursion Assignment",
+            "resources_count": 1,
+            "time_in_minutes": 150,
+            "type": "ASSIGNMENTS"
+        }
+    ],
+    "details": "Chapter Playlists"
+}

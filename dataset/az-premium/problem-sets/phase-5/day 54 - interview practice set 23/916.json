@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "A subsequence is a string that can be derived from another string by deleting some or no symbols without changing the order of the remaining symbols. Characters to be deleted are not required to go successively, there can be any gaps between them. For example, for the string \"abaca\" the following strings are subsequences: \"abaca\", \"aba\", \"aaa\", \"a\" and \"\" (empty string). But the following strings are not subsequences: \"aabaca\", \"cb\" and \"bcaa\".\n\nYou are given a string $s$ consisting of $n$ lowercase Latin letters.\n\nIn one move you can take any subsequence $t$ of the given string and add it to the set $S$. The set $S$ can't contain duplicates. This move costs $n\u2212|t|$, where $|t|$ is the length of the added subsequence (i.e. the price equals to the number of the deleted characters).\n\nYour task is to find out the minimum possible total cost to obtain a set $S$ of size $k$ or report that it is impossible to do so.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 100$\n$1 \\leq n \\leq 100$\n$1 \\leq k \\leq 10^{12}$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nstring s;\nll n, k;\nll dp[101][101][26];\nll rec(int i, int l, int c) {\n    if (l < 0)return 0;\n\n    if (i == -1) {\n        if (l == 0)return 1;\n        return 0;\n    }\n    auto &ans = dp[i][l][c];\n    if (ans != -1)return ans;\n    ans = 0;\n    if (s[i] - 'a' == c) {\n        if (l == 1) { // only single character c.\n            ans = 1;\n        }\n        else {\n            for (int j = 0; j < 26; j++) {\n                ans += rec(i - 1, l - 1, j);\n                ans = min(ans, k);\n            }\n        }\n    }\n    else ans = rec(i - 1, l , c);\n    ans = min(ans, k);\n    return ans;\n}\nvoid solve() {\n    cin >> n >> k;\n    cin >> s;\n    memset(dp, -1, sizeof(dp));\n    ll ans = 0;\n    for (int i = n; i >= 1 && k; i--) {\n        for (int j = 0; j < 26 && k; j++) {\n            if (k >= rec(n - 1, i, j)) {\n                k -= rec(n - 1, i, j);\n                ans += rec(n - 1, i, j) * (n - i);\n            }\n            else {\n                ans += k * (n - i);\n                k = 0;\n                break;\n            }\n        }\n    }\n    if (k == 1) {\n        ans += n;\n    }\n    else if (k > 1)ans = -1;\n    cout << ans << endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```\n\n\n",
+                "language": "C++14"
+            },
+            {
+                "code": "```cpp\n\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nconst long long INF64 = 1e12;\n\nint main() {\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t;\n    cin >> t;\n    while (t--) {\n        int n;\n        long long k;\n        cin >> n >> k;\n        --k; // the whole string costs nothing\n        string s;\n        cin >> s;\n\n        vector<vector<int>> lst(n, vector<int>(26, -1));\n        for (int i = 0; i < n; ++i) {\n            for (int j = 0; j < 26; ++j) {\n                if (i > 0) lst[i][j] = lst[i - 1][j];\n            }\n            lst[i][s[i] - 'a'] = i;\n        }\n\n        vector<vector<long long>> dp(n + 1, vector<long long>(n + 1));\n        for (int i = 0; i < n; ++i) {\n            dp[i][1] = 1;\n        }\n\n        for (int len = 2; len < n; ++len) {\n            for (int i = 1; i < n; ++i) {\n                for (int j = 0; j < 26; ++j) {\n                    if (lst[i - 1][j] != -1) {\n                        dp[i][len] = min(INF64, dp[i][len] + dp[lst[i - 1][j]][len - 1]);\n                    }\n                }\n            }\n        }\n\n        long long ans = 0;\n        for (int len = n - 1; len >= 1; --len) {\n            long long cnt = 0;\n            for (int j = 0; j < 26; ++j) {\n                if (lst[n - 1][j] != -1) {\n                    cnt += dp[lst[n - 1][j]][len];\n                }\n            }\n            if (cnt >= k) {\n                ans += k * (n - len);\n                k = 0;\n                break;\n            } else {\n                ans += cnt * (n - len);\n                k -= cnt;\n            }\n        }\n\n        if (k == 1) {\n            ans += n;\n            --k;\n        }\n\n        if (k > 0) cout << -1 << endl;\n        else cout << ans << endl;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:27:29.456554+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Firstly, let's calculate the following auxiliary matrix: $lst_{i,j}$ means the maximum position $pos$ that is less than or equal to $i$, and the character $s_{pos}=j$ (in order from $0$ to $25$, $'a' = 0$, $'b' = 1$, and so on). It can be calculated naively.\n\nAfter calculating this matrix we can solve the problem by the following dynamic programming: let $dp_{i,j}$ be the number of subsequences of length $j$ that ends exactly in the position $i$. Initially all values are zeros except $dp_{i,1}=1$ for each $i$ from $0$ to $n\u22121$.\n\nHow do we perform transitionss? Let's iterate over all lengths $j$ from $2$ to $n$, then let's iterate over all positions $i$ from $1$ to $n\u22121$ in a nested loop, and for the current state $dp_{i,j}$ we can calculate it as $\\Sigma_{c=0}^{25}dp_{lst_{i\u22121,c},j\u22121}$. If $lst_{i\u22121,c}=\u22121$ then we don't need to add this state of the dynamic programming to the current state. Don't forget to take the minimum with $10^{12}$ after each transition!\n\nThis transition means that we take all subsequences that end with each possible character of the alphabet and try to add the current character to each of them. You can understand that there are no overlapping subsequences in this dynamic programming.\n\nAfter that let's iterate over all possible lengths $j$ from $n$ to $1$ and calculate the number of subsequences of the current length $j$. It equals to $cnt=\\Sigma_{c=0}^{25}dp_{lst_{n\u22121,c},j}$. The same, if $lst_{n\u22121,c}=\u22121$ then we don't need to add this state of the dynamic programming to $cnt$. Don't forget to take the minimum with $10^{12}$! If $cnt \u2265 k$ then let's add $k*(n\u2212len)$ to the answer and break the cycle. Otherwise let's add $cnt*(n\u2212len)$ to the answer and decrease $k$ by $cnt$.\n\nIf after all iterations $k$ is greater than zero then let's try to add the empty string to the answer (we didn't take it into account earlier). Increase the answer by $n$ and decrease $k$ by one. If after this $k$ is still greater than zero then the answer is $-1$, otherwise the answer is the calculated sum.\n\n**Time complexity**: $O(26*n^{2})$ per test case."
+        },
+        "id": 916,
+        "input_format": "First-line contains $T$ - the number of test cases.\nThe first line of each test case contains two integers $n$ and $k$  \u2014 the length of the string and the size of the set, correspondingly.\nThe second line of each test case contains a string $s$ consisting of $n$ lowercase Latin letters.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In the first example we can generate $S$ = { \"asdf\", \"asd\", \"adf\", \"asf\", \"sdf\" }. The cost of the first element in $S$ is $0$ and the cost of the others is $1$. So the total cost of $S$ is $4$.",
+        "output_format": "For each test case, Print one integer \u2014:  \nif it is impossible to obtain the set $S$ of size $k$, print $-1$.\n Otherwise, print the minimum possible total cost to do it.",
+        "samples": [
+            {
+                "input": "4\n4 5\nasdf\n10 100\najihiushda\n5 7\naaaaa\n5 6\naaaaa\n",
+                "output": "4\n233\n-1\n15\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Distinct Subsequences III",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,60 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have given two positive integers <i>n </i>and <i>k.</i> Your task is to print all balanced parenthesis of length <i>n </i>in lexicographic order (https://en.wikipedia.org/wiki/Lexicographic_order) with depth <strong>exactly</strong> <i>k.</i>&nbsp;</p><p>Balanced parentheses mean that each opening symbol has a corresponding closing symbol and the pairs of parentheses are properly nested.</p><p>Note:</p><ol><li>depth(\"\") = 0.</li><li>depth('(' + A + ')) = depth(A) + 1, where A is a balanced paranthesis sequence.</li><li>depth(A + B) = max(depth(A), depth(B)), where A and B are both balanced paranthesis sequence.</li><li>depth(\"(\") = depth(\")\") = 0</li></ol>",
+        "complete_approach": "",
+        "constraints": "<p>2 \u2264 <i>n</i> \u2264 24<br>1 \u2264 <i>k</i> \u2264 <i>n</i> / 2<br>It is guaranteed that <i>n</i> is an even number.</p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nstring ans = \"\";\n\nvoid dfs(int curLen, int totalLen, int openCnt, int depth, int k) {\n    if(curLen == totalLen) {\n        assert(openCnt == 1);\n        ans += \")\";\n        if(depth == k) cout << ans << \"\\n\";\n        ans.pop_back();\n        return;\n    }\n\n    if(!openCnt) {\n        ans += \"(\";\n        dfs(curLen + 1, totalLen, openCnt + 1, max(depth, openCnt + 1), k);\n        ans.pop_back();\n    }\n    else {\n        int remLen = totalLen - curLen + 1;\n        if(remLen > openCnt && openCnt < k) {\n            ans += \"(\";\n            dfs(curLen + 1, totalLen, openCnt + 1, max(depth, openCnt + 1), k);\n            ans.pop_back();\n        }\n        ans += \")\";\n        dfs(curLen + 1, totalLen, openCnt - 1, max(depth, openCnt - 1), k);\n        ans.pop_back();\n    }\n}\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int n, k;\n    cin >> n >> k;\n\n    dfs(1, n, 0, 0, k);\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:17:12.657762+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 485,
+        "input_format": "<p>The only line of input contains two numbers number <i>n </i>and <i>k.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print all balanced parenthesis of length <i>n </i>with depth <i>k </i>in lexicographic order.</p>",
+        "samples": [
+            {
+                "input": "6 2",
+                "output": "(()())\n(())()\n()(())"
+            },
+            {
+                "input": "4 2",
+                "output": "(())"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Recursion",
+            "Backtracking"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Generate Balanced Parenthesis - medium version",
+        "video_editorial_id": 8211
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given an array of <i>N</i> integers and <i>Q</i> queries. In each query two integers <i>L</i>, <i>R</i> is given, you have to find (<i>A[L] + A[L+1] + A[L+2] + A[L+3]...A[R]</i>) % 10^9+7.<br>&nbsp;</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n#define mod 1000000007\ntypedef long long ll;\nconst int N = 1000001;\nint arr[N];\nsigned main() {\n  ios_base::sync_with_stdio(false);\n  cin.tie(0);\n  cout.tie(0);\n  ll n, q;\n  cin >> n >> q;\n  for (int i = 1; i <= n; i++) cin >> arr[i];\n  ll prefixSum[n + 1];\n  prefixSum[0] = 0;\n  for (int i = 1; i <= n; i++) {\n    prefixSum[i] = prefixSum[i - 1] + arr[i];\n    if (prefixSum[i] < 0) prefixSum[i] += mod;\n    if (prefixSum[i] >= mod) prefixSum[i] -= mod;\n  }\n  while (q--) {\n    ll l, r;\n    cin >> l >> r;\n    ll ans = prefixSum[r] - prefixSum[l - 1];\n    if (ans < 0) ans += mod;\n    if (ans >= mod) ans -= mod;\n    cout << ans << \"\\n\";\n  }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:37:16.975741+00:00"
+        },
+        "hints": {
+            "hint1": "Calculate prefixSum array where prefixSum[i] = (A[1] + A[2] + A[3]...A[i]).",
+            "hint2": "For each query, answers will be prefixSum[R]-prefixSum[L-1]. \n\nTake the modulus properly.",
+            "solution_approach": "Check the video solution - Prefix Sum Concept."
+        },
+        "id": 18,
+        "input_format": "<p>The first line contains two space-separated integers <i>N</i>, <i>Q</i> where 1&lt;=<i>N</i>&lt;=10^6, 1&lt;=<i>Q</i>&lt;=10^6.</p><p>Next line contains <i>N</i> space-separated integers (-1e9&lt;=<i>A<sub>i</sub></i>&lt;=1e9).</p><p>Next <i>Q</i> lines contain two space-separated integers <i>L</i>, <i>R</i> where 1&lt;=<i>L</i>&lt;=<i>R</i>&lt;=<i>N</i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "",
+        "output_format": "<p>For each query print the value of (<i>A[L] + A[L+1] + A[L+2] + A[L+3]...A[R]</i>) % 10^9+7 in a new line.</p>",
+        "samples": [
+            {
+                "input": "10 10\n12 -23 -123 2345 2345 44 345 -93945 -5353 1\n1 5\n1 8\n1 10\n2 2\n6 6\n4 8\n2 9\n4 10\n3 6\n5 9",
+                "output": "4556\n999911007\n999905655\n999999984\n44\n999911141\n999905642\n999905789\n4611\n999903443"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Prefix And Partial Sums"
+        ],
+        "template_code": [],
+        "time_limit_sec": 4.0,
+        "title": "LR Sum Query",
+        "video_editorial_id": 10660
+    },
+    "details": "Problem Details"
+}

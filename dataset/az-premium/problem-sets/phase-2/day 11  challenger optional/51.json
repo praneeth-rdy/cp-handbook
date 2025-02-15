@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given an array of <i>N</i> integers, find a subarray with at most <i>K</i> odd numbers and the total sum is maximum but not more than <i>D</i>. If no such subarray exists print <i>\"IMPOSSIBLE\"</i> without double-quotes.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\ntypedef long long ll;\nsigned main()\n{\n   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);\n   ll testCases;\n   cin>>testCases;\n   while(testCases--)\n   {\n     ll n,k,s;\n     cin>>n>>k>>s;\n     ll arr[n+1];\n     ll prefix[n+1];\n     prefix[0] = 0;\n     ll ans = -1e18;\n     for(ll i=1;i<=n;i++){\n       cin>>arr[i];\n       prefix[i]=prefix[i-1]+arr[i];\n     }\n     ll cntOdd = 0;\n     multiset < ll > currWindowPrefixSum;\n     currWindowPrefixSum.insert(0);\n     ll prev = 1;\n     for(ll i=1;i<=n;i++){\n       cntOdd+=(abs(arr[i])%2);\n       if(cntOdd>k){\n           while(prev<=i){\n               currWindowPrefixSum.erase(currWindowPrefixSum.find(prefix[prev-1]));\n               if(abs(arr[prev])%2){\n                   prev++;\n                   cntOdd--;\n                   break;\n               }\n               prev++;\n           }\n       }\n       if(!currWindowPrefixSum.empty()){\n           auto itr = currWindowPrefixSum.lower_bound(prefix[i]-s);\n           if(itr!=currWindowPrefixSum.end()){\n               ans = max(ans,prefix[i]-(*itr));\n           }\n       }\n       currWindowPrefixSum.insert(prefix[i]);\n     }\n     if(ans==-1e18){\n       cout<<\"IMPOSSIBLE\\n\";\n       continue;\n     }\n     cout<<ans<<\"\\n\";\n }\n\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:34:50.679454+00:00"
+        },
+        "hints": {
+            "hint1": "If a subarray from index L to R has number of distinct odd elements at most K, then all subarrays from index X to R (L < X) will also have number of distinct odd elements at most K. Note that the sum of the subarray won\u2019t follow a similar rule since negative elements are also present in the array.",
+            "hint2": "We would be using two pointers to solve this problem. We start both the pointers from the beginning i.e. L = 0 and R = 0. While traversing, we would keep the count of the number of distinct odd elements from L to R. We start from the beginning of the array and keep increasing the right pointer, R till the number of distinct elements is less than or equal to K. We need to check if the current subarray sum is \u2264 D. We would use prefix sum and multiset for finding this. Sum of the subarray can be given by prefix[R] - prefix[L-1]. So for a fixed R, we need to find L such that the number of distinct odd elements is at most K and prefix[R] - prefix[L-1] \u2264 D \u21d2 prefix[L-1] \u2265 prefix[R] - D. Since prefix[R] - prefix[L-1] would be maximum, prefix[L-1] would be minimum. In the multiset, we need to keep prefix[L-1] for all L such that the subarray from L to R has at most K distinct odd elements. We can use lower_bound(prefix[R] - D) to find the smallest such prefix[L-1].",
+            "solution_approach": "<p>Check the solution approach.</p>"
+        },
+        "id": 51,
+        "input_format": "<p>The first line contains <i>T</i>, the number of test cases <i>(1&lt;=T&lt;=10)</i>.</p><p>The first line contains two space separated integers <i>N, K, D</i> where <i>1&lt;=N&lt;=10^5, &nbsp;0&lt;=K&lt;=10^5, -1e9&lt;=D&lt;=1e9</i>.</p><p>Next line contains <i>N</i> space-separated integers <i>(-1e4&lt;=Ai&lt;=1e4).</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "<p>For the first test case, the optimal subarray - (2,3) \u2192 number of odd number is 1&lt;=2 and sum is 5&lt;=5.</p><p>For the second test case, the optimal subarray - (-1) \u2192 number of odd number is 1&lt;=2 and sum is -1&lt;=2.</p><p>For the third test case, the optimal subarray - (-1,2,3,4) \u2192 number of odd number is 2&lt;=2 and sum is 8&lt;=8.</p><p>For the fourth test case, the optimal subarray - (-4) \u2192 number of odd number is 0&lt;=0 and sum is -4&lt;=-2.</p>",
+        "output_format": "<p>For each test case print the sum of subarray with at most <i>K</i> odd numbers and the total sum is maximum, but not more than <i>D</i> in a newline. If no subarray is possible then print <i>\"IMPOSSIBLE\" </i>without double-quotes.</p>",
+        "samples": [
+            {
+                "input": "6\n3 2 5\n1 2 3\n3 1 2\n-3 -1 -3\n5 2 8\n-1 2 3 4 -5\n7 0 -2\n1 -4 1 0 1 0 2\n10 3 14\n1 0 -7 1 -10 4 -2 10 -1 3\n3 0 1000\n-101 201 -301",
+                "output": "5\n-1\n8\n-4\n14\nIMPOSSIBLE"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Prefix And Partial Sums",
+            "Two Pointers"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "K Odd Number",
+        "video_editorial_id": 8133
+    },
+    "details": "Problem Details"
+}

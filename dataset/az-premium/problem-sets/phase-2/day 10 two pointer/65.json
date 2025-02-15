@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given an array <i>A</i> of <i>N</i> integers and an integer <i>target</i>, find three integers in <i>A</i> such that the sum is closest to the <i>target (absolute value of (sum-target) is minimum)</i>. Print the minimum absolute value of (sum-target). You cannot select an index more than one. All three indexes should be distinct.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\ntypedef long long ll;\nsigned main()\n{\n   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);\n   int testcases;\n   cin>>testcases;\n   while(testcases--){\n       ll n,target;\n       cin>>n>>target;\n       vector< ll > arr(n);\n       for(int i=0;i<n;i++)\n           cin>>arr[i];\n       sort(arr.begin(),arr.end());\n       ll best = arr[0]+arr[1]+arr[2];\n       for(ll i=1;i<(ll)arr.size()-1;i++){\n           ll lo = 0;\n           ll hi = (ll)arr.size()-1;\n           while(1){\n               if(abs(arr[lo]+arr[i]+arr[hi]-target)<abs(best-target)){\n                   best=arr[lo]+arr[i]+arr[hi];\n               }\n               if(arr[lo]+arr[i]+arr[hi]>target)hi--;\n               else lo++;\n               if(lo==i||hi==i)break;\n           }\n       }\n       cout<<abs(best-target)<<\"\\n\";\n   }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:46:38.505965+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Sorting the given array would help us use the two-pointer technique.</p>",
+            "hint2": "<p>We iterate through the array and fix the first number of the array (index, K), and then use the two-pointer technique on the array to its right side. We take the left pointer as L = K + 1 and the right pointer as R = size(A) - 1. This would help us ensure that all the indexes taken are distinct. Find the sum of the three integers and take the minimum absolute difference between all such sums and target. If the sum &lt; target, decreasing the value of R would only decrease the sum and hence increase the absolute difference, so we increase the value of L. Similarly if sum &gt; target, we decrease the value of R. Continue doing the two-pointer until L &lt; R and find the minimum possible absolute difference of sum and target.</p>",
+            "solution_approach": ""
+        },
+        "id": 65,
+        "input_format": "<p>The first line contains <i>T</i>, the number of test cases <i>(1&lt;=T&lt;=100)</i>.</p><p>The first line contains two space-separated integers <i>N, target</i> where 3<i>&lt;=N&lt;=10^3, -1e18&lt;=target&lt;=1e18.</i></p><p>Next line contains <i>N</i> space-separated integers (-1e9&lt;=Ai&lt;=1e9).</p><p>The Sum of <i>N</i> across all test cases \u2264 10^4.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "",
+        "output_format": "<p>For each test case print the minimum absolute value of (sum-target).</p>",
+        "samples": [
+            {
+                "input": "1\n5 3\n1 2 3 4 5",
+                "output": "3"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Frequently Asked Questions",
+            "Two Pointers"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "3 Sum",
+        "video_editorial_id": 10685
+    },
+    "details": "Problem Details"
+}

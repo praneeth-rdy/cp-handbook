@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Zenithland has n cities and m roads between them. The goal is to construct new roads so that there is a route between any two cities. A road is bidirectional.\nYour task is to find out the minimum number of roads required.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n</i> \u2264 10<sup>5</sup><br>1 \u2264 <i>m</i> \u2264 2 x 10<sup>5</sup><br>1 \u2264 <i>a, b</i> \u2264 <i>n</i></p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n#define int long long\n#define ld long double\nconst int N = 100010;\nint inf = 1e9;\nint mod = 1e9 + 7;\nvector<vector<int>> g;\nvector<int> vis;\nvoid dfs(int node, int num_comp)\n{\n    vis[node] = 1;\n    for (auto x : g[node])\n    {\n        if (vis[x] == 0)\n        {\n            dfs(x, num_comp);\n        }\n    }\n}\nvoid solve()\n{\n    int n, m;\n    cin >> n >> m;\n    g.resize(n + 1);\n    vis.assign(n + 1, 0);\n    for (int i = 0; i < m; i++)\n    {\n        int a, b;\n        cin >> a >> b;\n        g[a].push_back(b);\n        g[b].push_back(a);\n    }\n    int num_comp = 0;\n    for (int i = 1; i <= n; i++)\n    {\n        if (vis[i] == 0)\n        {\n            num_comp++;\n            dfs(i, num_comp);\n        }\n    }\n    cout << num_comp - 1 << \"\\n\";\n}\nsigned main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n    // int _t;cin>>_t;while(_t--)\n    solve();\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:33:33.253797+00:00"
+        },
+        "hints": {
+            "hint1": "Find the number of connected components.",
+            "hint2": "Apply BFS/DFS to find the number of connected components in the graph, let it be C. Then the answer will be C - 1.",
+            "solution_approach": "Apply BFS/DFS to find the number of connected components in the graph, let it be C. Then the answer will be C - 1.\nWe just need to connect the components with each other. One component can be connected with the next component via 1 edge."
+        },
+        "id": 192,
+        "input_format": "The first input line has two integers n and m: the number of cities and roads. The cities are numbered 1, 2, \u2026, n.\nAfter that, there are m lines describing the roads. Each line has two integers a and b: there is a road between those cities.\nA road always connects two different cities, and there is at most one road between any two cities.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "<p>Construct a road between cities 1 and 3.</p>",
+        "output_format": "<p>Print the number of minimum roads required.</p>",
+        "samples": [
+            {
+                "input": "4 2\n1 2\n3 4",
+                "output": "1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Dfs"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Building Roads",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

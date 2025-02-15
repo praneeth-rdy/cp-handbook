@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given an array <i>a</i> consisting of <i>n</i> integers, and additionally an integer <i>m</i>. You have to choose some sequence of indices <i>b<sub>1</sub>,\u2009b<sub>2</sub>,\u2009...,\u2009b<sub>k</sub></i> (1\u2009\u2264\u2009<i>b<sub>1</sub></i>\u2009&lt;\u2009<i>b<sub>2</sub></i>\u2009&lt;\u2009...\u2009&lt;\u2009<i>b<sub>k</sub></i>\u2009\u2264\u2009<i>n</i>) in such a way that the value of <strong>(</strong><i><strong>a[b<sub>1</sub>] + a[b<sub>2</sub>] + ... + a[b<sub>k</sub>]</strong></i><strong>) mod </strong><i><strong>m</strong></i> is maximized. The chosen sequence can be empty.</p><p>Print the maximum possible value of <strong>(</strong><i><strong>a[b<sub>1</sub>] + a[b<sub>2</sub>] + ... + a[b<sub>k</sub>]</strong></i><strong>) mod </strong><i><strong>m</strong></i>.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n#define SZ(x) ((int) (x).size())\nusing namespace std;\n\nint main() \n{ \n    ios::sync_with_stdio(false);\n    cin.tie(0);\n\n    int n, m;\n    cin >> n >> m;\n    vector<int> a(n);\n\n    for (int i = 0; i < n; ++i) {\n        cin >> a[i];\n    }\n    if (n == 1) {\n        cout << a[0] % m << '\\n';\n        return 0;\n    }\n    int mid = ((n + 1) / 2);\n    vector<int> sums;\n    for (int conf = 0; conf < (1 << mid); ++conf) {\n        int sum = 0;\n        for (int i = 0; i < mid; ++i) {\n            if ((conf & (1 << i)) != 0) {\n                sum = (sum + a[i]) % m;\n            }\n        }\n        sums.push_back(sum);\n    }\n    sort(sums.begin(), sums.end());\n    int ans = 0;\n    for (int64_t conf = 0; conf < (1LL << n); conf += 1LL << mid) {\n        int sum = 0;\n        for (int i = mid; i < n; ++i) {\n            if ((conf & (1LL << i)) != 0) {\n                sum = (sum + a[i]) % m;\n            }\n        }\n        int need = (m - 1 - sum + m) % m;\n        int pos = upper_bound(sums.begin(), sums.end(), need) - sums.begin() - 1;\n        if (pos < 0) {\n            pos = SZ(sums) - 1;\n        }\n        ans = max(ans, (sum + sums[pos]) % m);\n    }\n    cout << ans << '\\n';\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:17:02.908862+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Generate all 2<sup>n</sup> subsets and for each subset take mod w.r.t. <i>m</i>, and print the one which is the maximum.<br>But this solution won't pass the constraints. We've to optimize it.</p>",
+            "hint2": "<p>Use the <i>meet-in-the-middle</i> to optimize the brute solution.</p>",
+            "solution_approach": "<p>We can use <strong>meet-in-the-middle</strong> technique to optimize it to <i>O(2<sup>n/2</sup>*log(2<sup>n/2</sup>))</i>. Preprocess the first <i>n / 2</i> elements naively and push sums modulo m to some array. After this process the second half with the following algorithm.</p><p>Now we have two bigger sets, first one with first <i>n / 2</i> elements, and the second one with the later <i>n / 2</i> elements.</p><p>Iterate over each smaller sets from the first bigger set. Let the modulo sum of the current set is <i>x</i>. We know that the sum of modulo values of two different sets won't increase beyond <i>2m</i>. So now our target is to find the largest modulo sum in the second bigger set with modulo sum &lt; <i>m - x</i>. We can find this using binary search, or upper_bound/lower_bound. Note that if we choose a subset with module sum greater than <i>m - x</i> from the second bigger set, then the net modulo sum will be less than <i>x</i>.&nbsp;</p>"
+        },
+        "id": 281,
+        "input_format": "<p>The first line contains two integers <i>n</i> and <i>m</i> (1\u2009\u2264\u2009<i>n</i>\u2009\u2264\u200935, 1\u2009\u2264\u2009<i>m</i>\u2009\u2264\u200910<sup>9</sup>).<br>The second line contains <i>n</i> integers <i>a<sub>1</sub>, a<sub>2</sub>, ..., a<sub>n</sub></i> (1\u2009\u2264\u2009<i>a<sub>i</sub></i>\u2009\u2264\u200910<sup>9</sup>).</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>You can choose a sequence b\u2009=\u2009{1,\u20092}, so the sum (5 + 2) is equal to 7 (and that's 3 after taking it modulo 4).</p>",
+        "output_format": "<p>Print the maximum possible value of <strong>(</strong><i><strong>a[b<sub>1</sub>] + a[b<sub>2</sub>] + ... + a[b<sub>k</sub>]</strong></i><strong>) mod </strong><i><strong>m</strong></i>.</p>",
+        "samples": [
+            {
+                "input": "4 4\n5 2 4 1",
+                "output": "3"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Meet In The Middle"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Modulo Subsequences",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

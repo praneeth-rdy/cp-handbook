@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given a tree consisting of <i>n</i> nodes. <i>d(u, v)</i> is the distance between nodes <i>u</i> and <i>v</i>, or number of edges in between the path connecting two nodes <i>u</i> and <i>v</i>. Your task is to find the sum of distances over all possible pairs of nodes.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n </i>\u2264 2 x 10<sup>5</sup><br>1 \u2264 <i>a</i>, <i>b </i>\u2264 <i>n</i></p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 200010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nvector<int> graph[N];\n\nll ans = 0;\n\nint dfs(int cur, int par, int n) {\n  int sum = 0;\n  for (int u : graph[cur]) {\n    if (u == par) continue;\n    sum += dfs(u, cur, n);\n  }\n  sum++;\n  ans += 1LL * sum * (n - sum);\n  return sum;\n}\n\nsigned main() {\n  // freopen(\"IN\", \"r\", stdin);\n  // freopen(\"OUT\", \"w\", stdout);\n\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n\n  int n;\n  cin >> n;\n\n  for (int i = 1; i < n; i++) {\n    int u, v;\n    cin >> u >> v;\n    graph[u].push_back(v);\n    graph[v].push_back(u);\n  }\n\n  dfs(1, -1, n);\n\n  cout << ans << \"\\n\";\n\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:40:06.139160+00:00"
+        },
+        "hints": {
+            "hint1": "Use contribution of each edge to the final answer.",
+            "hint2": "The main idea is to use the contribution of each edge to the final answer. Consider two sets A and B connected to each other via just an edge e. In this case, how many times would we encounter e in the final answer? If we try to choose just two nodes, one from set A and the other from set B, we are sure to encounter the edge e in the shortest path between the two nodes.\n\nSo, our task is to find the number of nodes on the side of a node using Depth First Search (DFS).",
+            "solution_approach": "Now, let's consider the contribution of each edge to the final answer. Suppose we have an edge e connecting two subtrees T1 and T2. Then, every pair of nodes (u, v) such that u belongs to T1 and v belongs to T2, will contribute twice to the sum of distances: once for the distance from u to v, and once for the distance from v to u.\n\nTherefore, for each edge e, we need to calculate the number of nodes in the two subtrees T1 and T2, and add the product of these two numbers to the final answer.\n\nTo calculate the number of nodes in a subtree rooted at a node u, we can use Depth First Search (DFS) to traverse all the nodes in the subtree. During the DFS, for each node v, we can calculate the number of nodes in the subtree rooted at v, as well as the sum of distances from v to all the nodes in the subtree rooted at v.\n\nUsing these values, we can calculate the contribution of each edge to the final answer as follows:\n\nLet sum1 be the number of nodes in subtree T1, and sum2 be the number of nodes in subtree T2, where T1 and T2 are the subtrees connected by the edge e.\n\nThen, the product sum1 * sum2 gives the number of pairs of nodes (u, v) such that u belongs to T1 and v belongs to T2. Therefore, we can add the product sum1 * sum2 to the final answer for each edge e.\n\nFinally, we can sum up the contributions of all the edges to get the final answer."
+        },
+        "id": 430,
+        "input_format": "The first input line contains an integer n: the number of nodes. The nodes are numbered 1, 2, \u2026, n.\nThen there are n \u2212 1 lines describing the edges. Each line contains two integers a and b: there is an edge between nodes a and b.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<ul><li>d(1, 1) = 0, d(1, 2) = 1, d(1, 3) = 1, d(1, 4) = 2, d(1, 5) = 2</li><li>d(2, 2) = 0, d(2, 3) = 2, d(2, 4) = 3, d(2, 5) = 3</li><li>d(3, 3) = 0, d(3, 4) = 1, d(3, 5) = 1</li><li>d(4, 4) = 0, d(4, 5) = 2</li><li>d(5, 5) = 0</li></ul>",
+        "output_format": "<p>Print the sum as mentioned in the problem statement.</p>",
+        "samples": [
+            {
+                "input": "5\n1 2\n1 3\n3 4\n3 5",
+                "output": "18"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Trees",
+            "Dfs",
+            "Dynamic Programming",
+            "Edge Contribution"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Sum of Distances",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

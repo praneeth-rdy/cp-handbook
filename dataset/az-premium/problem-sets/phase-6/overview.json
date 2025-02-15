@@ -1,0 +1,30 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "description": "Premium Day Wise Course Phase 6",
+            "id": 4487,
+            "name": "Advanced CP Sessions",
+            "resources_count": 5,
+            "time_in_minutes": 607,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 4729,
+            "name": "Contribution Technique",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 4730,
+            "name": "Geometry and Flows",
+            "resources_count": 3,
+            "time_in_minutes": 0,
+            "type": "COURSE_MATERIALS"
+        }
+    ],
+    "details": "Chapter Playlists"
+}

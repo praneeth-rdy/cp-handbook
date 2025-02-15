@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "There is a building with $N$ floors (numbered $1$ through $N$ from top to bottom), each with $M$ windows. All the windows need to be cleaned. For each valid $i$ and $j$, the window $(i, j)$ must be cleaned on the $A(i, j)$-th turn.  \n\n**From window $(i, j)$, water flows to the windows $(i+1, j-1)$, $(i+1, j)$, and $(i+1, j+1)$ if they exist.**  \nWhen a window $(i, j)$ is cleaned, the windows $(i+1, j-1)$, $(i+1, j)$, and $(i+1, j+1)$ become dirty because of dirty water after cleaning window $(i, j)$.  \n\nWater flows further down from these dirty windows, making the next level of windows dirty. The same process continues recursively.\n\n### Example:\nWhen the window $(0, 5)$ is cleaned:  \n- Water flows down to windows $(1, 4)$, $(1, 5)$, and $(1, 6)$, making them dirty.  \n- Then water flows from window $(1, 4)$ to $(2, 3)$, $(2, 4)$, $(2, 5)$.  \n- From window $(1, 5)$, water flows to $(2, 4)$, $(2, 5)$, $(2, 6)$.  \n- And so on.\n\n### Task:\nYou have to determine whether each window will be clean after the cleaning process ends.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 T \u2264 1000</p><p>1 \u2264 N, M \u2264 1000</p><p>1 \u2264 Ai,j \u2264 N*M</p><p>Sum of N*M across all test cases &lt;= 10^7.</p><p>&nbsp;</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint main(){\n   IOS\n   int t;\n   cin>>t;\n   while(t--) {\n       int n,m;\n       cin>>n>>m;\n       bool a[n][m];\n       int dp[n][m];\n\n       for(int i=0; i<n; ++i){\n           for(int j=0; j<m; ++j){\n               dp[i][j]=0,a[i][j]=0;\n               int x;\n               cin>>x;\n               if(i-1>=0){\n                   dp[i][j]=max(dp[i][j], dp[i-1][j]);\n                   if(j-1>=0)\n                       dp[i][j]=max(dp[i][j], dp[i-1][j-1]);\n                   if(j+1<m)\n                       dp[i][j]=max(dp[i][j], dp[i-1][j+1]);\n               }\n               if(x>=dp[i][j])\n                   a[i][j]=1;\n               dp[i][j]=max(dp[i][j], x);\n           }\n       }\n       for(int i=0; i<n; ++i){\n           for(int j=0; j<m; ++j){\n               cout<<a[i][j];\n           }\n           cout<<\"\\n\";\n       }\n   }\n   return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:36:32.557285+00:00"
+        },
+        "hints": {
+            "hint1": "Dirty water reaches (i,j) only from (i-1,j-1), (i-1,j) and (i-1,j+1).",
+            "hint2": "We can make DP array as DP[i][j] = max(DP[i-1][j-1], DP[i-1][j], DP[i-1][j+1]) which will denote the time when dirty water is reached at (i,j). We are given the time when (i,j) is cleaned, when this is greater than or equal to DP[i][j], the window(i,j) is clean, otherwise dirty.\n\nTime Complexity per test case: O(N*M)",
+            "solution_approach": "Another simple approach -> just start from the window that will be cleaned at last. For sure that window will be cleaned. Find out the cells that are reachable from that cell. All that cells will be dirty for sure. Now pick the 2nd last cleaned window, if it is not already dirty due to the last window. You can mark it as cleaned and again find all the windows reachable and mark the windows as dirty. If the window is already dirty then no need to do anything. Keep on doing that. You will visit each window only once, so the time complexity is O(n*m)."
+        },
+        "id": 188,
+        "input_format": "<p>The first line of the input contains one integer T - the number of test cases. Then T test cases follow.</p><p>The first line of each test case contains two space-separated integers N, M - the size of the building.</p><p>Each of the next N lines contains Ai,j - the time at which window (i,j) is cleaned. At a time, only one window can be cleaned.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, when window(1,1) and window(1,2) are cleaned, they make the window(2,1) and window(2,2) dirty. They were cleaned earlier, so they remain dirty.\n\nFor the second test case, all the windows remain clean because when a window becomes dirty, it gets cleaned afterwards.",
+        "output_format": "For each test case, print N lines, each with M integers denoting whether the (i,j)-th window will be clean or not after the cleaning process ends.",
+        "samples": [
+            {
+                "input": "3\n2 2\n4 3\n2 1\n3 3\n1 2 3\n6 5 4\n7 8 9\n3 4\n1 4 7 3\n5 8 2 6\n12 11 9 10",
+                "output": "11\n00\n111\n111\n111\n1111\n1100\n1111"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Cleaning Window",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

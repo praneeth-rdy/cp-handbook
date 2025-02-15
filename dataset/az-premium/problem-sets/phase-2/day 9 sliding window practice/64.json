@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given an array of <i>N</i> integers and an integer <i>D</i>. Consider all subarray with length <i>D</i>, the penalty of the subarray is the number of distinct elements present in the subarray. Find a subarray of length <i>D</i> with minimum penalty. Print the minimum penalty.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nsigned main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n    int testcases;\n    cin >> testcases;\n    int freq[1000001] = {0};\n    while (testcases--)\n    {\n        int n, k;\n        cin >> n >> k;\n        int arr[n];\n        for (int i = 0; i < n; i++)\n            cin >> arr[i];\n        int ans = k;\n        int start = 0;\n        int current = 0;\n        int currSum = 0;\n        while (current < n)\n        {\n            if (freq[arr[current]] == 0)\n                currSum++;\n            freq[arr[current]]++;\n            if (current >= k)\n            {\n                freq[arr[current - k]]--;\n                if (freq[arr[current - k]] == 0)\n                    currSum--;\n            }\n            if (current >= k - 1)\n                ans = min(ans, currSum);\n            current++;\n        }\n        for (int i = n - k; i < n; i++) // only the frequency of last d element is set, so for next testcase making it zero.\n            freq[arr[i]]--;\n        cout << ans << \"\\n\";\n    }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:44:40.473722+00:00"
+        },
+        "hints": {
+            "hint1": "Use the sliding window technique to consider all subarray of length $D$. Suppose you have an answer for index $1$ to index $D$. Then next step you will remove the element at index $1$ and add the element at index $D+1$ to get the subarray of length $D$ starting at $1$. Next step remove the element at index $2$ and add the element at index $D+2$. Think about how you will calculate the distinct number.",
+            "hint2": "Just keep a frequency array, when you add a number increase the frequency, when you delete a number decrease the frequency. Suppose the number you are adding has $frequency = 0$, which means it is added the first time, so you should increase your count of the distinct element. Similarly after deleting a number if it's $frequency = 0$, then you should decrease the count of your distinct element.",
+            "solution_approach": "Try to do it in $O(n)$. For clearing the frequency array for each test case, notice that only the frequency of the number present in the array can change. So iterate over the array and initialize the frequency of number present int the $array = 0$. So overall you will do $O(n)$ transition.\n\nWhenever possible use a frequency array instead of a map . Here we can use frequency array because each element is lesser than $10^6$ . By this we reduced the time complexity of searching distinct elements from $O(logn)$ to $O(1)$.\n\nAlso its better to use a global frequency array instead of every time defining a vector of size $O(10^6)$ becasue that would require $O(T*10^6)$ time complexity. Rather define a global array of size $10^6$ and every time just use it."
+        },
+        "id": 64,
+        "input_format": "<p>The first line contains <i>T</i>, the number of test cases <i>(1&lt;=T&lt;=10000)</i>.</p><p>The first line contains two space-separated integers <i>N, D</i> where <i>1&lt;=N&lt;=10^6, 1&lt;=D&lt;=N.</i></p><p>Next line contains <i>N</i> space-separated integers (0&lt;=Ai&lt;=1e6).</p><p>The Sum of <i>N</i> across all test cases \u2264 5*10^6.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>For first test case all the subarray with length = 3 and minimum element -&gt;<br>0,1,1 - 2<br>1,1,2 - 2<br>1,2,2 - 2<br>2,2,2 - 1<br>So minimum penalty = 1</p>",
+        "output_format": "<p>For each test case print the minimum penalty in a newline.</p>",
+        "samples": [
+            {
+                "input": "5\n6 3\n0 1 1 2 2 2\n5 3\n1 0 1 2 3\n5 5\n1 1 2 3 4\n5 1\n1 2 3 4 5\n7 3\n1 2 1 2 3 4 2",
+                "output": "1\n2\n4\n1\n2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Sliding Window"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Minimum Penalty",
+        "video_editorial_id": 10664
+    },
+    "details": "Problem Details"
+}

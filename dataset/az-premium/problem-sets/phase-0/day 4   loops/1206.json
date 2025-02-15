@@ -1,0 +1,69 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given two numbers $A$ and $B$. Print the **greatest common divisor** of $(A,B)$.\n\n**Note:** The greatest common divisor (**GCD**) of two or more integers, which are not all zeroes, **is the largest positive integer that divides each of the integers**.\n\nFor example:\n\nThe **GCD** of **$8$** and **$12$** is **$4$**.\n\nBecause the numbers that divide both **$8$** and **$12$** are **$1,2,4$**, and **$4$** is the largest one.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq A, B \\leq 10^3$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n    int a, b;\n    cin >> a >> b;\n\n    if (a < b)\n        swap(a, b);\n\n    while (b != 0)\n    {\n        int temp = b;\n        b = a % b;\n        a = temp;\n    }\n    cout << a << \"\\n\";\n    return 0;\n}",
+                "language": "C++14"
+            },
+            {
+                "code": "import sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    a = int(data[idx])\n    idx += 1\n    b = int(data[idx])\n    idx += 1\n\n    if a < b:\n        a, b = b, a\n\n    while b != 0:\n        temp = b\n        b = a % b\n        a = temp\n\n    stdout.write(str(a) + '\\n')\n\nif __name__ == \"__main__\":\n    main()",
+                "language": "Python3"
+            },
+            {
+                "code": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        StringTokenizer st = new StringTokenizer(br.readLine());\n        int a = Integer.parseInt(st.nextToken());\n        int b = Integer.parseInt(st.nextToken());\n\n        if (a < b) {\n            int temp = a;\n            a = b;\n            b = temp;\n        }\n\n        while (b != 0) {\n            int temp = b;\n            b = a % b;\n            a = temp;\n        }\n\n        out.println(a);\n\n        out.flush();\n        out.close();\n    }\n}",
+                "language": "Java"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:34:43.531370+00:00"
+        },
+        "hints": {
+            "hint1": "\nYou can do it naively by enumerating factors of both $A$ and $B$ and looking for the largest common factor. This will take $O(\\sqrt{A+B})$ time.\n",
+            "hint2": "\nAn efficient approach is to use the Euclidean algorithm, which computes the GCD using repeated modulo operations.\n",
+            "solution_approach": "\nWe can use the Euclidean algorithm to find the GCD of two numbers. The algorithm is as follows:\n\ngcd(A, B) = gcd(B, A mod B)\n\nThe complete pseudocode is as follows:\n\nfunction gcd(A, B)\n   while B \u2260 0\n       T := B\n       B := A mod B\n       A := T\n   return A\n\nThe time complexity of this algorithm is $O(\\log(\\min(A,B)))$ and space complexity is $O(1)$.\n"
+        },
+        "id": 1206,
+        "input_format": "Only one line containing two numbers $A$ and $B$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first sample, the numbers are $12$ and $8$.\nTheir common divisors are $1$, $2$, and $4$.\nThe largest of these is $4$, which is the GCD.\n## Note\nWhat is the greatest common divisor of **$54$ and $24$**?\nThe number $54$ can be expressed as a product of two integers in several different ways:\n$54 \\times 1 = 27 \\times 2 = 18 \\times 3 = 9 \\times 6 .....$\nThus the divisors of $54$ are: **$1,2,3,6,9,18,27,54$**\nSimilarly, the divisors of $24$ are: **$1,2,3,4,6,8,12,24$**\nThe numbers that these two lists share in common are **the common divisors of $54$ and $24$**:\n$1,2,3,6$\nThe greatest of these is $6$. That is, the greatest common divisor of $54$ and $24$. One writes:\n**gcd($54,24$) = $6$**.",
+        "output_format": "Print the **GCD** of $A$ and $B$.",
+        "samples": [
+            {
+                "input": "12 8\n",
+                "output": "4\n"
+            },
+            {
+                "input": "3 7\n",
+                "output": "1\n"
+            },
+            {
+                "input": "5 10\n",
+                "output": "5\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Number Theory",
+            "Math"
+        ],
+        "template_code": [],
+        "time_limit_sec": 0.5,
+        "title": "Gcd",
+        "video_editorial_id": 10692
+    },
+    "details": "Problem Details"
+}

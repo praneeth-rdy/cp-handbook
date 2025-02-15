@@ -1,0 +1,64 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a simple graph, output the number of simple cycles in it.\n\nA **simple cycle** is a cycle with no repeated vertices or edges.",
+        "complete_approach": "",
+        "constraints": "$1 \\le n \\le 20$\n$0 \\le m \\le 190$\n$1 \\le a, b \\le n$, $a \\ne b$",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```c++\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\n\nint dp[20][(1<<20)];\nbool isEdge[20][20];\nint n, m;\nint cur;\n\nint dfs(int pos, int vis, int sz) {\n    if(dp[pos][vis] != -1) {\n        return dp[pos][vis];\n    }\n    int ans = 0;\n    if(sz > 2 && isEdge[pos][cur]) {\n        ans++;\n    }\n    for (int i = cur; i < n; ++i) {\n        if((vis & (1<<i))) continue;\n        if(isEdge[pos][i]) {\n            ans += dfs(i, (vis | (1<<i)), sz+1);\n        }\n    }\n    return dp[pos][vis]=ans;\n}\n\nsigned main(){\n    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n    cin >> n >> m;\n    for (int i = 0; i < m; ++i) {\n        int a, b;\n        cin >> a >> b;\n        a--; b--;\n        isEdge[a][b] = isEdge[b][a] = 1;\n    }\n    int ans = 0;\n    for (int i = 0; i < n; ++i) {\n        cur = i;\n        memset(dp, -1, sizeof(dp));\n        ans += dfs(i, (1<<i), 1);\n    }\n    cout << ans/2;\n    return 0;\n}\n```\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\n```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    static int n, m;\n    static boolean[][] isEdge = new boolean[20][20];\n    static long[][] dp = new long[20][1 << 20];\n    static int cur;\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        StringTokenizer st = new StringTokenizer(br.readLine());\n        n = Integer.parseInt(st.nextToken());\n        m = Integer.parseInt(st.nextToken());\n\n        for (int i = 0; i < m; ++i) {\n            st = new StringTokenizer(br.readLine());\n            int a = Integer.parseInt(st.nextToken()) - 1;\n            int b = Integer.parseInt(st.nextToken()) - 1;\n            isEdge[a][b] = true;\n            isEdge[b][a] = true;\n        }\n\n        long ans = 0;\n        for (int i = 0; i < n; ++i) {\n            cur = i;\n            for (int j = 0; j < n; j++) {\n                Arrays.fill(dp[j], -1);\n            }\n            ans += dfs(i, 1 << i, 1);\n        }\n        out.println(ans / 2);\n        out.flush();\n        out.close();\n    }\n\n    static long dfs(int pos, int vis, int sz) {\n        if (dp[pos][vis] != -1) {\n            return dp[pos][vis];\n        }\n        long ans = 0;\n        if (sz > 2 && isEdge[pos][cur]) {\n            ans++;\n        }\n        for (int i = cur; i < n; ++i) {\n            if ((vis & (1 << i)) != 0) continue;\n            if (isEdge[pos][i]) {\n                ans += dfs(i, vis | (1 << i), sz + 1);\n            }\n        }\n        return dp[pos][vis] = ans;\n    }\n}\n```\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\n```python\nimport sys\nsys.setrecursionlimit(1 << 25)\n\ndef main():\n    import threading\n    def solve():\n        n, m = map(int, sys.stdin.readline().split())\n        isEdge = [[False] * 20 for _ in range(20)]\n        for _ in range(m):\n            a, b = map(int, sys.stdin.readline().split())\n            a -= 1\n            b -= 1\n            isEdge[a][b] = True\n            isEdge[b][a] = True\n        dp = [dict() for _ in range(20)]\n        ans = 0\n        for i in range(n):\n            cur = i\n            def dfs(pos, vis, sz):\n                if vis in dp[pos]:\n                    return dp[pos][vis]\n                res = 0\n                if sz > 2 and isEdge[pos][cur]:\n                    res += 1\n                for j in range(cur, n):\n                    if vis & (1 << j):\n                        continue\n                    if isEdge[pos][j]:\n                        res += dfs(j, vis | (1 << j), sz + 1)\n                dp[pos][vis] = res\n                return res\n            dp = [dict() for _ in range(20)]\n            ans += dfs(i, 1 << i, 1)\n        print(ans // 2)\n    threading.Thread(target=solve).start()\n\nif __name__ == \"__main__\":\n    main()\n```\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "Editorial code is not passing the Sample cases.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:34:24.375302+00:00"
+        },
+        "hints": {
+            "hint1": "The brute force approach would be to check every possible subset of vertices to see if it forms a simple cycle, which would be very inefficient due to its exponential time complexity. Can you think of a way to optimize this using Dynamic Programming and Bitmasking?",
+            "hint2": "Consider using DP with bitmasking to represent the set of visited vertices. Start a DFS from each vertex and keep track of visited vertices using a bitmask. Memoize the results to avoid recomputation.",
+            "solution_approach": "We can solve this problem using Depth-First Search (DFS) with memoization (Dynamic Programming) and bitmasking to keep track of visited vertices.\n\nHere's the approach:\n\n- **DFS with Bitmasking**: Start a DFS from each vertex `cur`. Use a bitmask `vis` to represent the set of visited vertices. The bitmask helps in keeping track of cycles without revisiting the same vertex.\n\n- **State Representation**: Define a DP array `dp[pos][vis]`, where `pos` is the current vertex, and `vis` is the bitmask of visited vertices. This DP stores the number of simple cycles starting and ending at `cur` that go through `pos` with the set of visited vertices `vis`.\n\n- **Recurrence Relation**:\n  - If we revisit the starting vertex `cur` and the cycle length is greater than $2$, we have found a simple cycle. Increment the count.\n  - For each neighbor `i` of `pos`, if `i` is not visited, recurse with updated `vis` and increment the cycle size `sz`.\n\n- **Memoization**: Store the computed results in `dp[pos][vis]` to avoid recomputation for the same state.\n\n- **Avoid Overcounting**: Since the graph is undirected, each cycle is counted twice (once in each direction). Therefore, divide the final answer by $2$ to get the correct count.\n\n- **Implementation Details**:\n  - Initialize `dp` to `-1` to indicate unvisited states.\n  - Use adjacency matrix `isEdge` to represent the graph for efficient edge lookups.\n  - Start the loop for neighbors from `cur` to ensure cycles are counted starting from the current vertex in a consistent manner.\n\n### Time Complexity\nTime Complexity per test case: $O(N^2 \\times 2^N)$, where $N$ is the number of vertices. This is acceptable since $N \\leq 20$.\n\n### Space Complexity\nSpace Complexity per test case: $O(N \\times 2^N)$ due to the DP array."
+        },
+        "id": 454,
+        "input_format": "The first line of input contains two integers $n$ and $m$ \u2014 the number of vertices and edges in the graph, respectively.\nEach of the next $m$ lines contains two integers $a$ and $b$, indicating that vertices $a$ and $b$ are connected by an undirected edge.\nThere is no more than one edge connecting any pair of vertices.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "The graph has $7$ vertices and $16$ edges forming $214$ unique simple cycles.",
+        "output_format": "Print the number of simple cycles in the graph.",
+        "samples": [
+            {
+                "input": "7 16\n1 2\n1 3\n1 5\n1 7\n2 3\n2 4\n2 6\n3 4\n3 5\n3 6\n3 7\n4 5\n4 6\n4 7\n5 6\n6 7",
+                "output": "214"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Dynamic Programming",
+            "Bitmask"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "Cycles in a graph",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

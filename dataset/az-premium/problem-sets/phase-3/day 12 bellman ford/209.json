@@ -1,0 +1,56 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have given a graph <i>G</i> with <i>n</i> nodes and <i>m</i> edges. Each edge has an integer weight associated with. The weight of an edge may negative, positive or zero. <strong>If the graph contains a cycle with total weight &gt; 0, print -1. Otherwise, find the weight of the highest weighted path from node 1 to </strong><i><strong>n</strong></i><strong>.</strong></p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 2500 \u2264 <i>n</i><br>1 \u2264 5000 \u2264 <i>m</i><br>1 \u2264 <i>a</i>, <i>b </i>\u2264 <i>n</i><br>\u221210<sup>9 </sup>\u2264 <i>x </i>\u2264 10<sup>9</sup></p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\n\ntypedef long long ll;\n\nint mod = 1e9 + 7;\n\nconst int N = 100010;\n\nstruct edge {\n\tint u, v, w;\n};\n\nsigned main()\n{\n\tios_base::sync_with_stdio(0);\n\tcin.tie(0); cout.tie(0);\n\n\tint n, m;\n\tcin >> n >> m;\n\n\tedge E[m];\n\tfor(int i = 0; i < m; i++) {\n\t\tint a, b, c;\n\t\tcin >> a >> b >> c;\n\t\tE[i].u = a;\n\t\tE[i].v = b;\n\t\tE[i].w = -c;\n\t}\n\n\tll dist[n + 1];\n\tfor(int i = 1; i <= n; i++) {\n\t\tdist[i] = 1e18;\n\t}\n\tdist[1] = 0;\n\n\tfor(int i = 1; i <= n; i++) {\n\t\tfor(int j = 0; j < m; j++) {\n\t\t\tint u = E[j].u;\n\t\t\tint v = E[j].v;\n\t\t\tint w = E[j].w;\n\t\t\tdist[v] = min(dist[v], dist[u] + w);\n\t\t}\n\t}\n\n\tbool neg = false;\n\tfor(int i = 0; i < m; i++) {\n\t\tint u = E[i].u;\n\t\tint v = E[i].v;\n\t\tint w = E[i].w;\n\t\tif(dist[v] > dist[u] + w) {\n\t\t\tneg = true;\n\t\t\tbreak;\n\t\t}\n\t}\n\n\tif(neg) cout << \"-1\\n\";\n\telse {\n\t\tassert(dist[n] != 1e18);\n\t\tcout << -dist[n] << \"\\n\";\n\t}\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:14:08.838571+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "<p>Construct a new graph with weights multiplies by -1. Now check for the existence of a negative cycle in this graph. If it does not exist, find the shortest distance from 1 to n. Note that since weights can be negative, use Bellman-Ford Algorithm.</p>"
+        },
+        "id": 209,
+        "input_format": "<p>The first input line has two integers <i>n</i> and <i>m</i>: the number of nodes and edges. The nodes are numbered 1, 2, \u2026, <i>n</i>.<br>Then, there are <i>m</i> lines describing the edges. Each line has three integers <i>a</i>, <i>b</i> and <i>x</i>: the edge starts at node <i>a</i>, ends at node <i>b</i>, and weight of the edge is <i>x</i>. All edges are unidirectional edges.<br>You can assume that it is possible to get from node 1 to node <i>n</i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print the answer on a new line.</p>",
+        "samples": [
+            {
+                "input": "4 5\n1 2 3\n2 4 -1\n1 3 -2\n3 4 7\n1 4 4",
+                "output": "5"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Single Source Shortest Path",
+            "Bellman Ford"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Bellman-Ford Revisited",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

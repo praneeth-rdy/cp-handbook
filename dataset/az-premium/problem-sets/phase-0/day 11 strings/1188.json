@@ -1,0 +1,71 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a string $S$. Print the **original string** if it's **not too long**, otherwise, print the **special abbreviation**.\n\n**Note:** The string is called **too long** if its length is strictly more than $10$ characters. If the string is **too long**, then you have to print the string in the following manner:\n\n1. Print the **first** character in the string.\n2. Print the number of characters between the first and the last characters.\n3. Print the **last** character in the string.\n\n**For example:** \"localization\" will be \"l10n\", and \"internationalization\" will be \"i18n\".",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 100$\n$1 \\leq \\lvert S \\rvert \\leq 100$",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include<bits/stdc++.h>\nusing namespace std;\n\nvoid solution() {\n    string s; cin >> s;\n    if (s.size() <= 10) {\n        cout << s;\n    } else {\n        cout << s[0] << s.size() - 2 << s[s.size() - 1];\n    }\n    cout << endl;\n}\n\nint main() {\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n    int t; cin >> t;\n    while (t--) {\n        solution();\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int t = Integer.parseInt(br.readLine());\n        while (t-- > 0) {\n            String s = br.readLine();\n            if (s.length() <= 10) {\n                out.println(s);\n            } else {\n                String abbreviation = \"\" + s.charAt(0) + (s.length() - 2) + s.charAt(s.length() - 1);\n                out.println(abbreviation);\n            }\n        }\n        \n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n    \n    for _ in range(t):\n        s = data[idx]\n        idx += 1\n        if len(s) <= 10:\n            print(s)\n        else:\n            abbreviation = s[0] + str(len(s) - 2) + s[-1]\n            print(abbreviation)\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:33:57.373998+00:00"
+        },
+        "hints": {
+            "hint1": "Check the length of the string. If it is greater than $10$, you need to abbreviate it.",
+            "hint2": "To abbreviate, print the first character, then the length minus 2 (excluding the first and last characters), and then the last character.",
+            "solution_approach": "To solve this problem, iterate over each input string and check its length.\n\n- If the length of the string is less than or equal to $10$, print the string as it is.\n\n- If the length is greater than $10$, create an abbreviation:\n\n  - Take the first character of the string.\n\n  - Calculate the number of characters between the first and last characters (which is `length - 2`).\n\n  - Take the last character of the string.\n\n  - Concatenate these three parts to form the abbreviation.\n\nRepeat this process for all test cases.\n\n**Time Complexity per test case:** $O(1)$\n\n**Space Complexity per test case:** $O(1)$"
+        },
+        "id": 1188,
+        "input_format": "The first line contains an integer $T$ denoting the number of test cases.\nEach of the following $T$ lines contains a string $S$.\n**It's guaranteed that $S$ contains only lowercase Latin letters.**",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In the first test case:\n- \"word\" is not too long (length 4 \u2264 10), so we print it as is.\n- \"localization\" has length 12 > 10, so we abbreviate it to \"l10n\".\n- \"internationalization\" has length 20 > 10, abbreviated as \"i18n\".\n- \"pneumonoultramicroscopicsilicovolcanoconiosis\" has length 45 > 10, abbreviated as \"p43s\".\nIn the second test case:\n- \"arijit\" and \"biswas\" are not too long, so we print them as is.\n- \"arijitbiswas\" has length 12 > 10, abbreviated as \"a10s\".\n- \"biswasarijit\" has length 12 > 10, abbreviated as \"b10t\".\n- \"arijitarijitbiswasbiswas\" has length 24 > 10, abbreviated as \"a22s\".\nIn the third test case:\n- Both \"codeforces\" and \"algozenith\" are not too long (lengths 10 and 10), so we print them as is.",
+        "output_format": "For each test case, print the resulting string.",
+        "samples": [
+            {
+                "input": "4\nword\nlocalization\ninternationalization\npneumonoultramicroscopicsilicovolcanoconiosis",
+                "output": "word\nl10n\ni18n\np43s"
+            },
+            {
+                "input": "2\ncodeforces\nalgozenith",
+                "output": "codeforces\nalgozenith"
+            },
+            {
+                "input": "5\narijit\nbiswas\narijitbiswas\nbiswasarijit\narijitarijitbiswasbiswas",
+                "output": "arijit\nbiswas\na10s\nb10t\na22s"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Strings"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Way Too Long Words",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

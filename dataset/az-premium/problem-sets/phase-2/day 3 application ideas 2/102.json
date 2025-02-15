@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given two arrays <i>A</i> of size <i>N</i> and <i>B</i> of size <i>M</i> and an integer <i>K</i>. Create a new array <i>C</i> of size <i>N*M</i> consisting of <i>A[i]+B[j]</i> for <i>1\u2264i\u2264N, 1\u2264j\u2264M</i>. Find the <i>Kth</i> smallest element in the array <i>C</i>.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\ntypedef pair<int, int> Pair;\ntypedef long long ll;\nvector<int> a, b;\n#define int long long\nsigned main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n    int t;\n    cin >> t;\n    while (t--)\n    {\n        int n, m, k;\n        cin >> n >> m >> k;\n        a.resize(n);\n        b.resize(m);\n        for (int i = 0; i < n; i++)\n        {\n\n            cin >> a[i];\n        }\n        for (int i = 0; i < m; i++)\n        {\n\n            cin >> b[i];\n        }\n        if (n > m)\n        {\n            swap(n, m);\n            swap(a, b);\n        }\n        sort(a.begin(), a.end());\n        sort(b.begin(), b.end());\n        int l = a[0] + b[0];\n        int h = a[n - 1] + b[m - 1];\n        int ans = l;\n        while (l <= h)\n        {\n            int mid = (l + h) / 2;\n            int ne = 0;\n            for (int i = 0; i < n; i++)\n            {\n                ne += upper_bound(b.begin(), b.end(), mid - a[i]) - b.begin();\n            }\n            if (ne >= k)\n            {\n                ans = mid;\n                h = mid - 1;\n            }\n            else\n                l = mid + 1;\n        }\n        cout << ans << '\\n';\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:41:30.542020+00:00"
+        },
+        "hints": {
+            "hint1": "We can use binary search on the possible sums between A and B. For a given value in A, you can find the possible solutions in B for a sum, say X i.e. $A[i] + B[j] \\leq X$.",
+            "hint2": "If the count for values with sum $X \\geq K$, then we can divide the array into two parts and perform binary search on one part. Similarly, we can do this if $count \\leq K$.",
+            "solution_approach": "Let\u2019s say $N \\leq M$(swap the arrays if this is not the case). We are doing this to reduce the time complexity. We would be performing binary search on the possible sum of the K-th element in the new array, $A_i + B_i$. Sort both the arrays and take the left pointer as L, the smallest sum possible i.e. A[0] + B[0], and the right pointer as R, the largest sum possible i.e. $A[N-1] + B[M-1]$. We take $mid = \\dfrac{L+R}{2}$.\n\nWe would traverse through the first array (with size N) and find the count of numbers such that its sum with $A_i$ is \u2264 mid. If the count of such numbers is $\\geq K$, that can be a possible answer and we continue binary search from $L$ to $R = mid-1$. Otherwise, we need to increase the sum of numbers and hence we perform binary search from $L = mid+1$ to $R$.\n\nRemember that you must iterate in the check function over the smaller array otherwise you will get TLE.So try to find the array which is smaller and do the iteration over it and apply the upper bound over the larger function.\n\nCondition is given as min(n,m) over all test cases doesnt exceed $10^5$ so we must take the hint to take the smaller array as the iterating version.\n\n**Time Complexity per test case: $O(N \\times log_2M \\times log_2(max(A_i + B_i) - min(A_i + B_i))$ where $N \\leq M$**"
+        },
+        "id": 102,
+        "input_format": "The first line contains $T$, the number of test cases ($1 \\leq T \\leq 10000$).\n\nThe first line contains 3 space-separated integers $N, M, K$ where \n\n$$ 1 \\leq N \\leq 10^6, \\, 1 \\leq M \\leq 10^6, \\, 1 \\leq K \\leq N \\times M $$.\n\nNext line contains $N$ space-separated integers ($0 \\leq A_i \\leq 10^4$).\n\nNext line contains $M$ space-separated integers ($0 \\leq B_i \\leq 10^4$).\n\nSum of **$ \\text{min}(N, M) $ across all test cases $\\leq 10^5$**.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "<p>Array C -&gt; [1+4,1+5,1+6,2+4,2+5,2+6,3+4,3+5,3+6] -&gt; [5,6,7,6,7,8,7,8,9]<br>Array C after sorting - [5,6,6,7,7,7,8,8,9]<br>6th element is 7.</p>",
+        "output_format": "<p>For each test case print the <i>Kth</i> smallest element in the array <i>C</i>.</p>",
+        "samples": [
+            {
+                "input": "1\n3 3 6\n1 2 3\n4 5 6",
+                "output": "7"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Binary Search"
+        ],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "Kth Sum Value",
+        "video_editorial_id": 10683
+    },
+    "details": "Problem Details"
+}

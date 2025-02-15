@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are hosting a party and have invited N guests. The guests may or may not know each other. You are expecting a famous celebrity to show up. A celebrity is a person who doesn\u2019t know anyone else but everyone else knows him. Find the celebrity if present.\n\nTry to solve it in O(N) time with constant extra space.",
+        "complete_approach": "",
+        "constraints": "<p><i>2 \u2264 N \u2264 1000</i></p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint FindCeleb(vector<vector<int>> &a)\n{\n    int n = (int)a.size();\n\n    int celeb = 0;\n\n    for (int i = 1; i < n; i++)\n    {\n        if (a[celeb][i])\n            celeb = i;\n    }\n\n    for (int i = 0; i < n; i++)\n    {\n        if (i == celeb)\n            continue;\n\n        if (a[celeb][i] || !a[i][celeb])\n        {\n            celeb = -1;\n            break;\n        }\n    }\n\n    if (celeb != -1)\n        celeb++;\n\n    return celeb;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    cout.tie(NULL);\n\n    int n;\n    cin >> n;\n\n    vector<vector<int>> a(n, vector<int>(n));\n\n    for (int i = 0; i < n; i++)\n        for (int j = 0; j < n; j++)\n            cin >> a[i][j];\n\n    cout << FindCeleb(a) << '\\n';\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:44:50.021662+00:00"
+        },
+        "hints": {
+            "hint1": "Recursion",
+            "hint2": "Eliminate n-1 guests who cannot be the celebrity",
+            "solution_approach": "\nThis problem can be very easily solved by brute forcing in $O(N^{2})$. But here we present a much more elegant solution. We eliminate $n-1$ guest who cannot be the celebrity using the following strategy:\n\n1. If A knows B then A cannot be the celebrity.\n2. If B knows A then B cannot be the celebrity.\n\nWe can do it using recursion by checking this for the $i^{th}$ person and the assumed celebrity for previous $i-1$ persons. This can also be done iteratively. Finally check if the last remaining guest is a celebrity in linear time.\n\n**Time Complexity -** $O(N)$\n"
+        },
+        "id": 594,
+        "input_format": "The first line of each test case contains $N$ - the number of guests attending the party.\n\nThe next $N$ lines contain $N$ integers. The $j^{th}$ integer of the $i^{th}$ line is 1 if the $i^{th}$ person knows the $j^{th}$ person, otherwise its 0. $(i^{th}$ integer of the $i^{th}$ line is always 0)$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In the first test case the $2^{\\text{nd}}$ person does not know anyone, but everyone knows him.  \nIn the second test case both of the guests know each other and so there is no guest.",
+        "output_format": "Print index of the person who is a celebrity if present, else print -1.",
+        "samples": [
+            {
+                "input": "3\n0 1 0\n0 0 0\n0 1 0",
+                "output": "2"
+            },
+            {
+                "input": "2\n0 1\n1 0",
+                "output": "-1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Brute Force"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nint FindCeleb(vector<vector<int>> &a)\n{\n    // Complete the solution\n}\n\n<fix>\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    cout.tie(NULL);\n\n    int n;\n    cin >> n;\n\n    vector<vector<int>> a(n, vector<int>(n));\n\n    for (int i = 0; i < n; i++)\n        for (int j = 0; j < n; j++)\n            cin >> a[i][j];\n\n    cout << FindCeleb(a) << '\\n';\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "CELEB",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

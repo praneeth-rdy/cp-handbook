@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a chessboard of size N \u00d7 M, find the number of ways in which you can place 2 knights - one black and one white, such that they do not attack each other.",
+        "complete_approach": "",
+        "constraints": "<p><i>1 \u2264 N,M \u2264 10<sup>5</sup></i><br><i>1 &lt; N x </i><i>M</i></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n\nint MOD = 1e9 + 7;\n\nint main()\n{\n    ll n, m;\n    cin >> n >> m;\n\n    ll tot = (n * m % MOD) * ((n * m - 1) % MOD) % MOD; //tot = (n*m)*(n*m-1)\n    ll att = max(0LL, n - 1) * max(0LL, m - 2) * 4 % MOD;\n    (att += max(0LL, n - 2) * max(0LL, m - 1) * 4 % MOD) %= MOD;\n\n    cout << (tot - att + MOD) % MOD << '\\n';\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:24:10.116772+00:00"
+        },
+        "hints": {
+            "hint1": "No of possible arrangements = Total Number - Number of ways where they attack",
+            "hint2": "The knights attack each other when they are placed in the corners of a rectangle of size 2\u00d73 or 3\u00d72.",
+            "solution_approach": "<p>The total number of ways is equal to <i>(N \u00d7 M) \u00d7 (N \u00d7 M - 1).</i> (You can place the first knight in any of the boxes and the second one in any box where you didn\u2019t place the first one)<br>The knights attack each other when they are placed in the corners of a rectangle of size 2\u00d73 or 3\u00d72<i>.</i> You can find the number of such rectangles in the chessboard and there are 4 possible orientations for the knights in the corners. So total arrangements where they attack each other is <i>4 \u00d7 No of horizontal rectangles + 4 \u00d7 No of vertical rectangles</i>.</p>"
+        },
+        "id": 603,
+        "input_format": "The one and only line of each input file contains two integers - N and M.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print the possible number of arrangements modulo <i>10<sup>9</sup> +7.</i></p>",
+        "samples": [
+            {
+                "input": "2 2",
+                "output": "12"
+            },
+            {
+                "input": "2 3",
+                "output": "26"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "BLAWHI",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

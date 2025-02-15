@@ -1,0 +1,134 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3393,
+            "name": "Live Sessions",
+            "resources_count": 8,
+            "time_in_minutes": 633,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3378,
+            "name": "Day 0",
+            "resources_count": 1,
+            "time_in_minutes": 50,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3379,
+            "name": "Day 1 - Basic C++ Syntax",
+            "resources_count": 7,
+            "time_in_minutes": 141,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3380,
+            "name": "Day 2 - Variables and & Operators",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3381,
+            "name": "Day 3 : if-else",
+            "resources_count": 3,
+            "time_in_minutes": 94,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3382,
+            "name": "Day 4 :  Loops",
+            "resources_count": 6,
+            "time_in_minutes": 181,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3383,
+            "name": "Day 5 :  Functions",
+            "resources_count": 5,
+            "time_in_minutes": 132,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3384,
+            "name": "Day 6: Time complexity",
+            "resources_count": 10,
+            "time_in_minutes": 64,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3385,
+            "name": "Day 7: Pattern Building",
+            "resources_count": 6,
+            "time_in_minutes": 244,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3386,
+            "name": "Day 8: Gap Day!",
+            "resources_count": 1,
+            "time_in_minutes": 1,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3387,
+            "name": "Day 9: Arrays",
+            "resources_count": 5,
+            "time_in_minutes": 144,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3388,
+            "name": "Day 10: Structures & More array problems",
+            "resources_count": 5,
+            "time_in_minutes": 143,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3389,
+            "name": "Day 11: Strings",
+            "resources_count": 5,
+            "time_in_minutes": 148,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3390,
+            "name": "Day 12: 2D Arrays",
+            "resources_count": 5,
+            "time_in_minutes": 146,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3391,
+            "name": "Day 13: Interesting Ideas",
+            "resources_count": 6,
+            "time_in_minutes": 156,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 3392,
+            "name": "Day 14 : Gap Day / Build 2048!",
+            "resources_count": 2,
+            "time_in_minutes": 100,
+            "type": "COURSE_MATERIALS"
+        }
+    ],
+    "details": "Chapter Playlists"
+}

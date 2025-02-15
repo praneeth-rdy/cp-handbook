@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have given an array <i>A</i> of <i>n</i> elements. Your task is to process <i>q</i> queries of the following types.</p><ul><li>1 <i>i j</i> <i>x</i> : Increase each value at positions from [<i>i, j</i>] by <i>x</i>.</li><li>2 <i>i</i> : Print the value at position <i>i</i>.</li></ul>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n</i>, <i>q </i>\u2264 2 x 10<sup>5</sup><br>1 \u2264 <i>A<sub>i</sub>, x </i>\u2264 10<sup>9</sup><br>1 \u2264 <i>i </i>\u2264 <i>n</i><br>1 \u2264 <i>i </i>\u2264 <i>j </i>\u2264 <i>n</i></p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 200010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nll tree[4 * N];\n\nvoid update(int node, int start, int end, int l, int r, int val) {\n    if(start > r || end < l) return;\n    if(start >= l && end <= r) {\n        tree[node] += val;\n        return;\n    }\n    int mid = (start + end) / 2;\n    update(2 * node, start, mid, l, r, val);\n    update(2 * node + 1, mid + 1, end, l, r, val);\n}\n\nll query(int node, int start, int end, int idx) {\n    if(start == end) return tree[node];\n    int mid = (start + end) / 2;\n    if(idx <= mid) return tree[node] + query(2 * node, start, mid, idx);\n    return tree[node] + query(2 * node + 1, mid + 1, end, idx);\n}\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int n, q;\n    cin >> n >> q;\n\n    for(int i = 0; i < n; i++) {\n        int x; cin >> x;\n        update(1, 0, n - 1, i, i, x);\n    }\n\n    while(q--) {\n        int t;\n        cin >> t;\n        if(t == 1) {\n            int i, j, x;\n            cin >> i >> j >> x;\n            i--; j--;\n            update(1, 0, n - 1, i, j, x);\n        }\n        else {\n            int i;\n            cin >> i;\n            i--;\n            cout << query(1, 0, n - 1, i) << \"\\n\";\n        }\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:32:52.106092+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "<p>Interchange the implementation of <i>query</i> and <i>update</i> part in the segment tree. For each query of the 2nd type, the value at index <i>i</i> will be the sum of values from root to the leaf node representing that index. For the update query of the 1st type, add the value to each logN nodes that completely lies within that range.</p><p>For more clarity, please see the editorial code.</p>"
+        },
+        "id": 402,
+        "input_format": "<p>The first input line has two integers <i>n</i> and <i>q</i>: the number of values and queries.<br>The second line has <i>n</i> integers <i>A<sub>1</sub>, A<sub>2</sub>, \u2026, A<sub>n</sub></i>: the array values.<br>Finally, there are <i>q</i> lines describing the queries. Each line has three integers: either \"1 <i>i j x</i>\" or \"2 <i>i</i>\".</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print the result of each query of type 2.",
+        "samples": [
+            {
+                "input": "8 3\n3 2 4 5 1 1 5 3\n2 4\n1 2 5 1\n2 4",
+                "output": "5\n6"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Prefix And Partial Sums",
+            "Segment Tree"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Range  Queries II",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

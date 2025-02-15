@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Find the number of solutions of following equation.</p><p><i>x<sub>1</sub></i> + <i>x<sub>2</sub></i> + <i>x<sub>3</sub></i> + \u2026 + <i>x<sub>n</sub></i> = <i>k</i>, satisfying that 0 \u2264 <i>x<sub>i</sub></i> &lt; <i>m</i>, modulo 1000000007.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n, m, k</i> \u2264 10<sup>5</sup></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n\nconst int N = 500010;\n\nint mod = 1e9 + 7;\n\nint power(int a, int b, int M) {\n    if(!b) return 1;\n    int temp = power(a, b / 2, M);\n    temp = 1LL * temp * temp % M;\n    if(b % 2) temp = 1LL * temp * a % M;\n    return temp;\n}\n\nint fact[N];\n\nvoid pre() {\n    fact[0] = 1;\n    for(int i = 1; i < N; i++) {\n        fact[i] = 1LL * fact[i - 1] * i % mod;\n    }\n}\n\nint ncr(int n, int r) {\n    if(n < r) return 0;\n    assert(n >= 0 && n < N && r >= 0 && r < N);\n    int ans = fact[n];\n    ans = 1LL * ans * power(fact[n - r], mod - 2, mod) % mod;\n    ans = 1LL * ans * power(fact[r], mod - 2, mod) % mod;\n    if(ans < 0) ans += mod;\n    assert(ans >= 0 && ans < mod);\n    return ans;\n}\n\nsigned main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    pre();\n    int n, m, k;\n    cin >> n >> m >> k;\n\n    int ans = 0;\n\n    for(int i = 0; i <= n; i++) {\n        int temp = ncr(n, i);\n        if(n + k - i * m - 1 < n - 1) break;\n        temp = 1LL * temp * ncr(n + k - i * m - 1, n - 1) % mod;\n        if(temp < 0) temp += mod;\n        if(i % 2) ans = (ans - temp + mod) % mod;\n        else ans = (ans + temp) % mod;\n    }\n\n    assert(ans >= 0 && ans < mod);\n\n    cout << ans << \"\\n\";\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:32:33.407510+00:00"
+        },
+        "hints": {
+            "hint1": "<p>The number of non-negative integer solutions to <i>x<sub>1</sub> + x<sub>2</sub> + \u2026+ x<sub>n</sub> = k</i> is given by <i>(n + k - 1) C (k)</i>.</p>",
+            "hint2": "<p>Try to think of how to remove the constraint on <i>x<sub>i</sub></i>s, by doing inclusion-exclusion.</p>",
+            "solution_approach": "<p>The only thing we need to handle is to get rid of that annoying constraint <i>x<sub>i</sub> &lt; m</i>. To do that, we apply the inclusion-exclusion principle. Let <i>e<sub>i</sub> = x<sub>i</sub> \u2265 m</i>, then <i>N<sub>o</sub></i> is our desired answer. Clearly, this set of properties is homogeneous. Take <i>T = {1, 2, \u2026, j} (j \u2264 n)</i>, then <i>N<sub>T</sub></i> is the number of solutions with <i>x<sub>1</sub> \u2265 m, x<sub>2</sub> \u2265 m, \u2026, x<sub>j</sub> \u2265 m</i>. Setting <i>y<sub>i</sub> = x<sub>i</sub> - m(i \u2264 j), y<sub>i</sub> = x<sub>i</sub>(i &gt; j)</i>, and it's the same as the number of solutions of the system</p><p><i>y<sub>1</sub> + y<sub>2</sub> + \u2026 + y<sub>n</sub> = k - jm</i>,</p><p>thus the answer is therefore</p><p><i>N<sub>o</sub> = Summation over j = [0, n] (-1)<sup>j</sup> * nCj * (n + k - jm - 1) C (n - 1)</i></p><p><strong>Time complexity:</strong> <i>O(n)</i> with some preprocessing.</p>"
+        },
+        "id": 177,
+        "input_format": "<p>The only line of input contains three space-separated integers <i>n, m, k</i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>For the first test cases, only two solutions exist (2, 3) and (3, 2).</p>",
+        "output_format": "<p>Print the number of solutions.</p>",
+        "samples": [
+            {
+                "input": "2 4 5",
+                "output": "2"
+            },
+            {
+                "input": "20 10 50",
+                "output": "366736536"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Character Encoding",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

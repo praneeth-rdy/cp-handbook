@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "## Description\n\nWe have to paint **n** boards of length `{A1, A2, ..., An}`. There are **k** painters available, and each takes **1 unit time** to paint **1 unit** of the board. The goal is to find the **minimum time** required to complete this task under the following constraints:\n\n### Constraints\n1. Two painters cannot share a board. A board cannot be partially painted by one painter and partially by another.\n2. A painter can only paint **contiguous** boards. For example, if a painter paints board 1 and 3 but not 2, it is invalid.",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\n\nsigned main(){\n   ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n   int t;\n   cin >> t;\n   while(t--) {\n       int n, k;\n       cin >> n >> k;\n       int x[n];\n       int l = 0, r = 0;\n       for (int i = 0; i < n; ++i) {\n           cin >> x[i];\n           l = max(l, x[i]);\n           r += x[i];\n       }\n       int ans = 0;\n       while(l <= r) {\n           int mid = (l+r)/2;\n           int cnt = 0;\n           int now = 0;\n           for (int i = 0; i < n; ++i) {\n               if(now + x[i] <= mid) {\n                   now += x[i];\n               }\n               else {\n                   now = x[i];\n                   cnt++;\n               }\n           }\n           if(now) cnt++;\n           if(cnt <= k) {\n               ans = mid;\n               r = mid - 1;\n           }\n           else {\n               l = mid + 1;\n           }\n       }\n       cout << ans << \"\\n\";\n   }\n   return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:17:09.054216+00:00"
+        },
+        "hints": {
+            "hint1": "If K painters are able to paint the boards in time X, then they can paint the boards in time less than X as well. That means this is a monotonic function. You can use this to apply binary search.",
+            "hint2": "<p>We would be doing binary search on the minimum time to paint all the boards by the K painters. We take the left pointer as L = max(Xi) (because 2 painters cannot share a board to paint) and R = \u03a3(Xi). We take mid = (L+R)/2. Find the number of painters it takes to paint all the boards in time \u2018mid\u2019. This can be done by assigning the boards to the painters in contiguous order and at the same time ensuring that the painters are painting the boards in continuous order.</p><p>If the number of painters is \u2264 K, that means this is a possible answer and we can minimize the time taken to paint the boards, we continue binary search on L to R = mid-1. Otherwise, we need to increase the time to ensure that only K painters are doing the job, so we continue the binary search on L = mid+1 to R.</p><p>Time Complexity: O(N * log<sub>2</sub>(\u03a3Xi))</p>",
+            "solution_approach": ""
+        },
+        "id": 472,
+        "input_format": "<p>The first line contains a single integer T (1 \u2264 T \u2264 100000) - the number of test cases.</p><p>The first line of each test case contains 2 space-separated integers N, K (1 \u2264 N \u2264 100000, 1 \u2264 K \u2264 100000) - the number of boards and the number of painters.</p><p>The second line of each test case contains N space-separated integers (0 \u2264 xi \u2264 10^9) - the length of the boards.</p><p>Sum of N across all test cases \u2264 10^6.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case print the minimum time required to complete the painting in a new line.</p>",
+        "samples": [
+            {
+                "input": "5\n5 2\n1 2 3 4 5\n5 3\n2 5 7 2 5\n5 1\n1 2 3 4 5\n5 5\n1 2 3 4 5\n5 4\n1 7 2 3 5",
+                "output": "9\n7\n15\n5\n7"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Frequently Asked Questions",
+            "Binary Search",
+            "company-Rippling"
+        ],
+        "template_code": [],
+        "time_limit_sec": 4.0,
+        "title": "Famous Painter Partition Problem",
+        "video_editorial_id": 10682
+    },
+    "details": "Problem Details"
+}

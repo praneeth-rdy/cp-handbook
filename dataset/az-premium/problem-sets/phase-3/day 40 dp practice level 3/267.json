@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given N marbles in different colours. You have to remove marbles till there are no marbles left. Each time you can choose continuous marbles with the same color, remove them and get k*k points (where \u2018k\u2019 is the length of the continuous marbles removed). Find the maximum points you can get.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 N \u2264 100</p><p>0 \u2264 Ai \u2264 100</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\n\nint dp[100][100][100];\nint a[100];\n\nint dfs(int l,int r,int k){\n       if (l > r) return 0;\n       if (dp[l][r][k]) return dp[l][r][k];\n\n       while (l < r && a[r] == a[r-1]) {\n           r--;\n           k++;\n       }\n       dp[l][r][k] = dfs(l,r-1,0) + (k+1) * (k+1);\n       for (int i = l; i < r; ++i) {\n           if (a[i]==a[r]) {\n               dp[l][r][k] = max(dp[l][r][k], dfs(l,i,k+1) + dfs(i+1,r-1,0));\n           }\n       }\n       return dp[l][r][k];\n   }\n\nsigned main(){\n   ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n   int t = 1;\n   while (t--) {\n       int n;\n       cin >> n;\n       for (int i = 0; i < n; ++i) {\n           cin >> a[i];\n       }\n       memset(dp, 0, sizeof(dp));\n       cout << dfs(0, n-1, 0) << \"\\n\";\n   }\n   return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:34:10.966957+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Divide the problem into subproblems. For this problem, a similar approach can be used. f(i,j) = max(f(i,k)+f(k+1,j)) i&lt;=k&lt;j</p>",
+            "hint2": "You have to remove all subarrays with different colors as the end box, then remove all the boxes with the same color as the end boxes.",
+            "solution_approach": "<p>Use DP[i][j][k] which denotes the largest number we can get using i-th to j-th marbles with k same coloured marbles. The DP transition will be DP[i][j][k] = max(dp[i][p][k+1]+dp[p+1][j-1][0]).</p><p>Time Complexity: O(N^4)</p><p>Complete solution discussed in the live session.</p>"
+        },
+        "id": 267,
+        "input_format": "The first line contains one integer N - the length of the array. \n\nThe second line contains N space-separated integers - the colours of the marbles.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>For the first test case of the example, remove 1, then 3 and then 2, we get 1*1+1*1+2*2 = 6.</p><p>For the second test case of the example, remove 1, then 3, then 4 and 2, we get 2*2+1*1+2*2+1*1 = 10.</p>",
+        "output_format": "Print the maximum points you can get in a new line.",
+        "samples": [
+            {
+                "input": "4\n2 1 3 2",
+                "output": "6"
+            },
+            {
+                "input": "6\n4 3 1 1 4 2",
+                "output": "10"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Remove Marbles",
+        "video_editorial_id": 8177
+    },
+    "details": "Problem Details"
+}

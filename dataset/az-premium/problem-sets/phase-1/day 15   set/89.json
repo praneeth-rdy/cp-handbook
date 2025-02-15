@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>There are <i>N</i> students in section <i>A</i>. The <i>i</i>-th student got <i>A<sub>i</sub></i> marks. The class teacher of section <i>B</i> was absent so sections <i>A</i> and <i>B</i> were merged. The students of section <i>B</i> did not want to humiliate themselves, so they decided to sit with students having the same marks as them. You are given the marks of students of section <i>B</i> in order of their entry in the class. You have to tell whether the <i>i</i>-th student of section <i>B</i> can sit with a student with the same marks as him. If there is at least 1 person in the room with the same marks, print <i>\u2018YES\u2019</i> else print <i>\u2018NO\u2019</i>. (without the quotes)</p><p>See Sample Test Cases.</p>",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10$  \n\n$1 \\leq N, M \\leq 10^5$  \n\n$1 \\leq A_i, B_i \\leq 10^{12}$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n#define int long long\n\nsigned main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int n, m;\n    cin >> n >> m;\n    map<int, bool> m1;\n    for (int i = 0; i < n; ++i) {\n      int x;\n      cin >> x;\n      m1[x] = 1;\n    }\n    for (int i = 0; i < m; ++i) {\n      int x;\n      cin >> x;\n      if (m1.count(x)) {\n        cout << \"YES\\n\";\n      } else {\n        cout << \"NO\\n\";\n        m1[x] = 1;\n      }\n    }\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:13:14.333042+00:00"
+        },
+        "hints": {
+            "hint1": "You have to tell whether a student with the same marks is already present in the class. Try thinking about how you can store the marks of the students already present in the class and for the students as they enter the class.",
+            "hint2": "Think of a data structure that can efficiently store if a student with given marks is present in the class.",
+            "solution_approach": "The problem can be easily solved by using a $\\frac{map}{set}$. You have to store the marks of students of section `A` in the $\\frac{map}{set}$. As each student of section `B` enters the class, you can check if a student with given marks is present or not. You also have to store the marks of this student in the map/set so that a student who comes after with the same marks can sit with this student.\n\nTime Complexity per test case: $O((N+M)\\log N)$"
+        },
+        "id": 89,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\n\nThe first line of each test case contains two space-separated integers $N$ and $M$ - the number of students in sections $A$ and $B$, respectively.\n\nThe second line of each test case contains $N$ space-separated integers $A_1, A_2, \\dots, A_N$ - the grades of students in section $A$.\n\nThe third line of each test case contains $M$ space-separated integers $B_1, B_2, \\dots, B_M$ - the grades of students in section $B$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In the first test case of the example, when the first student enters, there is no student with 7 marks.\nWhen the second student enters, there is 1 student with 4 marks.\nWhen the third student enters, there is no student with 1 mark.\nWhen the fourth student enters, there are 2 students with 4 marks.\nWhen the fifth student enters, there is 1 student with 5 marks.",
+        "output_format": "<p>For each test case, print <i>M</i> strings on a new line. Print <i>\u2018YES\u2019</i> if there is at least 1 person in the room with the same IQ. Otherwise, print <i>\u2018NO\u2019</i>. (without the quotes)</p>",
+        "samples": [
+            {
+                "input": "2\n3 5\n2 5 4\n7 4 1 4 5\n4 4\n1 1 8 2\n8 3 3 5",
+                "output": "NO\nYES\nNO\nYES\nYES\nYES\nNO\nYES\nNO"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Students and Grades",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

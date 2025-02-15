@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given a string $S$ with length $N$. Each character is assigned a cost for removing it. Find the minimum cost for removing characters such that it does not contain any subsequence `hard`.",
+        "complete_approach": "",
+        "constraints": "<p>1\u2264 T \u2264 1000</p><p>1\u2264 N \u2264 10^5</p><p>1\u2264 Ai \u2264 10^9</p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n#define int long long\n\nsigned main() {\n   IOS\n   int t;\n   cin >> t;\n   while(t--) {\n       int n;\n       string s;\n       cin >> n >> s;\n       int a[n];\n       for (int i = 0; i < n; ++i) {\n           cin >> a[i];\n       }\n       int dp[4] = {0};\n       for (int i = 0; i < n; ++i) {\n           if(s[i] == 'h') dp[0] += a[i];\n           else if (s[i] == 'a') dp[1] = min(dp[0], dp[1] + a[i]);\n           else if (s[i] == 'r') dp[2] = min(dp[1], dp[2] + a[i]);\n           else if (s[i] == 'd') dp[3] = min(dp[2], dp[3] + a[i]);\n       }\n       cout << dp[3] << \"\\n\";\n   }\n   return 0;\n}```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-04-08T01:35:42.589297+00:00"
+        },
+        "hints": {
+            "hint1": "Define DP array, DP[4] where DP[i] denotes the cost of not being able to form a prefix of length i of \u2018hard\u2019",
+            "hint2": "Iterate through the given string, if we encounter any character of \u2018hard\u2019, we have two choices, remove the current character or remove the previous character (in case of \u2018h\u2019, there is no previous character).",
+            "solution_approach": "Iterate through the given string, if we encounter any character $j$ of `hard`, we have two choices and we take the minimum of the two. You can remove the current character, which will make your cost $DP[j] + A[i]$ or you can remove the previous character, which will make your cost $DP[j-1]$.\n\n**Time Complexity per test case:** $O(N)$"
+        },
+        "id": 182,
+        "input_format": "- The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\n- The first line of each test case contains one integer $N$ - the length of the array.\n- The second line of each test case contains a string $S$.\n- The third line of each test case contains $N$ space-separated integers - the cost of removing a character.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, print the minimum cost for removing characters such that it does not contain any subsequence \u2018hard\u2019.",
+        "samples": [
+            {
+                "input": "3\n4\nabcd\n1 2 3 4\n10\nhhhaaarrdd\n1 2 3 4 1 2 3 4 2 3\n4\nhard\n2 1 4 6",
+                "output": "0\n5\n1"
+            }
+        ],
+        "status": "CREATED",
+        "tags": [
+            "Dynamic Programming"
+        ],
+        "template_code": [],
+        "time_limit_sec": 6.0,
+        "title": "Hard Problem",
+        "video_editorial_id": 8163
+    },
+    "details": "Problem Details"
+}

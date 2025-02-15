@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Shubham and Vivek have planned to play $N$ games of Rock-Paper-Scissor. Vivek has already decided upon the sequences of his $N$ moves. He told his sequence to Shubham and challenged him. \n\nGiven a sequence of length $N$ of Vivek\u2019s moves, Help Shubham to find a sequence of moves that give him the maximum number of wins among $N$ games, provided that he can only change his current move w.r.t his previous move at most $K$ times among all $N$ Moves.\n\nOut of all optimal sequences of moves, print the lexicographically smallest one.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 50$\n$1 \\leq N \\leq 1000$\n$0 \\leq K \\leq 1000$\nString $S$ can only have \u2018$R$\u2019, \u2018$P$\u2019 and, \u2018$S$\u2019 characters.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nint n, k;\nstring s; // PRS\nint dp[1001][1001][3], a[1001];\nint rec(int i, int cnt, int p) {\n    if (i == n)return 0;\n    auto &ans = dp[i][cnt][p];\n    if (ans != -1)return ans;\n    ans = rec(i + 1, cnt, p) + (((p + 1) % 3) == a[i]);\n    for (int j = 0; j < 3; j++) {\n        if (j != p && cnt < k) {\n            ans = max(ans, rec(i + 1, cnt + 1, j) + (((p + 1) % 3) == a[i]));\n        }\n    }\n    return ans;\n}\nvoid solve() {\n    cin >> n >> k;\n    string s;\n    cin >> s;\n    for (int i = 0; i < n; i++) {\n        if (s[i] == 'P')a[i] = 0;\n        if (s[i] == 'R')a[i] = 1;\n        if (s[i] == 'S')a[i] = 2;\n    }\n    memset(dp, -1, sizeof(dp));\n    int cnt = 0, p = 0, ans2;\n    int ans = rec(0, 0, 0);\n    if (ans < rec(0, 0, 1))ans = rec(0, 0, 1), p = 1;\n    if (ans < rec(0, 0, 2))ans = rec(0, 0, 2), p = 2;\n    cout << ans << endl;\n    assert(ans > 0);\n    ans2 = ans;\n    string moves;\n    // getting lexicologically smallest.\n    for (int i = 0; i < n; i++) {\n        if (cnt + (p != 0) <= k && ans == rec(i, cnt + (p != 0), 0)) {\n            if (i && p != 0)cnt++;\n            p = 0;\n            moves.push_back('P');\n            if (a[i] == 1)ans--;\n        }\n        else if (cnt + (p != 1) <= k && ans == rec(i, cnt + (p != 1), 1)) {\n            if (i && p != 1)cnt++;\n            p = 1;\n            moves.push_back('R');\n            if (a[i] == 2)ans--;\n        }\n        else if (cnt + (p != 2) <= k && ans == rec(i, cnt + (p != 2), 2)) {\n            if (i && p != 2)cnt++;\n            p = 2;\n            moves.push_back('S');\n            if (a[i] == 0)ans--;\n        }\n        else {\n            assert(false);\n        }\n    }\n    cout << moves << endl;\n\n    // verify.\n    assert(moves.size() == n);\n    assert(ans == 0);\n    char prev = moves[0];\n    int cnts = 0;\n    for (int i = 0; i < n; i++) {\n        if (moves[i] == 'P' && a[i] == 1)ans2--;\n        if (moves[i] == 'R' && a[i] == 2)ans2--;\n        if (moves[i] == 'S' && a[i] == 0)ans2--;\n        if (moves[i] != prev)cnts++;\n        prev = moves[i];\n    }\n    assert(cnts <= k);\n    assert(ans2 == 0);\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:23:27.531148+00:00"
+        },
+        "hints": {
+            "hint1": "Use dynamic programming",
+            "hint2": "The solution uses dynamic programming to determine the maximum score that Shubham can achieve and to extract a string representing the optimal sequence of moves that Shubham should make. The dp state dp[level][cnt][choice] represents the maximum score possible if Shubham chooses to move choice in the level'th round, he has cnt changes left, and we are considering rounds from level to N-1. If Shubham chooses to change his move, he can only do so a limited number of times (cnt). Therefore, we decrement cnt when Shubham decides to change his move.",
+            "solution_approach": "Transitions can be in the following way:\nLets say the current choice is 2 \ndp[level][cnt][choice] = (if\\_Shubham\\_wins?1:0) + max({rec(level + 1, cnt-1, 1), rec(level + 1, cnt, 2), rec(level + 1, cnt - 1, 3)});\n\nWhenever the choice changes in the next chance we reduce the cnt value by 1 because now we can make one less change.\n\nTime complexity for each test case : O(#states * transitions) = $O(9NK)$"
+        },
+        "id": 913,
+        "input_format": "First-line contains $T$ - the number of test cases.\nFirst line of each test case contains $2$ integers $N$ and $K$.\nSecond-line of each test case contains the string $S$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, output the maximum number of wins possible, and on the next line, print the lexicographically smallest sequences of moves required for the maximum wins.",
+        "samples": [
+            {
+                "input": "4\n6 2\nRPSSPR\n6 3\nSRRRRR\n6 0\nRPSRPS\n6 1\nPSSPPS\n",
+                "output": "4\nPPRRPP\n6\nRPPPPP\n2\nPPPPPP\n4\nRRRSSS\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 10.0,
+        "title": "Rock Paper Scissor",
+        "video_editorial_id": 8241
+    },
+    "details": "Problem Details"
+}

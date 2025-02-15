@@ -1,0 +1,64 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a number $N$. Determine whether $N$ is power of 2 or not.",
+        "complete_approach": "",
+        "constraints": "$ 1 \\leq N \\leq 10^{18} $",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid solution()\n{\n    long long n;\n    cin >> n;\n    if (ceil(log2(n)) == floor(log2(n)))\n    {\n        cout << \"YES\" << endl;\n    }\n    else\n    {\n        cout << \"NO\" << endl;\n    }\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n    solution();\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```py\ndef solve():\n    N = int(input().strip())\n    \n    # Check if N is a power of 2 using bitwise operation\n    if N > 0 and (N & (N - 1)) == 0:\n        print(\"YES\")\n    else:\n        print(\"NO\")\n\ndef main():\n    solve()\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:37:32.091100+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "A simple method for this is to simply take the log of the number on base 2 and if you get an integer then the number is the power of 2."
+        },
+        "id": 1228,
+        "input_format": "Only one line contains a number $N$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print \"$\\textbf{YES}$\" if $N$ is power of 2 otherwise, print \"$\\textbf{NO}$\".",
+        "samples": [
+            {
+                "input": "8\n",
+                "output": "YES\n"
+            },
+            {
+                "input": "10\n",
+                "output": "NO\n"
+            },
+            {
+                "input": "1\n",
+                "output": "YES\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Power Of Two",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

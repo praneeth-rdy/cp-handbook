@@ -1,0 +1,60 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a binary tree, a target node with value $tar$ present in the binary tree, and an integer value $k$, find all the nodes that are at distance $k$ from the given $tar$ node. \n\n\n\n#### Note-:\n- No parent pointers are available.\n- All Node values are unique.\n- $tar$ value node always exists in the given tree.\n- return the *vector< int >* in sorted order by node value.\n- If no such nodes are found, then return empty vector { }.\n- Try to solve this problem in $O(N*logN)$ time and $O(H)$ space, where $H$ is the height of the binary tree. \n- Don't forget to clear any global variable in the template code, as input contains multiple test cases.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq n \\leq 10^4$ - number of nodes.\n$0 \\leq k\\leq 20$ \n$1 \\leq$ *Node Value* $\\leq 10^4$ \n$1 \\leq tar\\leq 10^4$ \n- All Node values are unique.\n- $tar$ value node always exists in the given tree.\n- Don't forget to clear any global variable in the template code, as input contains multiple test cases.\n- Sum of $n$ across all test cases is $\\leq 10^5$.",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nstruct Node {\n    int data;\n    Node* left;\n    Node* right;\n    Node(int x): data(x), left(nullptr), right(nullptr) {};\n};\nvector<int> ans;\nint dfs(Node *v, int &tar, int k, int d) {\n    if (v == nullptr || d > k)return 0; // pruning\n    if (d == k) {\n        ans.push_back(v->data);\n        return 0;\n    }\n    if (v->data == tar) { // target node found.\n        dfs(v->left, tar, k, 1); // search for kth distance node in target subtree.\n        dfs(v->right, tar, k, 1);\n        return 1;\n    }\n    int left, right;\n    if (d == 0) { // searching for target node.\n        left = dfs(v->left, tar, k, d);\n        right = dfs(v->right, tar, k, d);\n    }\n    else { // searching for kth distance nodes.\n        left = dfs(v->left, tar, k, d + 1);\n        right = dfs(v->right, tar, k, d + 1);\n    }\n    if (left == k || right == k) {\n        ans.push_back(v->data);\n        return 0;\n    }\n    if (left > 0) {\n        dfs(v->right, tar, k, left + 1);\n        return left + 1;\n    }\n    if (right > 0) {\n        dfs(v->left, tar, k, right + 1);\n        return right + 1;\n    }\n    return 0;\n}\nvector <int> KDistanceNodes(Node* root, int k, int tar) {\n    if (k == 0)return {tar};\n    ans.clear();\n    dfs(root, tar, k, 0);\n    sort(ans.begin(), ans.end());\n    return ans;\n}\n\nNode *deserialize(string data)\n{\n    if (data.size() == 0)\n        return nullptr;\n    // cout << data << endl;\n    vector<string> dat;\n    string t;\n    for (auto c : data)\n    {\n        if (c == ',')\n        {\n            dat.push_back(t);\n            t.clear();\n        }\n        else\n            t.push_back(c);\n    }\n    dat.push_back(t);\n    int i = 0;\n    queue<Node *> q;\n    auto root = new Node(stoll(dat[0]));\n    q.push(root);\n    auto cur = root;\n    i++;\n    while (!q.empty())\n    {\n        auto x = q.front();\n        q.pop();\n        if (dat[i] != \"x\")\n        {\n            x->left = new Node(stoll(dat[i]));\n            q.push(x->left);\n        }\n        i++;\n        if (dat[i] != \"x\")\n        {\n            x->right = new Node(stoll(dat[i]));\n            q.push(x->right);\n        }\n        i++;\n    }\n    return root;\n}\nvoid solve() {\n    int n, k, tar;\n    cin >> n >> k >> tar;\n    string s;\n    cin >> s;\n    auto root = deserialize(s);\n    auto ans = KDistanceNodes(root, k, tar);\n    for (auto x : ans)cout << x << \" \";\n    cout << endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:16:25.981321+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "There are two types of nodes to be considered. \n1) Nodes in the subtree rooted with the target node. In sample test 1, if the target node is 5 and k is 2, then such nodes are 7, 8, and 9. \n2) Other nodes, may be an ancestor of the target, or a node in some other subtree. For target node 5 and k is 2, then node 3 comes in this category.\n\nFinding the first type of nodes is easy to implement. Just traverse subtrees rooted with the target node and decrement $k$ in the recursive call. When the $k$ becomes 0, print the node currently being traversed.\n\nHow to find nodes of the second type? For the output nodes not lying in the subtree with the target node as the root, we must go through all ancestors. For every ancestor, we find its distance from the target node, let the distance be $d$, now we go to another subtree (if the target was found in the left subtree, then we go to the right subtree and vice versa) of the ancestor and find all nodes at $k-d$ distance from the ancestor.\n\nRefer to the Editorial's Code for more details.\n\n**Time Complexity : $O(N*logN)$**\n\n**Space Complexity: $O(H)$**"
+        },
+        "id": 1030,
+        "input_format": "Complete the function \n<pre><code class=\"language-cpp\"> vector< int > KDistanceNodes(TreeNode* root, int k, int tar)</code></pre> \n, that takes $root$ pointer of the binary tree, $k$ and $tar$ as input parameters and return the *vector < int >* having nodes that are at $k$ distance from the $tar$ node in the sorted order by node values.\n\nFor local testing of the sample, the first line contains $T$, the number of test cases. The first line of each test case contains $n$- number of nodes, $k$ and $tar$ . The second line of each test case contains the level order traversal of the tree, where *'$x$'* denotes the *'nullptr'*.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>For the given Binary Tree , $n=10$ , $k=2$ , and $tar=5$</p><figure class=\"image image_resized\" style=\"width:38.89%;\"><img src=\"https://algozenith.s3.ap-south-1.amazonaws.com/content/06-06-22/99_1f07e216-b6b3-4bd2-bc75-09f40d5bc4be.png\"></figure><p>Output will be $[ 3,7,8,9 ]$.</p>",
+        "output_format": "",
+        "samples": [
+            {
+                "input": "1\n10 2 5\n1,5,3,2,4,10,6,7,x,9,8,x,x,x,x,x,x,x,x,x,x\n",
+                "output": "3 7 8 9 \n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Binary Tree",
+            "company-Samsung",
+            "company-NK Securities"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nstruct Node {\n    int data;\n    Node* left;\n    Node* right;\n    Node(int x): data(x), left(nullptr), right(nullptr) {};\n};\n</fix>\n\n<fix>\nvector <int> KDistanceNodes(Node* root, int k, int tar) { \n</fix>\n    // Write Code Here.\n    return {};\n}\n<fix>\n\nNode *deserialize(string data)\n{\n    if (data.size() == 0)\n        return nullptr;\n    // cout << data << endl;\n    vector<string> dat;\n    string t;\n    for (auto c : data)\n    {\n        if (c == ',')\n        {\n            dat.push_back(t);\n            t.clear();\n        }\n        else\n            t.push_back(c);\n    }\n    dat.push_back(t);\n    int i = 0;\n    queue<Node *> q;\n    auto root = new Node(stoll(dat[0]));\n    q.push(root);\n    auto cur = root;\n    i++;\n    while (!q.empty())\n    {\n        auto x = q.front();\n        q.pop();\n        if (dat[i] != \"x\")\n        {\n            x->left = new Node(stoll(dat[i]));\n            q.push(x->left);\n        }\n        i++;\n        if (dat[i] != \"x\")\n        {\n            x->right = new Node(stoll(dat[i]));\n            q.push(x->right);\n        }\n        i++;\n    }\n    return root;\n}\nvoid solve() {\n    int n, k, tar;\n    cin >> n >> k >> tar;\n    string s;\n    cin >> s;\n    auto root = deserialize(s);\n    auto ans = KDistanceNodes(root, k, tar);\n    for (auto x : ans)cout << x << \" \";\n    cout << endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "K Distance Nodes",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,74 @@
+{
+    "code": 200,
+    "data": {
+        "body": "An integer array is called arithmetic if it consists of **at least three elements** and if the difference between any two consecutive elements is the same.\n\nFor example, $[1,3,5,7,9]$, $[7,7,7,7]$, and $[3,-1,-5,-9]$ are arithmetic sequences, whereas $[1,2,4,5]$ is not an arithmetic sequence.\n\nGiven an integer array $A$, return the number of arithmetic **subarrays** of $A$.\n\nA **subarray** is any continuous segment of an array.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq N \\leq 10^5$\n$-10^9 \\leq A_i \\leq 10^9$",
+        "difficulty": 2,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\nlong long findArithmeticSeq(int a[], int n)\n{\n    long long dp[n] = {0};\n    for (int i = 2; i < n; i++)\n    {\n        dp[i] = (a[i] - a[i - 1] == a[i - 1] - a[i - 2]) ? 1 + dp[i - 1] : 0;\n    }\n    long long ans = 0;\n    for (int i = 0; i < n; i++)\n        ans += dp[i];\n    return ans;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n;\n    cin >> n;\n    int a[n];\n    for (int i = 0; i < n; i++)\n    {\n        cin >> a[i];\n    }\n    cout << findArithmeticSeq(a, n) << '\\n';\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        int n = Integer.parseInt(br.readLine());\n        int[] a = new int[n];\n        String[] inputLine = br.readLine().split(\" \");\n        for (int i = 0; i < n; i++) {\n            a[i] = Integer.parseInt(inputLine[i]);\n        }\n\n        out.println(findArithmeticSeq(a, n));\n\n        out.flush();\n        out.close();\n    }\n\n    static long findArithmeticSeq(int[] a, int n) {\n        long[] dp = new long[n];\n        for (int i = 2; i < n; i++) {\n            long d1 = (long) a[i] - a[i - 1];\n            long d2 = (long) a[i - 1] - a[i - 2];\n            if (d1 == d2) {\n                dp[i] = 1 + dp[i - 1];\n            } else {\n                dp[i] = 0;\n            }\n        }\n        long ans = 0;\n        for (int i = 0; i < n; i++) {\n            ans += dp[i];\n        }\n        return ans;\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    n = int(data[idx])\n    idx += 1\n    a = [int(data[idx + i]) for i in range(n)]\n    idx += n\n\n    ans = find_arithmetic_seq(a, n)\n    stdout.write(str(ans) + '\\n')\n\ndef find_arithmetic_seq(a, n):\n    dp = [0] * n\n    for i in range(2, n):\n        if a[i] - a[i - 1] == a[i - 1] - a[i - 2]:\n            dp[i] = 1 + dp[i - 1]\n        else:\n            dp[i] = 0\n    ans = sum(dp)\n    return ans\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:13:41.697833+00:00"
+        },
+        "hints": {
+            "hint1": "Consider checking for consecutive differences and counting sequences where the difference remains constant.",
+            "hint2": "Can you think of using Dynamic Programming? Consider this state $dp(i)$ \u2192 represents the number of arithmetic sequences ending at $i^{th}$ index. Think of transition.",
+            "solution_approach": "The $dp$ transition can be written as:\n\nif a[i] - a[i - 1] == a[i - 1] - a[i - 2]:\n    dp[i] = 1 + dp[i - 1]\nelse:\n    dp[i] = 0\n\nThe answer will be the sum of all the $dp$ values. The time complexity will be $O(N)$ and space complexity is $O(N)$. It can be done without any extra space as we only need the $dp$ value for the previous state.\n\n**Time Complexity:** $O(N)$\n\n**Space Complexity:** $O(N)$ (can be optimized to $O(1)$)"
+        },
+        "id": 633,
+        "input_format": "The first line contains a single integer $N$ - the size of the array.\nThe second line contains $N$ integers - the elements of the array.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In the first test case, the arithmetic subarrays are $[1,3,5]$, $[3,5,7]$, and $[1,3,5,7]$.\nIn the second test case, $[1,2,3]$ is the only arithmetic subarray.\nIn the third test case, there are no arithmetic subarrays.",
+        "output_format": "Print the number of arithmetic **subarrays** of $A$.",
+        "samples": [
+            {
+                "input": "4\n1 3 5 7",
+                "output": "3"
+            },
+            {
+                "input": "3\n1 0 1",
+                "output": "0"
+            },
+            {
+                "input": "4\n1 2 3 5",
+                "output": "1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Dynamic Programming",
+            "Arrays"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nlong long findArithmeticSeq(int a[], int n)\n{\n    //add code here\n}\n\n<fix>\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n;\n    cin >> n;\n    int a[n];\n    for (int i = 0; i < n; i++)\n    {\n        cin >> a[i];\n    }\n    cout << findArithmeticSeq(a, n) << '\\n';\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "SLICES-I",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,67 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given a binary tree with $n$ nodes. Each node has an integer value associated with it. Your task is to print the leaf nodes and then remove these leaf nodes. Now, return the new leaf nodes and repeat the process until the tree becomes empty.\n\n**Note:**\n\n- You don't require to remove the leaf nodes. Just print the values in the required order.\n- The leaf nodes must be stored in a left to right order.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^4$\n$1 \\leq n \\leq 10^5$\n$1 \\leq \\text{value} \\leq 10^5$\nSum of $n$ over all test cases is $\\leq 10^6$.",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nstruct TreeNode\n{\t// TreeNode Definition.\n\tint data;\n\tTreeNode *left;\n\tTreeNode *right;\n\tTreeNode(int x) : data(x), left(nullptr), right(nullptr) {}\n};\n\n\nclass Solution {\npublic:\n\tmap<int, vector<int>> m;\n\tint dfs(TreeNode *root) {\n\t\tif (root == nullptr)return 0;\n\t\tint d = 0;\n\t\tif (root->left && !root->right)d = 1 + dfs(root->left);\n\t\telse if (root->right && !root->left)d = 1 + dfs(root->right);\n\t\telse if (root->left && root->right) {\n\t\t\td = 1 + dfs(root->left);\n\t\t\td = max(d, 1 + dfs(root->right)); // in max, flow is from right to left.\n\t\t}\n\t\telse d = 0;\n\t\tm[d].push_back(root->data);\n\t\treturn d;\n\t}\n\tvector<vector<int>> findLeaves(TreeNode * root) {\n\t\tvector<vector<int>> ans;\n\t\tm.clear();\n\t\tdfs(root);\n\t\tfor (auto v : m)ans.push_back(v.second);\n\t\treturn ans;\n\t}\n};\n\n// Decodes your encoded data to tree.\nTreeNode *deserialize(string data)\n{\n\tif (data.size() == 0)\n\t\treturn nullptr;\n\tvector<string> dat;\n\tstring t;\n\tfor (auto c : data)\n\t{\n\t\tif (c == ',')\n\t\t{\n\t\t\tdat.push_back(t);\n\t\t\tt.clear();\n\t\t}\n\t\telse\n\t\t\tt.push_back(c);\n\t}\n\tdat.push_back(t);\n\tint i = 0;\n\tqueue<TreeNode *> q;\n\tTreeNode *root = new TreeNode(stoll(dat[0]));\n\tq.push(root);\n\tauto cur = root;\n\ti++;\n\twhile (!q.empty())\n\t{\n\t\tauto x = q.front();\n\t\tq.pop();\n\t\tif (dat[i] != \"x\")\n\t\t{\n\t\t\tx->left = new TreeNode(stoll(dat[i]));\n\t\t\tq.push(x->left);\n\t\t}\n\t\ti++;\n\t\tif (dat[i] != \"x\")\n\t\t{\n\t\t\tx->right = new TreeNode(stoll(dat[i]));\n\t\t\tq.push(x->right);\n\t\t}\n\t\ti++;\n\t}\n\treturn root;\n}\n\nvoid solve() {\n\tstring s;\n\tcin >> s;\n\tSolution sol;\n\tauto root = deserialize(s);\n\tauto ans = sol.findLeaves(root);\n\tfor (auto x : ans) {\n\t\tfor (auto y : x)cout << y << \" \";\n\t\tcout << endl;\n\t}\n\tcout << endl;\n}\nint main() {\n\tios_base :: sync_with_stdio(0);\n\tcin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n\tfreopen(\"input.txt\", \"r\", stdin); \\\n\tfreopen(\"output.txt\", \"w\", stdout);\n#endif\n\tint t = 1;\n\t// int i = 1;\n\tcin >> t;\n\twhile (t--) {\n\t\t// cout << \"Case #\" << i << \": \";\n\t\tsolve();\n\t\t// i++;\n\t}\n\treturn 0;\n}",
+                "language": "C++14"
+            },
+            {
+                "code": "import sys\nfrom collections import deque\n\ndef main():\n    lines = sys.stdin.readlines()\n    idx = 0\n    t = int(lines[idx].strip())\n    idx += 1\n    for _ in range(t):\n        s = lines[idx].strip()\n        idx += 1\n        sol = Solution()\n        root = deserialize(s)\n        ans = sol.findLeaves(root)\n        for x in ans:\n            for y in x:\n                print(y, end=' ')\n            print()\n        print()\n\nclass TreeNode:\n    def __init__(self, x):\n        self.data = x\n        self.left = None\n        self.right = None\n\nclass Solution:\n    def __init__(self):\n        self.m = {}\n\n    def dfs(self, root):\n        if root is None:\n            return 0\n        d = 0\n        if root.left and not root.right:\n            d = 1 + self.dfs(root.left)\n        elif root.right and not root.left:\n            d = 1 + self.dfs(root.right)\n        elif root.left and root.right:\n            d = 1 + self.dfs(root.left)\n            d = max(d, 1 + self.dfs(root.right))  # in max, flow is from right to left.\n        else:\n            d = 0\n        self.m.setdefault(d, []).append(root.data)\n        return d\n\n    def findLeaves(self, root):\n        ans = []\n        self.m.clear()\n        self.dfs(root)\n        for key in sorted(self.m.keys()):\n            ans.append(self.m[key])\n        return ans\n\ndef deserialize(data):\n    if len(data) == 0:\n        return None\n    dat = data.split(',')\n    i = 0\n    root = TreeNode(int(dat[0]))\n    q = deque()\n    q.append(root)\n    i += 1\n    while q:\n        x = q.popleft()\n        if i < len(dat):\n            if dat[i] != 'x':\n                x.left = TreeNode(int(dat[i]))\n                q.append(x.left)\n            i += 1\n        else:\n            break\n        if i < len(dat):\n            if dat[i] != 'x':\n                x.right = TreeNode(int(dat[i]))\n                q.append(x.right)\n            i += 1\n        else:\n            break\n    return root\n\nif __name__ == \"__main__\":\n    main()",
+                "language": "Python3"
+            },
+            {
+                "code": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n    static class TreeNode {\n        int data;\n        TreeNode left;\n        TreeNode right;\n        TreeNode(int x) {\n            data = x;\n            left = null;\n            right = null;\n        }\n    }\n\n    static class Solution {\n        TreeMap<Integer, ArrayList<Integer>> m = new TreeMap<>();\n\n        int dfs(TreeNode root) {\n            if (root == null) return 0;\n            int d = 0;\n            if (root.left != null && root.right == null)\n                d = 1 + dfs(root.left);\n            else if (root.right != null && root.left == null)\n                d = 1 + dfs(root.right);\n            else if (root.left != null && root.right != null) {\n                d = 1 + dfs(root.left);\n                d = Math.max(d, 1 + dfs(root.right)); // in max, flow is from right to left.\n            } else\n                d = 0;\n            m.computeIfAbsent(d, k -> new ArrayList<>()).add(root.data);\n            return d;\n        }\n\n        ArrayList<ArrayList<Integer>> findLeaves(TreeNode root) {\n            ArrayList<ArrayList<Integer>> ans = new ArrayList<>();\n            m.clear();\n            dfs(root);\n            for (Map.Entry<Integer, ArrayList<Integer>> entry : m.entrySet()) {\n                ans.add(entry.getValue());\n            }\n            return ans;\n        }\n\n        // Decodes your encoded data to tree.\n        TreeNode deserialize(String data) {\n            if (data.length() == 0)\n                return null;\n            String[] dat = data.split(\",\");\n            int i = 0;\n            TreeNode root = new TreeNode(Integer.parseInt(dat[0]));\n            Queue<TreeNode> q = new LinkedList<>();\n            q.offer(root);\n            i++;\n            while (!q.isEmpty()) {\n                TreeNode x = q.poll();\n                if (i < dat.length && !dat[i].equals(\"x\")) {\n                    x.left = new TreeNode(Integer.parseInt(dat[i]));\n                    q.offer(x.left);\n                }\n                i++;\n                if (i < dat.length && !dat[i].equals(\"x\")) {\n                    x.right = new TreeNode(Integer.parseInt(dat[i]));\n                    q.offer(x.right);\n                }\n                i++;\n            }\n            return root;\n        }\n    }\n\n    public static void solve(BufferedReader br, PrintWriter out) throws IOException {\n        String s = br.readLine();\n        Solution sol = new Solution();\n        TreeNode root = sol.deserialize(s);\n        ArrayList<ArrayList<Integer>> ans = sol.findLeaves(root);\n        for (ArrayList<Integer> x : ans) {\n            for (int y : x) {\n                out.print(y + \" \");\n            }\n            out.println();\n        }\n        out.println();\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        int t = Integer.parseInt(br.readLine());\n        while (t-- > 0) {\n            solve(br, out);\n        }\n        out.flush();\n        out.close();\n    }\n}",
+                "language": "Java"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:16:29.835154+00:00"
+        },
+        "hints": {
+            "hint1": "Consider assigning a level or order to each node, representing when it will become a leaf during the removal process.",
+            "hint2": "Perform a post-order traversal to calculate the height or depth of each node from the bottom, grouping nodes by their height.",
+            "solution_approach": "\nThe problem can be solved using a Depth First Search (DFS) traversal.\n\n- For each node, calculate its \"height\" defined as the maximum of the heights of its children plus one.\n- Leaf nodes have a height of 0.\n- The nodes that are removed in the same iteration will have the same height.\n- Use a map or array to group nodes by their heights.\n- Start from the leaves (height 0) and collect nodes at each height.\n\n**Steps:**\n\n1. Perform a DFS traversal starting from the root.\n2. For each node:\n   - If the node is `null`, return `-1`.\n   - Recursively find the heights of the left and right subtrees.\n   - The current node's height is `max(leftHeight, rightHeight) + 1`.\n   - Add the node's value to the list corresponding to its height.\n3. After traversal, collect the lists of nodes at each height in order.\n\n**Time Complexity:**\n\n- Each node is visited once.\n- Time complexity is $O(n)$ where $n$ is the number of nodes.\n\n**Space Complexity:**\n\n- $O(n)$ for the map or list holding the nodes at each height.\n"
+        },
+        "id": 1049,
+        "input_format": "The first line contains one integer $T$ \u2014 the number of test cases.\nFor each test case:\n- The first line contains the level order traversal of the tree, where `'x'` denotes a `null` node.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "**Test Case 1:**\nGiven binary tree:\n    1\n   / \\\\\n  2   3\n / \\     \n4   5    \nFirst removal: leaf nodes are 4, 5, 3.\nSecond removal: leaf node is 2.\nThird removal: leaf node is 1.\n**Test Case 2:**\nGiven binary tree:\n    1\n   / \\\\\n  2   3\n /\n4 \nFirst removal: leaf nodes are 4, 3.\nSecond removal: leaf node is 2.\nThird removal: leaf node is 1.",
+        "output_format": "For each test case, output the leaf nodes at each level of removal, one per line. Each sequence of removal should be printed in a separate line, with node values separated by space. After each test case, print an empty line.\nThe leaf nodes must be printed in left to right order for each series of removal.",
+        "samples": [
+            {
+                "input": "2\n1,2,3,4,5,x,x,x,x,x,x\n1,2,3,4,x,x,x,x,x\n",
+                "output": "4 5 3 \n2 \n1 \n\n4 3 \n2 \n1 \n\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Recursion",
+            "Binary Tree"
+        ],
+        "template_code": [
+            {
+                "code": "",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 2.0,
+        "title": "Leaves Removal",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

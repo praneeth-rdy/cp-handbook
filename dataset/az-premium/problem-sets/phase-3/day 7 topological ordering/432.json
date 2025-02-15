@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "A game has n levels, connected by m teleporters, and your task is to get from level 1 to level n. The game has been designed so that there are no directed cycles in the underlying graph. In how many ways can you complete the game?",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n </i>\u2264 10<sup>5</sup><br>1 \u2264 <i>m </i>\u2264 2 x 10<sup>5</sup><br>1 \u2264 <i>a</i>, <i>b </i>\u2264 <i>n</i></p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <iostream>\n#include <vector>\n#include <queue>\nusing namespace std;\nint n;\nvector<int> edge[100001];\nvector<int> backedge[100001];\n\nint main(){\n    ios_base::sync_with_stdio(0); cin.tie(0);\n    int m; cin >> n >> m;\n    int in_degree[n+1], dp[n+1];\n    for(int i = 0; i <= n; i++){\n        in_degree[i] = 0;\n        dp[i] = 0;\n    }\n    dp[1] = 1;\n    for(int i = 0; i < m; i++){\n        int a,b; cin >> a >> b;\n        edge[a].push_back(b);\n        backedge[b].push_back(a);\n        in_degree[b]++;\n    }\n    //uses Kahn's algorithm\n    queue<int> q;\n    for(int i = 0; i < n; i++) {\n        if(in_degree[i] == 0) {\n            q.push(i);\n        }\n    }\n\n    while(!q.empty()) {\n        int node = q.front();\n        q.pop();\n        for(int next : edge[node]) {\n            in_degree[next]--;\n            if(in_degree[next] == 0) q.push(next);\n        }\n\n        for(int prev : backedge[node]) {\n            dp[node] = (dp[node] + dp[prev]) % 1000000007;\n        }\n    }\n    cout << dp[n] << endl;\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:16:42.764853+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Topological Sorting.</p>",
+            "hint2": "<p>Now think about each node as a dp state, and try to find the transition.</p>",
+            "solution_approach": "<p>One useful property of directed acyclic graphs is, as the name suggests, that no cycles exist. If we consider each node in the graph as a state, we can perform dynamic programming on the graph if we process the states in an order that guarantees for every edge u \u2192 v that u is processed before v. Fortunately, this is the exact definition of a topological sort!</p><p>Let dp[v] denote the number of paths reaching v. We can see, dp[v]= sum of all dp[u], s.t. u \u2192 v edge exists.<br>With an exception of dp[1], or the starting node, having a value of 1. We process the nodes topologically so dp[u] will already have been computed before dp[v].</p>"
+        },
+        "id": 432,
+        "input_format": "The first input line has two integers n and m: the number of levels and teleporters. The levels are numbered 1, 2, \u2026, n.\nAfter this, there are m lines describing the teleporters. Each line has two integers a and b: there is a teleporter from level a to level b.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print one integer: the number of ways you can complete the game. Since the result may be large, print it modulo 10<sup>9</sup>+7.</p>",
+        "samples": [
+            {
+                "input": "4 5\n1 2\n2 4\n1 3\n3 4\n1 4",
+                "output": "3"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Dynamic Programming",
+            "Topological Ordering"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Complete the Game",
+        "video_editorial_id": 8204
+    },
+    "details": "Problem Details"
+}
