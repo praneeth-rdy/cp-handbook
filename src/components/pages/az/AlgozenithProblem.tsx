@@ -10,6 +10,7 @@ import { Copy, Clock, Database, Code, Info } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import rehypeRaw from 'rehype-raw';
 import 'katex/dist/katex.min.css';
 import { motion } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -163,7 +164,7 @@ export default function AlgozenithProblemPage() {
                 <CardContent className="prose prose-zinc dark:prose-invert max-w-none pt-6">
                   <ReactMarkdown 
                     remarkPlugins={[remarkMath]}
-                    rehypePlugins={[rehypeKatex]}
+                    rehypePlugins={[rehypeRaw, rehypeKatex]}
                   >
                     {problemData.body}
                   </ReactMarkdown>
@@ -178,7 +179,7 @@ export default function AlgozenithProblemPage() {
                 <CardContent className="prose prose-zinc dark:prose-invert max-w-none pt-6">
                   <ReactMarkdown
                     remarkPlugins={[remarkMath]}
-                    rehypePlugins={[rehypeKatex]}
+                    rehypePlugins={[rehypeRaw, rehypeKatex]}
                   >
                     {problemData.inputFormat}
                   </ReactMarkdown>
@@ -193,7 +194,7 @@ export default function AlgozenithProblemPage() {
                 <CardContent className="prose prose-zinc dark:prose-invert max-w-none pt-6">
                   <ReactMarkdown
                     remarkPlugins={[remarkMath]}
-                    rehypePlugins={[rehypeKatex]}
+                    rehypePlugins={[rehypeRaw, rehypeKatex]}
                   >
                     {problemData.outputFormat}
                   </ReactMarkdown>
@@ -208,7 +209,7 @@ export default function AlgozenithProblemPage() {
                 <CardContent className="prose prose-zinc dark:prose-invert max-w-none pt-6">
                   <ReactMarkdown
                     remarkPlugins={[remarkMath]}
-                    rehypePlugins={[rehypeKatex]}
+                    rehypePlugins={[rehypeRaw, rehypeKatex]}
                   >
                     {problemData.constraints}
                   </ReactMarkdown>
@@ -280,7 +281,7 @@ export default function AlgozenithProblemPage() {
                   <CardContent className="prose prose-zinc dark:prose-invert max-w-none pt-6">
                     <ReactMarkdown
                       remarkPlugins={[remarkMath]}
-                      rehypePlugins={[rehypeKatex]}
+                      rehypePlugins={[rehypeRaw, rehypeKatex]}
                     >
                       {problemData.note}
                     </ReactMarkdown>
