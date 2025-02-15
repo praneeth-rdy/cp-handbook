@@ -1,6 +1,6 @@
 /**
  * Converts snake_case JSON problem data to camelCase format
- * @param jsonData Raw JSON data from Algozenith problem file
+ * @param jsonData Raw JSON data from AZ problem file
  * @returns Parsed problem data with camelCase properties
  */
 export function parseProblemData(jsonData: any) {

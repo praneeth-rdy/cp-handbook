@@ -19,7 +19,7 @@ const parseProblemsData = (data: any[]): Problem[] => {
   }))
 }
 
-function AlgozenithModule() {
+export default function Module() {
   const { chapter, module } = useParams()
   const [problems, setProblems] = useState<Problem[]>([])
   const [loading, setLoading] = useState(true)
@@ -107,5 +107,3 @@ function AlgozenithModule() {
     </motion.div>
   )
 }
-
-export default AlgozenithModule

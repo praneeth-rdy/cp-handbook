@@ -54,7 +54,7 @@ interface ProblemData {
   videoEditorialId: string | null;
 }
 
-export default function AlgozenithProblemPage() {
+export default function Problem() {
   const [problemData, setProblemData] = useState<ProblemData | null>(null);
 
   const { chapter, module, problem } = useParams();

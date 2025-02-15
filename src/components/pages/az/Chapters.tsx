@@ -5,7 +5,7 @@ import { parseChaptersData, parseModulesData } from '@/utils/parsing-utils'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { motion, AnimatePresence } from "framer-motion"
 import { Link } from 'react-router'
-import { Clock, FileText, BookOpen, ArrowRight } from 'lucide-react'
+import { Clock, BookOpen, ArrowRight } from 'lucide-react'
 
 interface Chapter {
   id: number
@@ -109,7 +109,7 @@ const ModulesList = ({ chapter }: { chapter: Chapter }) => {
   )
 }
 
-export default function AlgozenithChapters() {
+export default function Chapters() {
   const [chapters, setChapters] = useState<Chapter[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -155,7 +155,7 @@ export default function AlgozenithChapters() {
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl font-bold mb-12 bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 dark:from-violet-400 dark:via-indigo-400 dark:to-blue-400 bg-clip-text text-transparent"
         >
-          Algozenith Learning Path
+          AZ Problem Sets
         </motion.h1>
 
         <Tabs defaultValue={chapters[0]?.id.toString()} className="w-full">
