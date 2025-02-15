@@ -34,3 +34,24 @@ export function parseProblemData(jsonData: any) {
     videoEditorialId: jsonData.video_editorial_id
   };
 }
+
+export function parseChaptersData(data: any) {
+  return data.map((chapter: any) => ({
+      id: chapter.id,
+      name: chapter.name,
+      code: chapter.code,
+      description: chapter.description,
+      timeInMinutes: chapter.time_in_minutes
+    }))
+}
+
+export function parseModulesData(data: any) {
+  return data.map((module: any) => ({
+    id: module.id,
+    name: module.name,
+    description: module.description,
+    resourcesCount: module.resources_count,
+    timeInMinutes: module.time_in_minutes,
+    type: module.type
+  }))
+}

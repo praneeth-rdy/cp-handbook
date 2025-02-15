@@ -5,42 +5,49 @@
             "description": null,
             "id": 503,
             "name": "Phase 0",
+            "code": "phase-0",
             "time_in_minutes": 2497
         },
         {
             "description": null,
             "id": 510,
             "name": "Phase 1",
+            "code": "phase-1",
             "time_in_minutes": 5253
         },
         {
             "description": null,
             "id": 512,
             "name": "Phase 2",
+            "code": "phase-2",
             "time_in_minutes": 4312
         },
         {
             "description": null,
             "id": 522,
             "name": "Phase 3",
+            "code": "phase-3",
             "time_in_minutes": 5792
         },
         {
             "description": null,
             "id": 559,
             "name": "Phase 4",
+            "code": "phase-4",
             "time_in_minutes": 3557
         },
         {
             "description": null,
             "id": 713,
             "name": "Phase 5",
+            "code": "phase-5",
             "time_in_minutes": 5918
         },
         {
             "description": null,
             "id": 714,
             "name": "Phase 6",
+            "code": "phase-6",
             "time_in_minutes": 727
         }
     ],

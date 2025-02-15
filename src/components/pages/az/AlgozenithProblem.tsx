@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import { parseProblemData } from '@/utils/parsing-utils';
 import ReactMarkdown from 'react-markdown';
@@ -6,12 +6,12 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
-import { Copy, ChevronDown, Clock, Database, Code, Info, Sparkles } from 'lucide-react';
+import { Copy, Clock, Database, Code, Info } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getProblemDetails } from '@/services/az-service';
 
