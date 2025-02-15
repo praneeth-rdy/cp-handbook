@@ -1,0 +1,56 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Write a program to solve a Sudoku puzzle by filling the empty cells.</p><p>A sudoku solution must satisfy <strong>all of the following rules</strong>:</p><ol><li>Each of the digits 1-9 must occur exactly once in each row.</li><li>Each of the digits 1-9 must occur exactly once in each column.</li><li>Each of the digits 1-9 must occur exactly once in each of the 9's 3x3 sub-boxes of the grid.</li></ol><p>The <strong>\u201c.\u201d</strong> character indicates empty cells.</p>",
+        "complete_approach": "",
+        "constraints": "<ul><li>9x9 sudoku board, filled with digits 1-9 or having <strong>\u201c.\u201d</strong> as empty cells.</li><li>It is <strong>guaranteed</strong> that the input board has only one solution.</li></ul>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nvector<vector<int>> grid;\nbool check(int i, int j, int val) {\n    for (int k = 0; k < 9; k++) { // checking row i and column j.\n        if (grid[i][k] == val || grid[k][j] == val)return false;\n    }\n    int l = (i / 3) * 3, r = (j / 3) * 3;\n    for (int a = l; a < l + 3; a++) {  // checking the 3*3 square having (i,j).\n        for (int b = r; b < r + 3; b++)if (grid[a][b] == val)return false;\n    }\n    return true;\n}\n\nvoid sudoku_solver(int i, int j) {\n    if (i == 9) {\n        // output the valid sudoku.\n        for (int i = 0; i < 9; i++) {\n            for (int j = 0; j < 9; j++)cout << grid[i][j];\n            cout << endl;\n        }\n        exit(0);\n        return;\n    }\n\n    if (grid[i][j] == 0) {\n        for (int val = 1; val <= 9; val++) {\n            if (check(i, j, val)) {\n                grid[i][j] = val;\n                if (j == 8)sudoku_solver(i + 1, 0);\n                else sudoku_solver(i, j + 1);\n                grid[i][j] = 0; // backtrack.\n            }\n        }\n    }\n    else {\n        if (j == 8)sudoku_solver(i + 1, 0);\n        else sudoku_solver(i, j + 1);\n    }\n}\nvoid solve() {\n    grid.assign(9, vector<int>(9, 0));\n    for (int i = 0; i < 9; i++) {\n        string s;\n        cin >> s;\n        for (int j = 0; j < 9; j++) {\n            if (s[j] == '.')grid[i][j] = 0;\n            else grid[i][j] = s[j] - '0';\n        }\n    }\n    sudoku_solver(0, 0);\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n    int t = 1;\n    // int i = 1;\n    // cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:28:17.844751+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 863,
+        "input_format": "<p>Given 9x9 sudoku board, filled with digits <strong>1-9</strong> or having <strong>\u201c.\u201d</strong> as empty cells.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print the unique valid filled 9x9 Sudoku.</p>",
+        "samples": [
+            {
+                "input": "9....3...\n..4..6.23\n.28..519.\n....52...\n..3...4..\n.5....3..\n.4.1.9..5\n....642..\n.69......",
+                "output": "976213548\n514986723\n328745196\n481352967\n293678451\n657491382\n842139675\n735864219\n169527834"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Recursion",
+            "Backtracking"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Sudoku Solver",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,58 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given the <i>root</i> of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).</p><p>Complete the function:</p><p><i>vector&lt;vector&lt;int&gt;&gt; getLevelorderTraversal(Node* root)&nbsp;</i></p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n\nvector<vector<int>> getLevelorderTraversal(Node* root) {\n   vector<vector<int>> ans;\n   if(!root) return ans;\n   queue<Node*> q;\n   q.push(root);\n   while(!q.empty()){\n       int sz = q.size();\n       vector<int> v;\n       while(sz--){\n           Node * temp = q.front();\n           v.push_back(temp->val);\n           q.pop();\n           if(temp->left) q.push(temp->left);\n           if(temp->right) q.push(temp->right);\n       }\n       ans.push_back(v);\n   }\n   return ans;\n}\n\nNode* getBinaryTree(vector<int> &num, int*ind) {\n    if(num[*ind] == -1)\n        return NULL;\n    Node* node = new Node(num[*ind]);\n    (*ind)++;\n    node->left = getBinaryTree(num,ind);\n    (*ind)++;\n    node->right = getBinaryTree(num,ind);\n    return node;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n;\n        cin>>n;\n        assert(n<=1000000);\n        vector<int>arr(n);\n        for(int i=0;i<n;i++)\n            cin>>arr[i];\n        int ind = 0;\n        Node* tree = getBinaryTree(arr,&ind);\n        vector<vector<int>> ans = getLevelorderTraversal(tree);\n        for(auto u:ans){\n            for(auto v:u){\n                cout<<v<<\" \";\n            }\n            cout<<\"\\n\";\n        }\n        cout<<\"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Solution Approach is missing"
+            ],
+            "last_updated": "2024-06-22T02:15:35.152021+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Try to think in terms of BFS. BFS also traverses the nodes levelwise. Here first we have to take the left node, so push the left node first for any level.</p>",
+            "hint2": "<p>Push the root.</p><p>Start doing dfs, take the size of the queue which currently contains all the nodes present in the current level. For all these nodes push the left child first, then the right child.</p>",
+            "solution_approach": ""
+        },
+        "id": 576,
+        "input_format": "<p>The first line contains an integer T, (1 \u2264 T \u2264 10^5), the number of test cases.</p><p>The first line of each test case contains an integer N, &nbsp;the length of the array representing the serialized representation of a tree.</p><p>The next line contains N-space-separated integers.&nbsp;</p><p>The input is given as a serialized representation of a tree.</p><p>The following function parses the input:</p><p><i>Node* getBinaryTree(vector&lt;int&gt; &amp;num, int*ind)</i></p><p><i>Sum of N across all test cases \u2264 10^7.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<pre><code class=\"language-plaintext\">Test case 2- \n 5222\n    \\\n   3819\n    /\n  6801\n\t\nTest case 3 - \n   8901\n   /\n  7891\n   /   \\\n  5407 1720</code></pre>",
+        "output_format": "<p>Return the level order traversal of the tree.</p>",
+        "samples": [
+            {
+                "input": "3\n3\n6004 -1 -1 \n7\n5222 -1 3819 6801 -1 -1 -1 \n9\n8901 7891 5407 -1 -1 1720 -1 -1 -1 ",
+                "output": "6004 \n\n5222 \n3819 \n6801 \n\n8901 \n7891 \n5407 1720 "
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Frequently Asked Questions",
+            "Binary Tree"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n\n</fix>\nvector<vector<int>> getLevelorderTraversal(Node* root) {\n  // Complete the function.\n}\n\n<fix>\nNode* getBinaryTree(vector<int> &num, int*ind) {\n    if(num[*ind] == -1)\n        return NULL;\n    Node* node = new Node(num[*ind]);\n    (*ind)++;\n    node->left = getBinaryTree(num,ind);\n    (*ind)++;\n    node->right = getBinaryTree(num,ind);\n    return node;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n;\n        cin>>n;\n        assert(n<=1000000);\n        vector<int>arr(n);\n        for(int i=0;i<n;i++)\n            cin>>arr[i];\n        int ind = 0;\n        Node* tree = getBinaryTree(arr,&ind);\n        vector<vector<int>> ans = getLevelorderTraversal(tree);\n        for(auto u:ans){\n            for(auto v:u){\n                cout<<v<<\" \";\n            }\n            cout<<\"\\n\";\n        }\n        cout<<\"\\n\";\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Level Order Traversal",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

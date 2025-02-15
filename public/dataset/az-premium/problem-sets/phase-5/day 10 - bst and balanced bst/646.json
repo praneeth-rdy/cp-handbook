@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "**Convert a Binary Tree into its Mirror Tree.**\n\nMirror of a Tree: Mirror of a Binary Tree T is another Binary Tree M(T) with left and right children of all non-leaf nodes interchanged.",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "Editorial Code data is currently empty.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:14:14.500990+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 646,
+        "input_format": "<p>The first line contains an integer T, (1 \u2264 T \u2264 10^5), the number of test cases.</p><p>The first line of each test case contains an integer N, &nbsp;the length of the array representing the serialized representation of a tree.</p><p>The next line contains N-space-separated integers.&nbsp;</p><p>The input is given as a serialized representation of a tree.</p><p>The following function parses the input:</p><p><i>Node* getBinaryTree(vector&lt;int&gt; &amp;num, int*ind)</i></p><p><i>Sum of N across all test cases \u2264 10^7.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Return the mirror tree.</p>",
+        "samples": [
+            {
+                "input": "3\n3\n2067 -1 -1 \n13\n8365 1448 5240 -1 9909 -1 -1 5843 -1 -1 5682 -1 -1 \n15\n7841 883 -1 -1 4929 6791 -1 -1 9159 2122 -1 -1 4179 -1 -1 ",
+                "output": "2067 -1 -1 \n8365 5682 -1 -1 1448 5843 -1 -1 5240 9909 -1 -1 -1 \n7841 4929 9159 4179 -1 -1 2122 -1 -1 6791 -1 -1 883 -1 -1 "
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Frequently Asked Questions",
+            "Binary Tree",
+            "company-AlgoZenith",
+            "company-Intuit"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n</fix>\n\nNode* getMirrorTree(Node* root) {\n    //Complete the function\n}\n<fix>\nNode* getBinaryTree(vector<int> &num, int*ind) {\n    if(num[*ind] == -1)\n        return NULL;\n    Node* node = new Node(num[*ind]);\n    (*ind)++;\n    node->left = getBinaryTree(num,ind);\n    (*ind)++;\n    node->right = getBinaryTree(num,ind);\n    return node;\n}\n\nvoid generateArray(Node* root, vector<int>&ans){\n    if(root==NULL){\n        ans.push_back(-1);\n        return;\n      }\n    ans.push_back(root->val);\n    generateArray(root->left,ans);\n    generateArray(root->right,ans);\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n;\n        cin>>n;\n        assert(n<=1000000);\n        vector<int>arr(n);\n        for(int i=0;i<n;i++)\n            cin>>arr[i];\n        int ind = 0;\n        Node* tree = getBinaryTree(arr,&ind);\n        tree = getMirrorTree(tree);\n        vector<int>ans;\n        generateArray(tree,ans);\n        for(auto v:ans)cout<<v<<\" \";\n        cout<<\"\\n\";\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 3.0,
+        "title": "Mirror Tree",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

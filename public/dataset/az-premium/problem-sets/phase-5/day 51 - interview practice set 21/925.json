@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "*Gerald of Rivia* also known as *The Witcher* wants to reach the end of the dungeon. The dungeon consists of $n \\times m$ rooms laid out in a $2D$ grid. *Gerald* was initially positioned in the top-left room and must fight his way through, to the bottom-right room of the dungeon, where the exit is located.\n\n*Gerald* has an initial health point represented by a positive integer. If at any point his health point drops to $0$ or below, he dies immediately.\n\nSome of the rooms are guarded by demons (represented by negative integers), so *Gerald* loses health upon entering these rooms; other rooms are either empty (represented as $0$) or contain magic orbs that increase Gerald's health (represented by positive integers).\n\nTo reach the exit as quickly as possible, Gerald decides to move only rightward or downward in each step.\n\nReturn Gerald's minimum initial health so that he can exit the dungeon.\n\nNote that any room can contain threats or power-ups, even the first room Gerald enters and the bottom-right room where the exit is located.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 100$\n$1 \\leq n \\leq 200$\n$1 \\leq m \\leq 200$\n$-1000 \\leq dungeon[i][j] \\leq 1000$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\n\nvoid solve() {\n    int n, m;\n    cin >> n >> m;\n    vector<vector<int>> dungeon(n, vector<int>(m)), dp(n + 1, vector<int>(m + 1, 1e9));\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < m; j++)cin >> dungeon[i][j];\n    }\n    for (int i = n - 1; i >= 0; i--) {\n        for (int j = m - 1; j >= 0; j--) {\n            if (i == n - 1 && j == m - 1)dp[i][j] = max(1, 1 - dungeon[i][j]);\n            else dp[i][j] = max(1, min(dp[i + 1][j], dp[i][j + 1]) - dungeon[i][j]);\n        }\n    }\n    cout << dp[0][0] << endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:27:41.504539+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Let $dp[i][j]$ be the minimum $hp$ we need to reach the exit if we start from point $(i,j)$. Let us consider the following example:\n\n-2\t-3\t+3\n-5\t-10\t+1\n+10\t+30\t-5\n\nLet us add the bottom dummy row and right dummy column to handle border cases more easily. We fill it with infinities, except two ones - neighbors of the exit.\n\nHow we can evaluate $dp[i][j]$? We need to look at two cells: $dp[i+1][j]$ and $dp[i][j+1]$ and evaluate two possible candidates: $dp[i+1][j]-dungeon[i][j]$ and $dp[i][j+1]-dungeon[i][j]$.\n\nIf at least one of these two numbers is negative, it means that we can survive just with $1$ $hp$: (look at number +30 in our table for example)\nIf both these numbers are positive, we need to take the minimum of them, see for example number $-10$ in our table: to survive we need either $5 - -10 = 15$ if we go right and $1 - -10 = 11$ if we go down, of course, we choose $11$.\nThis conditions can be written in one a bit ugly line: $dp[i][j] = max(min(dp[i+1][j],dp[i][j+1])-dungeon[i][j],1)$.\nFinally, why do we put $1$ to two neighbors of the exit? To make this formula valid for exit cell: if we have a negative number like $-5$ in this cell, we need $6$ $hp$ to survive, if we have a non-negative number in this cell, we need $1$ $hp$ to survive.\n\n7\t5\t2\tinf\n6\t11\t5\tinf\n1\t1\t6\t1\ninf\tinf\t1\t#\n\n**Complexity**: both time and space is $O(m*n)$.\n\n##### Binary Search solution :\nBinary search to choose a $initHealth$ of the Gerald which can survive and reach the bottom left cell.\nMinimum value $left = 1$, maximum value $right = (m+n) * 1000 + 1$ (because in the worst case, value of all cells in the grid is $-1000$).\n\n```\nmid = (left + right) / 2.\nIf isGood(mid) then:\nans = mid\nright = mid - 1 // Minimize init health as much as possible\nElse:\nleft = mid + 1 // Increasing init health\n```\nTo check isGood(initHealth)\n- Gerald has an initial health point in cell $(0, 0)$.\n- Let $dp[r][c]$ denote the maximum health we can get and we can reach from the cell $(0, 0)$ to cell $(r, c)$.\n- Finally, if we found a path which $dp[m-1][n-1] > 0$ means the knight can survive successfully which this initHealth.\n\nTime: $O(M * N * logR)$, where $M <= 200$ is the number of rows, $N <= 200$ is the number of columns, $R = 1000 * (m+n)$ is the binary search range.\nSpace: $O(M * N)$"
+        },
+        "id": 925,
+        "input_format": "First-line contains $T$ - the number of test cases.\nFirst-line of each test case contains $2$ integers $n$ and $m$.\nEach of the next $n$ lines of each test case contains $m$ integers, denoting the values of $n \\times m$ dungeon's rooms.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For test 1: The initial health of Gerald must be at least 7 if he follows the optimal path: Right-> Right -> Down -> Down.",
+        "output_format": "For each test case, output Gerald's minimum initial health so that he can exit the dungeon.",
+        "samples": [
+            {
+                "input": "2\n3 3\n-2 -3 3\n-5 -10 1\n10 30 -5\n1 1\n1\n",
+                "output": "7\n1\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-AlgoZenith",
+            "company-NPCI"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "The Witcher II",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

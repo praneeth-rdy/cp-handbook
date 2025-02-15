@@ -1,0 +1,63 @@
+{
+    "code": 200,
+    "data": {
+        "body": "For a given integer $N$, print the pattern as shown in the examples below.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10$\n$1 \\leq N \\leq 10^2$",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n  ios_base::sync_with_stdio(false);\n  cin.tie(NULL);\n\n  // including all the test cases\n  int t;\n  cin >> t;\n\n  while (t--) {\n    int n, i, j;\n    cin >> n;\n\n    // iterating over every row\n    for (i = 1; i <= n; i++) {\n      // preceding blank spaces\n      int n_blanks = n - i;\n      for (j = 1; j <= n_blanks; j++) {\n        cout << \"  \";\n      }\n\n      // printing the values in ascending order\n      int max_val = i;\n      for (j = 1; j <= max_val; j++) {\n        cout << j << \" \";\n      }\n\n      // printing the values in descending order\n      for (j = max_val - 1; j >= 1; j--) {\n        cout << j << \" \";\n      }\n\n      // succeeding blank spaces\n      for (j = 1; j <= n_blanks; j++) {\n        cout << \"  \";\n      }\n\n      // moving printing operation to the next line\n      cout << \"\\n\";\n    }\n\n    // spacing between different test cases\n    cout << \"\\n\";\n  }\n\n  return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        // including all the test cases\n        int t = Integer.parseInt(br.readLine());\n\n        while (t-- > 0) {\n            int n;\n            n = Integer.parseInt(br.readLine());\n\n            // iterating over every row\n            for (int i = 1; i <= n; i++) {\n                // preceding blank spaces\n                int n_blanks = n - i;\n                for (int j = 1; j <= n_blanks; j++) {\n                    out.print(\"  \");\n                }\n\n                // printing the values in ascending order\n                int max_val = i;\n                for (int j = 1; j <= max_val; j++) {\n                    out.print(j + \" \");\n                }\n\n                // printing the values in descending order\n                for (int j = max_val - 1; j >= 1; j--) {\n                    out.print(j + \" \");\n                }\n\n                // succeeding blank spaces\n                for (int j = 1; j <= n_blanks; j++) {\n                    out.print(\"  \");\n                }\n\n                // moving printing operation to the next line\n                out.println();\n            }\n\n            // spacing between different test cases\n            out.println();\n        }\n\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    # including all the test cases\n    t = int(data[idx])\n    idx += 1\n    for _ in range(t):\n        n = int(data[idx])\n        idx += 1\n\n        # iterating over every row\n        for i in range(1, n+1):\n            # preceding blank spaces\n            n_blanks = n - i\n            for j in range(1, n_blanks+1):\n                stdout.write(\"  \")\n\n            # printing the values in ascending order\n            max_val = i\n            for j in range(1, max_val+1):\n                stdout.write(str(j) + \" \")\n\n            # printing the values in descending order\n            for j in range(max_val -1, 0, -1):\n                stdout.write(str(j) + \" \")\n\n            # succeeding blank spaces\n            for j in range(1, n_blanks+1):\n                stdout.write(\"  \")\n\n            # moving printing operation to the next line\n            stdout.write(\"\\n\")\n\n        # spacing between different test cases\n        stdout.write(\"\\n\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:30:50.031069+00:00"
+        },
+        "hints": {
+            "hint1": "Observe how each row forms a palindrome with numbers increasing up to the row number and then decreasing back to $1$.",
+            "hint2": "Use loops to first print spaces, then increasing numbers from $1$ to the row number, followed by decreasing numbers back to $1$.",
+            "solution_approach": "We can generate the pattern by iterating over each row from $1$ to $N$. In each row:\n\nFirst, print $(N - \\text{row number})$ spaces to align the pattern.\n\nThen, print numbers from $1$ to the current row number, separated by spaces.\n\nNext, print numbers from $(\\text{row number} - 1)$ down to $1$, creating the decreasing sequence.\n\nEach number is followed by a space to maintain consistent spacing.\n\nAfter printing all numbers in the row, move to the next line.\n\nAfter all rows are printed for a test case, print an empty line before processing the next test case.\n\n**Time Complexity per test case**: $O(N^2)$\n\n**Space Complexity per test case**: $O(1)$"
+        },
+        "id": 1094,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\nThe first line of each test case contains the integer $N$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "**First Test Case ($N=3$):**\n    1     \n  1 2 1   \n1 2 3 2 1 \n- Row 1: Two spaces, then '1'\n- Row 2: One space, then '1 2 1'\n- Row 3: No spaces, then '1 2 3 2 1'\n**Second Test Case ($N=4$):**\n      1       \n    1 2 1     \n  1 2 3 2 1   \n1 2 3 4 3 2 1",
+        "output_format": "For each test case, print the desired pattern. Add an empty line after each test case.",
+        "samples": [
+            {
+                "input": "2\n3\n4",
+                "output": "1     \n  1 2 1   \n1 2 3 2 1 \n\n      1       \n    1 2 1     \n  1 2 3 2 1   \n1 2 3 4 3 2 1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Another Pyramid Pattern",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

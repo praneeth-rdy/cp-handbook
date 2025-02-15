@@ -1,0 +1,63 @@
+{
+    "code": 200,
+    "data": {
+        "body": "There is a town divided into a grid of cells with $H$ rows and $W$ columns. The cell at the $i^{th}$ row from the top and $j^{th}$ column from the left is a passable space if $S_{i,j}$ is **'.'** and a block if $S_{i,j}$ is **'#'**.\n\nSaitama will go from his house to a fish market. His house is in the cell at the top-left corner, and the fish market is in the cell at the bottom-right corner.\n\nSaitama can move one cell *up, down, left, or right* to a passable cell. He cannot leave the town. He cannot enter a block, either. However, his physical strength allows him to destroy all blocks in a square region with $2\u00d72$ cells of his choice with **one punch**, making these cells passable.\n\nFind the minimum number of punches needed for Saitama to reach the fish market.",
+        "complete_approach": "",
+        "constraints": "$ 2 \u2264 H , W \u2264 1000$\n$H$ and $W$ are integers.\n$S_{i,j}$ is '.' or '#'.\n$S_{1,1}$ and $S_{H,W}$ are **'.'**",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\r\nusing namespace std;\r\n\r\n#define ll int64_t\r\n#define endl '\\n'\r\n\r\nint n, m;\r\nint dx[4] = {0, 0, -1, 1};\r\nint dy[4] = { -1, 1, 0, 0};\r\nvoid solve() {\r\n\tcin >> n >> m;\r\n\tchar grid[n][m];\r\n\tfor (int i = 0; i < n; i++) {\r\n\t\tfor (int j = 0; j < m; j++)cin >> grid[i][j];\r\n\t}\r\n\tvector<vector<int>> dist(n + 1, vector<int>(m + 1, 1e9));\r\n\tdeque<array<int, 2>> dq;\r\n\tdq.push_front({0, 0});\r\n\tdist[0][0] = 0;\r\n\twhile (!dq.empty()) {\r\n\t\tauto v = dq.front();\r\n\t\tdq.pop_front();\r\n\t\tfor (int i = 0; i < 4; i++) {\r\n\t\t\tint x = dx[i] + v[0], y = dy[i] + v[1];\r\n\t\t\tif (x >= 0 && x < n && y >= 0 && y < m) {\r\n\t\t\t\tif (grid[x][y] == '.') {\r\n\t\t\t\t\tif (dist[x][y] > dist[v[0]][v[1]]) {\r\n\t\t\t\t\t\tdist[x][y] = dist[v[0]][v[1]];\r\n\t\t\t\t\t\tdq.push_front({x, y});\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t\telse {\r\n\t\t\t\t\tfor (int p = x - 1; p <= x + 1; p++) {\r\n\t\t\t\t\t\tfor (int q = y - 1; q <= y + 1; q++) {\r\n\t\t\t\t\t\t\tif (p >= 0 && p < n && q >= 0 && q < m) {\r\n\t\t\t\t\t\t\t\tif (dist[p][q] > dist[v[0]][v[1]] + 1) {\r\n\t\t\t\t\t\t\t\t\tdist[p][q] = dist[v[0]][v[1]] + 1;\r\n\t\t\t\t\t\t\t\t\tdq.push_back({p, q});\r\n\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n\tcout << dist[n - 1][m - 1];\r\n}\r\nint main() {\r\n\tios_base :: sync_with_stdio(0);\r\n\tcin.tie(nullptr); cout.tie(nullptr);\r\n\r\n#ifdef Mastermind_\r\n\tfreopen(\"input.txt\", \"r\", stdin); \\\r\n\tfreopen(\"output.txt\", \"w\", stdout);\r\n#endif\r\n\tint t = 1;\r\n\t// int i = 1;\r\n\t// cin >> t;\r\n\twhile (t--) {\r\n\t\t// cout << \"Case #\" << i << \": \";\r\n\t\tsolve();\r\n\t\t// i++;\r\n\t}\r\n\treturn 0;\r\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:13:54.585790+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "This problem can be solved with a **0-1 BFS (Breadth-First Search)**.\n\nAssuming that he does not punch until needed, we can assume that a 2\u00d72 region of destroying blocks is adjacent to the square Saitama is at.\n\nWhen Saitama is in the square labelled T in the diagram below, after a single punch he can move to any square labelled *, regardless of the previous state of the squares.\n```\n.***.\n*****\n**T**\n*****\n.***.\n```\nTherefore, we can assume that a move on foot to an adjacent square costs 0 and moving to any * square after a punch costs 1, and perform a 01-BFS to solve the problem. The computational complexity is $O(HW)$."
+        },
+        "id": 901,
+        "input_format": "Input is given from Standard Input in the following format: \n$H$  $W$ \n$S_{1,1}$ . . . $S_{1,W}$\n:\n:\n$S_{H,1}$ . . . $S_{H,W}$",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In sample 1, He can reach the fish market by, for example, destroying the blocks in the square region with 2\u00d72 cells marked * below.\n```\n..#..\n#.**#\n##**#\n#.#.#\n..#..\n```\nIt is not required that all of the 2\u00d72 cells in the region to punch are blocks.",
+        "output_format": "Print the answer.",
+        "samples": [
+            {
+                "input": "5 5\n..#..\n#.#.#\n##.##\n#.#.#\n..#..\n",
+                "output": "1\n"
+            },
+            {
+                "input": "5 7\n.......\n######.\n.......\n.######\n.......\n",
+                "output": "0\n"
+            },
+            {
+                "input": "8 8\n.#######\n########\n########\n########\n########\n########\n########\n#######.\n",
+                "output": "5\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "0-1 Bfs",
+            "Single Source Shortest Path"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "One Punch Man",
+        "video_editorial_id": 8237
+    },
+    "details": "Problem Details"
+}

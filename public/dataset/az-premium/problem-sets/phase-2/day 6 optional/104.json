@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given <i>N</i> balls and an integer&nbsp;<i>K</i>. The color of each ball is given in an array <i>A</i>. A basket is filled if it contains at least <i>K</i> balls of different colors. Find the maximum number of filled baskets you can get if you optimally put the balls in the baskets.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\ntypedef long long ll;\nconst int N = 100001;\nll n, k;\nll arr[N];\nmap<ll, ll> freq;\nbool check(ll minVal)\n{\n    ll totalUsefulBalls = 0;\n    for (auto v : freq)\n    {\n        totalUsefulBalls += min(v.second, minVal);\n    }\n    return totalUsefulBalls >= k * minVal;\n}\nsigned main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n    ll testcases;\n    cin >> testcases;\n    while (testcases--)\n    {\n        cin >> n >> k;\n        ll sum = 0;\n        for (ll i = 0; i < n; i++)\n        {\n            cin >> arr[i];\n            freq[arr[i]]++;\n        }\n        ll low = 0, high = n;\n        ll ans = low;\n        while (low <= high)\n        {\n            ll mid = (low + high) / 2;\n            if (check(mid))\n                ans = mid, low = mid + 1;\n            else\n                high = mid - 1;\n        }\n        cout << ans << \"\\n\";\n        freq.clear();\n    }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:31:51.988535+00:00"
+        },
+        "hints": {
+            "hint1": "If we can fill $X$ number of baskets with at least $K$ balls of different colors, then the maximum possible baskets would be $\\geq X$. Otherwise, possible baskets would be $< X$. This is a monotonic function and hence we can use binary search in this problem.",
+            "hint2": "The first step in this solution is to use binary search to find the maximum number of filled baskets. We start with $L = 0$ and $R = N/K$, since each basket must have at least K balls. We then calculate the midpoint, $mid = \\dfrac{L+R}{2}$, and check if it is possible to fill mid baskets with at least K distinct colors. To do this, we use a frequency hashmap to count the number of balls of each color. For each color, we cannot use more than mid balls, since we want distinct balls in the baskets. If it is possible to fill mid baskets, then we update our left pointer to mid+1 and continue the binary search on the right half of the array. Otherwise, the maximum number of filled baskets must be less than mid, so we update our right pointer to mid-1 and continue the binary search on the left half of the array. We repeat this process until $L > R$, at which point we return the maximum number of filled baskets.",
+            "solution_approach": "Calculate the sum of min(freq[color],mid).  \n\n**If the $sum \\geq mid \\times K$ then there exists a way to fill \u201cmid\u201d baskets.**\n\nThe goal of the construction step is to find a way to fill the baskets with at least K distinct colors while making sure that no basket has the same color ball. To do this, we can use a 2-D grid of size midK where each row represents a basket, and each column represents a color.\n\nStarting from the first column, we fill each basket with the same color ball until we have used up all of the balls of that color or until we have reached the maximum number of balls allowed in each basket, which is mid. Once we have filled all the baskets with the same color ball for the first column, we move on to the next column and repeat the process.\n\nWe continue this process for all the columns until we have filled each basket with at least K distinct colors. At this point, we have constructed a solution that satisfies the problem constraints, since no basket has the same color ball, and each basket has at least K distinct colors.\n\n\n\n**The time complexity of this algorithm is $O(N \\log_2N)$ per test case due to the binary search step.**"
+        },
+        "id": 104,
+        "input_format": "<p>The first line contains <i>T</i>, the number of test cases (<i>1&lt;=T&lt;=100000</i>).</p><p>The first line contains three space-separated integers <i>N</i>, <i>K</i> where <i>1&lt;=N&lt;=10^5</i>, <i>1&lt;=K&lt;=N</i>.</p><p>Next line contains N space-separated integers (<i>0&lt;=Ai&lt;=1e9</i>).</p><p>Sum of <i>N</i> across all test cases &lt;=10^6.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><strong>1st test case:</strong><br>1st basket -&gt; {1,2,3,4,5}</p><p><strong>2nd test case:</strong><br>1st basket -&gt; {1,2,3}<br>2nd basket -&gt; {4,5}</p><p><strong>3rd test case:</strong><br>1st basket -&gt; {1,2,3}<br>2nd basket -&gt; {1,2,3}&nbsp;</p>",
+        "output_format": "<p>For each test case output the maximum number of filled baskets in a new line.&nbsp;</p>",
+        "samples": [
+            {
+                "input": "3\n5 5\n1 2 3 4 5\n5 2\n1 2 3 4 5\n6 3\n1 2 2 1 3 3",
+                "output": "1\n2\n2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Binary Search",
+            "company-Flipkart"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Color Balls",
+        "video_editorial_id": 8151
+    },
+    "details": "Problem Details"
+}

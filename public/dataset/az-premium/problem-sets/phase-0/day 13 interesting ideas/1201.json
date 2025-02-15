@@ -1,0 +1,78 @@
+{
+    "code": 200,
+    "data": {
+        "body": "",
+        "complete_approach": "",
+        "constraints": "$100 \\leq |S| \\leq 10^4$ where $|S|$ is the length of the string.",
+        "difficulty": 2,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    string S;\n    getline(cin, S);\n    size_t pos = S.find('?');\n    if (pos != string::npos) {\n        string query = S.substr(pos + 1);\n        stringstream ss(query);\n        string token;\n        while (getline(ss, token, '&')) {\n            size_t eq_pos = token.find('=');\n            if (eq_pos != string::npos) {\n                string param = token.substr(0, eq_pos);\n                string value = token.substr(eq_pos + 1);\n                cout << param << \": \" << value << '\\n';\n            }\n        }\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        String S = br.readLine();\n        int pos = S.indexOf('?');\n        if (pos != -1) {\n            String query = S.substring(pos + 1);\n            String[] tokens = query.split(\"&\");\n            for (String token : tokens) {\n                int eq_pos = token.indexOf('=');\n                if (eq_pos != -1) {\n                    String param = token.substring(0, eq_pos);\n                    String value = token.substring(eq_pos + 1);\n                    out.println(param + \": \" + value);\n                }\n            }\n        }\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\n\ndef main():\n    S = sys.stdin.readline().strip()\n    pos = S.find('?')\n    if pos != -1:\n        query = S[pos+1:]\n        tokens = query.split('&')\n        for token in tokens:\n            if '=' in token:\n                param, value = token.split('=', 1)\n                print(f\"{param}: {value}\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Editorial code is not passing the Sample cases.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:34:33.982963+00:00"
+        },
+        "hints": {
+            "hint1": "Look for the position of '?' in the string to find where the parameters start.",
+            "hint2": "Split the substring after '?' using '&' to separate each parameter-value pair, then split each pair using '=' to get the parameter and its value.",
+            "solution_approach": "To solve this problem, we need to parse the given URL and extract the parameters and their values. Here are the steps:\n\n1. **Locate the Parameters Start Position:**\n   - Find the position of the character '?' in the string $S$. This character indicates the beginning of the query parameters in a URL.\n\n2. **Extract the Query String:**\n   - Extract the substring from the position after '?' to the end of the string. This substring contains all the parameters and their values in the format `parameter=value`, separated by '&'.\n\n3. **Split the Query String into Parameter-Value Pairs:**\n   - Split the query string using '&' as a delimiter to obtain a list of parameter-value pairs.\n\n4. **Extract Parameters and Values:**\n   - For each parameter-value pair, split it using '=' as a delimiter to separate the parameter name and its value.\n\n5. **Print the Parameters and Values:**\n   - For each parameter and value extracted, print them in the format `parameter: value`.\n\n**Time Complexity per test case:** $O(N)$, where $N$ is the length of the string $S$.\n\n**Space Complexity per test case:** $O(N)$, for storing the intermediate strings and lists during processing."
+        },
+        "id": 1201,
+        "input_format": "Only one line containing a string $S$. It consists of **uppercase** and **lowercase** English letters, **digits**, and **special characters**.\nThe URL will be in the following format:\nhttp://www.{word}.{word}/{word}/{word}?username={word}&pwd={word}&profile={word}&role={word}&key={word}\n**It's guaranteed that all parameters will have a value. The value will always be a string of alphabets and digits.**",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3",
+            "cpp"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In each sample input, the provided URL contains the parameters after the '?' symbol in the format `parameter=value` separated by '&'. The program extracts each parameter and its corresponding value and prints them in the required format.",
+        "output_format": "Print 5 lines that contain the answer required above.",
+        "samples": [
+            {
+                "input": "http://www.cleartrip.com/signin/service?username=test&pwd=test&profile=developer&role=ELITE&key=manager",
+                "output": "username: test\npwd: test\nprofile: developer\nrole: ELITE\nkey: manager"
+            },
+            {
+                "input": "http://www.algozenith.com/signin/service?username=hackNasaUsingHtml&pwd=areYouSerious&profile=ownerOfTwitter&role=fakePromises&key=planToOwnNasa",
+                "output": "username: hackNasaUsingHtml\npwd: areYouSerious\nprofile: ownerOfTwitter\nrole: fakePromises\nkey: planToOwnNasa"
+            },
+            {
+                "input": "http://www.codeforces.com/signin/service?username=Arijit&pwd=jackTheKing&profile=useless&role=newbie&key=wrongAnswerOnTestCase2",
+                "output": "username: Arijit\npwd: jackTheKing\nprofile: useless\nrole: newbie\nkey: wrongAnswerOnTestCase2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Strings"
+        ],
+        "template_code": [
+            {
+                "code": "\n\n",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "URL",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

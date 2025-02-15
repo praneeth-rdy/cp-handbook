@@ -1,0 +1,49 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given a weighted tree consisting of <i>N</i> vertices. Vertices <i>u<sub>i</sub></i> and <i>v<sub>i</sub></i> are connected by an edge with weight <i>w<sub>i</sub></i>.</p><p>Let's define the <i>K</i>-coloring of the tree as an assignment of exactly <i>K</i> colors to each vertex so that each color is used no more than two times. You can assume that you have infinitely many colors available. We say that an edge is saturated in the given <i>K</i>-coloring if its endpoints share at least one color (i.e. there exists a color that is assigned to both endpoints).</p><p>Let's also define the value of a <i>K</i>-coloring as the sum of weights of saturated edges.</p><p>Please calculate the maximum possible value of a <i>K</i>-coloring of the given tree.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "Editorial Code data is currently empty.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:47:23.909841+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 448,
+        "input_format": "<p>The first line contains an integer T ( 1 \u2264 T \u2264 10^5) - the number of test case.</p><p>The first line of each test case contains two space-separated integers N, K ( 1 \u2264 N, K \u2264 10^6).</p><p>The next N-1 lines contain a description of an edge \u2192 u<sub>i</sub>, v<sub>i</sub>, w<sub>i</sub> (1 \u2264 u<sub>i</sub>, v<sub>i</sub> \u2264 N, u<sub>i</sub>\u2260v<sub>i</sub>, 1 \u2264 w \u2264 10^5). Vertices u<sub>i</sub> and v<sub>i</sub> are connected by an undirected edge of weight w<sub>i</sub>.</p><p>It is guaranteed that sum of all <i>N</i> over all test cases does not exceed 10^6.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case print the maximum possible value of a <i>K</i>-coloring of the given tree in a new line.</p>",
+        "samples": [
+            {
+                "input": "10\n9 3\n7 4 10\n6 8 1\n1 3 6\n2 4 10\n2 9 1\n5 4 9\n3 6 5\n1 2 5\n2 6\n1 2 2\n2 4\n1 2 8\n7 7\n4 3 2\n6 5 1\n3 2 3\n3 5 7\n7 1 10\n1 2 9\n3 9\n3 2 6\n2 1 8\n7 10\n1 5 9\n3 4 2\n1 3 6\n7 3 9\n3 6 3\n1 2 3\n6 3\n2 1 4\n4 2 10\n3 5 2\n3 1 5\n2 6 5\n1 2\n9 8\n4 7 7\n4 6 2\n2 9 9\n2 3 5\n5 3 3\n8 2 2\n2 1 1\n1 4 4\n7 4\n7 1 2\n1 2 8\n2 5 2\n2 3 9\n2 4 7\n5 6 1",
+                "output": "47\n2\n8\n32\n14\n32\n26\n0\n33\n29"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "K Coloring Tree",
+        "video_editorial_id": 8205
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You have to find the largest rectangular area possible in a given histogram where the largest rectangle can be made of contiguous bars. Assume that all bars have the same width, and the width is 1 unit.",
+        "complete_approach": "",
+        "constraints": "- $1 \\leq T \\leq 100$  \n- $1 \\leq N \\leq 10^5$  \n- $1 \\leq H_i \\leq 10^5$  \n\nWhere:  \n- **T** is the number of test cases.  \n- **N** is the number of bars in the histogram.  \n- **H\u1d62** is the height of the $i$-th bar.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint main() {\n    IOS\n    int t;\n    cin >> t;\n    while (t--) {\n        int n;\n        cin >> n;\n        int a[n];\n        for (int i = 0; i < n; ++i) {\n            cin >> a[i];\n        }\n        stack<int> s;\n        int i = 0;\n        long long ans = 0;\n        while (i < n) {\n            if (s.empty() || a[i] >= a[s.top()]) {\n                s.push(i);\n                i++;\n            }\n            else {\n                int t = s.top();\n                s.pop();\n                if (s.empty()) {\n                    ans = max(ans, 1LL * i * a[t]);\n                }\n                else {\n                    ans = max(ans, 1LL * a[t] * (i - s.top() - 1));\n                }\n            }\n        }\n        while (!s.empty()) {\n            int t = s.top();\n            s.pop();\n            if (s.empty()) {\n                ans = max(ans, 1LL * i * a[t]);\n            }\n            else {\n                ans = max(ans, 1LL * a[t] * (i - s.top() - 1));\n            }\n        }\n        cout << ans << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:38:45.975918+00:00"
+        },
+        "hints": {
+            "hint1": "Height of the largest rectangle will be one of the heights of the histogram. We can iterate through all the histograms, and for each histogram H, we try to create the maximum rectangle with H as the height.",
+            "hint2": "Consider 2 consecutive histograms $H[i]$ and $H[i+1]$. When $H[i+1] < H[i]$, for all histograms $X$ with index $> i + 1$, when traversing left for $L$, there is no point looking at $H[i]$ after looking at $H[i+1]$.\n\nIf $H[i+1] > X$, then $H[i] > X$ as we already know $H[i] > H[i+1]$. Then, the next entry we would want to look at is the first histogram left of $H[i+1]$ with height less than $H[i+1]$.\n",
+            "solution_approach": "We traverse all histograms from left to right, maintaining a stack of histograms. Every histogram is pushed to the stack once. A histogram is popped from the stack when a histogram of smaller height is seen.  \n\nWhen a histogram is popped, we calculate the area with the popped histogram as the smallest histogram. The current index tells us the 'right index' $R$, and the index of the previous item in the stack is the 'left index' $L$.  \n\nTime Complexity per test case: $O(N)$\n"
+        },
+        "id": 461,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.  \nThe first line of each test case contains one integer $N$ - the length of the array.  \nThe second line of each test case contains $N$ space-separated integers, where $H_i$ denotes the height of the $i^{th}$ bar.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, take all the histograms to get area as $3 \\times 1 = 3$.\n\n![Image for Test Case 1](https://docs.google.com/drawings/u/0/d/ss62cfucO2XuMUKEM3hHNIw/image?w=76&h=52&rev=37&ac=1&parent=1Gfkf2CiiZJ4HZQkX-8CYiH6NDjYyYMNamayN2f9NhTc)\n\nFor the second test case, take the last two histograms to get area as $2 \\times 3 = 6$.\n\n![Image for Test Case 2](https://docs.google.com/drawings/u/0/d/s-KiTN-arqmwy9VjoLgmvHQ/image?w=102&h=102&rev=51&ac=1&parent=1Gfkf2CiiZJ4HZQkX-8CYiH6NDjYyYMNamayN2f9NhTc)\n\nFor the third test case, take the first two histograms to get area as $2 \\times 4 = 8$.\n\n![Image for Test Case 3](https://docs.google.com/drawings/u/0/d/sBgKvB4o6rq7Q9oNk3fWCbA/image?w=102&h=126&rev=27&ac=1&parent=1Gfkf2CiiZJ4HZQkX-8CYiH6NDjYyYMNamayN2f9NhTc)",
+        "output_format": "For each test case, print the largest area of the rectangle in the histogram.",
+        "samples": [
+            {
+                "input": "3\n3\n2 1 2\n4\n1 2 3 4\n4\n5 4 1 2",
+                "output": "3\n6\n8"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Largest Rectangle",
+        "video_editorial_id": 10688
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>String P is given, consisting of uppercase alphabets. You have to find the number of strings Q, such that string Q is lexicographically larger than string P and reverse of string Q is lexicographically larger than the reverse of string P. Since the answer can be large, print the number of integers modulo 10<sup>9</sup> + 7.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 T \u2264 100</p><p>1 \u2264 |P| \u2264 10<sup>5</sup> where |P| is the length of string P.</p><p>It is guaranteed that the sum of |P| for all test cases is not greater than 10<sup>5</sup>.</p>",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\nconst int mod = 1000000007;\n\nstring s;\n\nint tt;// current test-case\nint testcase[100010][2][2]; // which testcase dp array is storing for\n\n\nint dp[100010][2][2]; // dp cache array.\n\n// t1 -> tight for same as Q from start or not. \n// t2 -> tight for larger or same as Q from end or not.\nint rec(int pos,int t1,int t2){\n    if(pos==s.length()){\n        if(t2==0 && t1==0)\n            return 1;// 1 valid string found.\n        else\n            return 0;\n    }\n    if(testcase[pos][t1][t2]==tt){ // check if the saved value is relevant for this testcase.\n        return dp[pos][t1][t2];\n    }\n    int ans = 0;\n    for(char dig = 'A'; dig<='Z'; dig++){\n        if(t1==1&&dig<s[pos])continue;\n        \n        int nt1 = t1;\n        if(t1==1&&dig>s[pos]) nt1 = 0;\n    \n        int nt2;\n        if(dig==s[pos]){\n            nt2 = t2;\n        }else if(dig>s[pos]){\n            nt2 = 0;\n        }else{\n            nt2 = 1;\n        }\n        \n        ans =(ans + rec(pos+1,nt1,nt2))%mod;\n    }\n    testcase[pos][t1][t2] = tt;\n    return dp[pos][t1][t2]=ans;\n}\n\nint main(){\n    int t;cin>>t;\n    for(tt=1;tt<=t;tt++){\n        cin>>s;\n        cout<<rec(0,1,1)<<endl;\n    }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Solution Approach is missing"
+            ],
+            "last_updated": "2024-06-22T02:39:24.266760+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Make DP array DP[index][t1][t2] - the number of ways to choose characters so far such that t1=0 denotes that the first index-1 characters of T match the corresponding characters of S and t1=1 means that T is larger than S. t2 = 0 denotes that the last index-1 characters of T match the corresponding characters of S and t2=1 means that reversed T is larger than reversed S.</p>",
+            "hint2": "For each possible character in the i-th position of the given string, the DP transitions can be divided into three cases: when character is more, less and equal than the corresponding character in given number. When it is greater, t1=1 and t2=1 and when it is equal, t1 and t2 remain the same as before. When it is lesser and t1=1, t1=1, t2=0.\n\nTime Complexity per test case: O(|P| * 2 * 2* 26) \n\nwhere |P| is the length of string P.",
+            "solution_approach": ""
+        },
+        "id": 304,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line and only line of input contain string P.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, Q will be valid when Q is YZZ or ZZY. Other 26 cases will be ZAZ to ZZZ.\n\nFor the second test case, the valid strings are XZ, YY, YZ, ZY, ZZ.\n\nFor the third test case, no string is greater than ZZZZ.",
+        "output_format": "For each test case, print the number of strings Q.",
+        "samples": [
+            {
+                "input": "3\nYZY\nXY\nZZZZ",
+                "output": "28\n5\n0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Dynamic Programming",
+            "Digit Dp"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "The Larger String",
+        "video_editorial_id": 8182
+    },
+    "details": "Problem Details"
+}

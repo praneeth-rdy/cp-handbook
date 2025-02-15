@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have given an array <i>A</i> of <i>n</i> integers. Your task is to answer <i>q</i> queries. Each query contains an integer <i>x</i>.&nbsp;<br>For each query, print the minimum index <i>i</i> such that <i>A<sub>i</sub></i> \u2265 <i>x, </i>and then decrease the value at position <i>i </i>by<i> x, </i>i.e., <i>A<sub>i </sub>= A<sub>i</sub> - x. </i>If there doesn't exist any index <i>i </i>satisfying the condition, then simply print 0.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n</i>, <i>q </i>\u2264 2 x 10<sup>5</sup><br>0 \u2264 <i>A<sub>i</sub>, x<sub>i</sub> </i>\u2264 10<sup>9</sup></p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 200010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nint tree[4 * N];\nint A[N];\n\nvoid build(int node, int start, int end)\n{\n    if (start == end)\n    {\n        tree[node] = A[start];\n        return;\n    }\n    int mid = (start + end) / 2;\n    build(2 * node, start, mid);\n    build(2 * node + 1, mid + 1, end);\n    tree[node] = max(tree[2 * node], tree[2 * node + 1]);\n}\n\nvoid update(int node, int start, int end, int idx, int val)\n{\n    if (start == end)\n    {\n        A[start] -= val;\n        tree[node] = A[start];\n        return;\n    }\n    int mid = (start + end) / 2;\n    if (idx <= mid)\n        update(2 * node, start, mid, idx, val);\n    else\n        update(2 * node + 1, mid + 1, end, idx, val);\n    tree[node] = max(tree[2 * node], tree[2 * node + 1]);\n}\n\nint query(int node, int start, int end, int x)\n{\n    if (tree[node] < x)\n        return -1;\n    if (start == end)\n        return start;\n    int mid = (start + end) / 2;\n    if (tree[2 * node] >= x)\n        return query(2 * node, start, mid, x);\n    return query(2 * node + 1, mid + 1, end, x);\n}\n\nsigned main()\n{\n    // freopen(\"IN\", \"r\", stdin);\n    // freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n, q;\n    cin >> n >> q;\n\n    for (int i = 0; i < n; i++)\n        cin >> A[i];\n\n    build(1, 0, n - 1);\n\n    for (int i = 0; i < q; i++)\n    {\n        int x;\n        cin >> x;\n        int ans = query(1, 0, n - 1, x);\n        if (ans >= 0)\n            update(1, 0, n - 1, ans, x);\n        cout << ans + 1 << \" \";\n    }\n    cout << \"\\n\";\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:31:17.463638+00:00"
+        },
+        "hints": {
+            "hint1": "Use a segment tree to efficiently handle the queries.",
+            "hint2": "",
+            "solution_approach": "The segment tree is built initially to store the values of the array.\nRecursively build the left and right subtrees of each node by dividing the range in half.\nUpdate each node with the maximum value of its children.\nFor each query, a binary search is performed on the segment tree to find the minimum index where the value is greater than or equal to the given value.\nIf such an index is found, the value at that index is decreased by the given value.\n\nTime Complexity:\n\nBuilding the segment tree takes $O(n)$ time.\nEach query performs a binary search on the segment tree, which takes $O(\\log n)$ time.\nOverall, the time complexity of the solution is $O(n + q \\log n)$, where $n$ is the size of the array and $q$ is the number of queries."
+        },
+        "id": 403,
+        "input_format": "<p>The first input line has two integers <i>n</i> and <i>q</i>: the number of values and queries.<br>The second line has <i>n</i> integers <i>A<sub>1</sub>, A<sub>2</sub>, \u2026, A<sub>n</sub></i>: the array values.<br>Finally, there are <i>q</i> integers describing the queries. <i>x<sub>1</sub>, x<sub>2</sub>, \u2026, x<sub>q</sub></i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print the index <i>i </i>as mentioned in the problem statement. If such an index doesn't exist, then print 0.</p>",
+        "samples": [
+            {
+                "input": "8 5\n3 2 4 1 5 5 2 6\n4 4 7 1 1",
+                "output": "3 5 0 1 1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Segment Tree"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "First Min Queries",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

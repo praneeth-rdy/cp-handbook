@@ -1,0 +1,314 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "course_name": "Day 1: C++ Landmines 1",
+            "resource_id": 319
+        },
+        {
+            "course_name": "Day 1: C++ Landmines 1",
+            "resource_id": 338
+        },
+        {
+            "course_name": "Day 1: C++ Landmines 1",
+            "resource_id": 340
+        },
+        {
+            "course_name": "Day 1: C++ Landmines 1",
+            "resource_id": 321
+        },
+        {
+            "course_name": "Day 2: C++ Landmines 2",
+            "resource_id": 320
+        },
+        {
+            "course_name": "Day 2: C++ Landmines 2",
+            "resource_id": 318
+        },
+        {
+            "course_name": "Day 2: C++ Landmines 2",
+            "resource_id": 326
+        },
+        {
+            "course_name": "Day 2: C++ Landmines 2",
+            "resource_id": 343
+        },
+        {
+            "course_name": "Day 3: C++ Landmines 3",
+            "resource_id": 335
+        },
+        {
+            "course_name": "Day 3: C++ Landmines 3",
+            "resource_id": 330
+        },
+        {
+            "course_name": "Day 3: C++ Landmines 3",
+            "resource_id": 333
+        },
+        {
+            "course_name": "Day 3: C++ Landmines 3",
+            "resource_id": 329
+        },
+        {
+            "course_name": "Day 4: Foundational Maths - Factor & GCD",
+            "resource_id": 323
+        },
+        {
+            "course_name": "Day 4: Foundational Maths - Factor & GCD",
+            "resource_id": 322
+        },
+        {
+            "course_name": "Day 4: Foundational Maths - Factor & GCD",
+            "resource_id": 67
+        },
+        {
+            "course_name": "Day 4: Foundational Maths - Factor & GCD",
+            "resource_id": 66
+        },
+        {
+            "course_name": "Day 5:  Modulo Arithmetic",
+            "resource_id": 68
+        },
+        {
+            "course_name": "Day 6: nCr",
+            "resource_id": 71
+        },
+        {
+            "course_name": "Day 6: nCr",
+            "resource_id": 69
+        },
+        {
+            "course_name": "Day 6: nCr",
+            "resource_id": 70
+        },
+        {
+            "course_name": "Day 7 Gap Day [Challengers, Optional]:",
+            "resource_id": 72
+        },
+        {
+            "course_name": "Day 7 Gap Day [Challengers, Optional]:",
+            "resource_id": 387
+        },
+        {
+            "course_name": "Day 7 Gap Day [Challengers, Optional]:",
+            "resource_id": 73
+        },
+        {
+            "course_name": "Day 8 : Prefix Sums",
+            "resource_id": 18
+        },
+        {
+            "course_name": "Day 8 : Prefix Sums",
+            "resource_id": 23
+        },
+        {
+            "course_name": "Day 9: 2D Versions",
+            "resource_id": 25
+        },
+        {
+            "course_name": "Day 9: 2D Versions",
+            "resource_id": 28
+        },
+        {
+            "course_name": "Day 9: 2D Versions",
+            "resource_id": 34
+        },
+        {
+            "course_name": "Day 10: STL Basics",
+            "resource_id": 346
+        },
+        {
+            "course_name": "Day 10: STL Basics",
+            "resource_id": 344
+        },
+        {
+            "course_name": "Day 11:STL Usages",
+            "resource_id": 75
+        },
+        {
+            "course_name": "Day 11:STL Usages",
+            "resource_id": 366
+        },
+        {
+            "course_name": "Day 12: Stacks & Queues",
+            "resource_id": 347
+        },
+        {
+            "course_name": "Day 12: Stacks & Queues",
+            "resource_id": 349
+        },
+        {
+            "course_name": "Day 12: Stacks & Queues",
+            "resource_id": 350
+        },
+        {
+            "course_name": "Day 13: Map",
+            "resource_id": 359
+        },
+        {
+            "course_name": "Day 13: Map",
+            "resource_id": 375
+        },
+        {
+            "course_name": "Day 13: Map",
+            "resource_id": 360
+        },
+        {
+            "course_name": "Day 13: Map",
+            "resource_id": 379
+        },
+        {
+            "course_name": "Day 14: Priority Queue",
+            "resource_id": 364
+        },
+        {
+            "course_name": "Day 14: Priority Queue",
+            "resource_id": 365
+        },
+        {
+            "course_name": "Day 14: Priority Queue",
+            "resource_id": 376
+        },
+        {
+            "course_name": "Day 14: Priority Queue",
+            "resource_id": 363
+        },
+        {
+            "course_name": "Day 15 :  Set",
+            "resource_id": 356
+        },
+        {
+            "course_name": "Day 15 :  Set",
+            "resource_id": 89
+        },
+        {
+            "course_name": "Day 15 :  Set",
+            "resource_id": 372
+        },
+        {
+            "course_name": "Day 16:  Multiset",
+            "resource_id": 361
+        },
+        {
+            "course_name": "Day 16:  Multiset",
+            "resource_id": 362
+        },
+        {
+            "course_name": "Day 16:  Multiset",
+            "resource_id": 373
+        },
+        {
+            "course_name": "Day 17:  Deque & Ordered set",
+            "resource_id": 353
+        },
+        {
+            "course_name": "Day 17:  Deque & Ordered set",
+            "resource_id": 367
+        },
+        {
+            "course_name": "Day 18: Application Ideas 1",
+            "resource_id": 74
+        },
+        {
+            "course_name": "Day 18: Application Ideas 1",
+            "resource_id": 395
+        },
+        {
+            "course_name": "Day 18: Application Ideas 1",
+            "resource_id": 83
+        },
+        {
+            "course_name": "Day 19: Application Ideas 2",
+            "resource_id": 348
+        },
+        {
+            "course_name": "Day 20: Application Ideas 3",
+            "resource_id": 77
+        },
+        {
+            "course_name": "Day 21: Application Ideas 4",
+            "resource_id": 396
+        },
+        {
+            "course_name": "Day 21: Application Ideas 4",
+            "resource_id": 352
+        },
+        {
+            "course_name": "Day 21: Application Ideas 4",
+            "resource_id": 76
+        },
+        {
+            "course_name": "Day 22: Application Ideas 5",
+            "resource_id": 391
+        },
+        {
+            "course_name": "Day 23: Application Ideas 6",
+            "resource_id": 98
+        },
+        {
+            "course_name": "Day 25: Stack Mastery",
+            "resource_id": 378
+        },
+        {
+            "course_name": "Day 25: Stack Mastery",
+            "resource_id": 461
+        },
+        {
+            "course_name": "Day 25: Stack Mastery",
+            "resource_id": 462
+        },
+        {
+            "course_name": "Day 26: [Optional/Gap]",
+            "resource_id": 78
+        },
+        {
+            "course_name": "Day 26: [Optional/Gap]",
+            "resource_id": 88
+        },
+        {
+            "course_name": "Day 26: [Optional/Gap]",
+            "resource_id": 82
+        },
+        {
+            "course_name": "Day 26: [Optional/Gap]",
+            "resource_id": 97
+        },
+        {
+            "course_name": "Day 27: [Optional/Gap]",
+            "resource_id": 87
+        },
+        {
+            "course_name": "Day 27: [Optional/Gap]",
+            "resource_id": 90
+        },
+        {
+            "course_name": "Day 27: [Optional/Gap]",
+            "resource_id": 374
+        },
+        {
+            "course_name": "Day 28: [Optional /Gap]",
+            "resource_id": 385
+        },
+        {
+            "course_name": "Day 28: [Optional /Gap]",
+            "resource_id": 460
+        },
+        {
+            "course_name": "Day 28: [Optional /Gap]",
+            "resource_id": 84
+        },
+        {
+            "course_name": "Day 28: [Optional /Gap]",
+            "resource_id": 358
+        },
+        {
+            "course_name": "Contribution Technique Practice",
+            "resource_id": 62
+        },
+        {
+            "course_name": "Contribution Technique Practice",
+            "resource_id": 63
+        }
+    ],
+    "details": "Chapter 510 Problems"
+}

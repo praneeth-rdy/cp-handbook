@@ -1,0 +1,65 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given a vector of <strong>distinct</strong> integers <i>candidates</i> and a target integer <i>target</i>, return <i>a list of all <strong>unique combinations</strong> of candidates where the chosen numbers sum to target.</i> You may return the combinations in <strong>any order</strong>.</p><p>The <strong>same</strong> number may be chosen from vector <i>candidates</i> an <strong>unlimited number of times</strong>. Two combinations are unique if the frequency of at least one of the chosen numbers is different.</p>",
+        "complete_approach": "",
+        "constraints": "<ul><li>1 \u2264 candidates.length() \u2264 30.</li><li>1 \u2264 candidates[i] \u2264 200.</li><li>All elements of candidates are distinct.</li><li>1 \u2264 target \u2264 500.</li></ul>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nvector<int> temp;\nvector<vector<int>> ans;\nvoid rec(vector<int>& candidates, int i, int &target, int sum) {\n    if (sum > target)return; // pruning\n    if (i == candidates.size()) { // base\n        if (sum == target) { // save combination.\n            ans.push_back(temp);\n        }\n        return;\n    }\n    rec(candidates, i + 1, target, sum); // not choosing i-th element.\n\n    // choosing i-th element.\n    temp.push_back(candidates[i]);\n    rec(candidates, i, target, sum + candidates[i]);\n    temp.pop_back(); // backtracking\n}\nvector<vector<int>> combinationSum(vector<int>& candidates, int target) {\n    ans.clear();\n    rec(candidates, 0, target, 0);\n    return ans;\n}\n\nvoid checker() {\n    int n, x, target;\n    cin >> n >> target;\n    vector<int> t;\n    for (int i = 0; i < n; i++) {\n        cin >> x;\n        t.push_back(x);\n    }\n    auto v = combinationSum(t, target);\n    for (auto &x : v) {\n        sort(x.begin(), x.end());\n    }\n    sort(v.begin(), v.end());\n    for (auto x : v) {\n        for (auto y : x)cout << y << \" \";\n        cout << endl;\n    }\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n    int t = 1;\n    // int i = 1;\n    // cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        checker();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:17:54.153310+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 868,
+        "input_format": "<p>Complete the function <i><strong>combinationSum(candidates, target).&nbsp;</strong></i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>return combinations as <i><strong>vector&lt;vector&lt;int&gt;&gt;</strong></i> in any order.</p>",
+        "samples": [
+            {
+                "input": "4 7\n2 3 6 7 \n ",
+                "output": "2 2 3\n7"
+            },
+            {
+                "input": "1 1 \n2\n",
+                "output": "  "
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Recursion",
+            "Backtracking"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n</fix>\n\nvector<vector<int>> combinationSum(vector<int>& candidates, int target) {\n    // write code here.\n}\n\n<fix>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nvoid checker() {\n    int n, x, target;\n    cin >> n >> target;\n    vector<int> t;\n    for (int i = 0; i < n; i++) {\n        cin >> x;\n        t.push_back(x);\n    }\n    auto v = combinationSum(t, target);\n    for (auto &x : v) {\n        sort(x.begin(), x.end());\n    }\n    sort(v.begin(), v.end());\n    for (auto x : v) {\n        for (auto y : x)cout << y << \" \";\n        cout << endl;\n    }\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n    int t = 1;\n    // int i = 1;\n    // cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        checker();\n        // i++;\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Combination Sum I",
+        "video_editorial_id": 8229
+    },
+    "details": "Problem Details"
+}

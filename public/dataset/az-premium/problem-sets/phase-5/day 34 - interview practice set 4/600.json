@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given an unsigned integer <i>N</i> you have to swap all odd bits with even bits. For example, 53 (<strong>1</strong>1<strong>0</strong>1<strong>0</strong>1) is converted to 58 (1<strong>1</strong>1<strong>0</strong>1<strong>0).</strong></<p>1 (01) -&gt; 2 (10)<br>2 (10) -&gt; 1 (01)<br>3 (11) -&gt; 3 (11)</p>></p><p>Try to do it in O(1).</p>",
+        "complete_approach": "",
+        "constraints": "<p><i>1 \u2264 T \u2264 10<sup>5</sup></i><br><i>1 \u2264 N \u2264 10<sup>8</sup></i></p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n\n    while (t--)\n    {\n        int n;\n        cin >> n;\n\n        int even_mask = 0xAAAAAAAA, odd_mask = 0x55555555;\n       \n        int even_bits = n & even_mask, odd_bits = n & odd_mask;\n        \n        even_bits >>= 1;\n        odd_bits <<= 1;\n        \n        cout << (even_bits | odd_bits) << '\\n';\n    }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:18:57.407230+00:00"
+        },
+        "hints": {
+            "hint1": "\nCan you come up with some bit wise operations to solve each test case in constant time?",
+            "hint2": "Left shift the even bits and right shift the odd bits",
+            "solution_approach": "<p>Extract the even and odd bits of <i>N</i> using <i><strong>0xAAAAAAAA</strong></i> (32-bit integer with even-bits set as 1 and odd-bits 0) and <i><strong>0x55555555</strong></i> (32-bit integer with odd-bits set as 1 and even-bits 0). Left shift the even-bits so that they become odd-bits and right shift the odd-bits so that they become the even-bits. The bit wise OR of these bits gives the final answer.</p>"
+        },
+        "id": 600,
+        "input_format": "<p><span style=\"background-color:transparent;color:#000000;\">The first line contains <i>T</i> - the number of test cases.</span><br><span style=\"background-color:transparent;color:#000000;\"><i>T</i> lines follow each containing a single integer <i>N.</i></span></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>1 (01) -&gt; 2 (10)<br>2 (10) -&gt; 1 (01)<br>3 (11) -&gt; 3 (11)</p>",
+        "output_format": "<p><span style=\"background-color:transparent;color:#000000;\">Print the modified integer for every test case in a new line.</span></p>",
+        "samples": [
+            {
+                "input": "5\n1\n2\n3\n53\n23",
+                "output": "2\n1\n3\n58\n43"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Tricky",
+            "Bit Manipulation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "SWAPBIT",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

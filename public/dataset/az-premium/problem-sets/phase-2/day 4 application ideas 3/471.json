@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Vivek has built a new classroom with N seats. The seats are located along a straight line at positions x1,x2\u2026..xN.<br>Vivek has to assign seats to K students such that a seat can be assigned to at most 1 student and the minimum distance between any two students is as large as possible. Find the largest minimum distance possible.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\n\nsigned main(){\n   ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n   int t;\n   cin >> t;\n   while(t--) {\n       int n, k;\n       cin >> n >> k;\n       int x[n];\n       for (int i = 0; i < n; ++i) {\n           cin >> x[i];\n       }\n       sort(x, x+n);\n       int l = 1, r = x[n-1]-x[0];\n       int ans = 1;\n       while(l <= r) {\n           int mid = (l+r)/2;\n           int cnt = 1;\n           int prev = x[0];\n           for (int i = 1; i < n; ++i) {\n               if(x[i] >= prev + mid) {\n                   cnt++;\n                   prev = x[i];\n               }\n           }\n           if(cnt >= k) {\n               ans = mid;\n               l = mid + 1;\n           }\n           else {\n               r = mid - 1;\n           }\n       }\n       cout << ans << \"\\n\";\n   }\n   return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:16:59.637867+00:00"
+        },
+        "hints": {
+            "hint1": "If minimum distance, X is possible by assigning seats to K students, then it is possible to have a minimum distance lesser than X as well. That means this is a monotonic function. You can use this to apply binary search.",
+            "hint2": "<p>We would be doing binary search on the largest minimum adjacent distance possible. First, we will sort the seat positions given to us. We take the left pointer as L = 1(since it is given that a seat can be assigned to at most 1 student) and R = X[N-1] - X[0]. We take mid = (L+R)/2. Find the number of students that can be seated if the minimum separation should be mid. This can be done by assigning the first seat to student 1 and then assigning seats such that they have separation of at least mid.</p><p>If this number is \u2265 K, that means this can be a possible answer and so we continue binary search on L = mid+1 to R. Otherwise, we need to decrease the value of minimum distance to allow more number of students to be seated so we continue binary search on L to R = mid-1.</p><p>Time Complexity per test case: O(N * log<sub>2</sub>(X[N-1] - X[0]))</p>",
+            "solution_approach": ""
+        },
+        "id": 471,
+        "input_format": "<p>The first line contains a single integer T (1 \u2264 T \u2264 100000) - the number of test cases.</p><p>The first line of each test case contains 2 space-separated integers N, K (2 \u2264 N \u2264 100000, 2 \u2264 K \u2264 N) - the number of seats and the number of students.</p><p>The second line of each test case contains N space-separated integers (0 \u2264 xi \u2264 10^9) - the position of the seats. All the given positions are distinct.</p><p>Sum of N across all test cases \u2264 10^6.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case print the largest minimum distance possible in a new line.</p>",
+        "samples": [
+            {
+                "input": "14\n13 3\n6048 2794 6123 1643 6907 6993 2382 6961 1094 488 7424 6469 6009 \n10 6\n469 706 278 545 711 386 298 242 385 316 \n18 17\n1042 271 839 45 1253 1060 428 676 418 1298 1230 668 665 158 916 659 458 202\n11 10\n16073873 456996657 980038523 123316193 427829862 54109396 319462445 181390046 543060523 490620628 938036110\n6 2\n274592090 858952753 241301573 721888021 806214246 383142174\n12 5\n5940 28062 23820 1965 3005 18306 23749 18322 17322 15504 14570 4481\n17 13\n1905 1798 5250 986 1239 3311 3519 5262 2444 151 5580 5008 1914 2366 5285 1528 331 \n4 3\n792050646 886157889 58701906 576742651\n9 6\n3584 5153 5516 6249 2453 3992 6179 1646 4810\n7 6\n149042184 953621985 987837168 343845676 726735692 6723177 435784762 \n4 3\n149479138 621021707 506424026 519149062 \n2 2\n1557 4228 \n5 2\n4150 9442 5146 9633 3537\n6 4\n160913372 862781533 10044128 722271773 201193061 944524755 ",
+                "output": "2306\n70\n8\n38035523\n617651180\n3975\n116\n309415238\n706\n91939086\n114597681\n2671\n6096\n191148933"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Binary Search"
+        ],
+        "template_code": [],
+        "time_limit_sec": 4.0,
+        "title": "ClassRoom",
+        "video_editorial_id": 8209
+    },
+    "details": "Problem Details"
+}

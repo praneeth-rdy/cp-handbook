@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>There are <i>N</i> balls on the <i>X</i>-axis and <i>M</i> balls on the <i>Y</i>-axis. At the time, <i>t=0</i>, each ball on <i>X</i>-axis is thrown parallel to the <i>Y</i>-axis in the positive <i>Y</i> direction. Similarly, each ball on <i>Y</i>-axis is thrown parallel to the <i>X</i>-axis in the positive <i>X</i> direction. At any time, if two balls collide, they disappear. A collision can only happen between the ball thrown from <i>X</i>-axis and the ball thrown from <i>Y</i>-axis. <strong>No two balls from </strong><i><strong>X</strong></i><strong>-axis or </strong><i><strong>Y</strong></i><strong>-axis can collide.</strong> A ball can take part in at max one collision. You have to find the total number of collisions.&nbsp;</p>",
+        "complete_approach": "",
+        "constraints": "1 \u2264 **T** \u2264 100 \n1 \u2264 **N, M** \u2264 10<sup>5</sup> \n1 \u2264 **X<sub>i</sub>, U<sub>i</sub>, Y<sub>i</sub>, V<sub>i</sub>** \u2264 10<sup>9</sup>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n#define int long long\n\nsigned main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int n, m;\n    cin >> n >> m;\n    int ans = 0;\n    map<int, int> m1;\n    for (int i = 0; i < n; ++i) {\n      int x, u;\n      cin >> x >> u;\n      m1[x * u]++;\n    }\n    for (int i = 0; i < m; ++i) {\n      int y, v;\n      cin >> y >> v;\n      if (m1.count(y * v)) {\n        ans++;\n        m1[y * v]--;\n        if (m1[y * v] == 0) {\n          m1.erase(y * v);\n        }\n      }\n    }\n    cout << ans << \"\\n\";\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:41:53.618045+00:00"
+        },
+        "hints": {
+            "hint1": "Two balls collide when they reach a position at the same time.",
+            "hint2": "Use, Speed $= \\dfrac{distance}{time}$.",
+            "solution_approach": "To solve this problem, we can start by observing that two balls will collide only if they meet at the same position at the same time. Since the balls move in straight lines, the only point where they can meet is the intersection of their paths. Therefore, we can check for collisions by finding the intersection points of the paths of all pairs of balls.\n\nLet's consider two balls, one from the X-axis and one from the Y-axis, with positions `(x, u)` and `(y, v),` respectively. Here, `u` and `v` are the velocities of the balls on the X-axis and Y-axis, respectively. The two balls will collide if they reach the point `(x, y)` at the same time. The time taken by the ball on the X-axis to reach `(x, y)` is given by $\\frac {y}{u} $, and the time taken by the ball on the Y-axis to reach `(x, y)` is given by $\\frac {x}{v}$. Therefore, the two balls will collide if $\\frac {y}{u}  = \\frac {x}{v}$, which can be simplified to $y \\times v = x \\times u$. If this condition is satisfied, the two balls will collide at the point `(x, y)`.\n\nThe given solution uses a map to keep track of the number of times the product x * u appears in the input from the X-axis. This product corresponds to the time at which the ball fired from X-axis reaches the position `(x, y)` on the grid.\n\nThen, for each ball fired from the Y-axis, the solution checks if there is a ball fired from the X-axis that will reach the same position at the same time, using the product $y \\times v$. If there is a ball, the solution increments the ans counter to keep track of the total number of collisions.\n\nTo handle the case where a ball fired from X-axis can collide with more than one ball fired from Y-axis, the solution uses a map to keep track of the frequency of each product $x \\times u$. When a collision is found, the frequency is decremented, and if the frequency becomes $0$, the product is removed from the map.\n\n### Time complexity \n $O(N \\log N)$, where N is the total number of balls fired from the X-axis and Y-axis combined. This is because the solution uses a map, and the time complexity of map operations is $O(\\log N)$."
+        },
+        "id": 82,
+        "input_format": "<p>The first line of the input contains one integer <i>T</i> - the number of test cases. Then <i>T</i> test cases follow.<br>The first line of each test case contains two space-separated integers <i>N</i> and <i>M</i> - the number of balls on the <i>X</i>-axis and <i>Y</i>-axis respectively.<br>For each test case, <i>N</i> lines follow. The <i>i</i>-th of the line contains two space-separated integers <i>X<sub>i</sub></i> and <i>U<sub>i</sub></i>, the position and speed of the <i>i</i>-th ball respectively.<br>For each test case, <i>M</i> lines follow. The <i>i</i>-th of the line contains two space-separated integers <i>Y<sub>i</sub></i> and <i>V<sub>i</sub></i>, the position and speed of the <i>i</i>-th ball respectively.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>In the first test case of the example, at <i>t=1</i> the balls collide. The number of collisions is 1.</p><p>In the second test case of the example, at <i>t=1</i>, the first ball on <i>X</i>-axis and the first ball on <i>Y</i>-axis collide and disappear. The number of collisions is 1.</p><p>In the third test case of the example, at <i>t=\u2153</i>, the second ball on <i>X</i>-axis and the first ball on <i>Y</i>-axis collide and disappear. At <i>t=1</i>, the first ball on <i>X</i>-axis and the second ball on <i>Y</i>-axis collide and disappear. The number of collisions is 2.</p>",
+        "output_format": "For each test case, print the number of collisions on a separate line.",
+        "samples": [
+            {
+                "input": "3\n1 1 \n1 3 \n3 1 \n2 1 \n1 4 \n1 3 \n4 1 \n2 3 \n1 2 \n2 3 \n1 6 \n2 1 \n6 1",
+                "output": "1\n1\n2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Collisions",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

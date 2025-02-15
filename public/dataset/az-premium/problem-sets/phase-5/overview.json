@@ -1,0 +1,446 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4432,
+            "name": "Day 1 - Linked List",
+            "resources_count": 4,
+            "time_in_minutes": 0,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4433,
+            "name": "Day 2 - Practice Linked list",
+            "resources_count": 3,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4434,
+            "name": "Day 3 - Learn the atomic techniques",
+            "resources_count": 5,
+            "time_in_minutes": 30,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4435,
+            "name": "Day 4 - Practice applications 1",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4436,
+            "name": "Day 5 - Practice applications 2",
+            "resources_count": 3,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4437,
+            "name": "Day 6 - Some more techniques",
+            "resources_count": 3,
+            "time_in_minutes": 30,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4438,
+            "name": "Day 7 - Final Practice",
+            "resources_count": 3,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4439,
+            "name": "Day 8 - Binary Search Tree",
+            "resources_count": 4,
+            "time_in_minutes": 82,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4440,
+            "name": "Day 9 - Traversals again",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4441,
+            "name": "Day 10 - BST and Balanced BST",
+            "resources_count": 6,
+            "time_in_minutes": 127,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4442,
+            "name": "Day 11 - Recovery Problem",
+            "resources_count": 2,
+            "time_in_minutes": 82,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4443,
+            "name": "Day 12 - Problems on BST",
+            "resources_count": 5,
+            "time_in_minutes": 132,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4444,
+            "name": "Day 13 - Interconversion Idea",
+            "resources_count": 2,
+            "time_in_minutes": 64,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4445,
+            "name": "Day 14 - LCA on Trees",
+            "resources_count": 3,
+            "time_in_minutes": 49,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4446,
+            "name": "Day 15 - More Advanced Traversal",
+            "resources_count": 3,
+            "time_in_minutes": 67,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4447,
+            "name": "Day 16 - Mixed Practice",
+            "resources_count": 3,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4448,
+            "name": "Day 17 - Gap Day",
+            "resources_count": 3,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4449,
+            "name": "Day 18 - Core CS Layers",
+            "resources_count": 1,
+            "time_in_minutes": 63,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4450,
+            "name": "Day 19 - Compilers",
+            "resources_count": 1,
+            "time_in_minutes": 92,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4451,
+            "name": "Day 20 - COA",
+            "resources_count": 1,
+            "time_in_minutes": 74,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4452,
+            "name": "Day 21 - OS Part 1",
+            "resources_count": 1,
+            "time_in_minutes": 127,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4453,
+            "name": "Day 22 - OS part 2",
+            "resources_count": 1,
+            "time_in_minutes": 56,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4454,
+            "name": "Day 23 - OS part 3",
+            "resources_count": 3,
+            "time_in_minutes": 156,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4455,
+            "name": "Day 24 - Networks",
+            "resources_count": 1,
+            "time_in_minutes": 119,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4456,
+            "name": "Day 25 - DBMS",
+            "resources_count": 2,
+            "time_in_minutes": 96,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4457,
+            "name": "Day 26 - OOPS 1",
+            "resources_count": 2,
+            "time_in_minutes": 197,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4458,
+            "name": "Day 27 - OOPS 2",
+            "resources_count": 2,
+            "time_in_minutes": 227,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4459,
+            "name": "Day 28 - SOLID & Design Patterns",
+            "resources_count": 2,
+            "time_in_minutes": 242,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4460,
+            "name": "Day 29 - LLD interview question 1",
+            "resources_count": 1,
+            "time_in_minutes": 116,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4461,
+            "name": "Day 30 - LLD interview question 2",
+            "resources_count": 1,
+            "time_in_minutes": 0,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4462,
+            "name": "Day 31 - Interview Practice Set 1",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4463,
+            "name": "Day 32 - Interview Practice Set 2",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4464,
+            "name": "Day 33 - Interview Practice Set 3",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4465,
+            "name": "Day 34 - Interview Practice Set 4",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4466,
+            "name": "Day 35 - Interview Practice Set 5",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4467,
+            "name": "Day 36 - Interview Practice Set 6",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4468,
+            "name": "Day 37 - Interview Practice Set 7",
+            "resources_count": 3,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4469,
+            "name": "Day 38 - Interview Practice Set 8",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4470,
+            "name": "Day 39 - Interview Practice Set 9",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4471,
+            "name": "Day 40 - Interview Practice Set 10",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4472,
+            "name": "Day 41 - Interview Practice Set 11",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4473,
+            "name": "Day 42 - Interview Practice Set 12",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4474,
+            "name": "Day 43 - Interview Practice Set 13",
+            "resources_count": 5,
+            "time_in_minutes": 150,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4475,
+            "name": "Day 44 - Interview Practice Set 14",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4476,
+            "name": "Day 45 - Interview Practice Set 15",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4477,
+            "name": "Day 46 - Interview Practice Set 16",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4478,
+            "name": "Day 47 - Interview Practice Set 17",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4479,
+            "name": "Day 48 - Interview Practice Set 18",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4480,
+            "name": "Day 49 - Interview Practice Set 19",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4481,
+            "name": "Day 50 - Interview Practice Set 20",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4482,
+            "name": "Day 51 - Interview Practice Set 21",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4483,
+            "name": "Day 52 - Interview Practice Set 22",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4484,
+            "name": "Day 53 - Interview Practice Set 22",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4485,
+            "name": "Day 54 - Interview Practice Set 23",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course Phase 5",
+            "id": 4486,
+            "name": "Day 55 - Interview Practice Set 24",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        }
+    ],
+    "details": "Chapter Playlists"
+}

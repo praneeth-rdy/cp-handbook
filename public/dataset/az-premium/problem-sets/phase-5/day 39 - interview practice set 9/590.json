@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an array of size 2N + 2 where N elements occur twice and 2 occur just once. You have to find the 2 non-repeating elements.\n\nTry to solve this using O(1) extra space.",
+        "complete_approach": "",
+        "constraints": "<p>0 \u2264&nbsp;<i>N</i>&nbsp;\u2264 5 x 10<sup>5</sup></p><p>1 \u2264 A[i]&nbsp;\u2264 <i>N</i> + 2</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> FindRepeated(vector<int> &a)\n{\n    int n = (int)a.size();\n\n    int xr = 0;\n    for (int i = 0; i < n; i++)\n        xr ^= a[i];\n\n    int j = 0;\n    while (1)\n    {\n        if (xr & (1 << j)) //finding set bit of XOR of array\n            break;\n        j++;\n    }\n    int xxor = 0, yxor = 0;\n    for (int i = 0; i < n; i++)\n    {\n        if (a[i] & (1 << j))\n            xxor ^= a[i];\n        else\n            yxor ^= a[i];\n    }\n\n    vector<int> ans;\n    ans.push_back(min(xxor, yxor));\n    ans.push_back(max(xxor, yxor));\n\n    return ans;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(NULL);\n    cin.tie(NULL);\n    cout.tie(NULL);\n\n    int n;\n    cin >> n;\n\n    vector<int> a(2 * n + 2);\n\n    for (int i = 0; i < 2 * n + 2; i++)\n        cin >> a[i];\n\n    vector<int> ans = FindRepeated(a);\n    cout << ans[0] << \" \" << ans[1] << \"\\n\";\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:47:25.868842+00:00"
+        },
+        "hints": {
+            "hint1": "Find the XOR of the entire array.",
+            "hint2": "Can you split the array into 2 groups such that both the groups contain one of the non repeated elements?",
+            "solution_approach": "Find the XOR of the entire array. Any set bit of the XOR will come from either of the non repeated elements. So we split the array into 2 groups - one which has the set bit and one which doesn\u2019t. Now take XOR of the groups separately and that will give the non-repeated elements as all the other elements are present in pairs."
+        },
+        "id": 590,
+        "input_format": "The first line contains a single integer N.\nThe second line contains 2N + 2 integers - the array elements.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "5 and 6 are the numbers that are not repeated",
+        "output_format": "Print two integers - the elements which are not repeated in ascending order.",
+        "samples": [
+            {
+                "input": "4\n1 2 3 4 1 4 2 3 5 6",
+                "output": "5 6"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nvector<int> FindRepeated(vector<int> &a)\n{\n    // Complete the function\n}\n\n<fix>\nint main()\n{\n    ios_base::sync_with_stdio(NULL);\n    cin.tie(NULL);\n    cout.tie(NULL);\n\n    int n;\n    cin >> n;\n\n    vector<int> a(2 * n + 2);\n\n    for (int i = 0; i < 2 * n + 2; i++)\n        cin >> a[i];\n\n    vector<int> ans = FindRepeated(a);\n    cout << ans[0] << \" \" << ans[1] << \"\\n\";\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "TWOREP",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given a tree consisting of <i>n</i> nodes. Find the center of a tree. If there exist multiple centers, print -1.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n </i>\u2264 2 x 10<sup>5</sup><br>1 \u2264 <i>a</i>, <i>b </i>\u2264 <i>n</i></p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 200010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nvector<int> graph[N];\n\npair<int,int> bfs(int cur, int n, vector<int> &level) {\n    level.assign(n + 1, -1);\n\n    queue<int> q;\n    level[cur] = 1;\n    q.push(cur);\n\n    int last = cur;\n\n    while(!q.empty()) {\n        int u = q.front();\n        q.pop();\n        last = u;\n        for(int v : graph[u]) {\n            if(level[v] == -1) {\n                level[v] = level[u] + 1;\n                q.push(v);\n            }\n        }\n    }\n\n    return {last, level[last]};\n}\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int n; cin >> n;\n    for(int i = 1; i < n; i++) {\n        int u, v; cin >> u >> v;\n        graph[u].push_back(v);\n        graph[v].push_back(u);\n    }\n\n    vector<int> level1, level2;\n\n    pair<int,int> it = bfs(1, n, level1);\n    it = bfs(it.first, n, level1);\n    it = bfs(it.first, n, level2);\n\n    int len = it.second;\n\n    if(len % 2 == 0) {\n        cout << \"-1\\n\";\n        return 0;\n    }\n\n    int ans = -2;\n\n    for(int i = 1; i <= n; i++) {\n        if(level1[i] + level2[i] - 1 == len && level1[i] == (len + 1) / 2 && level2[i] == (len + 1) / 2) {\n            assert(ans == -2);\n            ans = i;\n        }\n    }\n\n    cout << ans << \"\\n\";\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:28:47.555128+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "1. A tree can have at most two centers. The center of a tree is also the center of its diameter. To find the center(s) of a tree, follow these steps:\n\n2. Find the length of the diameter of the tree. The diameter is the longest path between any two nodes in the tree.\n\n3. Once you have the length of the diameter, move from the farthest node towards the center by going up a distance of $\\lfloor\\frac{\\text{diameter}}{2}\\rfloor$ nodes.\n\n4. If the length of the diameter (diameter) is even, there are two centers in the tree. These centers are located at nodes $\\lfloor\\frac{\\text{diameter}}{2}\\rfloor$ and $\\lfloor\\frac{\\text{diameter}}{2}\\rfloor - 1$ on the diameter path.\n\nBy identifying the length of the diameter and then moving towards the center, you can determine the center(s) of the tree. If the diameter length is even, there will be two centers at equal distances from both ends of the diameter."
+        },
+        "id": 429,
+        "input_format": "The first input line contains an integer n: the number of nodes. The nodes are numbered 1, 2, \u2026, n.\nThen there are n \u2212 1 lines describing the edges. Each line contains two integers a and b: there is an edge between nodes a and b.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print the center of a tree. If there exist multiple centers, print -1.</p>",
+        "samples": [
+            {
+                "input": "3\n1 2\n1 3",
+                "output": "1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Trees",
+            "Dfs"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Center of Tree",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

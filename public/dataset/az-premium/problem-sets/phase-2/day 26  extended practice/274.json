@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>A number which is both a prime number as well as palindrome is called a <i>Prime Palindrome. </i>151 is a prime as well as a palindrome, hence 151 is a prime palindrome.<br>Your task is to find the count of Prime Palindromes belonging to the given range <i>[a, b]</i>.</p>",
+        "complete_approach": "",
+        "constraints": "<p>2 \u2264 <i>a</i> \u2264 <i>b</i> \u2264 10<sup>9</sup></p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n\nll ans = 0;\n\nbool isPrime(ll x) {\n\tfor(ll i = 2; i * i <= x; i++) {\n\t\tif(x % i == 0) \n\t\t\treturn false;\n\t}\n\treturn true;\n}\n\nvoid solve(ll cur, ll totalLen, ll curLen, ll a, ll b) {\n\tif(curLen == (totalLen + 1) / 2) {\n\t\tvector<int> d;\n\t\tll temp = cur;\n\t\twhile(temp) {\n\t\t\td.push_back(temp % 10);\n\t\t\ttemp /= 10;\n\t\t}\n\t\ttemp = cur;\n\t\tfor(int i = (totalLen % 2); i < (int)d.size(); i++) {\n\t\t\ttemp *= 10;\n\t\t\ttemp += d[i];\n\t\t}\n\t\tif(temp <= b && temp >= a && isPrime(temp)) {\n\t\t\tans++;\n\t\t}\n\t\treturn;\n\t}\n\n\tfor(ll i = 0; i < 10; i++) {\n\t\tcur *= 10; cur += i;\n\t\tsolve(cur, totalLen, curLen + 1, a, b);\n\t\tcur /= 10;\n\t}\n\treturn;\n} \n\nsigned main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    \n    ll a, b;\n    cin >> a >> b;\n\n    ll len = 0, temp = b;\n    while(temp) {\n    \tlen++;\n    \ttemp /= 10;\n    }\n\n    for(ll i = 1; i <= len; i++) {\n    \tfor(ll j = 1; j < 10; j++) {\n    \t\tsolve(j, i, 1LL, a, b);\n    \t}\n    }\n\n    cout << ans << \"\\n\";\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:18:36.055588+00:00"
+        },
+        "hints": {
+            "hint1": "<p><span style=\"background-color:rgb(255,255,255);color:rgba(0,0,0,0.75);\">Generate the palindromes and see if they are prime.</span></p>",
+            "hint2": "Find all palindrome numbers and then judge whether they are prime numbers (prime numbers).",
+            "solution_approach": "<p>Generate all palindrome numbers and see if they are prime or not. One optimization that you can do, generate only the first half of the number and the second half will be opposite of first. And now check for whether it is a prime number or not. You can do it with square root trick discussed in math module.</p><p><strong>Time complexity: </strong>O(10<sup>MAXLEN / 2</sup> x sqrt(MAXNUM))</p>"
+        },
+        "id": 274,
+        "input_format": "<p>The only line of input contains two space-separated numbers: <i>a</i> and <i>b</i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print the count to Prime Palindromes in-between the range <i>[a, b].</i></p>",
+        "samples": [
+            {
+                "input": "5 500",
+                "output": "12"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Recursion"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "Prime Palindromes",
+        "video_editorial_id": 8179
+    },
+    "details": "Problem Details"
+}

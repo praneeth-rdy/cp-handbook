@@ -1,0 +1,67 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a number $N$ and an array $A$ of $N$ numbers. Print the array in a **reversed order**.\n\n**Note:**\n*Don't use built-in-functions.*",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10$\n$1 \\leq N \\leq 1000$\n$0 \\leq A_i \\leq 10^9$",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n\n    while (t--)\n    {\n        int n;\n        cin >> n;\n\n        int arr[n];\n        for (int i = 0; i < n; i++)\n        {\n            cin >> arr[i];\n        }\n\n        for (int i = 0; i < n/2; i++)\n        {\n            int t = arr[i];\n            arr[i] = arr[n-i-1];\n            arr[n-i-1] = t;\n        }\n        \n        for (int i = 0; i<n; i++) \n        {\n            cout << arr[i] << \" \";\n        }\n        cout << \"\\n\";\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int t = Integer.parseInt(br.readLine());\n        \n        while (t-- > 0) {\n            int n = Integer.parseInt(br.readLine());\n            String[] arrStr = br.readLine().split(\" \");\n            int[] arr = new int[n];\n            for(int i = 0; i < n; i++) {\n                arr[i] = Integer.parseInt(arrStr[i]);\n            }\n            for(int i = 0; i < n / 2; i++) {\n                int temp = arr[i];\n                arr[i] = arr[n - i - 1];\n                arr[n - i - 1] = temp;\n            }\n            for(int i = 0; i < n; i++) {\n                out.print(arr[i] + \" \");\n            }\n            out.println();\n        }\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n    for _ in range(t):\n        n = int(data[idx])\n        idx += 1\n        arr = [int(data[idx + i]) for i in range(n)]\n        idx += n\n        for i in range(n // 2):\n            arr[i], arr[n - i - 1] = arr[n - i - 1], arr[i]\n        stdout.write(' '.join(map(str, arr)) + '\\n')\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:31:59.391117+00:00"
+        },
+        "hints": {
+            "hint1": "Think about swapping elements from the start and end of the array.",
+            "hint2": "By swapping elements at positions $i$ and $n - i - 1$ for $i$ from $0$ to $n/2$, you can reverse the array in place without using built-in functions.",
+            "solution_approach": "To reverse the array without using built-in functions, we can swap the elements from the start and end of the array. We iterate from index $i = 0$ to $i = n/2$, and for each $i$, we swap the element at position $i$ with the element at position $n - i - 1$. This way, after reaching the middle of the array, all elements are swapped, and the array is reversed.\n\n**Time Complexity per test case**: $O(n)$\n\n**Space Complexity per test case**: $O(1)$ (In-place reversal)"
+        },
+        "id": 1155,
+        "input_format": "The first line contains $T$, the number of test cases.\nFor each test case:\nThe first line contains $N$, the number of elements.\nThe second line contains $N$ space-separated integers denoting the array.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "### Sample Input 1:\nThe original array is: [5, 1, 3, 2].\nAfter reversing, the array becomes: [2, 3, 1, 5], which is printed as output.\n### Sample Input 2:\nThe original array is: [1, 2, 3, 4, 5].\nAfter reversing, the array becomes: [5, 4, 3, 2, 1], which is printed as output.",
+        "output_format": "Print the array in a **reversed order**.",
+        "samples": [
+            {
+                "input": "1\n4\n5 1 3 2",
+                "output": "2 3 1 5"
+            },
+            {
+                "input": "1\n5\n1 2 3 4 5",
+                "output": "5 4 3 2 1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Arrays"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Reversing",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

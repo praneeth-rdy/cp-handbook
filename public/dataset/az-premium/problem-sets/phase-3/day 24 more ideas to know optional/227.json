@@ -1,0 +1,65 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given an integer $n$, count the totatives of $n$, that is, the positive integers less than or equal to $n$ that are relatively prime to $n$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq n \\leq 10^{12}$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "#include <bits/stdc++.h>\nusing namespace std;\n\ntypedef long long ll;\n\nsigned main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    ll n;\n    cin >> n;\n\n    ll ans = n;\n\n    for(ll i = 2; i * i <= n; i++) {\n        bool is = false;\n        while(n % i == 0) {\n            n /= i;\n            is = true;\n        }\n        if(is) {\n            ans /= i;\n            ans *= (i - 1);\n        }\n    }\n\n    if(n > 1) {\n        ans /= n;\n        ans *= (n - 1);\n    }\n\n    cout << ans << \"\\n\";\n}",
+                "language": "C++14"
+            },
+            {
+                "code": "import sys\n\ndef main():\n    data = sys.stdin.read().split()\n    idx = 0\n    n = int(data[idx])\n    idx += 1\n    ans = n\n    i = 2\n    while i * i <= n:\n        is_prime_factor = False\n        while n % i == 0:\n            n //= i\n            is_prime_factor = True\n        if is_prime_factor:\n            ans //= i\n            ans *= (i - 1)\n        i += 1\n    if n > 1:\n        ans //= n\n        ans *= (n - 1)\n    print(ans)\n\nif __name__ == \"__main__\":\n    main()",
+                "language": "Python3"
+            },
+            {
+                "code": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        long n = Long.parseLong(br.readLine());\n        long ans = n;\n\n        for(long i = 2; i * i <= n; i++) {\n            boolean is = false;\n            while(n % i == 0) {\n                n /= i;\n                is = true;\n            }\n            if(is) {\n                ans /= i;\n                ans *= (i - 1);\n            }\n        }\n\n        if(n > 1) {\n            ans /= n;\n            ans *= (n - 1);\n        }\n\n        out.println(ans);\n\n        out.flush();\n        out.close();\n    }\n}",
+                "language": "Java"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:44:12.029194+00:00"
+        },
+        "hints": {
+            "hint1": "\nIf we know the prime factors, can we use a direct formula for Euler's totient?\n\nWe know we can factorize the numbers in $O(\\sqrt{N})$.\n",
+            "hint2": "\nSince we have to find only one number we use the following formula:\n\n$\\phi(n) = n \\left(1 - \\dfrac{1}{p_1}\\right)\\left(1 - \\dfrac{1}{p_2}\\right)\\cdots\\left(1 - \\dfrac{1}{p_r}\\right)$\n\nWhere $p_1$, $p_2$, $\\dots$, $p_r$ are the distinct prime factors of $n$.\n",
+            "solution_approach": "\nTo compute the totatives of $n$, which is Euler's totient function $\\phi(n)$, we can use the formula:\n\n$\\phi(n) = n \\prod_{p \\text{ divides } n} \\left(1 - \\dfrac{1}{p}\\right)$\n\nThis formula requires knowing the distinct prime factors of $n$.\n\nWe can factorize $n$ by checking divisibility from $2$ up to $\\sqrt{n}$.\n\nAs we find prime factors, we iteratively apply the formula.\n\n**Time Complexity per test case:** $O(\\sqrt{n})$\n"
+        },
+        "id": 227,
+        "input_format": "The only line of input contains an integer $n$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first sample case, $n = 6$. The positive integers less than or equal to $6$ that are relatively prime to $6$ are $1$ and $5$. So the answer is $2$.\nFor the second sample case, $n = 1,000,000$. The value of Euler's totient function $\\phi(1,000,000) = 400,000$. So the answer is $400,000$.",
+        "output_format": "Print the answer on a new line.",
+        "samples": [
+            {
+                "input": "\n6\n",
+                "output": "\n2\n"
+            },
+            {
+                "input": "\n1000000\n",
+                "output": "\n400000\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Number Theory",
+            "Math"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Euler's Phi Function",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

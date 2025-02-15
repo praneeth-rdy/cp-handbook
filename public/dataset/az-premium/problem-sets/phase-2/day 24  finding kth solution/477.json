@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": {
+        "body": "For the given *n*, consider the array *A* = {1, 2, \u2026, *n*}. There exist *n*! unique permutations of the array. When we list all these *n*! permutations in lexicographical order, your task is to find the *k*th permutation in that list.",
+        "complete_approach": "",
+        "constraints": "1 \u2264 *n* \u2264 10<sup>5</sup>  \n1 \u2264 *k* \u2264 min(*n*! , 10<sup>9</sup>)",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n\n#include <bits/stdc++.h>\nusing namespace std;\n#define IOS                       \\\n    ios_base::sync_with_stdio(0); \\\n    cin.tie(0);                   \\\n    cout.tie(0);\n\nvoid func(int k, vector<int> &arr)\n{\n    int n = (int)arr.size();\n    k--;\n    vector<int> ans;\n    int fact = 1;\n    for (int i = 1; i < n; i++)\n    {\n        fact = i * fact;\n    }\n    while (1)\n    {\n        ans.push_back(arr[k / fact]);\n        arr.erase(arr.begin() + k / fact);\n        if ((int)arr.size() == 0)\n            break;\n        k %= fact;\n        fact /= (int)arr.size();\n    }\n    for (auto i : ans)\n    {\n        cout << i << \" \";\n    }\n    cout << \"\\n\";\n}\n\nvoid solve()\n{\n    int n, k;\n    cin >> n >> k;\n    if (n <= 13)\n    {\n        vector<int> arr;\n        for (int i = 1; i <= n; i++)\n        {\n            arr.push_back(i);\n        }\n        func(k, arr);\n    }\n    else\n    {\n        vector<int> arr;\n        for (int i = 1; i < n - 12; i++)\n        {\n            cout << i << \" \";\n        }\n        for (int i = n - 12; i <= n; i++)\n        {\n            arr.push_back(i);\n        }\n        func(k, arr);\n    }\n}\n\nsigned main()\n{\n    IOS;\n    solve();\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:27:04.342796+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Observe that 13! &gt; 10<sup>9</sup>.</p>",
+            "hint2": "<p>At max, the last 13 numbers are only important. Remaining <i>n</i> - 13 numbers will remain the same in the answer permutation.</p>",
+            "solution_approach": "<p>Let a = {1, 2, \u2026, <i>n</i>}. See 13! &gt; 10<sup>9</sup>.&nbsp;</p><p>At max, the last 13 numbers are important when <i>n</i> &gt; 13, because only they're permutating in the answer array, and remaining <i>n</i> - 13 numbers will remain same. If <i>n </i>\u2264 13, then the whole array can get permutated.</p><p>Now do iteratively. Find out the farthest index from the last, that has to be changed. Suppose index <i>i </i>needs to change, then we've to choose <i><strong>ceil(k / (n - i)!)</strong></i> th smallest number from a[<i>i</i>] to a[<i>n</i> - 1].</p><p>How the expression in bold is derived? You can observe this when you try to simulate the process on your pen and paper. Just think about it.</p><p>And go on doing the same for other indices from <i>i</i> + 1 to <i>n</i> - 1.</p><p>See editorial code for more clear understanding.</p>"
+        },
+        "id": 477,
+        "input_format": "The first line contains two space-separated integers $n$ and $k$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print $n$ space-separated integers, denoting the $k$th permutation.",
+        "samples": [
+            {
+                "input": "3 4",
+                "output": "2 3 1"
+            },
+            {
+                "input": "10 3",
+                "output": "1 2 3 4 5 6 7 9 8 10"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Combinatorics",
+            "Recursion"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Kth Permutation - hard version",
+        "video_editorial_id": 8210
+    },
+    "details": "Problem Details"
+}

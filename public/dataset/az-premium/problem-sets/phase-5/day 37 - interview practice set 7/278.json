@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given **N** integers, the price of a given stock on each day. You can buy and sell at most 2 stocks. You cannot buy a stock before you sell the previous stock. You cannot sell a stock before you buy one. You have to find the maximum profit you can make by buying and selling stocks.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 T \u2264 100<br>1 \u2264 N \u2264 10<sup>5</sup><br>0 \u2264 Ai \u2264 10<sup>5</sup></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nlong long BuyAndSellStock(vector<int> &a) \n{\n    int n = (int)a.size();\n    long long pre[n];\n    pre[0] = 0;\n    long long m = a[0];\n    for (long long i = 1; i < n; ++i) {\n        pre[i] = max(pre[i-1], a[i] - m);\n        m = min(m, 1LL * a[i]);\n    }\n    long long post[n];\n    post[n-1] = 0;\n    m = a[n-1];\n    for (long long i = n - 2; i >= 0; --i) {\n        post[i] = max(post[i+1], m  -a[i]);\n        m = max(m, 1LL * a[i]);\n    }\n    long long ans = 0;\n    for (long long i = 0; i < n; ++i) {\n        ans=max(ans, pre[i]+post[i]);\n    }\n    return ans;\n}\n\nint main(){\n   IOS\n   \n   int t;\n   cin>>t;\n   \n   while(t--){\n       int n;\n       cin>>n;\n       \n       vector<int> a(n);\n\n       for (int i = 0; i < n; ++i) {\n           cin>>a[i];\n       }\n       \n       cout << BuyAndSellStock(a) << \"\\n\";\n   }\n\n   return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:14:40.045597+00:00"
+        },
+        "hints": {
+            "hint1": "We are allowed to buy and sell up to 2 stocks, so we can break the array into 2 parts and try all the cases.",
+            "hint2": "We try all the cases for breaking the array. For each point, calculate the left maximum profit and the right maximum profit.",
+            "solution_approach": "Calculate the maximum profit possible, while traversing from the front of the array and from the back of the array. It can be easily pre-computed by using a prefix array. Then take the maximum profit out of all the points.\n\nTime Complexity per test case: O(N)"
+        },
+        "id": 278,
+        "input_format": "The first line of the input contains one integer **T** - the number of test cases. Then **T** test cases follow.\nThe first line of each test case contains one integer **N** - the length of the array. \nThe second line of each test case contains **N** space-separated integers.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, you can buy stock on day 1 and sell on day 2 and again buy on day 4 and sell on day 5. Profit = (5-1) + (6-2) = 4+4 = 8\n\nFor the second test case, you can buy stock on day 1 and sell on day 4. Profit = 4-1 = 3\n\nFor the third test case, you don\u2019t buy and sell any stock. Profit = 0",
+        "output_format": "For each test case, print the maximum profit you can make by buying and selling stocks.",
+        "samples": [
+            {
+                "input": "3\n9\n1 5 2 2 6 0 3 2 1\n4\n1 2 3 4\n4\n5 3 2 1",
+                "output": "8\n3\n0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n</fix>\n\nlong long BuyAndSellStock(vector<int> &a) \n{\n    //Complete the function\n}\n\n<fix>\nint main(){\n   IOS\n   \n   int t;\n   cin>>t;\n   \n   while(t--){\n       int n;\n       cin>>n;\n       \n       vector<int> a(n);\n\n       for (int i = 0; i < n; ++i) {\n           cin>>a[i];\n       }\n       \n       cout << BuyAndSellStock(a) << \"\\n\";\n   }\n\n   return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 3.0,
+        "title": "Buy and Sell Stock - 3",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,56 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given $3$ strings $s1$, $s2$ and $s3$, the task is to find the length of the longest common sub-sequence in all three given strings.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 100$\n$1 \\leq |s1| \\leq 100$\n$1 \\leq |s2| \\leq 100$\n$1 \\leq |s3| \\leq 100$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\n\nint dp[101][101][101];\nstring s1, s2, s3;\nint rec(int i, int j, int k) {\n    if (i == s1.size() || j == s2.size() || k == s3.size())return 0;\n    auto &ans = dp[i][j][k];\n    if (ans != -1)return ans;\n    ans = max({rec(i + 1, j, k), rec(i, j + 1, k), rec(i, j, k + 1)});\n    if (s1[i] == s2[j] && s3[k] == s2[j])ans = max(ans, 1 + rec(i + 1, j + 1, k + 1));\n    return ans;\n}\nvoid solve() {\n    cin >> s1 >> s2 >> s3;\n    memset(dp, -1, sizeof(dp));\n    cout << rec(0, 0, 0) << endl;\n}\n\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```\n\n",
+                "language": "C++14"
+            },
+            {
+                "code": "\n```cpp\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\n\nint dp[101][101][101], n1, n2, n3;\nstring s1, s2, s3;\nvoid solve() {\n    cin >> s1 >> s2 >> s3;\n    memset(dp, 0, sizeof(dp));\n    n1 = s1.size(), n2 = s2.size(), n3 = s3.size();\n    for (int i = 1; i <= n1; i++) {\n        for (int j = 1; j <= n2; j++) {\n            for (int k = 1; k <= n3; k++) {\n                auto &ans = dp[i][j][k];\n                if (s1[i - 1] == s2[j - 1] && s2[j - 1] == s3[k - 1])ans = max(ans, 1 + dp[i - 1][j - 1][k - 1]);\n                ans = max({ans, dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1]});\n            }\n        }\n    }\n    cout << dp[n1][n2][n3] << endl;\n}\n\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:24:41.797357+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "The idea is to take a 3D array to store the length of common subsequence in all 3 given sequences i. e., $L[m + 1][n + 1][o + 1]$.\n\n1- If any of the string is empty then there is no common subsequence at all then $L[i][j][k] = 0$.\n\n2- If the characters of all sequences match (or $X[i] == Y[j] ==Z[k]$) then $L[i][j][k] = 1 + L[i-1][j-1][k-1]$.\n\n3- If the characters of both sequences do not match (or $X[i] != Y[j] || X[i] != Z[k] || Y[j] !=Z[k]$) then $L[i][j][k] = max(L[i-1][j][k], L[i][j-1][k], L[i][j][k-1])$\n\n**Time Complexity** - $O(|s1|*|s2|*|s3|)$.\n**Space Complexity** - $O(|s1|*|s2|*|s3|)$."
+        },
+        "id": 911,
+        "input_format": "First-line contains $T$ - the number of test cases.\nEach test case contains $3$ strings in a single line.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, print the length of the longest common subsequence in all the $3$ given strings, in a new line.",
+        "samples": [
+            {
+                "input": "3\nabc abc bbc\nalgozenith algo algorithm\nalgo zenith zen\n",
+                "output": "2\n4\n0\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "LCS of 3 Strings",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

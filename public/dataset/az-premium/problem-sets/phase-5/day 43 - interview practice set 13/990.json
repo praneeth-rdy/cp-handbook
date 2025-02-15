@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a lowercase alphabet string $s$, output the minimum number of adjacent swaps required to convert it into a palindrome. If it's not possible, output $-1$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 100$\n$1 \\leq |s| \\leq 1000$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nint minswaps(string s) {\n\tvector<array<int, 2>> v[26];\n\tint l = 0, r = s.size() - 1, ans = 0;\n\twhile (l <= r) {\n\t\tint cost = 1e9, ai = -1, aj = -1;\n\t\tfor (char c = 'a'; c <= 'z'; c++) {\n\t\t\tint i = l, j = r;\n\t\t\twhile (i <= j && s[i] != c)i++;\n\t\t\twhile (i <= j && s[j] != c)j--;\n\t\t\tif (i < j && cost >= abs(l - i) + abs(r - j))ai = i, aj = j, cost = abs(l - i) + abs(r - j);\n\t\t}\n\t\twhile (aj != -1 && ai > l)swap(s[ai], s[ai - 1]), ai--, ans++;\n\t\twhile (aj != -1 && aj < r)swap(s[aj], s[aj + 1]), aj++, ans++;\n\t\tl++, r--;\n\t}\n\tstring t = s;\n\treverse(t.begin(), t.end());\n\tif (t == s)return ans;\n\treturn -1;\n}\nint minswaps2(string s) {\n\tint l = 0, r = s.size() - 1, ans = 0, odd = 0;\n\tvector<int> cnt(26, 0);\n\tfor (auto c : s)cnt[c - 'a']++;\n\tfor (int i = 0; i < 26; i++)odd += (cnt[i] & 1);\n\tif (odd > 1)return -1;\n\twhile (l < r) {\n\t\tint i = l, j = r;\n\t\twhile (s[i] != s[j])j--;\n\t\tif (i == j) {\n\t\t\tswap(s[i], s[i + 1]), ans++;\n\t\t\tcontinue;\n\t\t}\n\t\twhile (j < r)swap(s[j], s[j + 1]), j++, ans++;\n\t\tl++, r--;\n\t}\n\treturn ans;\n}\n\n\nvoid solve() {\n\tstring s;\n\tcin >> s;\n\tint ans1 = minswaps(s), ans2 = minswaps2(s);\n\tcout << ans1 << endl;\n\tassert(ans1 == ans2);\n}\nint main() {\n\tios_base :: sync_with_stdio(0);\n\tcin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n\tfreopen(\"input.txt\", \"r\", stdin); \\\n\tfreopen(\"output.txt\", \"w\", stdout);\n#endif\n\tint t = 1;\n\t// int i = 1;\n\tcin >> t;\n\twhile (t--) {\n\t\t// cout << \"Case #\" << i << \": \";\n\t\tsolve();\n\t\t// i++;\n\t}\n\treturn 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:25:11.288764+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "**Intuition**\n\n1. If more than one character in a string occurs an odd number of times that string can't be a palindrome.\n2. Only adjacent swaps are allowed, so for each character in the left half of a string, we need to find the rightmost occurrence of that char so we can minimize the swaps.\n3. Handle the corner case that is, one odd occurring element in the string.\n\n**Implementation**\n\nCode for the invalid case is trivial, now when finding the rightmost occurring character of the current character if we reach the current character itself that means the current character is the odd occurring character in our string.\nFor an odd occurring character, we will just swap it with the next character of our string because the ideal place for that character is in the middle so by shifting it right we are ensuring we are not increasing our answer, plus if we shift that character all the way to middle in that iteration itself then the answer may not be correct consider the example \"daamm\" for my second point. if we shift d to the middle in that iteration itself it messes up the order for other elements.\n\n**Time Complexity :** $O(n^2)$ \n**Space Complexity :** $O(26)$"
+        },
+        "id": 990,
+        "input_format": "The first line contains $T$ - the number of test cases.\nThe first line of each test case contains string $s$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, output the minimum number of adjacent swaps required to convert it into a palindrome. If it's not possible, then output $-1$.",
+        "samples": [
+            {
+                "input": "4\ndaamm\nbaa\nabba\nalgozenith\n",
+                "output": "4\n1\n0\n-1\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-AlgoZenith"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Minimum Swaps Palindrome",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

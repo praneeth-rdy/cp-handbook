@@ -1,0 +1,56 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Your city is having people infected with a virus. The city in which you live is represented as a grid consisting of <strong>n</strong> rows and <strong>m</strong> columns. Cells containing <strong>2</strong> are the cells where the people infected with the virus are present and the cells having <strong>1</strong> are the cells having people not yet infected with the virus. There are certain empty cells which are represented by <strong>0</strong>. The infected people in a unit time can infect <strong>all</strong> their adjacent cells, i.e, if they are present at cell [i, j] they can infect cells [i-1, j], [i+1, j], [i, j-1] and [i, j+1]. The virus <strong>cannot</strong> pass through empty cells. Your task is to print the minimum time in which all the people are infected with the virus. If the virus cannot infect everyone, print <strong>-1</strong>.</p>",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">1 &lt;= n &lt;= 1000\n1 &lt;= m &lt;= 1000</code></pre>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL);\n\tint n, m;\n\tcin >> n >> m;\n\tvector <vector <int>>grid(n, vector <int> (m));\n\tfor (int i = 0; i < n; i++) {\n\t\tfor (int j = 0; j < m; j++) {\n\t\t\tcin >> grid[i][j];\n\t\t}\n\t}\n\tvector <vector <int>> vis(n, vector <int> (m, 1e9));\n\tqueue <pair<int, int>> q;\n\tfor (int i = 0; i < n; i++) {\n\t\tfor (int j = 0; j < m; j++) {\n\t\t\tif (grid[i][j] == 2) {\n\t\t\t\tvis[i][j] = 0;\n\t\t\t\tq.push({i, j});\n\t\t\t}\n\t\t}\n\t}\n\twhile (!q.empty()) {\n\t\tauto cur = q.front();\n\t\tq.pop();\n\t\tint i, j;\n\t\ti = cur.first;\n\t\tj = cur.second;\n\t\tif (i && grid[i - 1][j] != 0) {\n\t\t\tif (vis[i - 1][j] == 1e9) {\n\t\t\t\tvis[i - 1][j] = vis[i][j] + 1;\n\t\t\t\tq.push({i - 1, j});\n\t\t\t}\n\t\t}\n\t\tif (i + 1 < n && grid[i + 1][j] != 0) {\n\t\t\tif (vis[i + 1][j] == 1e9) {\n\t\t\t\tvis[i + 1][j] = vis[i][j] + 1;\n\t\t\t\tq.push({i + 1, j});\n\t\t\t}\n\t\t}\n\t\tif (j && grid[i][j - 1] != 0) {\n\t\t\tif (vis[i][j - 1] == 1e9) {\n\t\t\t\tvis[i][j - 1] = vis[i][j] + 1;\n\t\t\t\tq.push({i, j - 1});\n\t\t\t}\n\t\t}\n\t\tif (j + 1 < m && grid[i][j + 1] != 0) {\n\t\t\tif (vis[i][j + 1] == 1e9) {\n\t\t\t\tvis[i][j + 1] = vis[i][j] + 1;\n\t\t\t\tq.push({i, j + 1});\n\t\t\t}\n\t\t}\n\t}\n\tint ans = 0;\n\tfor (int i = 0; i < n; i++) {\n\t\tfor (int j = 0; j < m; j++) {\n\t\t\tif (grid[i][j] != 0) {\n\t\t\t\tans = max(ans, vis[i][j]);\n\t\t\t}\n\t\t}\n\t}\n\tif (ans == 1e9)\n\t\tans = -1;\n\tcout << ans;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:18:44.806470+00:00"
+        },
+        "hints": {
+            "hint1": "Can we think of the city as a graph?",
+            "hint2": "For each non-infected person we want the nearest infected person.",
+            "solution_approach": "We can think of the city as a graph. Now we need to find the nearest infected person for each cell containing 1. This can be solved using multisource BFS where we do Breadth-first search starting from every infected person. We push all the cells having 2 into a queue. This way the first time a non-infected cell is encountered in the BFS, it is through the shortest possible path.\nAfter getting the minimum time for all non-infected cells we can take maximum of all these times to find the minimum time after which everyone is infected. We initialise the distance to a very large quantity. So if a cell is not infected at the end, our answer turns out to be that large quantity (10<sup>9</sup> in our case) and we print -1."
+        },
+        "id": 589,
+        "input_format": "<p>The first line contains two integers <strong>n</strong> and <strong>m</strong>&nbsp; \u2014 the number of rows and columns, respectively.<br>The following <strong>n</strong> lines contain <strong>m</strong> integers each, the j-th element in the i-th line is the number written in the j-th cell of the i-th row.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "After 1 unit time,\n0 2 2\n0 2 2\n1 2 2.\n\nStill there is a person which has not yet been infected.\n0 2 2\n0 2 2\n2 2 2.\nSo the minimum time in which everyone is infected is 2.\n\nFor second test case,\nAfter 1 unit time,\n0 2 2\n0 2 2\n1 0 2.\nNo more cells can be infected.\nStill there is a person which has not yet been infected.\nSo we print -1.",
+        "output_format": "Print the minimum time in which everyone can be infected or <strong>-1</strong> if everyone cannot be infected.",
+        "samples": [
+            {
+                "input": "3 3\n0 1 2\n0 1 2\n1 1 2",
+                "output": "2"
+            },
+            {
+                "input": "3 3\n0 1 2\n0 1 2\n1 0 2",
+                "output": "-1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Bfs",
+            "Graphs",
+            "company-AlgoZenith"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Infected People",
+        "video_editorial_id": 10676
+    },
+    "details": "Problem Details"
+}

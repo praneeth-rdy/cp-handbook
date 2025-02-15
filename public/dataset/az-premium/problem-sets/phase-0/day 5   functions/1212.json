@@ -1,0 +1,61 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given two numbers $X$ and $Y$. Print the sum of all **odd numbers** between them, excluding $X$ and $Y$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10$  \n$1 \\leq X,Y \\leq 10^4$",
+        "difficulty": 2,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\n// O(1) time complexity\n// O(1) space complexity\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n\n    while (t--)\n    {\n        int x, y;\n        cin >> x >> y;\n        // if x is greater than y swap them\n        if (x > y)\n            swap(x, y);\n        /* we now try to modify x and y such that the sum we are looking for includes x and y*/    \n        if (x % 2) // if odd, we know next odd that will start the sum is x+2\n            x += 2;\n        else    // similarly if even\n            x += 1;\n        if (y % 2)// if odd, we know last odd that ends sum is y-2\n            y -= 2;\n        else    // similarly if even\n            y -= 1;\n        int d = (y - x) / 2;// d is difference, and d+1 is the number of elements\n        // we are trying to model the sum as\n        // x, x+2, x+4,....y\n        // so subtract x from all\n        // x*(d+1) + 0+2+4+y-x\n        // x*(d+1) + 2(0+1+2+(y-x)/2)\n        // x*(d+1) + (d)*(d+1)\n        // (x+d)*(d+1)\n        if (d < 0) // if nothing exists in between print 0\n            cout << \"0\\n\";\n        else\n            cout << d * (d + 1) + x * (d + 1) << \"\\n\";\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        // O(1) time complexity\n        // O(1) space complexity\n\n        int t = Integer.parseInt(br.readLine());\n\n        while (t-- > 0) {\n            String[] xy = br.readLine().trim().split(\"\\\\s+\");\n            int x = Integer.parseInt(xy[0]);\n            int y = Integer.parseInt(xy[1]);\n\n            // if x is greater than y swap them\n            if (x > y) {\n                int temp = x;\n                x = y;\n                y = temp;\n            }\n            /* we now try to modify x and y such that the sum we are looking for includes x and y*/    \n            if (x % 2 != 0) // if odd, we know next odd that will start the sum is x+2\n                x += 2;\n            else    // similarly if even\n                x += 1;\n            if (y % 2 != 0)// if odd, we know last odd that ends sum is y-2\n                y -= 2;\n            else    // similarly if even\n                y -= 1;\n            int d = (y - x) / 2;// d is difference, and d+1 is the number of elements\n            // we are trying to model the sum as\n            // x, x+2, x+4,....y\n            // so subtract x from all\n            // x*(d+1) + 0+2+4+y-x\n            // x*(d+1) + 2(0+1+2+(y-x)/2)\n            // x*(d+1) + (d)*(d+1)\n            // (x+d)*(d+1)\n            if (d < 0) // if nothing exists in between print 0\n                out.println(\"0\");\n            else\n                out.println(d * (d + 1) + x * (d + 1));\n        }\n\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n\n    for _ in range(t):\n        x = int(data[idx])\n        y = int(data[idx + 1])\n        idx += 2\n\n        # if x is greater than y swap them\n        if x > y:\n            x, y = y, x\n        # we now try to modify x and y such that the sum we are looking for includes x and y\n        if x % 2 != 0:  # if odd, we know next odd that will start the sum is x+2\n            x += 2\n        else:    # similarly if even\n            x += 1\n        if y % 2 != 0:  # if odd, we know last odd that ends sum is y-2\n            y -= 2\n        else:    # similarly if even\n            y -= 1\n        d = (y - x) // 2  # d is difference, and d+1 is the number of elements\n        # we are trying to model the sum as\n        # x, x+2, x+4,...y\n        # so subtract x from all\n        # x*(d+1) + 0+2+4+y-x\n        # x*(d+1) + 2(0+1+2+(y-x)/2)\n        # x*(d+1) + (d)*(d+1)\n        # (x+d)*(d+1)\n        if d < 0:  # if nothing exists in between print 0\n            print(\"0\")\n        else:\n            print(d * (d + 1) + x * (d + 1))\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:35:12.173561+00:00"
+        },
+        "hints": {
+            "hint1": "You can simply iterate between $X$ and $Y$ and sum the odd numbers. The time complexity will be $O(|X - Y|)$ per test case.",
+            "hint2": "Find a mathematical formula to compute the sum directly without iterating through the numbers.",
+            "solution_approach": "To solve this problem efficiently, we can compute the sum of the odd numbers between $X$ and $Y$ directly without iterating through all the numbers.\n\nFirst, ensure that $X \\leq Y$. If not, swap $X$ and $Y$.\n\nThen, adjust $X$ and $Y$ to find the range of odd numbers between them:\n\n- If $X$ is odd, the first odd number after $X$ is $X + 2$. If $X$ is even, the first odd number after $X$ is $X + 1$.\n- If $Y$ is odd, the last odd number before $Y$ is $Y - 2$. If $Y$ is even, the last odd number before $Y$ is $Y - 1$.\n\nNow, calculate the number of terms in the sequence:\n\n\\[ d = \\frac{y - x}{2} \\]\n\nIf $d < 0$, there are no odd numbers between $X$ and $Y$, so the sum is $0$.\n\nOtherwise, compute the sum as:\n\n\\[ \\text{Sum} = (d + 1) \\times x + d \\times (d + 1) \\]\n\nThis formula derives from the sum of an arithmetic progression with common difference $2$.\n\n**Time Complexity per test case:** $O(1)$  \n**Space Complexity per test case:** $O(1)$"
+        },
+        "id": 1212,
+        "input_format": "First line contains a number $T$, the number of test cases.  \nNext $T$ lines will contain two numbers $X$ and $Y$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, there are no odd numbers between $5$ and $6$.\nFor the second test case, between $4$ and $10$, the odd numbers are $5$, $7$, and $9$. The sum is $5 + 7 + 9 = 21$.\nFor the third test case, between $4$ and $9$, the odd numbers are $5$ and $7$. The sum is $5 + 7 = 12$.",
+        "output_format": "Print the sum of all odd numbers between $X$ and $Y$.",
+        "samples": [
+            {
+                "input": "3\n5 6\n10 4\n4 9",
+                "output": "0\n21\n12"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Math",
+            "Implementation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 0.5,
+        "title": "Sum of Consecutive Odd Numbers",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

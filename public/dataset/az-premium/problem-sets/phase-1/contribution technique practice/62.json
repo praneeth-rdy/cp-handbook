@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given a string S consisting of the lowercase character of length N. Score of a string is the number of distinct characters present in the string. Like the score of \"character\" is 6.</p><p>Find the sum of the score of all substring of S.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\ntypedef long long ll;\nsigned main(){\n    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);;\n    ll testcases;\n    cin>>testcases;\n    while(testcases--){\n        ll n;\n        cin>>n;\n        string s;\n        cin>>s;\n        ll prev[26];\n        for(ll i=0;i<26;i++)\n            prev[i] = -1;\n        long long ans = 26*((n*(n+1))/2);\n        for(ll i=0;i<n;i++){\n            ll lenNotWithChar = i - prev[s[i]-'a']-1;\n            ans = ans - ((lenNotWithChar*(lenNotWithChar+1))/2);\n            prev[s[i]-'a'] = i;\n        }\n        for(ll i=0;i<26;i++){\n            ll lenNotWithChar = n - prev[i]-1;\n            ans = ans - ((lenNotWithChar*(lenNotWithChar+1))/2);\n        }\n        cout<<ans<<\"\\n\";\n    }\n    \n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Solution Approach is missing"
+            ],
+            "last_updated": "2024-06-22T02:46:11.797908+00:00"
+        },
+        "hints": {
+            "hint1": "Since the strings are made of only lowercase alphabets, we can calculate the contribution of each letter from \u2018a\u2019 to \u2018z\u2019 to the final answer.",
+            "hint2": "We need to calculate the contribution of each letter from \u2018a\u2019 to \u2018z\u2019 to the final answer. For the answer, we will consider the case for \u2018a\u2019, you need to do the same for each letter from \u2018a\u2019 to \u2018z\u2019. If the count of \u2018a\u2019 is anything more than 0 in a subarray, it would contribute 1 to the final answer (since we are taking count of distinct characters). So, we can first add the total number of subarrays, N*(N+1)/2 to the final answer and then subtract those subarrays which don\u2019t have the character \u2018a\u2019 in it. This would give us the contribution for \u2018a\u2019 in the final answer. Do the same for all characters from \u2018a\u2019 to \u2018z\u2019.\n\nTime Complexity per test case: O(N)",
+            "solution_approach": ""
+        },
+        "id": 62,
+        "input_format": "<p>The first line contains <i>T</i>, the number of test cases <i>(1&lt;=T&lt;=10)</i>.</p><p>The first line of each test case contains an integers <i>N, </i>size of the string, <i>1&lt;=N&lt;=10^5.</i></p><p>The second line of each test case contains a string <i>S</i> of length <i>N</i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "<p><strong>For the 1st test case:</strong><br>Substring and score = (\"a\",1), (\"c\",1) (\"ac\",2).<br>Total score = 4</p><p><strong>For the 2nd test case:</strong><br>Substring and score = (\"a\",1), (\"aa\",1), (\"aac\",2), (\"a\",1), (\"ac\",2), (\"c\",1).<br>Total score = 8</p>",
+        "output_format": "<p>For each test case print the sum of the score of all substring of <i>S</i> in a newline.</p>",
+        "samples": [
+            {
+                "input": "5\n2\nac\n3\naac\n5\nabode\n5\naaaaa\n10\njdnbfjdhzw",
+                "output": "4\n8\n35\n15\n207"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Contribution Technique"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Count Distinct Char in Substrings",
+        "video_editorial_id": 8137
+    },
+    "details": "Problem Details"
+}

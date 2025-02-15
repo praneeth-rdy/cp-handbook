@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given an integer N, break it into the sum of K **positive integers**, where K >= 2, and maximize the product of those integers.",
+        "complete_approach": "",
+        "constraints": "<p><i>1 \u2264 T \u2264 10<sup>4</sup></i><br><i>2 \u2264 N \u2264 10<sup>6</sup></i></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define MOD 1000000007\n\nint power(long long a, long long b)\n{ //a^b\n    long long res = 1;\n    a = a % MOD;\n    while (b > 0)\n    {\n        if (b & 1)\n        {\n            res = (res * a) % MOD;\n            b--;\n        }\n        a = (a * a) % MOD;\n        b >>= 1;\n    }\n    return res;\n}\n\nint findMaxProd(int n)\n{\n    if (n == 2)\n        return 1;\n    if (n == 3)\n        return 2;\n    if (n == 4)\n        return 4;\n    if (n % 3 == 0)\n        return power(3, n / 3);\n    if (n % 3 == 2)\n        return 2ll * power(3, n / 3) % MOD;\n    return 4ll * power(3, n / 3 - 1) % MOD;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n    while (t--)\n    {\n        int n;\n        cin >> n;\n        cout << findMaxProd(n) << '\\n';\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:19:22.421563+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Can you come up with a greedy logic to break the number such that the product is maximized?</p>",
+            "hint2": "<p>Can you prove why the most profitable way of breaking the number is into 2's and 3's?</p>",
+            "solution_approach": "<p>The given problem can be solved using DP, but it'll be too slow. We can show that we would always want to break the number into 2's and 3's. For <i>N</i> \u2265 5, we can see that it is always beneficial to break N further. For example if <i>N = 6 + x</i>, the product we get is <i>6*x.</i> But if we write <i>N</i> as <i>N = 3 + 3 + x</i>, the product will be <i>9*x. </i>Also breaking the number into 3's is more profitable as <i>3*(x-3) \u2265 2*(x-2)</i> for <i>x \u2265 5.</i> So we can simply find the answer by multiplying by 3, N/3 times. To find the product efficiently you can use binary exponentiation.</p>"
+        },
+        "id": 631,
+        "input_format": "The first line contains a single integer <i>T</i> - the number of test cases.<br><i>T</i> lines follow containing a single integer <i>N.</i>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<pre><code class=\"language-plaintext\">1 + 1 = 2\n1 + 2 = 3\n2 + 2 = 4\n2 + 3 = 5\n3 + 3 + 4 = 10</code></pre>",
+        "output_format": "For each test case print in a new line the maximum output possible modulo <i>10<sup>9</sup>+7</i>.",
+        "samples": [
+            {
+                "input": "5\n2\n3\n4\n5\n10",
+                "output": "1\n2\n4\n6\n36"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-Apple"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nint findMaxProd(int n)\n{\n    //add code here\n}\n\n<fix>\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n    while (t--)\n    {\n        int n;\n        cin >> n;\n        cout << findMaxProd(n) << '\\n';\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "INTBREAK",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

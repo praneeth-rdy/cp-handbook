@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You want to visit the country of Wonderland. There are **N** cities in the country. Not all cities are connected by roads, but you know which cities are connected.\n\nYou landed in city **A**, and you want to visit city **B**. You already booked your car, but it doesn\u2019t have any petrol. The capacity of the tank of the car is **C**. You know the **Per Liter cost** of petrol in each city, and you also have the map of the country (i.e., you know the length of the road between two cities). \n\n**To travel one unit of distance, you need one liter of petrol.**\n\nYour task is to find the **minimum cost** to travel from city **A** to city **B**.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 N \u2264 10000<br>1 \u2264 M \u2264 100000<br>1 \u2264 C \u2264 100<br>1 \u2264 u, v \u2264 N<br>1 \u2264 d \u2264 C<br>1 \u2264 A, B \u2264 N<br>1 \u2264 P[i] \u2264 100<br>&nbsp;</p>",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define F first\n#define S second\n#define MP make_pair\nusing ii = pair<int, int>;\n\nint n, m, C;\nvector<ii> g[10010];\nint P[10010];\n\nint dist[10001][101];\nint vis[10001][101];\n\nint dijk(int st, int en)\n{\n    for (int i = 1; i <= n; i++)\n    {\n        for (int j = 0; j <= C; j++)\n        {\n            dist[i][j] = 1e9;\n            vis[i][j] = 0;\n        }\n    }\n\n    priority_queue<pair<int, ii>> pq;\n    \n    pq.push(MP(0, MP(st, 0)));\n    dist[st][0] = 0;\n    \n    while (!pq.empty())\n    {\n        pair<int, ii> cur = pq.top();\n        pq.pop();\n        \n        int node = cur.S.F;\n        int fuel = cur.S.S;\n        int dis = -cur.F;\n\n        if (vis[node][fuel] == 1)\n            continue;\n        \n        vis[node][fuel] = 1;\n\n        if (fuel < C && dis + P[node] < dist[node][fuel + 1])\n        {\n            dist[node][fuel + 1] = dis + P[node];\n            pq.push(MP(-dist[node][fuel + 1], MP(node, fuel + 1)));\n        }\n        \n        for (auto v : g[node])\n        {\n            if (fuel >= v.S && dist[v.F][fuel - v.S] > dis)\n            {\n                dist[v.F][fuel - v.S] = dis;\n                pq.push(MP(-dist[v.F][fuel - v.S], MP(v.F, fuel - v.S)));\n            }\n        }\n    }\n    \n    int mini = 1e9;\n    \n    for (int i = 0; i <= C; i++)\n    {\n        mini = min(mini, dist[en][i]);\n    }\n\n    assert(mini < 1e9);\n    \n    return mini;\n}\n\nvoid solve()\n{\n\n    cin >> n;\n    cin >> m;\n    \n    for (int i = 0; i < m; i++)\n    {\n        int u, v, w;\n        \n        cin >> u >> v >> w;\n        \n        g[u].push_back({v, w});\n        g[v].push_back({u, w});\n    }\n    \n    for (int i = 1; i <= n; i++)\n    {\n        cin >> P[i];\n    }\n    \n    int st, en;\n    \n    cin >> st >> en >> C;\n\n    cout << dijk(st, en) << \"\\n\";\n}\n\nsigned main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n    //int _t;cin>>_t;while(_t--)\n    solve();\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing"
+            ],
+            "last_updated": "2024-06-22T02:45:15.238191+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 615,
+        "input_format": "The first line of input contains **N** - the number of cities in the country of Wonderland.  \nThe second line contains **M** - the number of roads in the country.  \n\nThe next **M** lines each contain three integers **u**, **v**, and **d**:  \n- There is a road between city **u** and **v** of length **d**.\n\nThe next line contains **N** space-separated integers:  \n**P[1], P[2], ..., P[N]** - where **P[i]** is the per liter cost of petrol in city **i**.\n\nThe last line of input contains three integers **A**, **B**, and **C**:  \n- **A**: The starting city.  \n- **B**: The destination city.  \n- **C**: The capacity of the car's petrol tank.\n\nIt is guaranteed that it\u2019s always possible to reach city **B** from city **A**.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><strong>Explanation 1:</strong></p><p>Fill petrol of 4 liters in city 1, and travel via path 1 \u2192 2 \u2192 3 \u2192 4 \u2192 5.</p><p><strong>Explanation 2:</strong></p><p>Fill 1 liter of petrol in city 1 of cost 10, travel to city 6. Fill 5 liters of petrol at city 6 of cost 5 x 1 = 5. Travel to city 5. Total cost = 10 + 5 = 15. The path took 1 \u2192 6 \u2192 5.</p>",
+        "output_format": "Print the minimum cost to reach city **B** on a new line.",
+        "samples": [
+            {
+                "input": "5\n5\n1 2 1\n2 3 1\n3 4 1\n4 5 1\n1 4 6\n1 10 10 10 1\n1 5 8",
+                "output": "4"
+            },
+            {
+                "input": "6\n6\n1 2 1\n2 3 1\n3 4 1\n4 5 1\n1 6 1\n6 5 5\n10 10 10 10 1 1\n1 5 8",
+                "output": "15"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Dijkstra"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Budget Travelling",
+        "video_editorial_id": 8218
+    },
+    "details": "Problem Details"
+}

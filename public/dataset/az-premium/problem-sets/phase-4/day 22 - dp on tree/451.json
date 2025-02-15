@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given a tree consisting exactly of <span style=\"color:black!important;\">\ud835\udc5b</span> vertices. Each vertex <span style=\"color:black!important;\">\ud835\udc63</span> of this tree has a value <span style=\"color:black!important;\">\ud835\udc4e<sub>\ud835\udc63</sub></span> assigned to it.</p><p>Let <span style=\"color:black!important;\">\ud835\udc51\ud835\udc56\ud835\udc60\ud835\udc61(\ud835\udc65,\ud835\udc66)</span> be the distance between the vertices <span style=\"color:black!important;\">\ud835\udc65</span> and <span style=\"color:black!important;\">\ud835\udc66</span>. The distance between the vertices is the number of edges on the simple path between them.</p><p>Let's define the cost of the tree as the following value: firstly, let's fix some vertex of the tree. Let it be <span style=\"color:black!important;\">\ud835\udc63</span>. Then the cost of the tree is&nbsp;</p><figure class=\"image\"><img src=\"https://lh6.googleusercontent.com/d7cv7_H-WYjQNYDPfOaTm2hq3y1w6OGhAmEc4BfwQRc2_WR7GBBK44ok0V2SDZUy2tA9QD9QKvfy3XGI7CvFaIjilaVepq7sTPMkmw1EW6XXeNw3JMb_xnjQlpsu9CqUwxBaZqOq\"></figure><p>Your task is to calculate the <strong>maximum as well as minimum possible cost</strong> of the tree if you can choose <span style=\"color:black!important;\">\ud835\udc63</span> arbitrarily to calculate the answer for both the case.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 5,
+        "editorial_code": [],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "Editorial Code data is currently empty.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:42:50.576676+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 451,
+        "input_format": "<p>The first line contains an integer T ( 1 \u2264 T \u2264 10^5) - the number of test cases.</p><p>The first line of each test case contains an integer N( 1 \u2264 N\u2264 10^5).</p><p>The second line of each test case contains N space-separated integers &nbsp;1 \u2264 a<sub>i </sub>\u2264 10^5.</p><p>The next N-1 lines contain a description of an edge \u2192 u<sub>i</sub>, v<sub>i</sub> (1 \u2264 u<sub>i</sub>, v<sub>i</sub> \u2264 N, u<sub>i</sub>\u2260v<sub>i</sub>,). Vertices u<sub>i</sub> and v<sub>i</sub> are connected by an undirected edge.</p><p>It is guaranteed that sum of all <i>N</i> over all test cases does not exceed 10^6.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test print the maximum and minimum cost in a new line.</p>",
+        "samples": [
+            {
+                "input": "1\n5\n1 2 3 4 5\n1 2\n1 3\n2 4\n2 5",
+                "output": "32 16"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Trees",
+            "Dfs",
+            "Dynamic Programming",
+            "company-APT Portfolio"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "Maximum Cost Tree",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

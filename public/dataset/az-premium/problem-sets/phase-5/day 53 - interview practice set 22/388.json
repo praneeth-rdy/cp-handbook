@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Zenithland has $n$ cities and $m$ flight connections. Your task is to design a round trip that begins in a city, goes through one or more other cities, and finally returns to the starting city. Every intermediate city on the route has to be distinct.",
+        "complete_approach": "",
+        "constraints": "$ 1 \u2264 T \u2264 10 $\n$ 1 \u2264 n \u2264 10^{5}$\n$ 1 \u2264 m \u2264 2\u22c510^{5}$\n$ 1 \u2264 a , b \u2264 n$",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\r\nusing namespace std;\r\n\r\n#define ll int64_t\r\n#define endl '\\n'\r\n\r\nint n, m;\r\nvector<int> color;\r\nvector<vector<int>> adj;\r\nbool f;\r\nvoid dfs(int v) {\r\n\tif (f)return;\r\n\tcolor[v] = 1;// being visited\r\n\tfor (auto x : adj[v]) {\r\n\t\tif (color[x] == 1) {\r\n\t\t\tf = true;\r\n\t\t\treturn;\r\n\t\t}\r\n\t\tif (color[x] == 0) {\r\n\t\t\tdfs(x);\r\n\t\t}\r\n\t}\r\n\tcolor[v] = 2; // already visted\r\n}\r\nvoid solve() {\r\n\tcin >> n >> m;\r\n\tadj.assign(n + 1, vector<int>());\r\n\tfor (int i = 0; i < m; i++) {\r\n\t\tint u, v;\r\n\t\tcin >> u >> v;\r\n\t\tadj[u].push_back(v);\r\n\t}\r\n\tcolor.assign(n + 1, 0);\r\n\tf = false;\r\n\tfor (int i = 1; i <= n; i++) {\r\n\t\tif (color[i] == 0)dfs(i);\r\n\t}\r\n\tif (!f)cout << \"No\" << endl;\r\n\telse cout << \"Yes\" << endl;\r\n}\r\nint main() {\r\n\tios_base :: sync_with_stdio(0);\r\n\tcin.tie(nullptr); cout.tie(nullptr);\r\n\r\n#ifdef Mastermind_\r\n\tfreopen(\"input.txt\", \"r\", stdin); \\\r\n\tfreopen(\"output.txt\", \"w\", stdout);\r\n#endif\r\n\tint t = 1;\r\n\t// int i = 1;\r\n\tcin >> t;\r\n\twhile (t--) {\r\n\t\t// cout << \"Case #\" << i << \": \";\r\n\t\tsolve();\r\n\t\t// i++;\r\n\t}\r\n\treturn 0;\r\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:28:15.904726+00:00"
+        },
+        "hints": {
+            "hint1": "Apply DFS to find the cycle with length \u2265 2 in the graph.",
+            "hint2": "To check if a cycle exists in a directed graph, you can use a modified depth-first search (DFS) algorithm.\n\n1. First, you can represent the graph as an adjacency list or matrix.\n2. Next, you can perform a DFS starting from each vertex in the graph. During the DFS, you can keep track of the visited vertices and mark each visited vertex as you visit it. If you encounter a visited vertex again during the DFS, then you have found a cycle in the graph.\n3. However, in a directed graph, you need to consider the direction of the edges. Therefore, you need to keep track of not only visited vertices, but also which vertices are on the current path being traversed.\n4. To do this, you can use a color array to keep track of each vertex's state during the DFS. The color array can have the following values:  \n        $0$: the vertex is completely unvisited.   \n        $1$: the vertex whose some but not all children are visited.   \n        $2$: the vertex whose all the children are visited.    \n5. During the DFS, if you encounter a vertex that is already on the current path being traversed (i.e. has a color value of $1$), then you have found a cycle.  \n\nTime complexity : $O(V+E)$",
+            "solution_approach": "To check if a cycle exists in a directed graph, you can use a modified depth-first search (DFS) algorithm.\n\n1. First, you can represent the graph as an adjacency list or matrix.\n2. Next, you can perform a DFS starting from each vertex in the graph. During the DFS, you can keep track of the visited vertices and mark each visited vertex as you visit it. If you encounter a visited vertex again during the DFS, then you have found a cycle in the graph.\n3. However, in a directed graph, you need to consider the direction of the edges. Therefore, you need to keep track of not only visited vertices, but also which vertices are on the current path being traversed.\n4. To do this, you can use a color array to keep track of each vertex's state during the DFS. The color array can have the following values:  \n        $0$: the vertex is completely unvisited.   \n        $1$: the vertex whose some but not all children are visited.   \n        $2$: the vertex whose all the children are visited.    \n5. During the DFS, if you encounter a vertex that is already on the current path being traversed (i.e. has a color value of $1$), then you have found a cycle.  \n\nTime complexity : $O(V+E)$\n\n*Note : Difference between Round Trip and this question is  that in the former one we could have counted 2 nodes as forming a cycle i.e, if the node is connected with its parent in a loop we can call it a circle. In this question we dont consider a cycle unless and until there are 3 nodes in the cycle. So we dont consider the parent child loops in cycles .*\n\n\n*Note : It is important to note that when dealing with graphs that are not explicitly stated to be connected, one must perform a depth-first search (DFS) on all unvisited nodes to ensure that all components of the graph are explored. This is because running DFS only on one starting node may miss components of the graph that are not connected to that starting node.*"
+        },
+        "id": 388,
+        "input_format": "First line contains $T$ - Number of test cases.\nFirst input line of each test case has two integers $n$ and $m$: the number of cities and flights. The cities are numbered $1,2,\u2026,n$.\nThen, for each test case, there are $m$ lines describing the flights. Each line has two integers $a$ and $b$: there is a flight connection from city $a$ to city $b$. All connections are one-way flights from a city to another city.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, Print *\"Yes\"* if such round trip exists, otherwise print *\"No\"* in a new line.",
+        "samples": [
+            {
+                "input": "1\n4 5\n1 3\n2 1\n2 4\n3 2\n3 4\n",
+                "output": "Yes\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Dfs"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Round Trip II",
+        "video_editorial_id": 10653
+    },
+    "details": "Problem Details"
+}

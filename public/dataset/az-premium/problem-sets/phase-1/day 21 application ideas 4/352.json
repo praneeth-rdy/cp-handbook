@@ -1,0 +1,58 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given a list of N students with their names and roll number. Sort the list according to their roll numbers.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^5$  \n\n$1 \\leq N \\leq 10^5$  \n\n$1 \\leq |S| \\leq 100$  \n\n$1 \\leq R \\leq 10^5$  \n\nIt is guaranteed that the sum of $N$ over all test cases does not exceed $10^5$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n\nbool comp(pair<string, int> a, pair<string, int> b) {\n  return a.second < b.second;\n}\n\nint main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int n;\n    cin >> n;\n    vector<pair<string, int>> v;\n    for (int i = 0; i < n; ++i) {\n      string s;\n      int r;\n      cin >> s >> r;\n      v.push_back({s, r});\n    }\n    sort(v.begin(), v.end(), comp);\n    for (int i = 0; i < n; ++i) {\n      cout << v[i].first << \" \" << v[i].second << \"\\n\";\n    }\n  }\n  return 0;\n}\n```\n\n",
+                "language": "C++14"
+            },
+            {
+                "code": "\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid solve() {\n  int n;\n  cin >> n;\n\n  pair<int, string> arr[n];\n\n  for (int i = 0; i < n; i++) {\n    cin >> arr[i].second >> arr[i].first;\n  }\n\n  sort(arr, arr + n);\n\n  for (int i = 0; i < n; i++) {\n    cout << arr[i].second << \" \" << arr[i].first << \"\\n\";\n  }\n}\n\nsigned main() {\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cin.tie(0);\n  int _t;\n  cin >> _t;\n  while (_t--) solve();\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:45:58.854564+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Make a vector of pairs and store the name and roll number in it. Sort the vector using comparator function i.e. according to the roll number.\nOr you could also just use a vector or array to store the name and roll number in the following format {roll,name}. We use roll number as the first field because when we use sort function in vector or array it by default sorts based on the first field.So even without using comparator function it would sort it on the basis of roll numbers\n\nTime Complexity per test case: $O(N \\log N)$"
+        },
+        "id": 352,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer N - the length of the array. \n\nThe second line of each test case contains a string S and an integer R - the name and roll number.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, print the sorted list according to their roll numbers.",
+        "samples": [
+            {
+                "input": "2\n5\namelia 21\nsophia 12\nemma 11\nava 8\nisabel 1\n3\nalice 34\nbob 20\nhannah 5\n",
+                "output": "isabel 1\nava 8\nemma 11\nsophia 12\namelia 21\nhannah 5\nbob 20\nalice 34\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-Morgan Stanley"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Sort by Roll Number",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

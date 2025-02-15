@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p><span style=\"background-color:transparent;color:#000000;\">You are given a grid consisting of <strong>n </strong>rows and <strong>m </strong>columns. In the given grid, it is guaranteed that all the rows are sorted in increasing order and the columns are also sorted in increasing order. You have to answer <strong>q </strong>queries. In each query you are given a number <strong>x</strong>. You need to print <strong>\u2018Yes\u2019</strong> if the number is present in the grid and <strong>\u2018No\u2019</strong> otherwise.</span></p><p><span style=\"background-color:transparent;color:#000000;\">Try to solve this problem using constant extra space.</span></p>",
+        "complete_approach": "",
+        "constraints": "<p>1 &lt;= n,m &lt;= 1000<br>1 &lt;= q &lt;= 10000</span><br><span style=\"background-color:transparent;color:#000000;\">1 &lt;= grid[i][j] &lt;= 10<sup>9</sup></span><br><span style=\"background-color:transparent;color:#000000;\">1 &lt;= x &lt;= 10<sup>6</sup></span></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nbool search(vector<vector<int>> &grid, int x)\n{\n\tint n = (int)grid.size();\n\tint m = (int)grid[0].size();\n\tint i, j;\n\ti = 0;\n\tj = m - 1;\n\twhile (i < n && j >= 0)\n\t{\n\t\tif (grid[i][j] == x) // value found\n\t\t\treturn true;\n\t\tif (grid[i][j] > x) // eliminating this column\n\t\t\tj--;\n\t\telse // eliminating this row\n\t\t\ti++;\n\t}\n\treturn false;\n}\n\nint main()\n{\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL); cout.tie(NULL);\n\n\tint n, m;\n\tcin >> n >> m;\n\t\n\tvector<vector<int>> grid(n, vector<int>(m));\n\t\n\tfor (int i = 0; i < n; i++)\n\t{\n\t\tfor (int j = 0; j < m; j++)\n\t\t\tcin >> grid[i][j];\n\t}\n\t\n\tint q;\n\tcin >> q;\n\t\n\twhile (q--)\n\t{\n\t\tint x;\n\t\tcin >> x;\n\t\tif (search(grid, x))\n\t\t\tcout << \"Yes\\n\";\n\t\telse\n\t\t\tcout << \"No\\n\";\n\t}\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:28:41.403349+00:00"
+        },
+        "hints": {
+            "hint1": "<p><span style=\"background-color:transparent;color:#000000;\">Can we use the property of the grid to search faster?</span></p>",
+            "hint2": "<p><span style=\"background-color:transparent;color:#000000;\">If the value at the end of a row is less than x, x cannot be present in this row.</span><br><span style=\"background-color:transparent;color:#000000;\">If the value at the beginning of a column is more than x, x cannot be present in this column.</span></p>",
+            "solution_approach": "For each query we cannot search the entire grid as that would timeout. We can use the property of the grid that the rows and columns are both sorted in increasing order.\nWe start from the top right corner of the grid.\n\n1. If the value is equal to x we print true.\n2. If the value is less than x, all the numbers in the current row will also be smaller than x so they can be eliminated. So the current row is eliminated.\n3. If the value is greater than x, all the numbers in the current column will also be greater than x as we are at the top of the column and the column is sorted in increasing order.\n\nSo the current column is also eliminated.\nThis works as in each step a row or a column is eliminated and as there are a total of n + m rows and columns, we can answer each query in O(n+m) time complexity."
+        },
+        "id": 587,
+        "input_format": "The first line contains two integers n and m \u2014 the number of rows and columns, respectively.\nThe following n lines contain m integers each, the j-th element in the i-th line is the number written in the j-th cell of the i-th row.\nThe next line contains a single integer q - the number of queries.\nThen q lines follow. The ith line contains the value of x for the ith query.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><span style=\"background-color:transparent;color:#000000;\">Yes\u2019 is printed for the numbers present in the grid and \u2018No\u2019 for the numbers not present.</span></p>",
+        "output_format": "Print q lines. For each query print \u2018Yes\u2019 if the number is present in the grid and \u2018No\u2019 otherwise.",
+        "samples": [
+            {
+                "input": "3 4\n1 3 4 6\n2 5 7 9\n7 11 12 19\n5\n3\n8\n10\n12\n13",
+                "output": "Yes\nNo\nNo\nYes\nNo"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nbool search(vector<vector<int>> &grid, int x)\n{\n\t//Complete the function\n}\n\n<fix>\nint main()\n{\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL); cout.tie(NULL);\n\n\tint n, m;\n\tcin >> n >> m;\n\t\n\tvector<vector<int>> grid(n, vector<int>(m));\n\t\n\tfor (int i = 0; i < n; i++)\n\t{\n\t\tfor (int j = 0; j < m; j++)\n\t\t\tcin >> grid[i][j];\n\t}\n\t\n\tint q;\n\tcin >> q;\n\t\n\twhile (q--)\n\t{\n\t\tint x;\n\t\tcin >> x;\n\t\tif (search(grid, x))\n\t\t\tcout << \"Yes\\n\";\n\t\telse\n\t\t\tcout << \"No\\n\";\n\t}\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Grid Queries",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

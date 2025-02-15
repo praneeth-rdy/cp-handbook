@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Alice and Bob are playing a new game, which is very interesting and fun. The game is as follows:\n\n1. The game starts with two $n$-sized integer arrays, $A$ and $B$, and is played by two players, $P_1$ and $P_2$.\n2. The players move in alternating turns, with $P_1$ always moving first. During each move, the current player must choose an integer, $i$, such that $0 \\leq i \\leq n - 1$.  \n   - If the current player is $P_1$, then $P_1$ receives $A_i$ points.  \n   - If the current player is $P_2$, then $P_2$ receives $B_i$ points.\n3. Each value of $i$ can be chosen only once. That is, if a value of $i$ is already chosen by some player, none of the players can re-use it. So, the game always ends after $n$ moves.\n4. The player with the maximum number of points wins.\n5. The arrays $A$ and $B$ are accessible to both the players $P_1$ and $P_2$. So the players make an **optimal move** at every turn.\n\nGiven the values of $n$, $A$, and $B$, can you determine the outcome of the game? $P_1$ is Alice, and $P_2$ is Bob.  \nPrint **\u2018Alice\u2019** if Alice will win, **'Bob'** if Bob will win, or **'Tie'** if they will tie. Assume both players always move *optimally*.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10$  \n\n$2 \\leq N \\leq 1000$  \n\n$1 \\leq A_i, B_i \\leq 10^5$",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n#define endl '\\n'\n#define int long long\n#define F first\n#define S second\n\nusing ii = pair<int, int>;\n\nbool comp(ii a, ii b) { return a.F + a.S > b.F + b.S; }\n\nvoid solve() {\n  int n;\n  cin >> n;\n  int a[n], b[n];\n  vector<ii> arr;\n  for (int i = 0; i < n; i++) cin >> a[i];\n  for (int i = 0; i < n; i++) cin >> b[i];\n  for (int i = 0; i < n; i++) arr.push_back({a[i], b[i]});\n\n  sort(arr.begin(), arr.end(), comp);\n  int asc = 0, bsc = 0, turn = 0;\n  for (int i = 0; i < n; i++) {\n    if (turn == 0) {\n      asc += arr[i].F;\n      turn++;\n    } else {\n      bsc += arr[i].S;\n      turn--;\n    }\n  }\n\n  if (asc > bsc)\n    cout << \"Alice\" << endl;\n  else if (asc == bsc)\n    cout << \"Tie\" << endl;\n  else\n    cout << \"Bob\" << endl;\n}\n\nsigned main() {\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n\n  int _t = 1;\n  cin >> _t;\n  // string s; getline(cin, s);//\n\n  while (_t--) {\n    solve();\n  }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:36:28.183047+00:00"
+        },
+        "hints": {
+            "hint1": "Optimal play is to make your score > opponent's score, NOT to maximize your score.\nAn optimal move isn't always to choose the maximum available element\nSometimes, optimal move is to choose smaller element which blocks a big element on the opponent's side.",
+            "hint2": "Lets take an example :  A = [ a , x ] B = [ b , y ]\nIf I am player $1$: if I pick the first , my score is a , my opponents score is y\nIf I pick the second , my score is x , my opponents score is b\nCondition for first choice to be better than second choice is that if I score better than my opponents score in first choice\n$a-y > x-b$\n$a+b > x+y$\n\nAfter some thinking one may conclude, that in an optimal play the sequence of cards must have descending values.",
+            "solution_approach": "It can be proven that the optimal move for the current player is to always choose the first unused element having the maximal value for $A_i + B_i$, as the player will either add the largest number of points to their own score or block the opposing player from ever receiving a large number of points.\n\nSo now that we've established we must both maintain paired values and choose the first available index i having a maximal value for $A_i + B_i$, we have to consider the most efficient way to find which index i to choose. The best way to do this is to sort each pair of values in descending order of the maximum sum of $A_i$ and $B_i$.\n\nNext, we simply need to traverse the sorted array from $0$ to $n - 1$, adding the appropriate number of points at index i (i.e., the paired value at i associated with the current player) to the current player's score. This means that in the ith move, the current player will make an optimal move by choosing the ith element in the sorted array.\n\nOnce we've finished summing the scores, we simply compare them and print the appropriate result.\n\nTime Complexity: $O(N \\log N)$\nSpace Complexity: $O(N)$ extra space"
+        },
+        "id": 76,
+        "input_format": "The first line of input contains one integer $T$ ($1 \\leq T \\leq 10$) \u2014 the number of test cases. Then $T$ test cases follow.  \n\nThe first line of each test case contains $N$ ($2 \\leq N \\leq 1000$), the number of elements in arrays $A$ and $B$.  \n\nThe second line contains $N$ space-separated integers $A_1, A_2, \\dots, A_N$ - the elements of array $A$.  \n\nThe third line contains $N$ space-separated integers $B_1, B_2, \\dots, B_N$ - the elements of array $B$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><i><strong>Explanation 1:</strong></i><br>The players make the following 3 moves:</p><ol><li>Alice chooses i = 2 and receives 4 coins.</li><li>Bob chooses i = 0 and receives 5 coins. Notice that Bob won't choose i = 1, because this would cause Alice to win.</li><li>Alice chooses i = 1 (the only remaining move) and receives 3 coins.</li></ol><p>The total score of Alice is 7, while the total score of Bob is 5. Hence, Alice wins.</p><p><i><strong>Explanation 2:</strong></i><br>Both players will only make 1 move and all possible point values are 1, the players will end the game with equal scores.</p><p><i><strong>Explanation 3:</strong></i><br>Both players will only make 1 move and all the possible point values for Bob are greater than all the possible point values for Alice, Bob will win the game.</p>",
+        "output_format": "<p>For each test case, print one of the following predicted outcomes of the game on a new line:</p><ol><li>Print 'Alice' if Alice will win.</li><li>Print 'Bob' if Bob will win.</li><li>Print 'Tie' if the two players will tie.</li></ol>",
+        "samples": [
+            {
+                "input": "3\n3\n1 3 4\n5 3 1\n2\n1 1\n1 1\n2\n2 2\n3 3",
+                "output": "Alice\nTie\nBob"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Greedy",
+            "Game Theory"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Interesting Game",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

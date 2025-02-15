@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Find the number of unordered pairs of intersecting diagonals in the Convex <i>N</i>-gon. The intersecting point should be inside the polygon.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n#define endl '\\n'\n#define int long long int\n#define mod 1000000007\nconst int size = 1000002;\n\nint bin_pow(int a, int b) {  // required since answer needs to be in modulo\n  int ans = 1;\n  while (b) {\n    if (b % 2 == 1) ans = (ans * a) % mod;\n    a = (a * a) % mod;  // since we needed to take %, we did not take a*=a;\n    b /= 2;\n  }\n  return ans;\n}\n\ninline int mul(int a, int b) {  // preventing multiplication overflow\n  return (a * b) % mod;\n}\n\nvoid solve() {\n  // time complexity:O(log N)\n  // space complexity:O(1)\n  int N;\n  cin >> N;\n  int answer = mul(N, N - 1);\n  answer = mul(answer, N - 2);\n  answer = mul(answer, N - 3);\n  answer = mul(answer, bin_pow(24, mod - 2));  // O(log N)\n  if (answer < 0) answer += mod;\n  cout << answer % mod << endl;\n}\n\nsigned main() {\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n  int t;\n  cin >> t;\n  while (t--) solve();\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:43:51.338108+00:00"
+        },
+        "hints": {
+            "hint1": "Choose 4 points as opposite ends of diagonals. Now can you draw 2 diagonals using these 4 points, s.t. they intersect inside the polygon.",
+            "hint2": "If we combinatorially formulate Hint 1, we get ${N\\choose4} $.",
+            "solution_approach": "${N\\choose4} \\% 1000000007$.  \n\nTime Complexity : $O(\\log N)$"
+        },
+        "id": 69,
+        "input_format": "<p>The first line contains <i>T</i> (1 \u2264 <i>T</i> \u2264 100000), the number of test cases.<br>Each of the next <i>T</i> lines contains a positive integer <i>N</i> denoting the number of sides of convex polygon (3 \u2264 <i>N</i> \u2264 10<sup>9</sup>).</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><i><strong>Explanation 1:</strong></i><br>(1, 2)</p><p><i><strong>Explanatino 2:</strong></i><br>(1, 3), (1, 5), (2, 3), (2, 4), (4, 5)</p><figure class=\"image\"><img src=\"https://lh4.googleusercontent.com/Y_IFXMFo7Qnr3L72adAP-KtmYyihFb2vJSrO8mAdH1qMrWxyzWQdDxEN48eNPoHyMFt0K0RQy72gs5pWIsxciMXVh9afUQm7LDY_-J5fOEkY450HwJWS6p1s5H-XlL6PCXgr75li\"></figure>",
+        "output_format": "<p>For each test case, print a single number denoting the number of intersecting diagonals in the convex <i>N</i>-gon. Since answer can be large, print it with modulo 1000000007.</p>",
+        "samples": [
+            {
+                "input": "2\n4\n5",
+                "output": "1\n5"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Number of Intersecting Diagonals",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

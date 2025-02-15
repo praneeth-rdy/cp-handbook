@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given N bricks in a line and M different coloured buckets of paint. You have to find the number of ways you can colour the brick wall such that there are exactly K positions out of the N bricks such that it has a different colour from the brick wall on its immediate left. (except the first brick, since there is no left brick). Print it modulo 10^9+7.",
+        "complete_approach": "",
+        "constraints": "<p>1\u2264 T \u2264 100</p><p>1\u2264 N, M \u2264 2000</p><p>0\u2264 K \u2264 N-1</p><p>It is guaranteed that the sum of N*K over all test cases does not exceed 4*10<sup>8</sup>.</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n#define int long long\n\nconst int mod=1000000007;\nint dp[2001][2001];\n\nsigned main() {\n    IOS\n    int t;\n    cin >> t;\n    while(t--) {\n        int n, m, k;\n        cin >> n >> m >> k;\n        for(int i=0;i<=n;i++)\n            for(int j=0;j<=k;j++)\n                dp[i][j] = 0;\n        dp[1][0] = m;\n        for (int i = 2; i <= n; ++i) {\n            for (int j =0; j <= k; ++j) {\n                dp[i][j] = dp[i-1][j];\n                if(j)\n                    dp[i][j] = (dp[i][j] + (dp[i-1][j-1]*(m-1))%mod)%mod;\n            }\n        }\n        cout << dp[n][k] << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:33:42.781639+00:00"
+        },
+        "hints": {
+            "hint1": "You can colour the first brick in any of the M colours.",
+            "hint2": "We define DP array, DP[i][j] as the number of ways such that there are j bricks of different color from its left-adjacent brick among bricks numbered 1 to i.",
+            "solution_approach": "At any brick, you have two choices, either colour it the same as the previous brick or colour it a different colour if the number of bricks with a colour different than on its left is less than K.\n\nWe have the following DP transition: DP[i][j] = DP[i-1][j] (to colour it with the same colour as previous brick) and DP[i][j] = DP[i-1][j-1]*(M-1) (to colour it with a different colour than previous brick, we have M-1 choices)\n\nTime Complexity per test case: O(N*K)"
+        },
+        "id": 181,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first and only line of each test case contains three space-separated integers N, M, K.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, the following are the 2 different arrangements possible:\n1. [1, 2, 1]\n2. [2, 1, 2]\n\nFor the second test case, the following are the 2 different arrangements possible:\n1. [1, 2]\n2. [2, 1]",
+        "output_format": "For each test case, print the number of ways you can colour the brick wall satisfying the given condition % 10^9+7.",
+        "samples": [
+            {
+                "input": "3\n3 2 2\n2 2 1\n3 5 0",
+                "output": "2\n2\n5"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "Bricks Colouring",
+        "video_editorial_id": 8162
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,56 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Abhishek loves Snakes and Ladders game, he can always roll the die to whatever number he want between $1$ to $6$. Help him to find the least number of dice rolls to reach the destination i.e the $100^{th}$ cell from the $1^{st}$ cell.\n\nRules :- \n1. The game is played with a cubic die of $6$ faces numbered $1$ to $6$.\n\n2. Starting from square $1$, land on square $100$ with the exact roll of the die. If moving the number rolled would place the player beyond square $100$, no move is made.\n\n3. If a player lands at the base of a ladder, the player must climb the ladder. Ladders go up only.\n\n4. If a player lands at the mouth of a snake, the player must go down the snake and come out through the tail. Snakes go down only.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq t \\leq 10$\n$1 \\leq n,m \\leq 15$\n\nThe board is always $10 \\times 10$ with squares numbered $1$ to $100$ .\nNeither square $1$ nor square $100$ will be the starting point of a ladder or snake.\nA square will have at most one endpoint from either a snake or a ladder.",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\nint n, m;\nqueue<int> q;\nint go_immediately_to[110], dist[110];\nbool vis[110];\nbool isValid(int node)\n{\n    if(node < 1 || node > 100 || vis[node])\n        return false;\n    else\n        return true;\n}\nint BFS(int source)\n{\n    memset(vis, 0, sizeof(vis));\n    while(!q.empty())\n        q.pop();\n\n    vis[source] = 1;\n    q.push(source);\n    dist[source] = 0;\n    while(!q.empty())\n    {\n        int current_node = q.front();\n        q.pop();\n        for(int i = 1; i<=6; i++)\n        {\n            int next_node = go_immediately_to[current_node+i];\n            if(isValid(next_node))\n            {\n                q.push(next_node);\n                vis[next_node] = 1;\n                dist[next_node] = dist[current_node]+1;\n            }\n        }\n    }\n    if(!vis[100])\n        return -1;\n    else\n        return dist[100];\n}\nint main()\n{\n    int i, j, cs, t, u, v;\n    cin >> t;\n    for(cs = 1; cs<=t; cs++)\n    {\n        cin >> n;\n\n        for(i = 1; i<=100; i++)\n            go_immediately_to[i] = i;\n\n        for(i = 1; i<=n; i++)\n        {\n            cin >> u >> v;\n            go_immediately_to[u] = v;\n        }\n\n        cin >> m;\n\n        for(i = 1; i<=m; i++)\n        {\n            cin >> u >> v;\n            go_immediately_to[u] = v;\n        }\n\n        cout << BFS(1) << endl;\n    }\n\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:42:41.487759+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "**Modeling the board as a graph**\nLet's model the board as a graph. Every square on the board is a node. The source node is square $1$. The destination node is square $100$. From every square, it is possible to reach any of the $6$ squares in front of it in one move. So every square has a directed edge to the $6$ squares in front of it.\n\n**Handling the snakes and ladders**\nFor a snake starting at square $i$ and finishing at $j$, we can consider that there is no node with index $i$ in the graph. Because reaching node $i$ is equivalent to reaching node $j$ since the snake at node $i$  will immediately take us down to node $j$. The same analogy goes for ladders too. To handle the snakes and ladders, let's keep an array *go_immediately_to[]* and initialize it like this.\n\n```\n        if(no snake or ladder starts at node i)\n            go_immediately_to[i] = i.\n        else\n            j = ending node of the snake or the ladder starting at node i.\n            go_immediately_to[i] = j.\n```\n\nNow let's run a standard Breadth-First Search(BFS). Whenever we reach a node $i$, we will consider that we have reached the node *go_immediately_to[i]* and then continue with the BFS as usual. The distance of the destination is the solution to the problem.\n\n**Time Complexity**\n\nThe size of the board is always $10 \\times 10$. You can consider time complexity of each BFS is constant as the number of snakes or ladders won't have much effect. There are T test cases; total complexity is $O(T)$ omitting the constant factor of $10 \\times 10$."
+        },
+        "id": 927,
+        "input_format": "The first line contains the number of tests, $t$.\n\nFor each test case:\n- The first line contains $n$, the number of ladders.\n- Each of the next $n$ lines contains two space-separated integers, the start, and end of a ladder.\n- The next line contains the integer $m$, the number of snakes.\n- Each of the next $m$ lines contains two space-separated integers, the start, and end of a snake.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test:\nThe player can roll a 5 and a 6 to land at square 12. There is a ladder to square 98. A roll of 2 ends the traverse in 3 rolls.\n\nFor the second test:\nThe player first rolls 5 and climbs the ladder to square 80. 'Three' rolls of 6 get to square 98. A final roll of 2 lands on the target square in 5 total rolls.",
+        "output_format": "For each of the $t$ test cases, print the least number of rolls to move from start to finish on a separate line. If there is no solution, print $-1$.",
+        "samples": [
+            {
+                "input": "2\n3\n32 62\n42 68\n12 98\n7\n95 13\n97 25\n93 37\n79 27\n75 19\n49 47\n67 17\n4\n8 52\n6 80\n26 42\n2 72\n9\n51 19\n39 11\n37 29\n81 3\n59 5\n79 23\n53 7\n43 33\n77 21 \n",
+                "output": "3\n5\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Bfs",
+            "Graphs",
+            "company-AlgoZenith",
+            "company-Atlassian"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Snakes and Ladders",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

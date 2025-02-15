@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given a string S, find the longest string T such that:<br>\u2192 T is the prefix of S.<br>\u2192 T is the suffix of S.<br>\u2192 T is present in the middle of S, such that T is not a prefix and suffix.<br><br>Suppose S = \u201caaaa\u201d, then T = \u201caa\u201d.<br>aa is a prefix, S[0..1].<br>aa is a suffix S[2..3].<br>aa is present in the middle and it is not a prefix or suffix, S[1..2].</p><p>If no T exists then print -1.</p><p>&nbsp;</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\n\nint pi[100005];\n\nvoid prefix(string s)\n{\n    int n = s.size();\n    pi[0] = 0;\n    for (int i = 1; i < n; ++i)\n    {\n        int j = pi[i - 1];\n        while (j > 0 && s[i] != s[j])\n        {\n            j = pi[j - 1];\n        }\n        if (s[i] == s[j])\n        {\n            j++;\n        }\n        pi[i] = j;\n    }\n}\n\nsigned main()\n{\n    ios::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n    int t;\n    cin >> t;\n    while (t--)\n    {\n        int n;\n        cin >> n;\n        string s;\n        cin >> s;\n        prefix(s);\n        if (pi[n - 1] == 0)\n        {\n            cout << \"-1\\n\";\n            continue;\n        }\n        bool f = 0;\n        for (int i = n - 2; i >= 1; --i)\n        {\n            if (pi[i] == pi[n - 1])\n            {\n                cout << s.substr(0, pi[n - 1]) << \"\\n\";\n                f = 1;\n                break;\n            }\n        }\n        if (f)\n            continue;\n        if (pi[pi[n - 1] - 1] == 0)\n        {\n            cout << \"-1\\n\";\n        }\n        else\n        {\n            cout << s.substr(0, pi[pi[n - 1] - 1]) << \"\\n\";\n        }\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:16:37.209966+00:00"
+        },
+        "hints": {
+            "hint1": "Use the KMP algorithm for finding prefix function for the given string.",
+            "hint2": "Lets say, the prefix function for substring with length i is p[i]. Using 0-based indexing, if p[n-1] = 0, that means no prefix is the same as the suffix of the entire string and hence the answer does not exist for this case.",
+            "solution_approach": "### Case 1\nUsing 0-based indexing. If for any i < n-1, we get p[i] = p[n-1], that means the prefix and suffix of substring(0,i) is the same as the prefix and suffix of substring(0,n-1). So this will be the prefix, suffix and the substring present in the string.\n\nex : string = ababcdababefabab  \np[15]=4 (abab....abab)  \np[9] =4 (abab....abab)  \nWe can see that p[15] = p[9]  \nWhen we find p[9]=4 that means that the suffix of length 4 matches with the suffix of length 4. The suffix of length 4 lies neither in the prefix or suffix of the string and hence is the substring in the middle. Hence we found all the 3 strings.\n\n### Case 2\nIf no such case is found($\\neg\\exists i \\in [1,n]: p[i]=p[n-1]$), we can check for the substring(0, p[n-1]), whether it has a common prefix and suffix, since this would also be present as the suffix of the entire string. If it exists, that substring(0, p[n-1]) would be the answer, otherwise the answer does not exist.\n\nTime complexity per test case: O(N)"
+        },
+        "id": 424,
+        "input_format": "<p>The first line contains an integer <i>T, ( 1 \u2264 T \u2264 10000)</i> - the number of test cases.</p><p>The first line of each test case contains an integer <i>N, ( 2 \u2264 N \u2264 100000).</i></p><p>The second line contains a string <i>S</i> of length <i>N</i>.</p><p><i><strong>Sum of N across all test cases \u2264 10^6.</strong></i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case print the string T, if no string T exists print -1.</p>",
+        "samples": [
+            {
+                "input": "3\n9\nabababaab\n6\nffffff\n5\nabcde",
+                "output": "ab\nffff\n-1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Strings",
+            "Kmp"
+        ],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "Prefix Suffix Middle",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

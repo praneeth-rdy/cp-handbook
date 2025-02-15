@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given an integer array $nums$, find a contiguous non-empty subarray within the array that has the largest product and return the product.\n\nThe test cases are generated so that the answer will fit in a $64$-bit integer.\n\nA subarray is a contiguous subsequence of the array.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 100$\n$1 \\leq n \\leq 10^5$\n$-10 \\leq nums[i] \\leq 10$\nThe test cases are generated so that the answer will fit in a $64$-bit integer.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nll maxProduct(vector<ll>& nums) {\n    ll n = nums.size(), ans = LLONG_MIN, mx = 1, mn = 1;\n    for (int i = 0; i < n; i++) {\n        ll t = mn;\n        mn = min({nums[i], mn*nums[i], mx*nums[i]});\n        mx = max({nums[i], mx*nums[i], t*nums[i]});\n        ans = max(ans, mx);\n    }\n    return ans;\n}\nvoid solve() {\n    int n;\n    cin >> n;\n    vector<ll> a(n);\n    for (int i = 0; i < n; i++)cin >> a[i];\n    cout << maxProduct(a) << endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:36:02.648733+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "**What if the array has just positive numbers including zero ?**\nA solution of this will maintain $maxProd[i]$ where $maxProd[i]$ is the maximum subarray product ending at $i$. Then $maxProd[i+1] = max(maxProd[i] * nums[i+1], nums[i+1])$.\n\n**Now how do we change the solution when we allow negative numbers?**\nImagine that we have both $maxProd[i]$ and $minProd[i]$ i.e. max prod ending at $i$ and min prod ending at $i$. Now if we have a negative number at $nums[i+1]$ and if $minProd[i]$ is negative, then the product of the two will be positive and can potentially be largest product. Key point is to maintain both maxProd and minProd such that at iteration $i$, they refer to the max and min prod ending at index $i -1$.\n\nYou have three choices to make at any position in array.\n\n1. You can get maximum product by multiplying the current element with maximum product calculated so far. (might work when current element is positive).\n2. You can get maximum product by multiplying the current element withminimum product calculated so far. (might work when current element is negative).\n3. Current element might be a starting position for maximum product subarray.\n\n**Time Complexity** : $O(N)$ with $O(1)$ space."
+        },
+        "id": 953,
+        "input_format": "First-line contains $T$ - the number of test cases.\nThe first line of each test case contains $n$ - the size of the array.\nThe second line of each test case contains $n$ elements of the array $nums$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, print the maximum subarray product on a new line.",
+        "samples": [
+            {
+                "input": "3\n4\n2 3 -2 4\n3\n-2 0 -1\n1\n-10\n",
+                "output": "6\n0\n-10\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Maximum Product Subarray",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>A number is said to be a palindrome if it remains the same when it is read backward. A number is called special-palindromic if it contains a palindrome with an odd length greater than 1 and an even palindrome of length greater than 1 as a substring.</p><p>For example, the number 8857775 is special-palindromic because it contains the palindrome of odd length 57775 and even length 88. The number 111 is a special-palindrome as it contains the palindrome of odd length 111 and even length 11.<br>You are given two numbers l, r. Find the number of special-palindromic numbers in the range [l,r].</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 T \u2264 100</p><p>100 \u2264 l \u2264 r \u2264 10<sup>18</sup></p>",
+        "difficulty": 5,
+        "editorial_code": [],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "Editorial Code data is currently empty.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:14:45.392075+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 307,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\n\nThe first line of each test case contains two space-separated integers $l$, $r$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case output the number of special-palindrome in the range [l,r] in a new line.</p>",
+        "samples": [
+            {
+                "input": "5\n318661263196762255 862815711794150362\n81911993087269085 451708830417250256\n533442590027279954 541470499312103755\n53352857120044807 479628472267433970\n763787750602078367 838624921227800849",
+                "output": "365535445019098517\n249116249428192823\n5271193801698071\n285832399729012956\n50869536601549418"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Dynamic Programming",
+            "Digit Dp"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "Palindromic Number",
+        "video_editorial_id": 10696
+    },
+    "details": "Problem Details"
+}

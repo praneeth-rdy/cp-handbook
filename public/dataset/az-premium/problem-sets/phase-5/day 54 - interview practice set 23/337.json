@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a string of length $n$, your task is to determine the longest palindromic substring of the string. For example, the longest palindrome in *\"algoazzaa\"* is *\"azza\"*.\nIf there are multiple longest palindromic substrings, Output the one which comes first in the string.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^{4}$\n$1 \\leq n \\leq 10^{5}$\n\nSum of $n$ across all test cases is $\\leq$ $10^{6}$.",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\n\nclass Solution3 { // O(N) using manacher algorithm.\npublic:\n    vector<int> manacher(string s) { // gives 2n-1 size manacher array. (a#c#...#d )\n        string s1 = \"@\"; for (auto c : s) s1 += c, s1 += \"#\";\n        s1.back() = '&';\n        vector<int> ans(s1.size() - 1); int lo = 0, hi = 0;\n        for (int i = 1; i <= s1.size() - 2; i++) {\n            if (i != 1) ans[i] = min(hi - i, ans[hi - i + lo]);\n            while (s1[i - ans[i] - 1] == s1[i + ans[i] + 1]) ans[i] ++;\n            if (i + ans[i] > hi) lo = i - ans[i], hi = i + ans[i];\n        }\n        ans.erase(begin(ans));\n        for (int i = 0; i <= ans.size() - 1; i++) if ((i & 1) == (ans[i] & 1)) ans[i] ++;\n        return ans;\n    }\n    string getLPS(string s) { // gives one of the long. palindromic substr.\n        auto a = manacher(s);\n        auto it = max_element(a.begin(), a.end());\n        int l = *it, p;\n        for (int i = 0; i < a.size(); i++) {\n            if (a[i] == l) {\n                p = i;\n                break;\n            }\n        }\n        return s.substr((p + 1) / 2 - l / 2, l);\n    }\n};\n\nvoid solve() {\n    string s;\n    cin >> s;\n    Solution3 s3;\n    auto ans3 = s3.getLPS(s);\n    cout << ans3 << endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:41:34.182215+00:00"
+        },
+        "hints": {
+            "hint1": "<p>For each position 0 &lt;= i &lt; N, you can find the palindromic substring length considering i as the center. For even length substrings, you can take i and i+1 to be the centers. But this would take O(N^2), can you reduce it to O(N).</p>",
+            "hint2": "",
+            "solution_approach": "**Intuition:** We can solve this question in 3 ways that come at first glance:\n-   Use Brute Force : Check for every corresponding element in string the longest palindrome possible and do it till the end.\n-   DP: Since we are essentially looping over every element in Brute Force, maybe we can somehow use the result from our previous iteration to simplify the current one? This gives us a nudge to look for a pattern and hence we go for DP.\n- Expand through the center for even and odd length palindromes.\n- Manacher Algorithm.\n\n**Analysis:**\nLet's see all the approaches one by one !!!\n\n1.  **Brute Force:** Instead of directly going to code and finding a problem later, lets stop and think about the concept we intend to use here  \n**Concept:** We will go through all possible elements in string and find the longest palindrome amongst them.\n**Review:** To calculate all the possible substrings in a string of length n, the number of combinations generated are:\n1+2+3+4+..........n=n(n-1)/2. To check all the substrings for Palindrome, we will have to go through all the n characters.\n Total Combinations: n*n(n-1)/2= O(n^3)\n**Conclusion:** Since the time complexity is O(n^3), hence we will not discuss this approach, and our energy would be better spent looking at the DP solution.\n\n2.  **DP** : if we know string \"aba\" is palindrome then \"cabac\" must be palindrome as left and right are equal.\n**State :** P(i,j) - True if substring(i,j) is a palindrome\n**Transition:** P(i, j) == P(i+1, j-1) && s[i] == s[j];\n**Base cases** :\nP(i, i) = true;  //One character\nP(i, i+1) = s[i] == s[i+1];  //Two character\n**Time Complexity** - O(N^2), Space Complexity - O(N^2) (caching all substring)\n3. **Expand Around Center** : Time: O(n^2), Space: O(1)\nLoop through the input string with i then inner loop through a section of that string with j\nYou now have two pointers left and right (i, j) respectively\nSince we start with 2 letters, for them to be a palindrome they have to be the same, so while that is the case, we'll keep expanding our window till they're no longer a palindrome\nMax will be the longest palindrome so if the current palindrome length is greater than our previous palindrome length we'll update the max\nWe'll do this till we're done looping through the string for both odd and even length palindromes, then return max.\n3. **Manacher Algorithm:** it can be solved in O(N), Refer to Manacher Video( AZ201 String Algo Module ) for the details.\nRefer to : https://cp-algorithms.com/string/manacher.html\nOnly Manacher Algorithm based $O(N)$ solution will pass the all test cases for this problem."
+        },
+        "id": 337,
+        "input_format": "The first line contains $T$ - the number of test cases.\nThe first line of each test case contains a string of length $n$. Each character is one of *a\u2013z*.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, Output the Longest Palindromic Substring.\nIf there are multiple longest palindromic substrings, Output the one which comes first in the string.",
+        "samples": [
+            {
+                "input": "9\nalgoazzaa\naaaaaaaaaa\nababababab\nihpohpzoffel\nflexflexvpqxierullgcfckjqflexflex\nobsession\nabcxcbaxcba\nzzabc\naaccaabbaaccaaccaabbaaccaa\n",
+                "output": "azza\naaaaaaaaaa\nababababa\nff\ncfc\nses\nabcxcba\nzz\naaccaabbaaccaaccaabbaaccaa\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Strings",
+            "Manacher Algo"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Longest Palindromic Substring - Hard Version",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

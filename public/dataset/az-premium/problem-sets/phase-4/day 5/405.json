@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You've given an array <i>A</i> of <i>N</i> integers. Your task is to support the following queries.</p><ul><li>0 <i>x</i> <i>y</i> : Modify the number at index <i>x</i> to <i>y</i>.</li><li>1 <i>l r</i> : Print the count the number of even numbers in range <i>l</i> to <i>r</i> inclusive.</li><li>2 <i>l r</i> : Print the count the number of odd numbers in range <i>l</i> to <i>r</i> inclusive.</li></ul>",
+        "complete_approach": "",
+        "constraints": "- $1 \\leq N, Q \\leq 10^5$\n- $1 \\leq l \\leq r \\leq N$\n- $0 \\leq A_i \\leq 10^9$\n- $1 \\leq x \\leq N$\n- $0 \\leq y \\leq 10^9$",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 200010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nstruct ST{\n    int even, odd;\n    ST(int even = 0, int odd = 0) :\n        even(even), odd(odd) {}\n};\n\nST operator + (const ST &A, const ST &B) {\n    return ST(A.even + B.even, A.odd + B.odd);\n}\n\nstruct segtree {\n    vector<ST> tree;\n    segtree(int n = N) {\n        tree.resize(4 * n);\n    }\n\n    void update(int node, int start, int end, int idx, int val) {\n        if(start == end) {\n            if(val % 2 == 1) tree[node] = ST(0, 1);\n            else tree[node] = ST(1, 0);\n        }\n        else {\n            int mid = (start + end) >> 1;\n            if(idx <= mid) update(2 * node, start, mid, idx, val);\n            else update(2 * node + 1, mid + 1, end, idx, val);\n            tree[node] = tree[2 * node] + tree[2 * node + 1];\n        }\n    }\n\n    int query(int node, int start, int end, int l, int r, bool even) {\n        if(start > r || end < l) return 0;\n        if(start >= l && end <= r) {\n            if(even) return tree[node].even;\n            return tree[node].odd;\n        }\n        int mid = (start + end) / 2;\n        return query(2 * node, start, mid, l, r, even) + query(2 * node + 1, mid + 1, end, l, r, even);\n    }\n};\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int n, q;\n    cin >> n;\n\n    segtree T(n);\n\n    for(int i = 0; i < n; i++) {\n        int x; cin >> x;\n        T.update(1, 0, n - 1, i, x);\n    }\n\n    cin >> q;\n\n    for(int i = 0; i < q; i++) {\n        int t, x, y;\n        cin >> t >> x >> y;\n        if(!t) {\n            x--;\n            T.update(1, 0, n - 1, x, y);\n        }\n        else if(t == 1) {\n            x--; y--;\n            cout << T.query(1, 0, n - 1, x, y, true) << \"\\n\";\n        }\n        else {\n            x--; y--;\n            cout << T.query(1, 0, n - 1, x, y, false) << \"\\n\";\n        }\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:16:02.397459+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Segment Tree\u2026</p>",
+            "hint2": "<p>Think of what you need to store at each node of the segment tree, and then how should merge logic will happen (i.e. how you update the parent node from the children nodes)</p>",
+            "solution_approach": "<p>Lets store the count of <i>even</i> and <i>odd</i> numbers at each node belonging to the range for that node. The parent nodes value of <i>even</i> count is just the sum of even counts of two children nodes. Same of odd counts.</p><p>For clarification please go through the editorial code, and try to understand the merge logic.</p>"
+        },
+        "id": 405,
+        "input_format": "The first input line has an integer N, the number of elements.\nThe second line has N integers A<sub>1</sub>, A<sub>2</sub>, \u2026, A<sub>N</sub>: the array values.\nThe third line has an integer Q, the number of queries.\nEach of the next Q lines contains the query of one of the three types described in the statement.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print the output of query of type 1 and 2 on a new line.</p>",
+        "samples": [
+            {
+                "input": "6\n1 2 3 4 5 6\n4\n1 2 5\n2 1 4\n0 5 4\n1 1 6",
+                "output": "2\n2\n4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Segment Tree"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Even and Odd Queries",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

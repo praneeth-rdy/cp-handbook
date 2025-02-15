@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>There are <i>N</i> persons standing in the queue. They are numbered from 1 to <i>N</i>. <i>H<sub>i</sub></i> is the height of the person <i>i</i>. <i>P<sub>i</sub></i> is the number of persons who are taller than <i>i</i> and standing in front of <i>i</i>.&nbsp;<br>Given these two arrays <i>H</i> and <i>P</i>, your task is to find the actual order of the queue.&nbsp;<br>It is guaranteed that the height of each person will be unique.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>N</i> \u2264 10<sup>5</sup><br>1 \u2264 <i>H<sub>i</sub></i> \u2264 10<sup>9</sup><br>0 \u2264 <i>P<sub>i</sub></i> \u2264 <i>N</i></p>",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nint tree[4 * N];\n\nvoid build(int node, int start, int end) {\n    if(start == end) {\n        tree[node] = 1;\n        return;\n    }\n    int mid = (start + end) / 2;\n    build(2 * node, start, mid);\n    build(2 * node + 1, mid + 1, end);\n    tree[node] = tree[2 * node] + tree[2 * node + 1];\n    return;\n}\n\nvoid update(int node, int start, int end, int idx, int val) {\n    if(start == end) {\n        tree[node] = val;\n        return;\n    }\n    int mid = (start + end) / 2;\n    if(idx <= mid) update(2 * node, start, mid, idx, val);\n    else update(2 * node + 1, mid + 1, end, idx, val);\n    tree[node] = tree[2 * node] + tree[2 * node + 1];\n    return;\n}\n\nint query(int node, int start, int end, int x) {\n    if(start == end) {\n        assert(tree[node] == x);\n        return start;\n    }\n    int mid = (start + end) / 2;\n    if(tree[2 * node] >= x) return query(2 * node, start, mid, x);\n    return query(2 * node + 1, mid + 1, end, x - tree[2 * node]);\n}\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int n; cin >> n;\n\n    pair <int,int> p[n];\n    for(int i = 0; i < n; i++) {\n        cin >> p[i].first;\n        p[i].second = i;\n    }\n\n    int P[n];\n    for(int i = 0; i < n; i++) {\n        cin >> P[i];\n    }\n\n    sort(p, p + n);\n\n    build(1, 0, n - 1);\n\n    int ans[n];\n\n    for(int i = 0; i < n; i++) {\n        int h = p[i].first;\n        int j = p[i].second;\n\n        int pos = query(1, 0, n - 1, P[j] + 1);\n\n        ans[pos] = j;\n        update(1, 0, n - 1, pos, 0);\n    }\n\n    for(int i = 0; i < n; i++) {\n        cout << ans[i] + 1 << \" \";\n    }\n    cout << \"\\n\";\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:16:10.003913+00:00"
+        },
+        "hints": {
+            "hint1": "<p>What can you say about the position of the shortest person? If the position of the shortest person is <i>i</i>, how many people would be in front of the shortest person?<br>Once you fix the position of the shortest person, what can you say about the position of the second shortest person?</p>",
+            "hint2": "Sort people by heights. Then iterate from shortest to tallest. In each step, you need an efficient way to put the next person to the correct position. Notice that people we\u2019ve already placed are not taller than the current person. And the people we place after are taller than the current. So we have to find a place such that the number of empty positions in the front is equal to the P value of this person.",
+            "solution_approach": "<p>Please read Hint 2.<br>To make that approach more efficiently maintain a <i>K</i>th segment tree. This particular variation of the segment tree is already discussed in the module. Please go through them.</p>"
+        },
+        "id": 408,
+        "input_format": "<p>The first line of input contains <i>N</i> - the number of persons.<br>The second line of input contains <i>N</i> space-separated numbers <i>H<sub>1</sub>, H<sub>2</sub>, \u2026, H<sub>N</sub></i>.<br>The third line of input contains <i>N</i> space-separated numbers <i>P<sub>1</sub>, P<sub>2</sub>, \u2026, P<sub>N</sub></i>.<br>It is guaranteed that the answer will always exist.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print <i>N</i> space-separated integers <i>p<sub>1</sub>, p<sub>2</sub>, \u2026, p<sub>N</sub></i> - representing the actual order of the queue, where <i>p<sub>i</sub></i> is the person number standing at the <i>i</i>th position in the queue.</p>",
+        "samples": [
+            {
+                "input": "6\n5 3 2 6 1 4\n0 1 2 0 3 2",
+                "output": "1 2 3 5 4 6"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Segment Tree",
+            "Kth Segment Tree",
+            "Coordinate Compression"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Order of Heights",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Construct Tree from given Inorder and Preorder traversals",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "Editorial Code data is currently empty.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:38:16.293501+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 651,
+        "input_format": "<p>The first line contains an integer T, (1 \u2264 T \u2264 10^5), the number of test cases.</p><p>The first line of each test case contains an integer N, &nbsp;the length of the array representing the serialized representation of a tree.</p><p>The next line contains N-space-separated distinct integers representing the Inorder Traversal of the tree.&nbsp;</p><p>The next line contains N-space-separated distinct integers representing the Preorder Traversal of the tree.&nbsp;</p><p><i>Sum of N across all test cases \u2264 10^7.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case find the Binary Tree and return the Root Node of the binary tree. Complete this function -&nbsp;</p><p>Node* getBinaryTree(vector&lt;int&gt;&amp;inorder,vector&lt;int&gt;&amp;preorder)<br>{</p><p>}</p><p>A function in the main converts the Binary Tree Root returned into serialized array structure and prints it.</p>",
+        "samples": [
+            {
+                "input": "3\n4\n8766 2202 6058 4965 \n4965 6058 2202 8766 \n2\n3501 2847 \n2847 3501 \n10\n9648 6223 3180 3901 7171 3849 8580 5539 6609 1578 \n6609 8580 7171 3180 9648 6223 3901 3849 5539 1578 ",
+                "output": "4965 6058 2202 8766 -1 -1 -1 -1 -1 \n2847 3501 -1 -1 -1 \n6609 8580 7171 3180 9648 -1 6223 -1 -1 3901 -1 -1 3849 -1 -1 5539 -1 -1 1578 -1 -1 "
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Frequently Asked Questions",
+            "Binary Tree"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n\n</fix>\nNode* getBinaryTree(vector<int>&inorder,vector<int>&preorder)\n{\n  // Complete the function.\n}\n<fix>\nvoid generateArray(Node* root, vector<int>&ans){\n    if(root==NULL){\n        ans.push_back(-1);\n        return;\n      }\n    ans.push_back(root->val);\n    generateArray(root->left,ans);\n    generateArray(root->right,ans);\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n;\n        cin>>n;\n        assert(n<=1000000);\n        vector<int>arr1(n);\n        for(int i=0;i<n;i++)\n            cin>>arr1[i];\n        vector<int>arr2(n);\n        for(int i=0;i<n;i++)\n            cin>>arr2[i];\n        Node* tree = getBinaryTree(arr1,arr2);\n        vector<int>ans;\n        generateArray(tree,ans);\n        for(auto v:ans)cout<<v<<\" \";\n        cout<<\"\\n\";\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 2.0,
+        "title": "Tree from inorder and preorder",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

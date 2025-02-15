@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have been given an array <i>A</i> of <i>N</i> integers and <i>M</i> ranges. <i>ith</i> range is defined by the two integers <i>l<sub>i</sub></i> and <i>r<sub>i</sub></i>, <i>l<sub>i</sub>\u2264r<sub>i</sub></i>.</p><p>Initially, array <i>S</i> is empty. For range i, add elements <i>A[l<sub>i</sub>],A[l<sub>i+1</sub>]\u2026..A[r<sub>i</sub>]</i> in the array <i>S</i>. After adding all the elements in each of the range, sort the elements of <i>S</i> in ascending order.</p><p>You need to answer <i>Q</i> queries. Each query consists of a number <i>K</i> &gt; 0. You have to find the <i>Kth </i>smallest element in <i>S</i>, i.e., the element at <i>Kth</i> position in sorted <i>S</i>.</p><p>It may be possible that the same element presents multiple times in S.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n#define ll long long int\n\nvoid solve() {\n  ll n, k, q, i, a, b, x;\n  cin >> n >> k >> q;\n  vector<ll> v(n + 1), pre(n + 2, 0), dp(n);\n  vector<pair<ll, ll> > suf;\n\n  for (i = 1; i <= n; i++) {\n    cin >> v[i];\n  }\n  for (i = 0; i < k; i++) {\n    cin >> a >> b;\n    pre[a] += 1;\n    pre[b + 1] -= 1;\n  }\n\n  for (i = 1; i <= n; i++) {\n    if (i != 0) {\n      pre[i] = pre[i - 1] + pre[i];\n      suf.push_back({v[i], pre[i]});\n    }\n  }\n  sort(suf.begin(), suf.end());\n  for (i = 0; i < n; i++) {\n    if (i == 0)\n      dp[i] = suf[i].second;\n    else\n      dp[i] = dp[i - 1] + suf[i].second;\n  }\n  for (i = 0; i < q; i++) {\n    cin >> a;\n    if (lower_bound(dp.begin(), dp.end(), a) != dp.end()) {\n      x = lower_bound(dp.begin(), dp.end(), a) - dp.begin();\n      cout << suf[x].first << \" \";\n    } else {\n      cout << \"-1 \";\n    }\n  }\n  cout << endl;\n}\n\nint main() {\n  // #ifndef ONLINE_JUDGE\n  // freopen(\"input.txt\",\"r\",stdin);\n  // freopen(\"output.txt\",\"w\",stdout);\n  // #endif\n\n  ios_base::sync_with_stdio(false);\n  cin.tie(NULL);\n  int i, T;\n\n  T = 1;\n  cin >> T;\n\n  for (i = 1; i <= T; i++) {\n    solve();\n  }\n  return 0;\n}\n```\n\n\n",
+                "language": "C++14"
+            },
+            {
+                "code": "\n```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int _; cin >> _;\n    while(_--) {\n        int n, m, q;\n        cin >> n >> m >> q;\n        pair<int,int> A[n];\n        for(int i = 0; i < n; i++) {\n            cin >> A[i].first;\n            A[i].second = 0;\n        }\n        for(int i = 0; i < m; i++) {\n            int l, r; cin >> l >> r;\n            l--; r--;\n            A[l].second++;\n            if(r + 1 < n) A[r + 1].second--;\n        }\n        for(int i = 1; i < n; i++)\n            A[i].second += A[i - 1].second;\n\n        sort(A, A + n);\n\n        int ans[q];\n        pair<ll,int> Q[q];\n        for(int i = 0; i < q; i++) {\n            cin >> Q[i].first;\n            Q[i].second = i;\n        }\n\n        sort(Q, Q + q);\n\n        int ptr = 0;\n        ll sum = 0;\n\n        for(int i = 0; i < q; i++) {\n            ll x = Q[i].first;\n            while(ptr < n && sum + A[ptr].second < x) {\n                sum += A[ptr].second;\n                ptr++;\n            }\n            if(ptr < n) ans[Q[i].second] = A[ptr].first;\n            else ans[Q[i].second] = -1;\n        }\n\n        for(int i = 0; i < q; i++)\n            cout << ans[i] << \" \";\n        cout << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:30:37.238255+00:00"
+        },
+        "hints": {
+            "hint1": "The problem is to find the $k^{th}$ smallest element in the sorted list of integers obtained by concatenating the elements of given ranges. One direct approach to solve this problem would be to concatenate all the elements of the ranges into a list and sort it. Then, we can find the $k^{th}$ smallest element in the sorted list.\n\nHowever, adding each element of the ranges into the list S is a costly process. Therefore, we need a more efficient approach.\nCan you find which element in the array $A$ occurs how many times in the final array $S$?",
+            "hint2": "We can use the partial sums concept to find the contribution of each index in the array $A$ in the final array $S$.",
+            "solution_approach": "Check the video solution\n\nhttps://www.youtube.com/watch?v=F43IOF2MJKo\n\n## Solution 1\n\n* By idea of partial sums find keep track of which ranges are added in the final array\n* Calculating the prefix sum of the partial sums array will give us the frequency of each element added in the final array.\n* To find the smallest element, sort the elements in the final array, make sure you also keep track of their frequency. An easy way to do this is use a vector of pairs where the first element will be the element value and the second element is the frequency of that number.\n* Once we have the sorted order, we just need to find the $K$th smallest now. How to find this?\n* At any index can you find the number of elements which has occured before that particular element?\n* Yes! We need to calculate the prefix sums of the frequency of each element. By doing that at any particular value we can say from the prefix sums array how many elements has occured before that element.\n* From the prefix sums array using binary search find where $k$ lies in the prefix sums array. The result will contain the index where the value of prefix sums just exceeds or equals $k$. Getting the element will be easy if we use the index for accessing the element from the vector of pairs.  \n* Time complexity of this approach : $O(N \\log N + N + Q \\log N)$ for sorting, calculating the prefix sums array, and using binary search to find position of each k\n\n## Solution 2\nThis solution is almost same to the other version. Only difference here is, since we know the queries beforehand, so we can preprocess them in such a way that in one iteration through the prefix sums array of frequency of elements we can directly find out answers for all the queries. To do that sort the queries on the basis of the value $k$. Keep track of the query number too, since that would be important when printing the final answer. After having the sorted queries, just keep moving through the prefix frequency array, whenever you encounter a value from the query array which exceeds or equals the prefix sums array we know that we found our element. Store the answer.  \nTime complexity of this approach : $O(N \\log N + Q \\log Q + N)$ for sorting, sorting queries, and iterating through the prefix sums array."
+        },
+        "id": 34,
+        "input_format": "<p>The first line of the input contains a single integer <i>T</i> - the number of test cases(1 \u2264 <i>T </i>\u2264 10). Then <i>T</i> test cases follow.</p><p>The first line of each test case contains three integers <i>N</i>, <i>M</i>, and <i>Q, (</i>1 <i>\u2264 N, M, Q \u2264 </i>10^5<i>).</i></p><p>The second line contains <i>N</i> space-separated integers A<sub>1</sub>, A<sub>2</sub>,\u2026.,A<sub>N</sub>, the elements of the array A, (1\u2264<i>A<sub>i</sub></i>\u226410^9).</p><p>Next <i>M</i> lines contain two space-separated integers <i>l<sub>i</sub></i> and <i>r<sub>i</sub></i> - ith range, (1 \u2264 <i>l<sub>i</sub></i><sub> </sub>\u2264 <i>r<sub>i</sub></i><sub> </sub>\u2264 <i>N</i>).</p><p>The last line of a test case contains <i>Q</i> space-separated integers <i>K<sub>1</sub>, K<sub>2</sub>,\u2026.,K<sub>Q</sub>,</i> where <i>K<sub>i</sub></i> denotes the ith query. (1 \u2264 <i>K<sub>i </sub></i>\u22641 0^18).</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "<p><strong>Test Case 1</strong>: Initially array S is empty.</p><p>Add the 1st range -&gt; S = {1,3,2}.</p><p>Add the 2nd range -&gt; S = {1,3,2,3,2}</p><p>Add the 3rd range -&gt; S = {1,3,2,3,2,1}</p><p>After sorting the array, S = {1,1,2,2,3,3}</p><p>For K = 8, the 8th element doesn't exist in the atta S. So the answer of the 4th query is -1.</p><p><strong>Test Case 2</strong>: Initially array S is empty.</p><p>Add the 1st range -&gt; S = {1,5,4,3}.</p><p>Add the 2nd range -&gt; S = {1,5,4,3,1,5,4}.</p><p>After sorting the array, S = {1,1,3,4,4,5,5}.</p>",
+        "output_format": "<p>For each test case, print <i>Q</i> space-separated integers, where <i>ith</i> number denotes the answer of <i>ith</i> query. If the <i>Kth</i> value doesn't exist for a particular query, print <i>-1</i>.</p>",
+        "samples": [
+            {
+                "input": "2\n3 3 4\n1 3 2\n1 3\n2 3\n1 1\n1 2 5 8\n4 2 3\n1 5 4 3\n1 4\n1 3\n1 5 7",
+                "output": "1 1 3 -1 \n1 4 5 \n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Prefix And Partial Sums",
+            "company-Amazon"
+        ],
+        "template_code": [],
+        "time_limit_sec": 4.0,
+        "title": "Kth Val",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

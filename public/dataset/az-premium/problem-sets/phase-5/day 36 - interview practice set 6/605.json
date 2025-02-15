@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given an array of <strong>n</strong> elements where each element is at most <strong>k </strong>away from its target position in the sorted array. The task is to print the array in sorted order.</p><p>Complete the function</p><pre><code class=\"language-plaintext\">void NearlySort(vector&lt;int&gt; &amp;A, int k)</code></pre>",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-cpp\">1 &lt;= n &lt;= 100000\n0 &lt;= k &lt; n</code></pre>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid NearlySort(vector<int> &A, int k)\n{\n\tint n = (int)A.size();\n\n\tpriority_queue<int> pq;\n\n\tfor (int i = 0; i <= k; i++)\n\t\tpq.push(-A[i]);\n\n\tint j = 0;\n\n\tfor (int i = k + 1; i < n; i++)\n\t{\n\t\tA[j++] = -pq.top();\n\t\tpq.pop();\n\t\tpq.push(-A[i]);\n\t}\n\n\twhile (!pq.empty())\n\t{\n\t\tA[j++] = -pq.top();\n\t\tpq.pop();\n\t}\n}\n\nint main()\n{\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL);\n\tcout.tie(NULL);\n\n\tint n, k;\n\tcin >> n >> k;\n\n\tvector<int> v(n);\n\n\tfor (auto &i : v)\n\t\tcin >> i;\n\n\tNearlySort(v, k);\n\n\tfor (int i = 0; i < n; i++)\n\t\tcout << v[i] << \" \";\n\n\tcout << \"\\n\";\n\n\treturn 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:32:03.821780+00:00"
+        },
+        "hints": {
+            "hint1": "Can you utilize the fact that each number is at most k away from its target position?",
+            "hint2": "For each index, there are k possible candidate numbers. For each point we can find minimum of these k numbers.",
+            "solution_approach": "<p>We can sort the array in O(n log n) but we can use the special nature of the array to reduce the complexity. We use a priority queue to solve the problem in O(n log k).&nbsp;</p><ol><li>We insert the first k+1 elements into the priority queue.</li><li>One by one we remove the minimum element from the priority queue and add it to the result array and the new element into the priority queue.</li></ol><p>As we maintain a window of k+1 numbers, the current element is always the minimum element in the priority queue. We do not need more numbers in the priority queue because the number at a position in the resultant array can be at most k away in the input array.</p><p>Since the size of the priority queue is k, addition, and removal take O(log k) time and thus a total complexity of O(n log k).</p>"
+        },
+        "id": 605,
+        "input_format": "<p>The first line of input contains two integers <strong>n </strong>and <strong>k.</strong><br>The second line contains <strong>n</strong> integers which represents the input array.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>The array in sorted order is 10 11 14 15 20 64 70.<br>10 did not move.<br>11 moved by 1 place.<br>14 moved by 1 place.<br>20 moved by 1 place.<br>64 moved by 1 place.<br>15 moved by 2 places.<br>70 did not move.<br>So we can see that each number was not more than 2 away from their target position.</p>",
+        "output_format": "Output the input array in sorted order.",
+        "samples": [
+            {
+                "input": "7 2\n10 14 11 20 64 15 70",
+                "output": "10 11 14 15 20 64 70"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nvoid NearlySort(vector<int> &A, int k)\n{\n\t//Complete the function\n}\n\n<fix>\nint main()\n{\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL);\n\tcout.tie(NULL);\n\n\tint n, k;\n\tcin >> n >> k;\n\n\tvector<int> v(n);\n\n\tfor (auto &i : v)\n\t\tcin >> i;\n\n\tNearlySort(v, k);\n\n\tfor (int i = 0; i < n; i++)\n\t\tcout << v[i] << \" \";\n\n\tcout << \"\\n\";\n\n\treturn 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Nearly Sorted Arrays",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

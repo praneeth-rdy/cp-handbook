@@ -1,0 +1,63 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given the heads of two singly linked-lists <i>headA</i> and <i>headB</i>, return the node at which the two lists intersect. If the two linked lists have no intersection at all, return NULL.</p><p>Complete the function&nbsp;</p><pre><code class=\"language-plaintext\">ListNode* getIntersectionNode(ListNode* headA, ListNode* headB)</code></pre>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>N, M</i> \u2264 10<sup>5</sup><br>-1 \u2264 <i>skipA </i>&lt; <i>N</i><br>-1 \u2264 <i>skipB</i> &lt; <i>M</i><br>0 \u2264 Value of the node \u2264 10<sup>9</sup><br>It's guaranteed that the input is valid.</p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode() : val(0), next(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next) {}\n};\n\nListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {\n    ListNode* l1 = headA, *l2 = headB;\n    while(l1 != l2) {\n        l1 = (l1 == NULL) ? headB : l1->next;\n        l2 = (l2 == NULL) ? headA : l2->next;\n    }\n    return l1;\n}\n\nListNode* GetList(vector<int> &num) {\n    ListNode* head = nullptr;\n\n    if(num.empty()) {\n        return head;\n    }\n\n    ListNode* cur = head;\n    \n    for(int i  = 0; i < (int)num.size(); i++) {\n        ListNode* temp = new ListNode(num[i]);\n        if(!cur) {\n            cur = temp;\n            head = cur;\n        }\n        else {\n            cur->next = temp;\n            cur = temp;\n        }\n    }\n    \n    return head;\n}\n\npair<ListNode*, ListNode*> GetList(vector<int> listA, vector<int> listB, int skipA, int skipB) {\n    ListNode* headA = GetList(listA);\n    \n    if(skipA == -1 && skipB == -1) {\n        ListNode* headB = GetList(listB);\n        return {headA, headB};    \n    }\n\n    vector<int> temp;\n    for(int i = 0; i < skipB; i++) {\n        temp.push_back(listB[i]);\n    }\n\n    ListNode* headB = GetList(temp);\n\n    ListNode* curA = headA;\n    for(int i = 0; i < skipA; i++) {\n        curA = curA->next;\n    }\n\n    if(!headB) headB = curA;\n    else {\n        ListNode* curB = headB;\n        while(curB->next) {\n            curB = curB->next;\n        }\n        curB->next = curA;\n    }\n\n    return {headA, headB};\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    vector<int> listA(n);\n\n    for(int i = 0; i < n; i++) {\n        cin >> listA[i];\n    }\n\n    int m;\n    cin >> m;\n\n    vector<int> listB(m);\n\n    for(int i = 0; i < m; i++) {\n        cin >> listB[i];\n    }\n\n    int skipA, skipB;\n    cin >> skipA >> skipB;\n\n    pair<ListNode*,ListNode*> temp = GetList(listA, listB, skipA, skipB);\n\n    ListNode* headA = temp.first;\n    ListNode* headB = temp.second;\n\n    ListNode* ansHead = getIntersectionNode(headA, headB);\n\n    if(ansHead) {\n        cout << ansHead->val << \"\\n\";\n    }\n    else {\n        cout << \"-1\\n\";\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:42:32.441588+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "<h2>Solution 1 (Brute Force)</h2><p>Use a nested loop to iterate through both the linked lists and if they are equal at some point, return that node. If no node is found, return null.<br><i>Time Complexity:</i> Both the lists are iterated in a nested loop, the time complexity is O(n*m) where n, m are the number of nodes in the two linked lists.<br><i>Space Complexity:</i> Since constant extra memory is used, the space complexity is O(1).</p><p>&nbsp;</p><h2>Solution 2 (Optimal Solution - 1)</h2><p>Calculate the length of both the linked lists, say n and m. Let\u2019s say n \u2264 m(swap the linked lists if this is not the case), moves (m - n) steps from the head of the second linked list. At this point, both the nodes have the same number of nodes left, i.e. n. Simultaneously move both the head pointers until they are equal at some point. If no such node is found, return null.</p><p>\"background-color:transparent;color:#000000;\"><i>Time Complexity:</i> Both the lists are iterated twice, the time complexity is O(n + m) where n, m are the number of nodes in the two linked lists.<br><i>Space Complexity:</i> Since constant extra memory is used, the space complexity is O(1).</p><p>&nbsp;</p><h2>Solution 3 (Optimal Solution - 2)</h2><p>In Solution 1, we were traversing both Linked Lists, A and B simultaneously. If we align the two linked lists like A+B and B+A. Here, the length of both the linked lists will be the same and so only one traversal through them can result in the answer.</p><p>If A = [2,3,1,4] and B = [8,1,4]. The intersection point will be 1. The linked lists A+B and B+A can be represented as:</p><figure class=\"image\"><img src=\"https://lh4.googleusercontent.com/B7mkzCki_7xufyQR4Ol6kp-QAgifpfWq1GVkKy5f7-JKYaMH69dUArhCpts9HGreKG4pEio1pHmJSwfSGhv0deb1AsYXUS_yGm0N9fWds1CNh87PyJmbDDjDHcQim4nYqTGLcpgh\"></figure><p><i>Time Complexity:</i> Both the lists are iterated once, the time complexity is O(n + m) where n, m are the number of nodes in the two linked lists.<br><i>Space Complexity:</i> Since no extra memory is used, the space complexity is O(1).</p>"
+        },
+        "id": 537,
+        "input_format": "<p>The first line of input contains <i>N </i>- the number of nodes in the first linked list.<br>The second line contains <i>N</i> space-separated numbers denoting the elements of the linked list.<br>The third line contains <i>M</i> - the number of nodes in the second linked list.<br>The fourth line contains <i>M</i> space-separated numbers denoting the elements of the linked list.<br>The last line of input contains <i>skipA</i> and <i>skipB</i>. If <i>skipA </i>= <i>skipB</i> = -1, then there is no intersection of two lists. Otherwise <i>listA</i>[<i>skipA + i</i>] == <i>listB</i>[<i>skipB + i</i>] for <i>i</i> = 1 to <i>N</i> - <i>skipA. </i>It's guaranteed that when <i>skipA</i> \u2260 -1 and <i>skipB</i> \u2260 -1, then <i>N - skipA</i> == <i>M - skipB</i>.</p><p>The following function parses the input</p><pre><code class=\"language-plaintext\">pair&lt;ListNode*, ListNode*&gt; GetList(vector&lt;int&gt; listA, vector&lt;int&gt; listB, int skipA, int skipB)</code></pre>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>For the first test case:</p><figure class=\"image\"><img src=\"https://lh4.googleusercontent.com/R-xTVTBgbyu4nwesAjNaaR0pN81J7aOkb_dqKH6hOu8cgA4JiXqQwSrkcedBfx33obzgZd_XG1ugwSfT4C7EWNEZw-OeBx391w-zC6VI2uDWWLP88yHAWiF2ZOk0H3CMipIQ1POE\"></figure>",
+        "output_format": "",
+        "samples": [
+            {
+                "input": "5\n2 3 1 4 5\n6\n9 6 8 1 4 5\n2 3",
+                "output": "1"
+            },
+            {
+                "input": "4\n1 2 5 3\n3\n6 5 3\n2 1",
+                "output": "5"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Linked List",
+            "Two Pointers"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode() : val(0), next(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next) {}\n};\n</fix>\n\nListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {\n    //Complete the function\n}\n\n<fix>\nListNode* GetList(vector<int> &num) {\n    ListNode* head = nullptr;\n\n    if(num.empty()) {\n        return head;\n    }\n\n    ListNode* cur = head;\n    \n    for(int i  = 0; i < (int)num.size(); i++) {\n        ListNode* temp = new ListNode(num[i]);\n        if(!cur) {\n            cur = temp;\n            head = cur;\n        }\n        else {\n            cur->next = temp;\n            cur = temp;\n        }\n    }\n    \n    return head;\n}\n\npair<ListNode*, ListNode*> GetList(vector<int> listA, vector<int> listB, int skipA, int skipB) {\n    ListNode* headA = GetList(listA);\n    \n    if(skipA == -1 && skipB == -1) {\n        ListNode* headB = GetList(listB);\n        return {headA, headB};    \n    }\n\n    vector<int> temp;\n    for(int i = 0; i < skipB; i++) {\n        temp.push_back(listB[i]);\n    }\n\n    ListNode* headB = GetList(temp);\n\n    ListNode* curA = headA;\n    for(int i = 0; i < skipA; i++) {\n        curA = curA->next;\n    }\n\n    if(!headB) headB = curA;\n    else {\n        ListNode* curB = headB;\n        while(curB->next) {\n            curB = curB->next;\n        }\n        curB->next = curA;\n    }\n\n    return {headA, headB};\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    vector<int> listA(n);\n\n    for(int i = 0; i < n; i++) {\n        cin >> listA[i];\n    }\n\n    int m;\n    cin >> m;\n\n    vector<int> listB(m);\n\n    for(int i = 0; i < m; i++) {\n        cin >> listB[i];\n    }\n\n    int skipA, skipB;\n    cin >> skipA >> skipB;\n\n    pair<ListNode*,ListNode*> temp = GetList(listA, listB, skipA, skipB);\n\n    ListNode* headA = temp.first;\n    ListNode* headB = temp.second;\n\n    ListNode* ansHead = getIntersectionNode(headA, headB);\n\n    if(ansHead) {\n        cout << ansHead->val << \"\\n\";\n    }\n    else {\n        cout << \"-1\\n\";\n    }\n\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Intersection of Two Lists",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

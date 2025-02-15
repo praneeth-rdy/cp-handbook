@@ -1,0 +1,254 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3465,
+            "name": "Live Sessions",
+            "resources_count": 12,
+            "time_in_minutes": 1009,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3459,
+            "name": "Day 1: Binary search Fundamentals",
+            "resources_count": 4,
+            "time_in_minutes": 223,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3460,
+            "name": "Day 2: Application Ideas 1",
+            "resources_count": 4,
+            "time_in_minutes": 177,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3461,
+            "name": "Day 3: Application Ideas 2",
+            "resources_count": 4,
+            "time_in_minutes": 159,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3462,
+            "name": "Day 4: Application Ideas 3",
+            "resources_count": 4,
+            "time_in_minutes": 99,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3463,
+            "name": "Day 5 [Optional]:",
+            "resources_count": 1,
+            "time_in_minutes": 87,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 1",
+            "id": 3464,
+            "name": "Day 6 [Optional]:",
+            "resources_count": 2,
+            "time_in_minutes": 76,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3467,
+            "name": "Day 7: Sliding Window Framework",
+            "resources_count": 2,
+            "time_in_minutes": 135,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3468,
+            "name": "Day 8: Extended Ideas",
+            "resources_count": 2,
+            "time_in_minutes": 59,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3469,
+            "name": "Day 9: Sliding window Practice",
+            "resources_count": 3,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3476,
+            "name": "Day 10: Two Pointer",
+            "resources_count": 2,
+            "time_in_minutes": 84,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3477,
+            "name": "Day 11:  Challenger [Optional]",
+            "resources_count": 2,
+            "time_in_minutes": 60,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3478,
+            "name": "Day 12: Techniques Revisited [Optional]",
+            "resources_count": 2,
+            "time_in_minutes": 60,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3482,
+            "name": "Day 13: Bit manipulation Fundamental",
+            "resources_count": 4,
+            "time_in_minutes": 186,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3483,
+            "name": "Day 14: Frequent Interview Questions",
+            "resources_count": 1,
+            "time_in_minutes": 111,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3484,
+            "name": "Day 15: Application Idea 1",
+            "resources_count": 1,
+            "time_in_minutes": 168,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3485,
+            "name": "Day 16: Application Idea 2",
+            "resources_count": 2,
+            "time_in_minutes": 89,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3486,
+            "name": "Day 17: Application Idea 3",
+            "resources_count": 3,
+            "time_in_minutes": 102,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3487,
+            "name": "Day 18: Application Idea 4",
+            "resources_count": 2,
+            "time_in_minutes": 43,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3488,
+            "name": "Day 19 : Application Idea 5",
+            "resources_count": 2,
+            "time_in_minutes": 47,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "DP Premium Day Wise Phase 2",
+            "id": 3489,
+            "name": "Day 20 : GAP Day [Optional]",
+            "resources_count": 1,
+            "time_in_minutes": 1,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 2",
+            "id": 3520,
+            "name": "Day 21 : Recursion & Brute Force",
+            "resources_count": 2,
+            "time_in_minutes": 158,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 2",
+            "id": 3521,
+            "name": "Day 22: Backtracking",
+            "resources_count": 2,
+            "time_in_minutes": 149,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 2",
+            "id": 3522,
+            "name": "Day 23 :",
+            "resources_count": 2,
+            "time_in_minutes": 39,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 2",
+            "id": 3523,
+            "name": "Day 24 : Finding Kth Solution",
+            "resources_count": 3,
+            "time_in_minutes": 93,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 2",
+            "id": 3524,
+            "name": "Day 25: More LCCM Framework Practice",
+            "resources_count": 4,
+            "time_in_minutes": 120,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 2",
+            "id": 3525,
+            "name": "Day 26:  Extended Practice",
+            "resources_count": 3,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 2",
+            "id": 3526,
+            "name": "Day 27 : Gap Day [Optional]",
+            "resources_count": 3,
+            "time_in_minutes": 245,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 2",
+            "id": 3527,
+            "name": "Day 28 :  Meet in the Middle",
+            "resources_count": 4,
+            "time_in_minutes": 113,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Phase 2",
+            "id": 3528,
+            "name": "Day 29 : More Meet in the Middle Practice",
+            "resources_count": 4,
+            "time_in_minutes": 90,
+            "type": "COURSE_MATERIALS"
+        },
+        {
+            "description": "Premium Day Wise Course",
+            "id": 4670,
+            "name": "Recursion Assignment",
+            "resources_count": 1,
+            "time_in_minutes": 150,
+            "type": "ASSIGNMENTS"
+        }
+    ],
+    "details": "Chapter Playlists"
+}

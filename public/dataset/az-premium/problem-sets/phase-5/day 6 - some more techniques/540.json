@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Give a special singly linked list of length <i>N</i> with an additional random pointer that points to any node, including itself or <i>null</i>. Make a new linked list, which is exactly the same as the given linked list. Each node should point to the next and random pointer node in the same way as the original list. <strong>None of the pointers in the new list should point to nodes in the original list.</strong></p><p>For example, if there are two nodes <i>X</i> and <i>Y</i> in the original list, where <i>X.random \u2192 Y</i>, then for the corresponding two nodes <i>x</i> and <i>y</i> in the copied list, <i>x.random \u2192 y</i>.</p><p>Return the head of the copied linked list.</p><p>Complete the function</p><p><strong>ListNode* copyRandomList(ListNode* head)</strong></p>",
+        "complete_approach": "",
+        "constraints": "<p>0 \u2264 <i>N</i> \u2264 10<sup>5</sup><br>0 \u2264 Value of the Node \u2264 10<sup>9</sup></p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode *random;\n    ListNode() : val(0), next(nullptr), random(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr), random(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next), random(nullptr) {}\n    ListNode(int x, ListNode *next, ListNode *random) : val(x), next(next), random(random) {}\n};\n\nListNode* copyRandomList(ListNode* head) {\n    if(head == NULL) return NULL;\n    ListNode* cur = head;\n    while(cur != NULL) {\n        ListNode* temp = cur->next;\n        cur->next = new ListNode(cur->val);\n        cur->next->next = temp;\n        cur = temp;\n    }\n    cur = head;\n    while(cur != NULL) {\n        cur->next->random = cur->random?cur->random->next:cur->random;\n        cur = cur->next->next;\n    }\n    \n    ListNode* original = head, *copy = head->next;\n    ListNode* ans = copy;\n    while(copy != NULL && original != NULL) {\n        original->next = original->next->next;\n        copy->next = copy->next?copy->next->next:copy->next;\n        original = original->next;\n        copy = copy->next;\n    }\n    return ans;\n}\n\nListNode* GetList(vector<pair<int,int>> &num) {\n    int n = (int)num.size();\n    vector<ListNode*> copy(n);\n\n    ListNode* head = NULL;\n    ListNode* cur = NULL;\n\n    for(int i = 0; i < n; i++) {\n        ListNode* temp = new ListNode(num[i].first);\n        copy[i] = temp;\n        if(!head) {\n            head = temp;\n            cur = temp;\n        }\n        else {\n            cur->next = temp;\n            cur = cur->next;\n        }\n    }\n\n    for(int i = 0; i < n; i++) {\n        if(num[i].second == -1) continue;\n        copy[i]->random = copy[num[i].second];\n    }\n\n    return head;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    vector<pair<int,int>> num(n);\n\n    for(int i = 0; i < n; i++) {\n        cin >> num[i].first >> num[i].second;\n    }\n\n    ListNode* head = GetList(num);\n\n    ListNode* ans = copyRandomList(head);\n\n    while(ans) {\n        cout << ans->val << \" \";\n        if(ans->random) cout << ans->random->val << \"\\n\";\n        else cout << \"-1\\n\";\n        ans = ans->next;\n    }\n    \n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:28:29.991101+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "<h2>Solution 1 (Extra Space</h2><p>Iterate through the given linked list and maintain a hashmap, say m to store the key as the original node and its value as the new node. The new node should have the same value as the original node. Don\u2019t assign the next and random pointers at this point. Now traverse the linked list again and assign the next and random pointers using the hashmap. Note that you should use Nodes as the key and value pair and not their values.</p><p><i>Time Complexity:</i> The linked list is iterated twice, the time complexity is O(n) where n is the number of nodes in the linked list.<br><i>Space Complexity:</i> Since a hashmap of size n is made, the space complexity is O(n).</p><p>&nbsp;</p><h2>Solution 2 (Optimal)</h2><p>If the linked list is: 1 \u2192 2 \u2192 3 \u2192 4 \u2192 null, you need to copy each node and insert it right after the current node. Doing this will change the linked list to: 1 \u2192 1\u2019 \u2192 2 \u2192 2\u2019 \u2192 3 \u2192 3\u2019 \u2192 4 \u2192 4\u2019 \u2192 null. Now we need to assign the random pointers. It can be noticed that the random pointer of node 1\u2019 will be the same as the next pointer of the random pointer of node 1. The same can be done for each node. Now you just need to reassign the next pointers of the copy of the linked list.</p><p><i>Time Complexity:</i> The linked list is iterated thrice, the time complexity is O(n) where n is the number of nodes in the linked list.<br><i>Space Complexity:</i> Since constant extra memory is used, the space complexity is O(1).</p>"
+        },
+        "id": 540,
+        "input_format": "<p>The first line of input contains <i>N</i> - the number of nodes in the linked list.<br>Each of the next lines contains the node value and the random index in the list to which the random pointer is pointing. If the random index is -1, then the random pointer is pointing at <i>null.</i></p><p>The following function parses the input</p><p><strong>ListNode* GetList(vector&lt;pair&lt;int,int&gt;&gt; List)</strong></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<figure class=\"image\"><img src=\"https://lh3.googleusercontent.com/NXeg7u-zICehupo9p7yKWuSpsNTeud1J89Pap-ch3aHYfsJO6VyzZzvU3J1pNw3sO9eWqTCfEl2orbYCSFW6S0iSRbidWFFYVGVi5lbOPTTNk0ZNiqs1hoJ_CqBuQ6Gfzf4jr0Ws\"></figure>",
+        "output_format": "",
+        "samples": [
+            {
+                "input": "5\n1 2\n6 -1\n3 -1\n4 1\n5 3",
+                "output": "1 3\n6 -1\n3 -1\n4 6\n5 4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Tricky",
+            "Linked List"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode *random;\n    ListNode() : val(0), next(nullptr), random(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr), random(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next), random(nullptr) {}\n    ListNode(int x, ListNode *next, ListNode *random) : val(x), next(next), random(random) {}\n};\n</fix>\n\nListNode* copyRandomList(ListNode* head) {\n    //Complete the function\n}\n\n<fix>\nListNode* GetList(vector<pair<int,int>> &num) {\n    int n = (int)num.size();\n    vector<ListNode*> copy(n);\n\n    ListNode* head = NULL;\n    ListNode* cur = NULL;\n\n    for(int i = 0; i < n; i++) {\n        ListNode* temp = new ListNode(num[i].first);\n        copy[i] = temp;\n        if(!head) {\n            head = temp;\n            cur = temp;\n        }\n        else {\n            cur->next = temp;\n            cur = cur->next;\n        }\n    }\n\n    for(int i = 0; i < n; i++) {\n        if(num[i].second == -1) continue;\n        copy[i]->random = copy[num[i].second];\n    }\n\n    return head;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    vector<pair<int,int>> num(n);\n\n    for(int i = 0; i < n; i++) {\n        cin >> num[i].first >> num[i].second;\n    }\n\n    ListNode* head = GetList(num);\n\n    ListNode* ans = copyRandomList(head);\n\n    while(ans) {\n        cout << ans->val << \" \";\n        if(ans->random) cout << ans->random->val << \"\\n\";\n        else cout << \"-1\\n\";\n        ans = ans->next;\n    }\n    \n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Copy List with Random Pointer",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

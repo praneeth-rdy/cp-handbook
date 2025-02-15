@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an integer N with no more than 10<sup>5</sup> digits. You have to find the sum of its digits.",
+        "complete_approach": "",
+        "constraints": "1\u2264 T \u2264 10<sup>6</sup>\n\n1\u2264 Number of digits in N \u2264 10<sup>6</sup>\n\nIt is guaranteed that the sum of the number of digits in N over all the test cases does not exceed 10<sup>6</sup>.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint main() {\n    IOS\n    int t;\n    cin >> t;\n    while (t--) {\n        string s;\n        cin >> s;\n        int ans = 0;\n        for (char digit : s) {\n            ans += (digit - '0');\n        }\n        cout << ans << \"\\n\";\n    }\n    return 0;\n}\n```\n\n",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:38:58.303218+00:00"
+        },
+        "hints": {
+            "hint1": "long long int won\u2019t fit the constraints to input N",
+            "hint2": "",
+            "solution_approach": "Store the given integer as a string and iterate through it to find the sum of digits.\n\nTime Complexity per test case: O(Number of digits in N)"
+        },
+        "id": 321,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer N.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, 1+2 = 3\n\nFor the second test case, 1+5+6+1 = 13",
+        "output_format": "For each test case, print the sum of digits on N on a new line.",
+        "samples": [
+            {
+                "input": "3\n12\n1561\n53453451234567876545676540909890989890987987567654567654567656765678765678765\n",
+                "output": "3\n13\n443\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Sum of Digits",
+        "video_editorial_id": 10694
+    },
+    "details": "Problem Details"
+}

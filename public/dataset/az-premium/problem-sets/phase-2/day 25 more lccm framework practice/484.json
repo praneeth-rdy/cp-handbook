@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have given a positive even integer <i>n.</i> Your task is to print all balanced parenthesis of length <i>n </i>in lexicographic order (https://en.wikipedia.org/wiki/Lexicographic_order)<i>.</i>&nbsp;</p><p>Balanced parentheses mean that each opening symbol has a corresponding closing symbol and the pairs of parentheses are properly nested.</p>",
+        "complete_approach": "",
+        "constraints": "<p>2 \u2264 <i>n \u2264 </i>24<br>It is guaranteed that <i>n </i>is even.</p>",
+        "difficulty": 2,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nstring ans = \"\";\n\nvoid dfs(int curLen, int totalLen, int openCnt)\n{\n    if (curLen == totalLen)\n    {\n        assert(openCnt == 1);\n        ans += \")\";\n        cout << ans << \"\\n\";\n        ans.pop_back();\n        return;\n    }\n\n    if (!openCnt)\n    {\n        ans += \"(\";\n        dfs(curLen + 1, totalLen, openCnt + 1);\n        ans.pop_back();\n    }\n    else\n    {\n        int remLen = totalLen - curLen + 1;\n        ;\n        if (remLen > openCnt)\n        {\n            ans += \"(\";\n            dfs(curLen + 1, totalLen, openCnt + 1);\n            ans.pop_back();\n        }\n        ans += \")\";\n        dfs(curLen + 1, totalLen, openCnt - 1);\n        ans.pop_back();\n    }\n}\n\nsigned main()\n{\n    // freopen(\"IN\", \"r\", stdin);\n    // freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    dfs(1, n, 0);\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:44:53.814933+00:00"
+        },
+        "hints": {
+            "hint1": "The problem requires generating all balanced parenthesis of length n . To do this, you can use a recursive approach, where you keep track of the current length, the total length, and the number of opening parentheses.",
+            "hint2": "The solution approach involves using a recursive approach that generates all the balanced parentheses of length n. At each step, you have two choices: either add an opening parenthesis or a closing parenthesis. However, you have to make sure that the resulting sequence is still balanced.",
+            "solution_approach": "### Level\nWe need to keep track of current length, the total length, and the number of opening parentheses.  \n\n### Choice\nWe have two choices: either add an opening parenthesis or a closing parenthesis. However, you have to make sure that the resulting sequence is still balanced.\nIf you are adding a opening bracket increase the opening bracket count by 1, else for closing bracket decrease the opening bracket count by 1.\n\n### Check\nCheck if after adding a bracket the sequence is still valid or not.\n\n### Transition\nAfter taking an opening bracket call the DFS with the updated sequence, length, and number of opening parentheses. \nIf the length of the sequence is n, then print the sequence. Otherwise, backtrack."
+        },
+        "id": 484,
+        "input_format": "<p>The only line of input contains a number <i>n.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print all balanced parenthesis of length <i>n </i>in lexicographic order.</p>",
+        "samples": [
+            {
+                "input": "2",
+                "output": "()"
+            },
+            {
+                "input": "4",
+                "output": "(())\n()()"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Recursion",
+            "Backtracking"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Generate Balanced Parenthesis - easy version",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

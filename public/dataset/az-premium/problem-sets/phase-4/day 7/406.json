@@ -1,0 +1,56 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have given a bracket sequence <i>s<sub>1</sub>, s<sub>2</sub>, \u2026, s<sub>n </sub></i>or in other words, a string <i>s</i> of length <i>n</i>, consisting of characters '(' and ')'.&nbsp;<br>You've been asked <i>Q</i> queries. The <i>i</i>th query is of the form <i>l<sub>i</sub></i> and <i>r<sub>i</sub></i>. The answer to the <i>i</i>-th query is the length of the maximum correct bracket <strong>subsequence</strong> of sequence <i>s<sub>li</sub></i>,\u2009<i>s<sub>li</sub></i><sub>\u2009+\u20091</sub>,\u2009...,\u2009<i>s<sub>ri</sub></i>.<br>Find the correct answer to all queries.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n</i> \u2264 10<sup>6</sup><br>1 \u2264 <i>Q</i> \u2264 10<sup>5</sup><br>1 \u2264 <i>l<sub>i</sub></i> \u2264 <i>r<sub>i</sub></i> \u2264 <i>n</i></p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 200010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nstruct ST{\n    int L, O, C;\n    ST(int L = 0 , int O = 0, int C = 0) :\n        L(L), O(O), C(C) {}\n};\n\nST operator + (const ST &A, const ST &B) {\n    int t = min(A.O, B.C);\n    int L = A.L + B.L + 2 * t;\n    int O = A.O + B.O - t;\n    int C = A.C + B.C - t;\n    return ST(L, O, C);\n}\n\nstruct segtree {\n    vector<ST> tree;\n    string s;\n    segtree(string s) : s(s) {\n        int n = (int)s.length();\n        tree.resize(4 * n);\n    }\n\n    void build(int node, int start, int end) {\n        if(start == end) {\n            if(s[start] == '(') tree[node] = ST(0, 1, 0);\n            else tree[node] = ST(0, 0, 1);\n            return;\n        }\n        int mid = (start + end) / 2;\n        build(2 * node, start, mid);\n        build(2 * node + 1, mid + 1, end);\n        tree[node] = tree[2 * node] + tree[2 * node + 1];\n    }\n\n    ST query(int node, int start, int end, int l, int r) {\n        if(start > r || end < l) return ST(0, 0, 0);\n        if(start >= l && end <= r) return tree[node];\n        int mid = (start + end) / 2;\n        return query(2 * node, start, mid, l, r) + query(2 * node + 1, mid + 1, end, l, r);\n    }\n};\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    string s;\n    cin >> s;\n\n    segtree T(s);\n\n    int n = (int)s.length();\n\n    T.build(1, 0, n - 1);\n\n    int q; cin >> q;\n    while(q--) {\n        int l, r; cin >> l >> r;\n        l--; r--;\n        cout << T.query(1, 0, n - 1, l, r).L << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:16:08.233196+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Segment Tree\u2026</p>",
+            "hint2": "<p>Lets store at each node three different pieces of information.</p><ol><li>Maximum length correct bracket subsequences that is possible in the range corresponding to the node.</li><li>Number of total open brackets that are not in the maximum length correct bracket subsequences.</li><li>Number of total close brackets that are not in the maximum length correct bracket subsequences.</li></ol><p>Now think of how you can merge two nodes with this information.</p>",
+            "solution_approach": "\nWe will support the segments tree. At each vertex will be stored:\n\n1. $L_v$ \u2014 the maximum length of the bracket subsequence.\n2. $O_v$ \u2014 how many open brackets that sequence doesn't contain.\n3. $C_v$ \u2014 how many closed brackets that sequence doesn't contain.\n\nIf we want to combine two vertices with parameters $(L_1,\u2009O_1,\u2009C_1)$ and $(L_2,\u2009O_2,\u2009C_2)$, we can use the following rules:\n\n- $t = \\min(O_1,\u2009C_2)$\n- $L = L_1 + L_2 + 2 \\times t$\n- $O = O_1 + O_2 - t$\n- $C = C_1 + C_2 - t$\n\n*If we add an update query also, can you do it now?*\n"
+        },
+        "id": 406,
+        "input_format": "<p>The first line contains a sequence of characters <i>s</i><sub>1</sub>,\u2009<i>s</i><sub>2</sub>,\u2009...,\u2009<i>s<sub>n</sub></i> without any spaces. Each character is either a \"(\" or a \")\".&nbsp;<br>The second line contains integer <i>Q</i> \u2014 the number of queries.&nbsp;<br>Each of the next <i>Q</i> lines contains a pair of integers. The <i>i</i>-th line contains integers <i>l<sub>i</sub></i>,\u2009<i>r<sub>i</sub></i> \u2014 the description of the <i>i</i>-th query.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each query, print the answer on a new line.</p>",
+        "samples": [
+            {
+                "input": "()\n1\n1 2",
+                "output": "2"
+            },
+            {
+                "input": "())(())(())(\n7\n1 1\n2 3\n1 2\n1 12\n8 12\n5 11\n2 10",
+                "output": "0\n0\n2\n10\n4\n6\n6"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Segment Tree"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Bracket Queries",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

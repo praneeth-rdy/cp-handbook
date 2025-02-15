@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an array **nums** of **n** integers and an integer **target**.  \n\nYou want to build an expression out of **nums** by adding one of the symbols \u2018+\u2019 and \u2018-\u2019 before each integer in the array and then concatenate the integers.  \n\n1. For example, if nums = [1, 2], you can add \u2018-\u2019 before 1 and \u2018+\u2019 before 2 to obtain the expression \u201c-1+2\u201d which evaluates to 1.  \n\nReturn the number of different expressions that you can build, which evaluates to **target**.  \n\nSince the answer can be huge, output it modulo **10<sup>9</sup> + 7**.",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">1 &lt;= n &lt;= 1000\n0 &lt;= nums[i] &lt;= 1000\n-1000 &lt;= target &lt;= 1000\n0 &lt;= sum(nums[i]) &lt;= 1000</code></pre>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nconst int mod = 1e9 + 7;\n\nint BuildingtheSum(vector <int>& nums, int target) {\n\tint n = nums.size();\n\tvector <vector <int>> dp(n + 1, vector<int> (2001, 0));\n\tdp[0][1000] = 1;\n\tfor (int i = 0; i < n; i++) {\n\t\tfor (int j = 0; j <= 2000; j++) {\n\t\t\tif (dp[i][j] == 0)\n\t\t\t\tcontinue;\n\t\t\tdp[i + 1][j + nums[i]] = (dp[i + 1][j + nums[i]] + dp[i][j]) % mod;\n\t\t\tdp[i + 1][j - nums[i]] = (dp[i + 1][j - nums[i]] + dp[i][j]) % mod;\n\t\t}\n\t}\n\treturn dp[n][target + 1000];\n}\n\nint main() {\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL);\n\tint n;\n\tcin >> n;\n\tint target;\n\tcin >> target;\n\tvector <int> nums(n);\n\tfor (auto &i : nums)\n\t\tcin >> i;\n\tcout << BuildingtheSum(nums, target);\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:47:37.502226+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "Try to do it using dynamic programming.  \n\nConsider this state **dp(i, j)** = Number of ways to have sum **j** after considering the first **i** terms of the expression.  \n\nCan you build it further?\n",
+            "solution_approach": "We use dynamic programming to solve this problem.  \n\nLet **dp[i][j]** = Number of ways to have sum **j** after considering the first **i** terms of the expression. The range of **j** is -1000 \u2264 **j** \u2264 1000. To ensure that we have non-negative indices, we store the number of ways to have sum **j** in index **j + 1000**.  \n\nThus, the final answer is **dp[n][target + 1000]**.  \n\nWhen we are at the i-th term of the expression, we have two choices:  \n\n1. Add \u2018+\u2019 sign before this term.  \n   - If the current sum is **j**, we update **dp[i + 1][j + nums[i]]**.\n\n2. Add \u2018-\u2019 sign before this term.  \n   - If the current sum is **j**, we update **dp[i + 1][j - nums[i]]**.  \n\nTo ensure that we do not go out of the range of **j**, we only make transitions from **dp[i][j]** when **dp[i][j] > 0**.\n"
+        },
+        "id": 635,
+        "input_format": "Implement the function **BuildingtheSum** that takes in the array **nums** and the integer **target**.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "1. +1+1+1-1 = 2  \n2. +1+1-1+1 = 2  \n3. +1-1+1+1 = 2  \n4. -1+1+1+1 = 2",
+        "output_format": "Return the number of different expressions modulo **10<sup>9</sup> + 7** that evaluates to the given target.",
+        "samples": [
+            {
+                "input": "4 2\n1 1 1 1",
+                "output": "4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-Uber"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nint BuildingtheSum(vector <int>& nums, int target) {\n\t\n}\n\n\n<fix>\nint main() {\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL);\n\tint n;\n\tcin >> n;\n\tint target;\n\tcin >> target;\n\tvector <int> nums(n);\n\tfor (auto &i : nums)\n\t\tcin >> i;\n\tcout << BuildingtheSum(nums, target);\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Building the Sum",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

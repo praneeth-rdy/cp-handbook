@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given a 2d-array of dimension <i>N*M</i> and <i>Q</i> queries. In each query four integers <i>x1, y1, x2, y2 </i>is given, you have to find the sum of submatrix with <i>(x1,y1)</i> be the leftmost corner and <i>(x2,y2)</i> be the rightmost corner %10^9+7.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\nint mod = 1e9 + 7;\nsigned main() {\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n\n  int n, m, q;\n  cin >> n >> m >> q;\n  long long arr[n + 1][m + 1];\n  memset(arr, 0, sizeof(arr));\n  for (int i = 1; i <= n; i++) {\n    for (int j = 1; j <= m; j++) {\n      cin >> arr[i][j];\n      arr[i][j] += arr[i - 1][j] + arr[i][j - 1] - arr[i - 1][j - 1];\n    }\n  }\n  while (q--) {\n    int x1, y1, x2, y2;\n    cin >> x1 >> y1 >> x2 >> y2;\n    long long ans =\n        arr[x2][y2] - arr[x1 - 1][y2] - arr[x2][y1 - 1] + arr[x1 - 1][y1 - 1];\n    ans %= mod;\n    if (ans < 0) ans += mod;\n    cout << ans << '\\n';\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:44:57.597349+00:00"
+        },
+        "hints": {
+            "hint1": "Use Prefix Sums in 2D matrix. If new to this concept,\nCheck the video solution - 2D Prefix Sums Concept.",
+            "hint2": "",
+            "solution_approach": "We solve this problem using the concept of prefix sums.\n\nTo do this efficiently using prefix sums, we need to first precompute a 2d-array called prefix sums, where each cell (i,j) stores the sum of all the values in the submatrix with (1,1) as the top-left corner and (i,j) as the bottom-right corner. We can compute this array using the following formula:\n\npartialsums[i][j] = partialsums[i-1][j] + partialsums[i][j-1] - partialsums[i-1][j-1] + values[i][j]\n\nHere, values[i][j] is the value of the cell at (i,j) in the original 2d-array.\n\nNow to find the answer to each of the queries, where we are given the top left corner (x1,y1) and bottom right corner (x2,y2). We can find the sum of that rectangle by doing  \n\nans=partialsums[x2][y2]-partialsums[x1][y2]-partialsums[x2][y1]+partialsums[x1][y1]\n\nThe time complexity for this algorithm is $O(Q+N\\times M)$. For each query it almost takes constant time. initially we iterate over the entire 2D matrix to find the prefix sum of the matrix."
+        },
+        "id": 25,
+        "input_format": "<p>The first line contains three space-separated integers <i>N, M, Q</i> where 1&lt;=<i>N,</i> <i>M</i>&lt;=10^3, 1&lt;=<i>Q</i>&lt;=10^6.</p><p>Next <i>N</i> lines contains <i>M</i> space-separated integers (-1e9&lt;=<i>A<sub>ij</sub></i>&lt;=1e9).</p><p>Next <i>Q</i> lines contains four space separated integers <i>x1, y1, x2, y2 </i>where 1&lt;=<i>x1</i>&lt;=<i>x2</i>&lt;=<i>N</i>, 1&lt;=<i>y1</i>&lt;=<i>y2</i>&lt;=<i>M</i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "",
+        "output_format": "<p>For each query print, the sum of submatrix with <i>(x1,y1)</i> be the leftmost corner and <i>(x2,y2)</i> be the rightmost corner in a new line %10^9+7.</p>",
+        "samples": [
+            {
+                "input": "5 5 5\n-1 2 3 -4 2\n0 0 0 0 4\n1 2 4 3 5\n-1 -5 -2 3 4\n0 -3 -5 3 -6\n1 1 2 2\n1 2 3 4\n2 3 3 3\n4 4 4 4\n2 3 2 4",
+                "output": "1\n10\n4\n3\n0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Prefix And Partial Sums"
+        ],
+        "template_code": [],
+        "time_limit_sec": 4.0,
+        "title": "Rectangle Sum Query",
+        "video_editorial_id": 10675
+    },
+    "details": "Problem Details"
+}

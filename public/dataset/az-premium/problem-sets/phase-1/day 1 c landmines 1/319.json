@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an array of N integers. The frequency of exactly one integer is odd. Find that integer.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^6$  \n\n$1 \\leq N \\leq 10^6$ (N is odd)  \n\n$-10^9 \\leq A_i \\leq 10^9$  \n\nIt is guaranteed that the sum of $N$ over all test cases does not exceed $10^6$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint main() {\n    IOS\n    int t;\n    cin >> t;\n    while (t--) {\n        int n;\n        cin >> n;\n        int ans = 0;\n        for (int i = 0; i < n; ++i) {\n            int x;\n            cin >> x;\n            ans ^= x;\n        }\n        cout << ans << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:16:28.093462+00:00"
+        },
+        "hints": {
+            "hint1": "Xor of a number with itself is 0.",
+            "hint2": "Take xor of all elements of the array. All the numbers with even frequency would get cancelled out.\n\nTime Complexity per test case: O(N)",
+            "solution_approach": "Take xor of all elements of the array. All the numbers with even frequency would get cancelled out.\n\nTime Complexity per test case: O(N)"
+        },
+        "id": 319,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer N - the length of the array. \n\nThe second line of each test case contains N space-separated integers.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, print the integer with odd frequency.",
+        "samples": [
+            {
+                "explanation": "",
+                "input": "3\n5\n2 5 5 7 2\n3\n2 1 2\n5\n0 1 2 1 0",
+                "output": "7\n1\n2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Odd One Out AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

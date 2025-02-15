@@ -1,0 +1,58 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a binary tree and a number S, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals the given number. Return false if no such path can be found.",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "Editorial Code data is currently empty.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:46:59.230614+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 667,
+        "input_format": "<p>The first line contains an integer T, (1 \u2264 T \u2264 10^5), the number of test cases.</p><p>The first line of each test case contains an integer N, S &nbsp;the length of the array representing the serialized representation of a tree, the number.</p><p>The next line contains N-space-separated integers.&nbsp;</p><p>The input is given as a serialized representation of a tree.</p><p>The following function parses the input:</p><p><i>Node* getBinaryTree(vector&lt;int&gt; &amp;num, int*ind)</i></p><p><i>Sum of N across all test cases \u2264 10^7.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Return true/false.</p>",
+        "samples": [
+            {
+                "input": "4\n5 10\n1 9 -1 -1 -1 \n5 61\n8 -1 10 -1 -1 \n3 2\n2 -1 -1 \n13 13\n3 5 3 8 9 -1 -1 -1 -1 -1 1 -1 -1 ",
+                "output": "yes\nno\nyes\nno"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Frequently Asked Questions",
+            "Binary Tree",
+            "company-AlgoZenith"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n</fix>\nbool hasPathSum(Node* node, int sum)\n{\n        //Complete the function\n}\n\n<fix>\nNode* getBinaryTree(vector<int> &num, int*ind) {\n    if(num[*ind] == -1)\n        return NULL;\n    Node* node = new Node(num[*ind]);\n    (*ind)++;\n    node->left = getBinaryTree(num,ind);\n    (*ind)++;\n    node->right = getBinaryTree(num,ind);\n    return node;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n,sum;\n        cin>>n>>sum;\n        assert(n<=1000000);\n        vector<int>arr(n);\n        for(int i=0;i<n;i++)\n            cin>>arr[i];\n        int ind = 0;\n        Node* tree = getBinaryTree(arr,&ind);\n        if(hasPathSum(tree,sum))\n            cout<<\"yes\\n\";\n        else\n            cout<<\"no\\n\";\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Root to leaf path sum",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

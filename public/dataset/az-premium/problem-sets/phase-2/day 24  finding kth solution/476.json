@@ -1,0 +1,61 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>For the given <i>n</i>, consider the array <i>A</i> = {1, 2, \u2026, <i>n</i>}. There exist <i>n</i>! unique permutations of the array. When we list all these <i>n</i>! permutations in lexicographically order, your task is to find <i>k</i>th permutation in that list.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n</i> \u2264 9<br>1 \u2264 <i>k</i> \u2264 <i>n</i>!</p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n#define IOS                       \\\n    ios_base::sync_with_stdio(0); \\\n    cin.tie(0);                   \\\n    cout.tie(0);\n\nvoid func(int k, vector<int> &arr)\n{\n    int n = (int)arr.size();\n    k--;\n    vector<int> ans;\n    int fact = 1;\n    for (int i = 1; i < n; i++)\n    {\n        fact = i * fact;\n    }\n    while (1)\n    {\n        ans.push_back(arr[k / fact]);\n        arr.erase(arr.begin() + k / fact);\n        if ((int)arr.size() == 0)\n            break;\n        k %= fact;\n        fact /= (int)arr.size();\n    }\n    for (auto i : ans)\n    {\n        cout << i << \" \";\n    }\n    cout << \"\\n\";\n}\n\nvoid solve()\n{\n    int n, k;\n    cin >> n >> k;\n    if (n <= 13)\n    {\n        vector<int> arr;\n        for (int i = 1; i <= n; i++)\n        {\n            arr.push_back(i);\n        }\n        func(k, arr);\n    }\n    else\n    {\n        vector<int> arr;\n        for (int i = 1; i < n - 12; i++)\n        {\n            cout << i << \" \";\n        }\n        for (int i = n - 12; i <= n; i++)\n        {\n            arr.push_back(i);\n        }\n        func(k, arr);\n    }\n}\n\nsigned main()\n{\n    IOS;\n    solve();\n    return 0;\n}\n```\n\n\n",
+                "language": "C++14"
+            },
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nsigned main()\n{\n    // freopen(\"IN\", \"r\", stdin);\n    // freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n, k;\n    cin >> n >> k;\n\n    vector<int> nums(n);\n    for (int i = 0; i < n; i++)\n    {\n        nums[i] = i + 1;\n    }\n\n    for (int i = 0; i < k - 1; i++)\n    {\n        next_permutation(nums.begin(), nums.end());\n    }\n\n    for (int u : nums)\n    {\n        cout << u << \" \";\n    }\n    cout << \"\\n\";\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:44:51.938829+00:00"
+        },
+        "hints": {
+            "hint1": "We can always use next_permutation() to generate all possible permutations.   \nCan you try by using recursion and backtracking?",
+            "hint2": "",
+            "solution_approach": "Let a = {1, 2, \u2026, n}. \nNow do iteratively. Find out the farthest index from the last, that has to be changed. Suppose index i needs to change, then we've to choose $\\lceil k / (n - i)!\\rceil$ th smallest number from a[i] to a[n - 1].\n\nAnd go on doing the same for other indices from i + 1 to n - 1.\n\nSee editorial code for more clear understanding."
+        },
+        "id": 476,
+        "input_format": "<p>The first line contains two space-separated integers <i>n</i> and <i>k</i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><strong>Explanation 1: </strong>All 9 permutations in lexicographic order are</p><pre><code class=\"language-plaintext\">1 2 3\n1 3 2\n2 1 3\n2 3 1\n3 1 2\n3 2 1</code></pre><p>The 4th one is {2, 3, 1}.</p>",
+        "output_format": "<p>Print <i>n</i> space-separated integers, denoting the <i>k</i>th permutation.</p>",
+        "samples": [
+            {
+                "input": "3 4",
+                "output": "2 3 1"
+            },
+            {
+                "input": "4 9",
+                "output": "2 3 1 4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Combinatorics",
+            "Recursion"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Kth Permutation - easy version",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

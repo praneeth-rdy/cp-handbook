@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have given an array <i>A</i> of <i>n</i> elements. Your task is to process <i>q</i> queries of the following types.</p><ul><li>1 <i>i x</i> : Update the value at position <i>i</i> to <i>x</i>.</li><li>2 <i>i j</i> : Print the sum of values in the range [<i>i, j</i>].</li></ul>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n</i>, <i>q </i>\u2264 2 x 10<sup>5</sup><br>1 \u2264 <i>A<sub>i</sub>, x </i>\u2264 10<sup>9</sup><br>1 \u2264 <i>i </i>\u2264 <i>n</i><br>1 \u2264 <i>i </i>\u2264 <i>j </i>\u2264 <i>n</i></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 200010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nll tree[4 * N];\n\nvoid update(int node, int start, int end, int idx, int val) {\n    if(start == end) {\n        tree[node] = val;\n        return;\n    }\n    int mid = (start + end) / 2;\n    if(idx <= mid) update(2 * node, start, mid, idx, val);\n    else update(2 * node + 1, mid + 1, end, idx, val);\n    tree[node] = tree[2 * node] + tree[2 * node + 1];\n    return;\n}\n\nll query(int node, int start, int end, int l, int r) {\n    if(start > r || end < l) return 0;\n    if(start >= l && end <= r) return tree[node];\n    int mid = (start + end) / 2;\n    return query(2 * node, start, mid, l, r) + query(2 * node + 1, mid + 1, end, l, r);\n}\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int n, q;\n    cin >> n >> q;\n\n    for(int i = 0; i < n; i++) {\n        int x; cin >> x;\n        update(1, 0, n - 1, i, x);\n    }\n\n    while(q--) {\n        int t, a, b;\n        cin >> t >> a >> b;\n        if(t == 1) {\n            a--;\n            update(1, 0, n - 1, a, b);\n        }\n        else {\n            a--; b--;\n            cout << query(1, 0, n - 1, a, b) << \"\\n\";\n        }\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:34:16.364165+00:00"
+        },
+        "hints": {
+            "hint1": "Use a segment tree to efficiently handle the queries.",
+            "hint2": "",
+            "solution_approach": "##### 1. Build the segment tree:\n\n- Initialize the segment tree with the base case when the start and end indices are the same, i.e., a leaf node.\n- Recursively build the left and right subtrees of each node by dividing the range in half.\n- Update each node with the sum of its children.\n\n#####2. Perform the following steps for each query:\n\n- Read the query type (1 or 2) and the corresponding indices or range.\n- If the query is of type 1 (update):\n\n    - Decrease the index by 1 to adjust for 0-based indexing.\n    - Update the value at the specified index in the segment tree.\n- If the query is of type 2 (range sum):\n\n    - Decrease the indices by 1 to adjust for 0-based indexing.\n    - Use the query function to compute the sum of values in the specified range using the segment tree.\n    - Print the computed sum.\n\n######Time Complexity:\n\nBuilding the segment tree takes $O(n)$ time.\nEach update and range sum query takes $O(\\log n)$ time.\nOverall, the time complexity of the solution is $O((n + q) \\log n)$, where $n$ is the size of the array and $q$ is the number of queries."
+        },
+        "id": 401,
+        "input_format": "<p>The first input line has two integers <i>n</i> and <i>q</i>: the number of values and queries.<br>The second line has <i>n</i> integers <i>A<sub>1</sub>, A<sub>2</sub>, \u2026, A<sub>n</sub></i>: the array values.<br>Finally, there are <i>q</i> lines describing the queries. Each line has three integers: either \"1 <i>i x</i>\" or \"2 <i>i j</i>\".</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print the result of each query of type 2.",
+        "samples": [
+            {
+                "input": "8 4\n3 2 4 5 1 1 5 3\n2 1 4\n2 5 6\n1 3 1\n2 1 4",
+                "output": "14\n2\n11"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Range Queries I",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

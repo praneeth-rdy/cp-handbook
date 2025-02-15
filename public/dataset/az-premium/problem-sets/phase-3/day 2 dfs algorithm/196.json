@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You have given an undirected graph with n nodes, and m edges between them. The goal is to add exactly one edge between two nodes such that the total number of connected components in the graph decreases.\nYour task is to find out the number of ways to add such edge.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n</i> \u2264 10<sup>5</sup><br>1 \u2264 <i>m</i> \u2264 2 x 10<sup>5</sup><br>1 \u2264 <i>a, b</i> \u2264 <i>n</i></p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n\nconst int N = 100010;\n\nint mod = 1e9 + 7;\n\nvector<int> graph[N];\nbool visited[N];\nll temp = 0;\n\nvoid dfs(int cur)\n{\n    if (visited[cur])\n        return;\n    temp++;\n    visited[cur] = true;\n    for (int u : graph[cur])\n    {\n        dfs(u);\n    }\n}\n\nsigned main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n, m;\n    cin >> n >> m;\n\n    for (int i = 0; i < m; i++)\n    {\n        int u, v;\n        cin >> u >> v;\n        graph[u].push_back(v);\n        graph[v].push_back(u);\n    }\n\n    memset(visited, false, sizeof(visited));\n\n    ll sqsum = 0, sum = 0;\n\n    for (int i = 1; i <= n; i++)\n    {\n        temp = 0;\n        dfs(i);\n        sqsum += temp * temp;\n        sum += temp;\n    }\n\n    cout << (sum * sum - sqsum) / 2 << \"\\n\";\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:13:56.425852+00:00"
+        },
+        "hints": {
+            "hint1": "When will an edge decrease the number of connected components?? Only when the edge is connecting 2 different components right?",
+            "hint2": "Perform a DFS or BFS traversal to find the number of connected components in the graph. Let this number be c.\nIf there are k connected components with sizes a1, a2, ..., ak, then the number of ways to connect two different connected components is:\n\n$a1a2 + a1a3 + ... + a1ak + a2a3 + ... + a2*ak + ... + a(k-1)*ak$\n\nwhich can be simplified as:\n\n$\\dfrac{[(a1 + a2 + ... + ak)^2 - (a1^2 + a2^2 + ... + ak^2)]}{2}$",
+            "solution_approach": "Perform a DFS or BFS traversal to find the number of connected components in the graph. Let this number be c.\nIf there are k connected components with sizes a1, a2, ..., ak, then the number of ways to connect two different connected components is:\n\n$a1a2 + a1a3 + ... + a1ak + a2a3 + ... + a2*ak + ... + a(k-1)*ak$\n\nwhich can be simplified as:\n\n$\\dfrac{[(a1 + a2 + ... + ak)^2 - (a1^2 + a2^2 + ... + ak^2)]}{2}$"
+        },
+        "id": 196,
+        "input_format": "The first input line has two integers n and m: the number of nodes and edges. The nodes are numbered 1, 2, \u2026, n.\nAfter that, there are m lines describing the edges. Each line has two integers a and b: there is an edge between those nodes.\nAn edge always connects two different nodes, and there is at most one edge between any two nodes.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "<p><strong>Explanation 1:</strong><br>There are 6 ways to add edge so that the number of connected components in the graph decreases: (1, 4), (1, 5), (2, 4), (2, 5), (3, 4), (3, 5).</p><p><strong>Explanation 2:</strong><br>The given graph is already connected. Even if add any edge, we can't decrease the number of connected components.</p>",
+        "output_format": "<p>Print the number of ways to add such edge, described in the statement.</p>",
+        "samples": [
+            {
+                "input": "5 4\n1 2\n2 3\n1 3\n4 5",
+                "output": "6"
+            },
+            {
+                "explanation": "",
+                "input": "4 3\n1 2\n2 3\n3 4",
+                "output": "0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Math",
+            "Bfs",
+            "Graphs"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "One Edge",
+        "video_editorial_id": 10670
+    },
+    "details": "Problem Details"
+}

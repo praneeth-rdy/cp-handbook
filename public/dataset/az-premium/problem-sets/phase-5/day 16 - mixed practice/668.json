@@ -1,0 +1,63 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given a binary tree, print boundary nodes of the binary tree <strong>Anti-Clockwise</strong> starting from the root. The boundary includes left boundary, leaves, and right boundary in order without duplicate nodes. (The values of the nodes may still be duplicates.)</p><p>The <strong>left boundary</strong> is defined as the path from the root to the <strong>left-most</strong> node. The <strong>right boundary</strong> is defined as the path from the root to the <strong>right-most</strong> node. If the root doesn\u2019t have left subtree or right subtree, then the root itself is left boundary or right boundary. Note this definition only applies to the input binary tree, and not apply to any subtrees.</p><p>The <strong>left-most</strong> node is defined as a <strong>leaf</strong> node you could reach when you always firstly travel to the left subtree if it exists. If not, travel to the right subtree. Repeat until you reach a leaf node.</p><p>The <strong>right-most</strong> node is also defined in the same way with left and right exchanged.</p>",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^5$\nSum of $N$ across all test cases $\\leq 10^7$.",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n\nbool isLeaf(Node * root) {\n  return !root -> left && !root -> right;\n}\n\nvoid addLeftBoundary(Node * root, vector < int > & res) {\n  Node * cur = root -> left;\n  while (cur) {\n    if (!isLeaf(cur)) res.push_back(cur ->val);\n    if (cur -> left) cur = cur -> left;\n    else cur = cur -> right;\n  }\n}\nvoid addRightBoundary(Node * root, vector < int > & res) {\n  Node * cur = root -> right;\n  vector < int > tmp;\n  while (cur) {\n    if (!isLeaf(cur)) tmp.push_back(cur ->val);\n    if (cur -> right) cur = cur -> right;\n    else cur = cur -> left;\n  }\n  for (int i = tmp.size() - 1; i >= 0; --i) {\n    res.push_back(tmp[i]);\n  }\n}\n\nvoid addLeaves(Node * root, vector < int > & res) {\n  if (isLeaf(root)) {\n    res.push_back(root -> val);\n    return;\n  }\n  if (root -> left) addLeaves(root -> left, res);\n  if (root -> right) addLeaves(root -> right, res);\n}\nvoid printBoundary(struct Node* root){\n    vector < int > res;\n    if (!root) return;\n    if (!isLeaf(root)) res.push_back(root ->val);\n    addLeftBoundary(root, res);\n    // add leaf nodes\n    addLeaves(root, res);\n    addRightBoundary(root, res);\n    for(int i=0;i<res.size();i++) cout<<res[i]<<\" \";\n    cout<<endl;\n}\n\nNode* getBinaryTree(vector<int> &num, int*ind) {\n    if(num[*ind] == -1)\n        return NULL;\n    Node* node = new Node(num[*ind]);\n    (*ind)++;\n    node->left = getBinaryTree(num,ind);\n    (*ind)++;\n    node->right = getBinaryTree(num,ind);\n    return node;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n;\n        cin>>n;\n        assert(n<=1000000);\n        vector<int>arr(n);\n        for(int i=0;i<n;i++)\n            cin>>arr[i];\n        int ind = 0;\n        Node* tree = getBinaryTree(arr,&ind);\n        printBoundary(tree);\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:37:03.895379+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 668,
+        "input_format": "The first line contains an integer $T$, the number of test cases.\nThe first line of each test case contains an integer $N$ - the length of the array representing the serialized representation of a tree.\nThe next line contains $N$ space-separated integers. \nThe input is given as a serialized representation of a tree.\n\nThe following function parses the input:\n**Node* getBinaryTree(vector<int> &num, int*ind)**",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case print the boundary traversal of the tree in a new line.</p>",
+        "samples": [
+            {
+                "input": "9\n9\n8249 -1 609 -1 5681 8332 -1 -1 -1 \n11\n223 4160 6557 -1 -1 4723 -1 -1 992 -1 -1 \n7\n8124 9834 -1 -1 4119 -1 -1 \n11\n7738 -1 5199 -1 7433 -1 1304 -1 3265 -1 -1 \n7\n581 9893 2846 -1 -1 -1 -1 \n11\n1496 2073 -1 5120 2761 -1 3452 -1 -1 -1 -1 \n11\n1754 2272 2699 -1 -1 3912 -1 -1 1114 -1 -1 \n1\n-1 \n7\n370 -1 1215 -1 7021 -1 -1 ",
+                "output": "8249 8332 5681 609 \n223 4160 6557 4723 992 \n8124 9834 4119 \n7738 3265 1304 7433 5199 \n581 9893 2846 \n1496 2073 5120 2761 3452 \n1754 2272 2699 3912 1114 \n370 7021 1215 "
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Frequently Asked Questions",
+            "Binary Tree",
+            "Binary Search Tree",
+            "company-Samsung"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n</fix>\n\n\nvoid printBoundary(struct Node* root)\n{\n    // Complete the solution.\n}\n\n\n<fix>\nNode* getBinaryTree(vector<int> &num, int*ind) {\n    if(num[*ind] == -1)\n        return NULL;\n    Node* node = new Node(num[*ind]);\n    (*ind)++;\n    node->left = getBinaryTree(num,ind);\n    (*ind)++;\n    node->right = getBinaryTree(num,ind);\n    return node;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n;\n        cin>>n;\n        assert(n<=1000000);\n        vector<int>arr(n);\n        for(int i=0;i<n;i++)\n            cin>>arr[i];\n        int ind = 0;\n        Node* tree = getBinaryTree(arr,&ind);\n        printBoundary(tree);\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Boundary Traversal",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

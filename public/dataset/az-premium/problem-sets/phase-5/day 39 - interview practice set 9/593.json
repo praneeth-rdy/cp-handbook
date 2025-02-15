@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an array of **n** integers. You need to print the lexicographically next greater permutation of the numbers. If no greater permutation exists, print the lexicographically smallest permutation of the numbers.\n\n*The rearrangement of the numbers must be in place with constant extra memory.*  \n*Do not use built-in functions.*",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">1 &lt;= n &lt;= 100000\n1 &lt;= v[i] &lt;= 100000</code></pre>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid solve(vector<int> &v)\n{\n\tint n = (int)v.size();\n\tint i = n - 2;\n\twhile (i >= 0 && v[i + 1] <= v[i])\n\t\ti--;\n\tif (i >= 0) {\n\t\tint j = n - 1;\n\t\twhile (j >= 0 && v[j] <= v[i])\n\t\t\tj--;\n\t\tswap(v[i], v[j]);\n\t}\n\treverse(v.begin() + i + 1, v.end());\n}\n\nint main() {\n\tint n;\n\tcin >> n;\n\tvector <int> v(n);\n\tfor (auto &i : v)\n\t\tcin >> i;\n\n\tsolve(v);\n\n\tfor (auto i : v)\n\t\tcout << i << \" \";\n\tcout << \"\\n\";\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:18:46.695709+00:00"
+        },
+        "hints": {
+            "hint1": "We need to find the rightmost position where we can increase the permutation.",
+            "hint2": "",
+            "solution_approach": "If the array is sorted in descending order, no next greater permutation is possible so we just reverse the array.\nWe need to find the first pair of two successive numbers a[i] and a[i\u22121], from the right, which satisfies a[i\u22121] < a[i]. Now, no rearrangements to the right of a[i\u22121] can create a larger permutation since that subarray consists of numbers in descending order. Thus, we need to rearrange the numbers to the right of a[i\u22121] including itself.\nWe want to create the permutation just larger than the current one. Therefore, we need to replace the number a[i\u22121] with the number which is just larger than itself among the numbers lying to its right section, say a[j]. We swap the numbers a[i\u22121] and a[j].\nWe now have the correct number at index i\u22121. But still, the current permutation isn't the permutation that we are looking for. We need the smallest permutation that can be formed by using the numbers only to the right of a[i\u22121]. Therefore, we need to place those numbers in ascending order to get their smallest permutation.\nBut, recall that while scanning the numbers from the right, we simply kept decrementing the index until we found the pair a[i] and a[i\u22121] where a[i-1] < a[i]. Thus, all numbers to the right of a[i\u22121] were already sorted in descending order. Furthermore, swapping a[i\u22121] and a[j] didn't change that order. Therefore, we simply need to reverse the numbers following a[i\u22121] to get the next smallest lexicographic permutation."
+        },
+        "id": 593,
+        "input_format": "The first line of input contains a single integer **n**.\nThe next line contains **n** integers representing the input array.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "1. The next permutation after 3 1 2 is 3 2 1.\n2. Since 4 3 2 1 is the lexicographically greatest permutation, we print the array in ascending order(lexicographically smallest).",
+        "output_format": "Print a single line containing the output array.",
+        "samples": [
+            {
+                "input": "3\n3 1 2",
+                "output": "3 2 1"
+            },
+            {
+                "input": "4\n4 3 2 1",
+                "output": "1 2 3 4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nvoid solve(vector<int> &v)\n{\n\t// Complete the function\n}\n\n<fix>\nint main() {\n\tint n;\n\tcin >> n;\n\tvector <int> v(n);\n\tfor (auto &i : v)\n\t\tcin >> i;\n\n\tsolve(v);\n\n\tfor (auto i : v)\n\t\tcout << i << \" \";\n\tcout << \"\\n\";\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Next Permutation",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

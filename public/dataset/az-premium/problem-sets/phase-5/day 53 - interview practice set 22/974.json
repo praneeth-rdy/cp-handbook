@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "There are $n$ piles of elements arranged in a row. The $i^th$ pile has $arr[i]$ elements.\n\nA move consists of merging exactly $k$ consecutive piles into one pile, and the cost of this move is equal to the total number of elements in these $k$ piles.\n\nFind the minimum cost to merge all piles of elements into one pile. If it is impossible, return $-1$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 900$\n$1 \\leq n \\leq 30$\n$2 \\leq k \\leq 30$\n$1 \\leq arr[i] \\leq 100$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nint n, K;\nvector<vector<vector<int>>> dp;\nvector<int> v;\nint rec(int l, int r, int cnt) {\n\tint sum = 0;\n\tfor (int i = l; i <= r; i++)sum += v[i];\n\tif (l == r) {\n\t\tif (cnt == 1)return 0;\n\t\treturn 1e9;\n\t}\n\tauto &ans = dp[l][r][cnt];\n\tif (ans != -1)return ans;\n\tans = 1e9;\n\tif (cnt == 1)cnt = K;\n\tfor (int i = l; i < r; i++) {\n\t\tans = min(ans, rec(l, i, cnt - 1) + rec(i + 1, r, 1) + sum * (cnt == K));\n\t}\n\treturn ans;\n}\nvoid solve() {\n\tint n;\n\tcin >> n >> K;\n\tv.resize(n);\n\tfor (int i = 0; i < n; i++)cin >> v[i];\n\tdp.assign(n + 1, vector<vector<int>>(n + 1, vector<int>(K + 1, -1)));\n\tint ans = rec(0, n - 1, 1);\n\tif (ans == 1e9)ans = -1;\n\tcout << ans << endl;\n}\nint main() {\n\tios_base :: sync_with_stdio(0);\n\tcin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n\tfreopen(\"input.txt\", \"r\", stdin); \\\n\tfreopen(\"output.txt\", \"w\", stdout);\n#endif\n\tint t = 1;\n\t// int i = 1;\n\tcin >> t;\n\twhile (t--) {\n\t\t// cout << \"Case #\" << i << \": \";\n\t\tsolve();\n\t\t// i++;\n\t}\n\treturn 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:24:43.562146+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "**State** \n$dp(i,j,k)$ = means the minimum cost to merge array from index $i$ to index $j$ into $k$ different piles.\n\n\n**Transitions :** \n\n$dp(i,j,1) = dp(i,j,k) + sum[i..j]$ where $sum[i..j]$ represents the sum between index $i$ and index $j$ .Which means that in order to create one pile from index $i$ to index $j$ ($dp(i,j,1)$) in minimum cost , we have to create $k$ piles from index $i$ to index $j$ ($dp(i,j,k)$) and merge the operation cost which is sum of the segment.               \n\n$dp(i,j,k) = dp(i,t,1) + dp(t+1,j,k-1)$ where  $t$ lies between index $i$ to $j$ where $i$ is inclusive and $j$ is exclusive, which means that in order to create $k$ pile from index $i$ to index $j$ , we first choose any segment of arbitary length and try creating the pile from $(i,t)$ and then check for the minimum cost of creating $(k-1)$ piles from the rest of the array .\n\n\n**Base Cases :**\n    \n$dp(i,i,1)$ = Since only merge operation has cost therfore , and we dont need merge in the interval $i$ to $i$ to create $1$ pile, therefore cost is $0$ . \n\n\n**Time Complexity:** $O(n^3 * k)$"
+        },
+        "id": 974,
+        "input_format": "The first line contains $T$ - the number of test cases.\nThe first line of each test case contains two integers $n$ and $k$.\nSecond line of each test case contains $n$ values of $arr[i]$ denoting elements in the $i^{th}$ pile.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, Output the minimum cost to merge all piles of elements into one pile. If it is impossible, return $-1$.",
+        "samples": [
+            {
+                "input": "4\n4 2\n3 2 4 1\n4 3\n3 2 4 1\n5 3\n3 5 1 2 6  \n1 2\n5\n",
+                "output": "20\n-1\n25\n0\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-AlgoZenith",
+            "company-Salesforce"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Merge Elements 3",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

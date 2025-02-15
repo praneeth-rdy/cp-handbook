@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given a tree with <i>n</i> vertices and a positive number <i>k</i>. Find the number of distinct pairs of the vertices that have a distance of exactly <i>k</i> between them. Note that pairs (<i>v</i>, <i>u</i>) and (<i>u</i>, <i>v</i>) are considered to be the same pair.</p><p>The <i>distance</i> between two vertices of a tree is the length (in edges) of the shortest path between these vertices.</p><p>&nbsp;</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "Editorial Code data is currently empty.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:16:47.945601+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 449,
+        "input_format": "- The first line contains an integer $T$ ($1 \\leq T \\leq 10^5$) - the number of test cases.\n\n- The first line of each test case contains two space-separated integers $N$, $K$ ($1 \\leq N \\leq 10^5$, $1 \\leq K \\leq 500$).\n\n- The next $N-1$ lines contain a description of an edge \u2192 $u_i$, $v_i$ ($1 \\leq u_i, v_i \\leq N$, $u_i \\neq v_i$). Vertices $u_i$ and $v_i$ are connected by an undirected edge.\n\n- It is guaranteed that the **sum** of all $N$ over all test cases does not exceed $10^5$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, print the number of distinct pairs of the tree's vertices which have a distance of exactly $k$ between them in a new line.",
+        "samples": [
+            {
+                "input": "2\n10 3\n2 1\n3 1\n4 3\n5 4\n6 5\n7 1\n8 6\n9 2\n10 6\n10 2\n2 1\n3 1\n4 3\n5 4\n6 5\n7 1\n8 6\n9 2\n10 6",
+                "output": "8\n10"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Trees",
+            "Dynamic Programming"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "Tree Distance",
+        "video_editorial_id": 8206
+    },
+    "details": "Problem Details"
+}

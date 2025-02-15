@@ -1,0 +1,58 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a Binary Search Tree, find the median of it. \nIf no. of nodes are even: then median = ((n/2th node + (n+1)/2th node) /2 [integer division]. If tree is NULL then print 0. \nIf no. of nodes are odd : then median = (n+1)/2th node.",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "Editorial Code data is currently empty.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:43:24.179640+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 669,
+        "input_format": "<p>The first line contains an integer T, (1 \u2264 T \u2264 10^5), the number of test cases.</p><p>The first line of each test case contains an integer N the length of the array representing the serialized representation of a tree.</p><p>The next line contains N-space-separated distinct integers.&nbsp;</p><p>The input is given as a serialized representation of a tree.</p><p>The following function parses the input:</p><p><i>Node* getBinaryTree(vector&lt;int&gt; &amp;num, int*ind)</i></p><p><i>Sum of N across all test cases \u2264 10^7.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Return the median.</p>",
+        "samples": [
+            {
+                "input": "6\n11\n7456 1022 -1 3404 -1 6680 -1 -1 9344 -1 -1 \n11\n6084 3515 686 -1 -1 4778 -1 -1 6961 -1 -1 \n9\n4945 3300 -1 -1 5636 5317 -1 -1 -1 \n17\n1466 -1 2180 -1 2512 -1 2640 -1 2922 -1 5769 -1 6554 -1 7479 -1 -1 \n11\n9999 8664 7374 7342 6284 -1 -1 -1 -1 -1 -1 \n13\n833 622 -1 -1 3935 -1 9318 3991 -1 5233 -1 -1 -1 ",
+                "output": "6680\n4778\n5131\n2781\n7374\n3963"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Binary Tree",
+            "Binary Search Tree",
+            "Bst Iterator"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n</fix>\nint getMedian(Node* root){\n// Complete the function.\n}\n<fix>\nNode* getBinaryTree(vector<int> &num, int*ind) {\n    if(num[*ind] == -1)\n        return NULL;\n    Node* node = new Node(num[*ind]);\n    (*ind)++;\n    node->left = getBinaryTree(num,ind);\n    (*ind)++;\n    node->right = getBinaryTree(num,ind);\n    return node;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n;\n        cin>>n;\n        assert(n<=1000000);\n        vector<int>arr(n);\n        for(int i=0;i<n;i++){\n            cin>>arr[i];\n        }\n        int ind = 0;\n        cout<<getMedian(getBinaryTree(arr,&ind))<<\"\\n\";\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Median of BST",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a grid of size n*m, you need to find the total number of different paths from (1, 1) to (n, m). You are allowed to move from (x, y) to (x+1, y) and (x, y) to (x, y+1). The grid may have some blocked cells, represented by 1, and it is not allowed to move to a blocked cell. An empty cell is represented by 0. You are also given an integer k and you can convert at most k blocked cells into unblocked cells.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 t \u2264 10<sup>5</sup></p><p>1 \u2264 n, m \u2264 200</p><p>0 \u2264 k \u2264 400</p><p>0 \u2264 a<sub>ij</sub> \u2264 1</p><p>It is guaranteed that the sum of n*m*k over all test cases does not exceed 10<sup>8</sup>.</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n\n#include <bits/stdc++.h>\nusing namespace std;\n#define int long long\nconst int mod = 1e9 + 7;\n\nint n, m, k;\nint grid[210][210];\nint dp[210][210][410];\n\nint rec(int i, int j, int left)\n{\n\n    if (left < 0)\n    {\n        return 0;\n    }\n\n    if (i == n - 1 && j == m - 1)\n    {\n        if (grid[i][j] == 0 || left > 0)\n            return 1;\n        return 0;\n    }\n\n    if (i == n || j == m)\n    {\n        return 0;\n    }\n\n    if (dp[i][j][left] != -1)\n    {\n        return dp[i][j][left];\n    }\n\n    int ans = 0;\n    if (grid[i][j] == 0)\n    {\n        ans = (rec(i + 1, j, left) % mod + rec(i, j + 1, left) % mod) % mod;\n    }\n    else\n    {\n        ans = (rec(i + 1, j, left - 1) % mod + rec(i, j + 1, left - 1) % mod) % mod;\n    }\n\n    return dp[i][j][left] = ans % mod;\n}\n\nvoid solve()\n{\n    cin >> n >> m >> k;\n    for (int i = 0; i < n; i++)\n    {\n        for (int j = 0; j < m; j++)\n        {\n            cin >> grid[i][j];\n        }\n    }\n    for (int i = 0; i <= n; i++)\n    {\n        for (int j = 0; j <= m; j++)\n        {\n            for (int l = 0; l <= k; l++)\n            {\n                dp[i][j][l] = -1;\n            }\n        }\n    }\n    cout << rec(0, 0, k) << endl;\n}\n\nsigned main()\n{\n    ios_base::sync_with_stdio();\n    cin.tie(0);\n    cout.tie(0);\n    int t;\n    cin >> t;\n    while (t--)\n    {\n        solve();\n    }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:34:26.411825+00:00"
+        },
+        "hints": {
+            "hint1": "The cell $(i, j)$ can only be reached from the cells $(i-1, j)$ and $(i, j-1)$.",
+            "hint2": "If a cell (i, j) is blocked, it can be reached only if the number of unblocked cells till (i-1, j) or (i, j-1) is at most K - 1.\n\nUse the dp structure as $dp[i][j][left]$ which gives the number of paths from $(i,j)$ to $(n,m)$ with chance of converting left number of blocked cells to unblocked cells.",
+            "solution_approach": "The transitions would be as follows :\n\nCase1 :  If $(i,j)$ is a blocked cell \nans = rec(i + 1, j, left - 1) + rec(i, j + 1, left - 1) ;\nConverting blocked cell to unblocked takes one of our chances and hence in the next recursive step we would have left-1 number of chances left.\n\nCase2 :  If $(i,j)$ is unblocked\nans = rec(i + 1, j, left) + rec(i, j + 1, left ) ;\n\nTime Complexity per test case: $O(n*m*k)$"
+        },
+        "id": 493,
+        "input_format": "<p>The first line of the input contains one integer t - the number of test cases. Then t test cases follow.</p><p>The first line of each test case contains three space-separated integers n, m, k - the size of the grid and the number of cells you can convert.</p><p>Each of the following n lines contains m space-separated integers, aij - the number at that cell.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, any path from (1,1) to (n,m) has 2 blocked cells, which can be unblocked.\n\nFor the third test case, no cells can be unblocked and the first cell is blocked, so there are no paths from (1,1) to (n,m).",
+        "output_format": "For each test case, print the number of paths modulo 10^9 + 7.",
+        "samples": [
+            {
+                "input": "3\n3 3 2\n0 1 1\n1 1 0\n1 0 0\n3 3 1\n0 1 1\n1 1 0\n1 0 0\n2 3 0\n1 0 0\n0 1 0",
+                "output": "6\n0\n0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 4.0,
+        "title": "Number of Paths in Grid - 2",
+        "video_editorial_id": 10652
+    },
+    "details": "Problem Details"
+}

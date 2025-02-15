@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an integer N. You have to find all the permutations of N in lexicographic order.",
+        "complete_approach": "",
+        "constraints": "<p>1\u2264 N \u2264 10</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n\nint main() {\n  IOS int n;\n  cin >> n;\n  vector<int> v;\n  for (int i = 1; i <= n; ++i) {\n    v.push_back(i);\n  }\n  do {\n    for (int i = 0; i < n; ++i) {\n      cout << v[i] << \" \";\n    }\n    cout << \"\\n\";\n  } while (next_permutation(v.begin(), v.end()));\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:33:18.440522+00:00"
+        },
+        "hints": {
+            "hint1": "Use `next_permutation()` to solve the problem.",
+            "hint2": "",
+            "solution_approach": "The next possible permutation of the array can be found using `next_permutation()` function provided in STL. It returns 0 when there is no next permutation.\n\nTime Complexity per test case: $O(N \\times N!)$ . The time complexity will become clear when you learn about backtracking where you will learn how to design the stl function `next_permutation()`."
+        },
+        "id": 366,
+        "input_format": "The first and only line of the input contains one integer N.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print all the permutations of N in lexicographic order.",
+        "samples": [
+            {
+                "input": "3",
+                "output": "1 2 3 \n1 3 2 \n2 1 3 \n2 3 1 \n3 1 2 \n3 2 1\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Generating Permutations AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

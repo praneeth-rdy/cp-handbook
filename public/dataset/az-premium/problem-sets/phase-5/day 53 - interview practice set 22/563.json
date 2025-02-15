@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given an array A of size N and Q queries of the following two types:</p><ol><li>1 X Y: Update the array element at index <strong>X</strong> with<strong> Y.</strong></li><li>2 K: Print the position of the first array element greater than or equal to <strong>K</strong>. If there is no such index, then print <strong>-1</strong></li></ol>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nint seg[8000001];\nint arr[1000001];\nvoid build(int low,int high,int pos){\n   if(low==high){\n       seg[pos] = arr[low];\n       return;\n   }\n   int mid = (low+high)/2;\n   build(low,mid,2*pos);\n   build(mid+1,high,2*pos+1);\n   seg[pos]=max(seg[2*pos],seg[2*pos+1]);\n}\nint query(int low,int high,int pos,int k){\n   if(low==high){\n       if(arr[low]>=k)\n           return low;\n       return 1e9;\n   }\n   int mid = (low+high)/2;\n   if(seg[2*pos]>=k)\n       return query(low,mid,2*pos,k);\n   return query(mid+1,high,2*pos+1,k);\n}\nvoid update(int low,int high, int pos,int ind){\n   if(low>ind or high<ind)\n       return;\n   if(low==high){\n       seg[pos] = arr[low];\n       return;\n   }\n   int mid = (low+high)/2;\n   update(low,mid,2*pos,ind);\n   update(mid+1,high,2*pos+1,ind);\n   seg[pos]=max(seg[2*pos],seg[2*pos+1]);\n}\nsigned main()\n{\n   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);\n   int n,q;\n   cin>>n>>q;\n   for(int i=1;i<=n;i++)cin>>arr[i];\n   build(1,n,1);\n   while(q--){\n       int type;\n       cin>>type;\n       if(type==1){\n           int x,y;\n           cin>>x>>y;\n           arr[x] = y;\n           update(1,n,1,x);\n       }\n       else{\n           int k;\n           cin>>k;\n           int ans = query(1,n,1,k);\n           if(ans==1e9)\n               ans = -1;\n           cout<<ans<<\"\\n\";\n       }\n   }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:18:20.230058+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Try to think in the direction of the segment tree. You can build a max segment tree, each node storing the maximum element of the range. For query of type 1, simply do a point update. Now you can check the maximum value of a range in logN time. Can you use it to answer query 2?</p>",
+            "hint2": "<p>For query of type 2, one of the observations is you can do a binary search on the answer. Suppose maximum value in range [1\u2026mid]\u2265k, then the maximum value in the range [1\u2026mid+1] will also be \u2265k. If the maximum value in the range [1\u2026mid] &lt;k, then you have to look for range [mid+1\u2026n]. Simply do a binary search on the index and find the smallest index such that maximum value in the range 1\u2026.index \u2265k.</p><p>Time complexity. N(logN)<sup>2</sup></p><p>Can you do it in NlogN?&nbsp;</p>",
+            "solution_approach": "<p>You can even do it without using binary search. As you have already stored maximum value in a range. First, check if the left node representing the range 1\u2026mid has maximum value \u2265K or not. If it is present then go to the left node and do not traverse the right node. Else traverse right node. Keep on checking that, ultimately when the range reduces to a single element you can check the value and print the answer accordingly. So at every step, we are reducing our search range by half.</p><p>Time complexity: NlogN.</p>"
+        },
+        "id": 563,
+        "input_format": "<p>The first line contains two space-separated integers N, Q (1 \u2264 N, Q \u2264 10^6).</p><p>The next line contains N space-separated integers, (1 \u2264 A[i] \u2264 10^6).</p><p>The next Q lines contain either of the following queries:</p><ol><li>1 X Y (1 \u2264 X \u2264 N, 1 \u2264 Y \u2264 10^6)</li><li>2 K (1 \u2264 k \u2264 10^6).</li></ol><p>&nbsp;</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each query of type 2 print the answer.</p>",
+        "samples": [
+            {
+                "input": "5 5\n1 2 3 4 5\n2 4\n2 6\n1 3 6\n2 6\n2 8",
+                "output": "4\n-1\n3\n-1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "Array Queries",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

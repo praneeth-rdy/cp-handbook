@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given an array of <i>N</i> integers and <i>Q</i> queries. In each query, you are given two parameters <i>L</i> and <i>R</i>; you have to find the following:</p><p>1. Smallest integer <i>X<sub>1</sub></i> such that the value of <i>(A<sub>L</sub> XOR X<sub>1</sub>) + (A<sub>L+1</sub> XOR X<sub>1</sub>) + ... + (A<sub>R</sub> XOR X<sub>1</sub>)</i> is maximum possible.</p><p>2. Smallest integer <i>X<sub>2</sub></i> such that the value of <i>(A<sub>L</sub> OR X<sub>2</sub>) + (A<sub>L+1</sub> OR X<sub>2</sub>) + ... + (A<sub>R</sub> OR X<sub>2</sub>)</i> is maximum possible.</p><p>3. Smallest integer <i>X<sub>3</sub></i> such that the value of <i>(A<sub>L</sub> AND X<sub>3</sub>) + (A<sub>L+1</sub> AND X<sub>3</sub>) + ... + (A<sub>R</sub> AND X<sub>3</sub>)</i> is maximum possible.</p><p>Range of <i>X<sub>1</sub>, X<sub>2</sub>, X<sub>3</sub></i> allowed \u2192 <i>0 &lt;= X<sub>1</sub>, X<sub>2</sub>, X<sub>3</sub> &lt; 2^31.</i></p><p>Print the sum of X1, X2, X3 for each query in a newline.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nint prefSum[1000001][31];\nint main()\n{\n   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);\n   int testcases;\n   cin>>testcases;\n   while(testcases--)\n   {\n       int n,q;\n       int i;\n       cin>>n;\n       for(i=0;i<=n;i++)\n         for(int j = 0;j<31;j++)\n           prefSum[i][j]=0;\n       for(i=1;i<=n;i++)\n       {\n         int a;\n         cin>>a;\n         int cnt = 0;\n         while(a>0)\n         {\n           prefSum[i][cnt]=a%2;\n           a/=2;\n           cnt++;\n         }\n       }\n       for(i=1;i<=n;i++)\n       {\n         for(int j=0;j<31;j++)\n           prefSum[i][j]+=prefSum[i-1][j];\n       }\n       cin>>q;\n       while(q--)\n       {\n         int l,r;\n         cin>>l>>r;\n         double total=(r-l+1.0)/(2);\n         long long x1 = 0,x2 = 0,x3 = 0;\n         for(i=0;i<31;i++)\n         {\n           int p = prefSum[r][i]-prefSum[l-1][i];\n           if(p<total)\n             x1+=(1LL<<i);\n           if(p!=(r-l+1))\n             x2+=(1LL<<i);\n           if(p)\n             x3+=(1LL<<i);\n         }\n         long long ans = x1+x2+x3;\n         cout<<ans<<\"\\n\";\n       }\n   }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:38:53.744939+00:00"
+        },
+        "hints": {
+            "hint1": "Always remember that **BIT EXPRESSIONS ARE SUM INDEPENDENT ON EACH BIT.**\n\nIf $i^{th}$ bit is set in $X_1$,  then $i^{th}$ bit will be set in $A_i$ XOR $X_1$, if $i^{th}$ bit is not set in $A_i$ and,  \n  $i^{th}$ bit will not be set in $A_i$ XOR $X_1$, if $i^{th}$ bit is set in $A_i$.   \n  So if the $i^{th}$ bit is set in less than $\\dfrac{(R-L+1)}{2}$ numbers then $i^{th}$ bit should be set in $X_1$ otherwise not. So try to think when $i^{th}$ bit will be set in the $X_1$.",
+            "hint2": "If $i^{th}$ bit is set in 'cntSet' numbers and not set in 'cntNotSet' numbers in the range [L,R], then -\n\n1. $i^{th}$ bit is set in $X_1$ then contribution of $i^{th}$ bit = cntNotSet*(1LL<< i).\n\n2. $i^{th}$ bit is not set in $X_1$ then contribution of $i^{th}$ bit = cntSet*(1LL<< i).\n\nSo according to the value of cntSet and cntNotSet, $i^{th}$ bit is decided. If cntSet = cntNotSet, then $i^{th}$ bit should not be set as the minimum value of $X_1$ is required.\n\nValue of cntSet and cntNotSet can be found for every query in O(1) using prefix sum.",
+            "solution_approach": "$X_2$ - If the $i^{th}$ bit is set in all the numbers in the range [L, R], then it must not be set in the X2. Otherwise, it must be set.\n\n$X_3$ - If the $i^{th}$ bit is not set in all the numbers in the range[L, R], then it must not be set in the X3. Otherwise, it must be set."
+        },
+        "id": 50,
+        "input_format": "<p>The first line of the input contains a single integer <i>T</i> denoting the number of test cases, <i>(1&lt;=T&lt;=100)</i>.</p><p>The first line of each test case contains a single integer <i>N</i>, <i>(2&lt;=N&lt;=100000)</i>.</p><p>The second line contains <i>N</i> space-separated integers A<sub>1</sub>,A<sub>2</sub>,\u2026,A<sub>N</sub>, <i>(1&lt;=A<sub>i</sub>&lt;=10^9)</i>.</p><p>The third line contains an integer <i>Q</i>, <i>(1&lt;=Q&lt;=10^5)</i>.</p><p>The next <i>Q</i> lines contain two space-separated integers <i>L</i>, <i>R</i> <i>(1&lt;=L&lt;=R&lt;=N)</i>.</p><p>Sum of <i>Q</i> over all test cases does not exceed <i>10^6</i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each query print the value of X<sub>1 &nbsp;</sub>+ X<sub>2 </sub>+ X<sub>3</sub> &nbsp;in a new line.</p><p>&nbsp;</p>",
+        "samples": [
+            {
+                "input": "5\n5\n1 2 3 4 5\n5\n1 5\n2 5\n3 4\n2 4\n3 3\n3\n1 2 2\n3\n1 2\n2 3\n1 3\n4\n1 2 2 4\n5\n1 2\n2 3\n3 4\n2 4\n3 4\n10\n123 234565 3456765 3456 09888 433534 908767 125698 545676 23456\n10\n1 4\n1 6\n1 9\n1 10\n3 7\n3 9\n4 7\n6 9\n4 9\n7 9\n10\n23456 3456 987 8765 3456 34565 9876 654555 234566 87654344\n10\n1 8\n1 6\n1 9\n1 10\n2 7\n2 9\n4 7\n8 9\n9 9\n7 9",
+                "output": "4294967300\n4294967294\n4294967294\n4294967299\n4294967291\n4294967294\n4294967292\n4294967295\n4294967294\n4294967292\n4294967294\n4294967298\n4294967294\n4298580736\n4298580736\n4299121201\n4299120657\n4298857985\n4299120753\n4295712255\n4295106335\n4295958639\n4295222095\n4295618668\n4295028860\n4295751805\n4382781565\n4295010408\n4295751784\n4295002150\n4294863804\n4294732728\n4295640583\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Bit Manipulation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 4.0,
+        "title": "XOR AND OR Query",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

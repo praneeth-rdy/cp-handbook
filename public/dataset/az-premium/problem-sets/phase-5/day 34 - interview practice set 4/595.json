@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You manage a database consisting of huge strings. Each string in the database has an associated **id**, which is an integer. You need to generate a **compressed string** using the id of the string in the database.\n\nThe strings can consist of:\n\n1. A lowercase alphabet [`'a'` to `'z'`] - total 26 characters.  \n2. An uppercase alphabet [`'A'` to `'Z'`] - total 26 characters.  \n3. A digit [`'0'` to `'9'`] - total 10 characters.  \n\nSo there are a total of **62** possible characters.\n\nYour task is to convert the integer (id of the string) to a 62-base number where digits of the 62-base are:\n\n1. `0-25` \u2192 `'a'` to `'z'`  \n2. `26-51` \u2192 `'A'` to `'Z'`  \n3. `52-61` \u2192 `'0'` to `'9'`",
+        "complete_approach": "",
+        "constraints": "<p>1 &lt;= n &lt;= 10<sup>18</sup></p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL);\n\tvector <char> dig(62);\n\tfor (int i = 0; i < 26; i++) {\n\t\tdig[i] = (char)('a' + i);\n\t}\n\tfor (int i = 0; i < 26; i++) {\n\t\tdig[26 + i] = (char)('A' + i);\n\t}\n\tfor (int i = 0; i < 10; i++) {\n\t\tdig[52 + i] = (char)('0' + i);\n\t}\n\tstring ans = \"\";\n\tlong long int n;\n\tcin >> n;\n\twhile (n) {\n\t\tchar cur = dig[n % 62];\n\t\tn = n / 62;\n\t\tans += cur;\n\t}\n\treverse(ans.begin(), ans.end());\n\tcout << ans;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:18:48.450876+00:00"
+        },
+        "hints": {
+            "hint1": "Can you relate this problem to Decimal-Binary conversion?",
+            "hint2": "In binary representation, the base is 2. Here, the base is 62.",
+            "solution_approach": "In decimal-to-binary conversion, the base is $2$. Here, the base is $62$, and the digits are described in the statement.\n\nAny number in base $62$ can be represented as:\n\n$\nd_k \\cdot 62^k + d_{k-1} \\cdot 62^{k-1} + \\dots + d_0\n$\n\nWe can obtain $d_0$ by taking $(n \\mod 62)$.\n\nThe number left is:\n\n$\nd_k \\cdot 62^k + d_{k-1} \\cdot 62^{k-1} + \\dots + d_1 \\cdot 62\n$\n\nWe can divide $n$ by $62$ to obtain:\n\n$\nd_k \\cdot 62^{k-1} + d_{k-1} \\cdot 62^{k-2} + \\dots + d_1\n$\n\nAgain, we get $d_1$ by taking $mod$ with $62$.\n\nSimilarly, we can get all the digits of the number in base $62$.\n"
+        },
+        "id": 595,
+        "input_format": "The only line of input contains a single integer n which is the id associated with the string you want to compress.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>1) \u2018o\u2019 * 62<sup>2</sup> + \u2018i\u2019 * 62 + j = 54321</p>",
+        "output_format": "You need to output the compressed string which is the representation of the integer n in base 62.",
+        "samples": [
+            {
+                "input": "54321",
+                "output": "oij"
+            },
+            {
+                "input": "1071819",
+                "output": "eEZz"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Number Theory",
+            "company-AlgoZenith"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "String Compression",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

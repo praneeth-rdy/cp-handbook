@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "For an integer array $arr$, an **inverse pair** is a pair of integers $[i, j]$ where $0 \\leq i < j < |arr|$ and $arr[i] > arr[j]$.\n\nGiven two integers $N$ and $K$, return the number of different permutations consisting of numbers from $1$ to $N$ such that there are exactly $K$ inverse pairs. Since the answer can be huge, return it modulo $10^{9} + 7$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^{6} $\n$1 \\leq N \\leq 1000 $\n$0 \\leq K \\leq 1000 $",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nll dp[1001][1001], mod = 1e9 + 7;\nvoid solve() {\n    for (int i = 1; i <= 1000; i++)dp[i][0] = 1; // when k==0, base case.\n    dp[2][0] = dp[2][1] = 1; // base case.\n    for (int i = 3; i <= 1000; i++) {\n        for (int j = 1; j <= 1000; j++) {\n            dp[i][j] = (dp[i][j - 1] + dp[i - 1][j]) % mod;\n            if (j >= i)dp[i][j] = (dp[i][j] - dp[i - 1][j - i] + mod) % mod;\n        }\n    }\n    int t;\n    cin >> t;\n    while (t--) {\n        int n, k;\n        cin >> n >> k;\n        cout << dp[n][k] << endl;\n    }\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    // cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:40:56.438571+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "$dp[n][k]$ denotes the number of arrays that have $k$ inverse pairs for array composed of $1$ to $n$.\nwe can establish the recursive relationship between $dp[n][k]$ and $dp[n-1][i]$:\n\nif we put $n$ as the last number then all the $k$ inverse pair should come from the first $n-1$ numbers\nif we put $n$ as the second last number then there's $1$ inverse pair involves $n$ so the rest $k-1$ comes from the first $n-1$ numbers\n...\nif we put $n$ as the first number then there's $n-1$ inverse pairs involve $n$ so the rest $k-(n-1)$ comes from the first $n-1$ numbers\n\n$dp[n][k] = dp[n-1][k]+dp[n-1][k-1]+dp[n-1][k-2]+...+dp[n-1][k+1-n+1]+dp[n-1][k-n+1]$\n\nIt's possible that somewhere on the right-hand side the second array index becomes negative since we cannot generate negative inverse pairs we just treat them as $0$ but still leave the item there as a placeholder.\n\n$dp[n][k] = dp[n-1][k]+dp[n-1][k-1]+dp[n-1][k-2]+...+dp[n-1][k+1-n+1]+dp[n-1][k-n+1]$\n$dp[n][k+1] = dp[n-1][k+1]+dp[n-1][k]+dp[n-1][k-1]+dp[n-1][k-2]+...+dp[n-1][k+1-n+1]$\n\nso by deducting the first line from the second line, we have\n\n$dp[n][k+1] = dp[n][k]+dp[n-1][k+1]-dp[n-1][k+1-n]$\n\n**Time Complexity** : $O(N*K)$ for pre-computation, $O(1)$ per test case."
+        },
+        "id": 922,
+        "input_format": "First-line contains $T$ - the number of test cases.\nThe first line of each test case contains two integers $N$ and $K$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For test 1, The permutation $[1,3,2]$ and $[2,1,3]$ have exactly $1$ inverse pair",
+        "output_format": "For each test case, output the number of different permutations consist of numbers from $1$ to $N$ such that there is exactly $K$ inverse pairs modulo $10^{9} + 7$.",
+        "samples": [
+            {
+                "input": "4\n3 1\n1 0\n4 4\n3 4\n",
+                "output": "2\n1\n5\n0\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Dynamic Programming",
+            "Prefix And Partial Sums",
+            "Advanced Dp"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Inverse Pairs Permutation",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

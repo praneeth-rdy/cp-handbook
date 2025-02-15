@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given Q queries and have to perform the following operations:\n\n1. add x - add element x at the top of Priority Queue\n2. remove - delete top element of the Priority Queue, if Priority Queue is not empty\n3. print - print the element at top of the Priority Queue, if Priority Queue is not empty, otherwise print 0",
+        "complete_approach": "",
+        "constraints": "1\u2264 T \u2264 10<sup>5</sup>\n\n1\u2264 Q \u2264 10<sup>5</sup>\n\n1\u2264 X \u2264 10<sup>6</sup>\n\nIt is guaranteed that the sum of Q over all test cases does not exceed 10<sup>6</sup>.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n\nint main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int q;\n    cin >> q;\n    priority_queue<int> p;\n    while (q--) {\n      string s;\n      cin >> s;\n      if (s == \"add\") {\n        int x;\n        cin >> x;\n        p.push(x);\n      } else if (s == \"remove\") {\n        if (!p.empty()) {\n          p.pop();\n        }\n      } else {\n        if (!p.empty()) {  // print\n          cout << p.top() << \"\\n\";\n        } else {\n          cout << \"0\\n\";\n        }\n      }\n    }\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:33:16.446334+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "### ADD\nUse push() for inserting element at top of stack\n### REMOVE\nUse pop() for deleting element at top of stack\n### PRINT\nUse top() for printing element at top of stack\n\nTime Complexity per test case: $O(\\log N)$"
+        },
+        "id": 364,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer Q - the number of queries.\n\nEach of the next Q ines contains queries.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "1. Priority Queue becomes [4]\n2. Priority Queue becomes [4, 5]\n3. Priority Queue becomes [3, 4, 5]\n4. Element at top = 5\n5. Priority Queue becomes [3, 4]\n6. Element at top = 4",
+        "output_format": "For each test case, print the required queries.",
+        "samples": [
+            {
+                "input": "1\n6\nadd 4\nadd 5\nadd 3\nprint\nremove\nprint\n",
+                "output": "5\n4\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Priority Queue AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

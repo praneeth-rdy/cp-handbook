@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given two arrays *A* and *B* of size *N* and an integer *K*. You have to select *K* indexes $i_1, i_2, i_3, \\dots, i_K$ such that\n\n$$\n\\frac{A[i_1] + A[i_2] + A[i_3] + \\dots + A[i_K]}{B[i_1] + B[i_2] + B[i_3] + \\dots + B[i_K]}\n$$\n\nis maximum.",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\ntypedef long double ld;\nsigned main()\n{\n   ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);\n   int testcases;\n   cin>>testcases;\n   while(testcases--){\n       int n,k;\n       cin>>n>>k;\n       int arr[n],brr[n];\n       for(int i=0;i<n;i++)\n           cin>>arr[i];\n       for(int i=0;i<n;i++)\n           cin>>brr[i];\n       ld low = 0.0, high = 1e8;\n       ld ans = 0.0;\n       while(abs(low-high)>1e-9){\n           ld mid = (low+high)/2.0;\n           priority_queue <ld, vector<ld>, greater<ld>> pq;\n           for(int i=0;i<n;i++){\n               pq.push(arr[i]-mid*brr[i]);\n               if(pq.size()>k)\n                   pq.pop();\n           }\n           ld s = 0.0;\n           while(pq.size()){\n               s+=pq.top();\n               pq.pop();\n           }\n           if(s>=0.0)\n               ans = mid,low = mid;\n           else\n               high = mid;\n       }\n       cout<<fixed<<setprecision(6)<<ans<<\"\\n\";\n   }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:40:54.500294+00:00"
+        },
+        "hints": {
+            "hint1": "Equate:\n\n$$ \\frac{A[i_1] + A[i_2] + A[i_3] + \\dots + A[i_K]}{B[i_1] + B[i_2] + B[i_3] + \\dots + B[i_K]} \\, \\text{to} \\, X. $$\n\nIf the value of **X** is possible, then the maximum value would be $\\geq X$. Otherwise, it would be $< X$. \n\nThis is a monotonic function, and hence we can use **binary search** to solve this problem.\n",
+            "hint2": "Given:\n\n$$ \\frac{A[i_1] + A[i_2] + A[i_3] + \\dots + A[i_K]}{B[i_1] + B[i_2] + B[i_3] + \\dots + B[i_K]} = X $$\n\nWe can rewrite it as:\n\n$$ (A[i_1] + A[i_2] + A[i_3] + \\dots + A[i_K]) - X \\cdot (B[i_1] + B[i_2] + B[i_3] + \\dots + B[i_K]) = 0 $$\n\nOr:\n\n$$ (A[i_1] - X \\cdot B[i_1]) + (A[i_2] - X \\cdot B[i_2]) + \\dots + (A[i_K] - X \\cdot B[i_K]) = 0 $$\n\nThus, we need to select **K** indices such that the above condition is satisfied.\n",
+            "solution_approach": "<p>We would be doing binary search on the maximum possible value of (A[i1]+A[i2]+A[i3]+\u2026\u2026+A[iK]) / (B[i1]+B[i2]+B[i3]+\u2026\u2026+B[iK]). Let\u2019s</p><p>We take the left pointer as L = 0 and the right pointer as R = 10<sup>8</sup>. We take mid = (L+R)/2. We then check if it is possible to have mid as a possible value of the given function. To do this, we take the maximum K values of (A[i] - mid*B[i]) by using a priority queue. If the sum of these values is \u2265 0, then it might be possible to equate the sum to 0. If mid is a possible value, the maximum possible value can be \u2265 mid and we continue binary search on L = mid to R. Otherwise, the maximum possible value would be &lt; mid, so we continue binary search on L to R = mid.</p><p>Time Complexity per test case: O(N * log2(\u03a3Ai) * log2K)</p>"
+        },
+        "id": 105,
+        "input_format": "<p>The first line contains <i>T</i>, the number of test cases (<i>1&lt;=T&lt;=10000</i>).</p><p>The first line contains an integer <i>N, K </i>where <i>1&lt;=N&lt;=10^4, 1&lt;=K&lt;=N</i>.</p><p>Next line contains <i>N</i> space-separated integers (<i>1&lt;=Ai&lt;=1e4</i>).</p><p>Next line contains <i>N</i> space-separated integers (<i>1&lt;=Bi&lt;=1e4</i>).</p><p>Sum of <i>N</i> across all test cases&lt;=10^5.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><strong>1st test case:</strong><br>Select index \u2192 [1,3], result = 17/7.</p>",
+        "output_format": "<p>For each test case print the maximum possible value of (A[i<sub>1</sub>]+A[i<sub>2</sub>]+A[i<sub>3</sub>]+\u2026\u2026+A[i<sub>K</sub>]) / (B[i<sub>1</sub>]+B[i<sub>2</sub>]+B[i<sub>3</sub>]+\u2026\u2026+B[i<sub>K</sub>]). <strong>You have to print the result round off to 6 decimal places.</strong></p>",
+        "samples": [
+            {
+                "input": "3\n3 2\n10 9 7\n3 5 4\n8 3\n4 4 2 1 5 3 2 5\n2 2 2 5 3 5 2 3\n1 1\n1 \n1",
+                "output": "2.428571\n1.857143\n1.000000"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Tricky",
+            "Binary Search"
+        ],
+        "template_code": [],
+        "time_limit_sec": 4.0,
+        "title": "Maximise the fraction",
+        "video_editorial_id": 8152
+    },
+    "details": "Problem Details"
+}

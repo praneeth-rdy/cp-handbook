@@ -1,0 +1,58 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You've been given chemical formula of a compound. Your task is to print the count of each atom.<br>The atomic element always starts with an uppercase character, then zero or more lowercase letters, representing the name.<br>One or more digits representing that element's count may follow if the count is greater than 1. If the count is 1, no digits will follow. For example, H2O and H2O2 are possible, but H1O2 is impossible.<br>Two formulas concatenated together to produce another formula. For example, H2O2He3Mg4 is also a formula.<br>A formula placed in parentheses, and a count (optionally added) is also a formula. For example, (H2O2) and (H2O2)3 are formulas.</p><p>It's guaranteed that the total count of each individual atom is within INT_MAX.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 |<i>S</i>| \u2264 10<sup>3</sup></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nstring solve(string formula) {\n    stack < pair < string, int > > s;\n\n    for(int i = 0; i < (int)formula.length(); i++) {\n        if(formula[i] == '(') {\n            s.push({\"(\", -1});\n        }\n        else if(formula[i] == ')') {\n            int multiplier = 0;\n            while(i + 1 < (int)formula.length() && formula[i + 1] >= '0' && formula[i + 1] <= '9') {\n                multiplier *= 10;\n                multiplier += formula[i + 1] - '0';\n                i++;\n            }\n            if(!multiplier) multiplier = 1;\n\n            stack < pair < string, int > > temp;\n\n            while(!s.empty()) {\n                auto it = s.top();\n                s.pop();\n                if(it.first == \"(\") break;\n                temp.push({it.first, it.second * multiplier});\n            }\n\n            while(!temp.empty()) {\n                s.push(temp.top());\n                temp.pop();\n            }\n        }\n        else if(formula[i] >= 'A' && formula[i] <= 'Z') {\n            string atom = \"\";\n            atom += formula[i];\n            while(i + 1 < (int)formula.length() && formula[i + 1] >= 'a' && formula[i + 1] <= 'z') {\n                atom += formula[i + 1];\n                i++;\n            }\n\n            int cnt = 0;\n            while(i + 1 < (int)formula.length() && formula[i + 1] >= '0' && formula[i + 1] <= '9') {\n                cnt *= 10;\n                cnt += formula[i + 1] - '0';\n                i++;\n            }\n\n            if(!cnt) cnt = 1;\n\n            s.push({atom, cnt});\n        }\n    }\n\n    map < string, int > M;\n\n    while(!s.empty()) {\n        M[s.top().first] += s.top().second;\n        s.pop();\n    }\n\n    string ans = \"\";\n\n    for(auto it : M) {\n        ans += it.first;\n        if(it.second > 1) ans += to_string(it.second);\n    }\n\n    return ans;\n}\n\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    string formula;\n    cin >> formula;\n\n    cout << solve(formula) << \"\\n\";\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:16:53.608036+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Parse the input string, and open the brackets. It's kind of simulating the entire manual process in programming!</p>",
+            "hint2": "<p>We can use stack for that purpose.</p>",
+            "solution_approach": "<p>The expected time complexity of the solution using simulation: <i>O(|S|<sup>2</sup>)</i></p><p>We can optimize the solution to O(|<i>S</i>|) by doing some simple optimizations, like the count of each element will get multiply by only those numbers which are outside the closing brackets of brackets containing this atom. Try it out by yourself!</p>"
+        },
+        "id": 460,
+        "input_format": "<p>The only line of input contains a string <i>S</i> representing the chemical formula of a compound.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print the count of all elements as a string in the following form: the first name (in sorted order), followed by its count (if that count is more than 1), followed by the second name (in sorted order), followed by its count (if that count is more than 1), and so on.</p>",
+        "samples": [
+            {
+                "input": "Mg(OH)2",
+                "output": "H2MgO2"
+            },
+            {
+                "input": "K4(ON(SO3)2)2",
+                "output": "K4N2O14S4"
+            },
+            {
+                "input": "(Ti34)10",
+                "output": "Ti340"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Molecular Formula",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You need to answer t test cases. In each case, your program should take in a string s and convert it into an integer. If the string is not valid print \u2018Invalid\u2019. Do not use built-in functions.",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">1 &lt;= t &lt;= 1000\n1 &lt;= |s| &lt;= 18\n|s| = length of the string</code></pre>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Response\n{\n    bool isValid;\n    long long int integer;\n\n    Response() : isValid(true), integer(0) {}\n    Response(bool isValid, long long int integer) : isValid(isValid), integer(integer){};\n};\n\nResponse STOI(string s)\n{\n    int n = s.length();\n    int f = 0;   // to show that the string is invalid\n    int neg = 0; // to show that the integer is negative\n    long long int ans = 0;\n    int pos = 0;\n\n    Response response;\n\n    if (s[0] == '-')\n        neg = 1;\n    if (s[0] == '+')\n        pos = 1;\n    for (int i = 0; i < n; i++)\n    {\n        if (neg && i == 0)\n            continue;\n        if (pos && i == 0)\n            continue;\n        ans = ans * 10 + (s[i] - '0');\n        if (s[i] < '0' || s[i] > '9')\n        {\n            f = 1;\n            break;\n        }\n    }\n    if (f || (neg && n == 1) || (pos && n == 1))\n    {\n        response.isValid = false;\n    }\n    else\n    {\n        if (neg)\n            ans = ans * -1;\n        response.isValid = true;\n        response.integer = ans;\n    }\n    return response;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    cout.tie(NULL);\n\n    int test_cases;\n    cin >> test_cases;\n\n    while (test_cases--)\n    {\n        string s;\n        cin >> s;\n\n        Response response = STOI(s);\n\n        if (!response.isValid)\n            cout << \"Invalid\\n\";\n        else\n            cout << response.integer << \"\\n\";\n    }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:43:27.739414+00:00"
+        },
+        "hints": {
+            "hint1": "How to find a number if we know the digits at each position?",
+            "hint2": "",
+            "solution_approach": "We can convert the string into an integer by traversing the string and adding digits one by one to the answer.\n           answer = answer*10 + (s[i]-\u20190\u2019);\nThe length of the strings can go up to 18 so we need to use 64-bit integers.\n\nWe need to handle few edge cases.\n\n1. The first character of the string can be \u2018-\u2019 which denotes that it is a negative integer.\n2. The string cannot have anything other than digits at all positions.\n3. The first character of the string can be \u2018+\u2019.\n\nIf the string has anything other than digits we print \u2018Invalid\u2019."
+        },
+        "id": 604,
+        "input_format": "The first line contains a single integer t denoting the number of test cases. Then t lines follow.\nEach line contains a string s which you need to convert into an integer or report that the string is invalid.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In the first two cases, the string is converted into the corresponding integer. Note that the integer can be negative.\nThe third test case is not a valid string so we print Invalid.",
+        "output_format": "Print the integer or print \u2018Invalid\u2019.",
+        "samples": [
+            {
+                "input": "4\n745612\n-12\n+13\n524a2",
+                "output": "745612\n-12\n13\nInvalid"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Brute Force",
+            "Implementation",
+            "company-AlgoZenith"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Response\n{\n    bool isValid;\n    long long int integer;\n\n    Response() : isValid(true), integer(0) {}\n    Response(bool isValid, long long int integer) : isValid(isValid), integer(integer){};\n};\n</fix>\n\nResponse STOI(string s)\n{\n    // Complete the function\n}\n\n<fix>\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    cout.tie(NULL);\n\n    int test_cases;\n    cin >> test_cases;\n\n    while (test_cases--)\n    {\n        string s;\n        cin >> s;\n\n        Response response = STOI(s);\n\n        if (!response.isValid)\n            cout << \"Invalid\\n\";\n        else\n            cout << response.integer << \"\\n\";\n    }\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "STOI",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

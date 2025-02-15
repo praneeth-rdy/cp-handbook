@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given $Q$ queries and have to perform the following operations:\n\n1. **insertback x** - Add element $x$ at the end of the deque.  \n2. **eraseback** - Delete the end element of the deque, if the deque is not empty.  \n3. **insertfront x** - Add element $x$ at the front of the deque.  \n4. **erasefront** - Delete the front element of the deque, if the deque is not empty.  \n5. **printfront** - Print the element at the front of the deque, if the deque is not empty; otherwise, print $0$.  \n6. **printback** - Print the element at the back of the deque, if the deque is not empty; otherwise, print $0$.  \n7. **print x** - Print the $x$-th element of the deque (0-indexed), if it exists; otherwise, print $0$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^5$  \n\n$1 \\leq Q \\leq 10^5$  \n\n$1 \\leq X \\leq 10^6$  \n\nIt is guaranteed that the sum of $Q$ over all test cases does not exceed $10^5$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n\nint main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int q;\n    cin >> q;\n    deque<int> d;\n    while (q--) {\n      string s;\n      cin >> s;\n      if (s == \"insertback\") {\n        int x;\n        cin >> x;\n        d.push_back(x);\n      } else if (s == \"eraseback\") {\n        if (!d.empty()) {\n          d.pop_back();\n        }\n      } else if (s == \"insertfront\") {\n        int x;\n        cin >> x;\n        d.push_front(x);\n      } else if (s == \"erasefront\") {\n        if (!d.empty()) {\n          d.pop_front();\n        }\n      } else if (s == \"printfront\") {\n        if (!d.empty()) {\n          cout << d.front() << \"\\n\";\n        } else {\n          cout << \"0\\n\";\n        }\n      } else if (s == \"printback\") {\n        if (!d.empty()) {\n          cout << d.back() << \"\\n\";\n        } else {\n          cout << \"0\\n\";\n        }\n      } else {\n        int x;\n        cin >> x;\n        if (x < (int)d.size()) {\n          cout << d[x] << \"\\n\";\n        } else {\n          cout << \"0\\n\";\n        }\n      }\n    }\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:32:58.346942+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Use `push_back(x)` for inserting element at end of deque\nUse `pop_back()` for deleting element at end of deque\nUse `push_front(x)` for inserting element at front of deque\nUse `pop_front()` for deleting element at front of deque\nUse `front()` for printing element at end of deque\nUse `back()` for printing element at end of deque\nUse `d[i]` for accessing the i-th element of the deque\nTime Complexity per test case: $O(1)$"
+        },
+        "id": 353,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\n\nThe first line of each test case contains one integer $Q$ - the number of queries.\n\nEach of the next $Q$ lines contains a query.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "1. Deque becomes [3]  \n2. Deque becomes [3, 5]  \n3. Deque becomes [2, 3, 5]  \n4. Last element of deque is 5  \n5. Element at index 1 is 3  \n6. Deque becomes [2, 3]  \n7. Deque becomes [1, 2, 3]  \n8. First element of deque is 1",
+        "output_format": "<p>For each test case, print the required queries.</p>",
+        "samples": [
+            {
+                "input": "1\n8\ninsertback 3\ninsertback 5\ninsertfront 2\nprintback\nprint 1\neraseback\ninsertfront 1\nprintfront\n",
+                "output": "5\n3\n1\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Deque AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

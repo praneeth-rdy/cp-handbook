@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given q queries and a multiset A, initially containing only integer 0. There are three types of queries:</p><p>\"+ x\" \u2014 add integer x to multiset A.</p><p>\"- x\" \u2014 erase one occurrence of integer x from multiset A. It's guaranteed that at least one x is present in the multiset A before this query.</p><p>\"? x\" \u2014 you are given integer x and need to compute the value , i.e. the maximum value of bitwise exclusive OR (also know as XOR) of integer x and some integer y from the multiset A.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\n\nclass trieNode {\npublic:\n    int freq;\n    trieNode* left;\n    trieNode* right;\n    trieNode() {\n        freq = 0;\n        left = NULL;\n        right = NULL;\n    }\n};\n\nvoid insert(int n, trieNode* head) {\n    trieNode* cur = head;\n    for (int i = 31; i >= 0; --i) {\n        int bit = (n >> i)&1;\n        if(bit) {\n            if(!cur->right) {\n                cur->right = new trieNode();\n            }\n            cur = cur->right;\n            cur->freq++;\n        }\n        else {\n            if(!cur->left) {\n                cur->left = new trieNode();\n            }\n            cur = cur->left;\n            cur->freq++;\n        }\n    }\n}\n\nvoid erase(int n, trieNode* head) {\n    trieNode* cur = head;\n    for (int i = 31; i >= 0; --i) {\n        int bit = (n >> i)&1;\n        if(bit) {\n            cur->right->freq--;\n            cur = cur->right;\n        }\n        else {\n            cur->left->freq--;\n            cur = cur->left;\n        }\n    }\n}\n\nint findMaxXOR(int n, trieNode* head) {\n    trieNode* cur = head;\n    int ans = 0;\n    for (int j = 31; j >= 0; --j) {\n        int bit = (n >> j)&1;\n        if(bit) {\n            if(cur->left && cur->left->freq > 0) {\n                ans += (1<<j);\n                cur = cur->left;\n            }\n            else {\n                cur = cur->right;\n            }\n        }\n        else {\n            if(cur->right && cur->right->freq > 0) {\n                ans += (1<<j);\n                cur = cur->right;\n            }\n            else {\n                cur = cur->left;\n            }\n        }\n    }\n    return ans;\n}\n\nsigned main(){\n    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n    int q;\n    cin >> q;\n    trieNode* head = new trieNode();\n    insert(0, head);\n    while(q--) {\n        char c;\n        int x;\n        cin >> c >> x;\n        if(c == '+') {\n            insert(x, head);\n        }\n        else if(c == '-') {\n            erase(x, head);\n        }\n        else {\n            cout << findMaxXOR(x, head) << \"\\n\";\n        }\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:37:44.967856+00:00"
+        },
+        "hints": {
+            "hint1": "For problems involving xor, you should think about the bits of the numbers. We need to maximise the xor, so it will be beneficial to take the number which can result in a higher value of the most significant bit.",
+            "hint2": "You can make a Trie to insert and erase the numbers. Since duplicates are allowed, you can use the frequency as a parameter to make the code simpler. Whenever you need to insert, you can increase the frequency of the bits present in that number and decrease when you need to erase it.",
+            "solution_approach": "Whenever you need to find the maximum possible value of xor with a number present in the multiset (or say the trie), you need to start from the maximum bit of the number. Since maximum value is given as 1e9, you can start with 30 since log2(1e9) < 30. If the current bit of the given integer x is 0, you should try to take the number which has current bit as 1, if it is possible since 0^1=1. Similarly if the current bit is 1, you should try to take number with current bit as 0.\n\nTime Complexity: O(Q*log(max(Ai))\n\nThis is a standard problem of the trie. To support delete operation, you can just keep \u2018count\u2019 of every node as well. This stores how many numbers will visit this node when inserting that number in the trie. When you insert, then increase the count of all nodes that the insertion visits, and when deleting an integer, just decrease the count. To find max xor, simply apply the greedy strategy and check the count as well to decide whether the node exists or not."
+        },
+        "id": 418,
+        "input_format": "<p>First line contains an integer q, 1 \u2264 q \u2264 10^5.</p><p>Each of the following q lines of the input contains one of three characters '+', '-' or '?' and an integer xi (1\u2009\u2264\u2009xi\u2009\u2264\u200910<sup>9</sup>). It's guaranteed that there is at least one query of the third type.</p><p>Note, that the integer 0 will always be present in set A.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "",
+        "output_format": "<p>For each query of the type '?' print one integer \u2014 the maximum value of bitwise exclusive OR (XOR) of integer x<sub>i</sub> and some integer from the multiset A.</p>",
+        "samples": [
+            {
+                "input": "12\n? 4\n+ 4\n? 4\n+ 4\n? 3\n- 4\n- 4\n? 3\n+ 4\n? 4\n+ 1\n+ 1",
+                "output": "4\n4\n7\n3\n4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Tries"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "XORMax",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

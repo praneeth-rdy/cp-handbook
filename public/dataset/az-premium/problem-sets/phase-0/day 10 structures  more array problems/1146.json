@@ -1,0 +1,66 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a number $N$ and two arrays $A$, $B$ of $N$ numbers. Determine if $B$ is a **permutation** of $A$ or not.\n\n**Note:** A **permutation** is an arrangement of all or part of a set of objects.\n\n**For example:** The arrays $[2, 1, 3]$, $[3, 2, 1]$, and $[2, 3, 1]$ are permutations of the array $[1, 2, 3]$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10$\n$1 \\leq N \\leq 3 \\times 10^5$\n$1 \\leq A_i \\leq 10^7$\n$1 \\leq B_i \\leq 10^7$\nIt's guaranteed that the sum of $N$ over all test cases does not exceed $3 \\times 10^5$.",
+        "difficulty": 2,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n\n    while (t--)\n    {\n        int n;\n        cin >> n;\n        int A[n];\n        for (int i = 0; i < n; i++)\n        {\n            cin >> A[i];\n        }\n        bool perm = true;\n        int B[n];\n        for (int i = 0; i < n; i++)\n        {\n            cin >> B[i];\n        }\n        sort(A, A + n);\n        sort(B, B + n);\n        bool isPerm = true;\n        for (int i = 0; i < n; i++) {\n            if (A[i] != B[i]) {\n                isPerm = false;\n                break;\n            }\n        }\n        if (isPerm) {\n            cout << \"yes\\n\";\n        } else {\n            cout << \"no\\n\";\n        }\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int t = Integer.parseInt(br.readLine());\n        \n        while (t-- > 0) {\n            int n = Integer.parseInt(br.readLine());\n            int[] A = new int[n];\n            String[] aStr = br.readLine().split(\" \");\n            for (int i = 0; i < n; i++) {\n                A[i] = Integer.parseInt(aStr[i]);\n            }\n            int[] B = new int[n];\n            String[] bStr = br.readLine().split(\" \");\n            for (int i = 0; i < n; i++) {\n                B[i] = Integer.parseInt(bStr[i]);\n            }\n            Arrays.sort(A);\n            Arrays.sort(B);\n            boolean isPerm = true;\n            for (int i = 0; i < n; i++) {\n                if (A[i] != B[i]) {\n                    isPerm = false;\n                    break;\n                }\n            }\n            if (isPerm) {\n                out.println(\"yes\");\n            } else {\n                out.println(\"no\");\n            }\n        }\n        \n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n    for _ in range(t):\n        n = int(data[idx])\n        idx += 1\n        A = [int(data[idx + i]) for i in range(n)]\n        idx += n\n        B = [int(data[idx + i]) for i in range(n)]\n        idx += n\n        A.sort()\n        B.sort()\n        isPerm = True\n        for i in range(n):\n            if A[i] != B[i]:\n                isPerm = False\n                break\n        if isPerm:\n            print(\"yes\")\n        else:\n            print(\"no\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:39:18.226001+00:00"
+        },
+        "hints": {
+            "hint1": "Can we make the order of elements in both the arrays same?",
+            "hint2": "Think of sorting both the arrays.",
+            "solution_approach": "To determine if array $B$ is a permutation of array $A$, we can sort both arrays and then compare them element by element.\n\n**Steps:**\n\n1. Read arrays $A$ and $B$ of size $N$.\n2. Sort array $A$.\n3. Sort array $B$.\n4. Iterate through the arrays from index $0$ to $N-1$:\n   - If at any index $i$, $A[i] \\ne B[i]$, then $B$ is not a permutation of $A$.\n5. If all elements match, then $B$ is a permutation of $A$.\n\n**Explanation:**\n\nSorting both arrays ensures that if they contain the same elements (possibly in different orders), they will be transformed into identical arrays. Comparing the sorted arrays element by element will reveal any discrepancies.\n\n**Time Complexity per test case:**\n\n- Sorting both arrays: $O(N \\log N)$\n- Comparing arrays: $O(N)$\n- Total Time Complexity per test case: $O(N \\log N)$\n\n**Space Complexity per test case:**\n\n- Additional space for sorting (depends on sorting algorithm): Typically $O(N)$ or $O(\\log N)$\n- Space for arrays $A$ and $B$: $O(N)$\n- Total Space Complexity per test case: $O(N)$"
+        },
+        "id": 1146,
+        "input_format": "The first line contains $T$, the number of test cases.\nFor each test case:\n- The first line contains an integer $N$, the number of elements in the arrays $A$ and $B$.\n- The second line contains $N$ space-separated integers each denoting an element of the array $A$.\n- The third line contains $N$ space-separated integers each denoting an element of the array $B$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In **Sample Input 1**, after sorting both arrays, they are not equal. Therefore, the output is \"no\".\nIn **Sample Input 2**, for the first test case, similar to Sample Input 1, the arrays are not equal after sorting, so the output is \"no\".\nFor the second test case, after sorting, both arrays are equal, so the output is \"yes\".",
+        "output_format": "Print **\"yes\"** if array $B$ is a permutation of $A$, otherwise print **\"no\"** without quotations.",
+        "samples": [
+            {
+                "input": "1\n4\n4 2 3 7\n2 3 4 9",
+                "output": "no"
+            },
+            {
+                "input": "2\n4\n4 2 3 7\n2 3 4 9\n5\n5 1 1 9 3\n1 9 1 5 3",
+                "output": "no\nyes"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Sorting",
+            "Implementation",
+            "Arrays"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Permutation With Arrays",
+        "video_editorial_id": 10677
+    },
+    "details": "Problem Details"
+}

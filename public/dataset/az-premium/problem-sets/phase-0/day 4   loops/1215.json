@@ -1,0 +1,65 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a number $N$, and $N$ numbers, find the **maximum** number among these $N$ numbers.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq N \\leq 10^3$\n$0 \\leq X_i \\leq 10^9$",
+        "difficulty": 2,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n// O(N) time\n// O(1) space\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    int mx = -1;\n    // all elements greater than -1, so initialising it as -1 allows it to get modified as we process the input\n    // this stores the maximum element in the sequence\n    for (int i = 0; i < n; i++) // can be done while taking in the input\n    {\n        int y;\n        cin >> y;\n        if (y > mx) // update\n            mx = y;\n    }\n\n    cout << mx << \"\\n\";\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        // O(N) time\n        // O(1) space\n\n        int n = Integer.parseInt(br.readLine());\n\n        int mx = -1;\n        // all elements greater than -1, so initialising it as -1 allows it to get modified as we process the input\n        // this stores the maximum element in the sequence\n\n        StringTokenizer st = new StringTokenizer(br.readLine());\n\n        for (int i = 0; i < n; i++) { // can be done while taking in the input\n            int y = Integer.parseInt(st.nextToken());\n            if (y > mx) // update\n                mx = y;\n        }\n\n        out.println(mx);\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n\n    # O(N) time\n    # O(1) space\n\n    n = int(data[idx])\n    idx += 1\n\n    mx = -1\n    # all elements greater than -1, so initialising it as -1 allows it to get modified as we process the input\n    # this stores the maximum element in the sequence\n\n    for i in range(n):  # can be done while taking in the input\n        y = int(data[idx])\n        idx += 1\n        if y > mx:  # update\n            mx = y\n\n    print(mx)\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:36:06.349034+00:00"
+        },
+        "hints": {
+            "hint1": "A value which is equal to at least one element will be the maximum of the array. Can you check whether an element is maximum or not for all elements?",
+            "hint2": "Try to keep track of the largest number you have seen so far as you iterate through the numbers.",
+            "solution_approach": "To find the maximum number among the given $N$ numbers, we can iterate through the list of numbers while keeping track of the maximum value found so far.\n\nWe initialize a variable `mx` to a value less than the minimum possible input number, for example, `mx = -1` (since all numbers are non-negative). As we read each number `y`, we compare it with `mx`. If `y` is greater than `mx`, we update `mx` to `y`.\n\nAfter processing all numbers, `mx` will hold the maximum number among the given numbers.\n\n**Time Complexity per test case:** $O(N)$\n\n**Space Complexity per test case:** $O(1)$"
+        },
+        "id": 1215,
+        "input_format": "First line contains a number $N$.\nSecond line contains $N$ numbers $X_i$ where $1 \\leq i \\leq N$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first sample, $8$ is the maximum element among the given numbers.\nFor the second sample, both the elements are $2$, and it is the maximum.",
+        "output_format": "Print the **maximum** number.",
+        "samples": [
+            {
+                "input": "5\n1 8 5 7 5",
+                "output": "8"
+            },
+            {
+                "input": "2\n2 2",
+                "output": "2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Arrays"
+        ],
+        "template_code": [],
+        "time_limit_sec": 0.5,
+        "title": "Max",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

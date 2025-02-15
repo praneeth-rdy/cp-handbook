@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have N magical candy bag. The i-th bag contains A<sub>i</sub> candies. In each minute you can eat all the candies, A<sub>i</sub> of one bag, after that, the candies become [A<sub>i</sub> / 2] where [x] is the greatest integer less than x. You have K minutes, find the maximum number of candies you can eat.</p>",
+        "complete_approach": "",
+        "constraints": "1\u2264 T \u2264 10<sup>5</sup>\n\n1\u2264 N \u2264 10<sup>5</sup>\n\n0\u2264 K \u2264 10<sup>5</sup>\n\n1\u2264 A<sub>i</sub> \u2264 10<sup>9</sup>\n\nIt is guaranteed that the sum of K over all test cases does not exceed 10<sup>6</sup>.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n#define int long long\n\nsigned main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int n, k;\n    cin >> n >> k;\n    priority_queue<int> q;\n    for (int i = 0; i < n; ++i) {\n      int x;\n      cin >> x;\n      q.push(x);\n    }\n    int ans = 0;\n    for (int i = 0; i < k; ++i) {\n      int x = q.top();\n      ans += x;\n      q.pop();\n      q.push(x / 2);\n    }\n    cout << ans << \"\\n\";\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:41:25.108412+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Put all the number of candies in each bag in a priority queue and take the maximum number of candies possible in each minute. Erase the maximum number of candies and insert $[candies/2]$.\n\nTime Complexity per test case: $O(K \\log N)$"
+        },
+        "id": 365,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains two space-separated integers N, K - the number of bags and the number of minutes.\n\nThe second line of each test case contains N space-separated integers.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, first take 5 candies then the bag becomes: [4, 3, 2, 1], and then take 4 candies to get a total 5+4 = 9 candies.\n\nFor the second test case, first take 4 candies, then bag becomes: [2] and then take 2 candies to get a total 4+2 = 6 candies.\n\nFor the third test case, first take 5 candies, then bag becomes: [3, 2, 2, 2, 1, 2] and then take 3 candies, then bag becomes: [1, 2, 2, 2, 1, 2], then take 2 candies to get a total 5+3+2 = 10 candies.",
+        "output_format": "For each test case, print the maximum number of candies you can eat.",
+        "samples": [
+            {
+                "input": "3\n4 2\n4 3 5 1\n1 2\n4\n6 3\n3 2 2 5 1 2\n",
+                "output": "9\n6\n10\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "The Magical Candy Bag AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,61 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given an array having $n$ elements, the cost to move from $i^{th}$ element to its adjacent element ( *if exist* ) at $i+1$ and $i-1$ is $b$, and the cost to move to other same valued index is $a$.\nFind min cost to reach every index from a given source index of the array.",
+        "complete_approach": "",
+        "constraints": "$1 \u2264 n \u2264 2 \\times 10^{5}$\n$1 \u2264 a , b \u2264 10^{9}$\n$1 \u2264 arr[i] \u2264 100$\n$1 \u2264 src \u2264 n$",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nconst int mx = 2e5 + 10;\n\nint n, a, b;\nint arr[mx];\nvector<vector<array<int, 2>>> adj;\nmap<int, vector<int>> sadj; // same value index list.\nvector<ll> dist;\nvoid dijktra(int src) { // ~O(NlogN)\n\tdist.assign(2 * n + 10, 1e18); // now we have 2*n nodes.\n\tpriority_queue<array<ll, 2>, vector<array<ll, 2>>, greater<array<ll, 2> >> pq;\n\tpq.push({0, src});\n\tdist[src] = 0;\n\twhile (!pq.empty()) {\n\t\tauto x = pq.top();\n\t\tpq.pop();\n\t\tint i = x[1];\n\t\tif (x[0] > dist[i])continue;\n\t\tfor (auto y : adj[i]) {\n\t\t\tint j = y[0], w = y[1];\n\t\t\tif (dist[j] > dist[i] + w) {\n\t\t\t\tdist[j] = dist[i] + w;\n\t\t\t\tpq.push({dist[j], j});\n\t\t\t}\n\t\t}\n\t}\n}\nvoid solve() {\n\tcin >> n;\n\tcin >> a >> b;\n\tadj.assign(2 * n + 10, vector<array<int, 2>>());\n\tfor (int i = 1; i <= n; i++) {\n\t\tcin >> arr[i];\n\t\tsadj[arr[i]].push_back(i);\n\t\tif (i != n)adj[i].push_back({i + 1, b});\n\t\tif (i != 1)adj[i].push_back({i - 1, b});\n\t}\n\tint super_node = n + 1;\n\tfor (auto x : sadj) {\n\t\tfor (auto i : x.second) {\n\t\t\tadj[super_node].push_back({i, a});\n\t\t\tadj[i].push_back({super_node, 0});\n\t\t}\n\t\tsuper_node++;\n\t}// now we have at max 2*n nodes in the graph and 4*n-2 edges.\n\tint src;\n\tcin >> src;\n\tdijktra(src);\n\tfor (int i = 1; i <= n; i++)cout << dist[i] << \" \";\n}\nint main() {\n\tios_base :: sync_with_stdio(0);\n\tcin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n\tfreopen(\"input.txt\", \"r\", stdin); \\\n\tfreopen(\"output.txt\", \"w\", stdout);\n#endif\n\tint t = 1;\n\t// int i = 1;\n\t// cin >> t;\n\twhile (t--) {\n\t\t// cout << \"Case #\" << i << \": \";\n\t\tsolve();\n\t\t// i++;\n\t}\n\treturn 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:31:38.856639+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "**Approach**: use the Super Node idea to reduce the number of edges.\nFor each same values nodes, generate a supernode, such that \n\n$i --0-\u2192 SuperNode_i$  and  $SuperNode_i -- a -\u2192 i$  \n\nfor all index $i$ having same value $arr[i]$. \nNow we have at max $2*n$ nodes in the graph and $4*n-2$ edges.\nNow apply Dijkstra's algorithm.\nSo , Time complexity of Dijktra's will be ~ $O( nlogn )$."
+        },
+        "id": 897,
+        "input_format": "First-line contains $n$ - size of the array and costs $a$ and $b$..\nSecond line contains $n$ elements of the array.\nThe third line contains a source index $src$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "In a single line, print the min-cost to reach every index from a given source index $src$.",
+        "samples": [
+            {
+                "input": "10 1 2                                \n1 2 1 1 2 3 2 3 2 1                                  \n1\n",
+                "output": "0 2 1 1 3 5 3 5 3 1 \n"
+            },
+            {
+                "input": "1 1 2                                \n7                                  \n1\n",
+                "output": "0\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Single Source Shortest Path",
+            "Dijkstra",
+            "Tricky"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Jump Game",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

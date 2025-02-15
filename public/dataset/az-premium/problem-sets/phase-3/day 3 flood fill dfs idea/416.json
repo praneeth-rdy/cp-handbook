@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You have been given a tree with N nodes and N - 1 edges. You want to colour each node, such that no two adjacent nodes (directly connected by an edge) and no two nearly-adjacent nodes (both directly connected to a common node with edges) has the same colour. \nYour task is to find the minimum number of colours required to accomplished this.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>N</i> \u2264 10<sup>5</sup></p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <iostream>\nusing namespace std;\n\nint N,a,b;\nint d[100000];\n\nint main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n    cin >> N;\n    for(int i=1;i<N;i++)\n    {\n        cin >> a >> b;\n        d[a-1]++, d[b-1]++;\n    }\n    int D = 0;\n    for(int i=0;i<N;i++)\n        if(d[i] > D)\n            D = d[i];\n    cout << D+1 << '\\n';\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:16:14.065921+00:00"
+        },
+        "hints": {
+            "hint1": "<p>This problem asks us to colour the vertices of a tree with the minimum number of colours, such that no two nodes of the same colour are adjacent or separated by only two edges. So if some node has <i>d</i> neighbours, then all <i>d</i> neighbours of the node, as well as the node itself, must receive pairwise distinct colours. Hence, if the maximum degree in the tree is <i>D</i>, then we need at least <i>D </i>+ 1 colours.</p>",
+            "hint2": "It turns out that D+1 colours are always sufficient. Can you prove it?",
+            "solution_approach": "<p>This problem asks us to colour the vertices of a tree with the minimum number of colours, such that no two nodes of the same colour are adjacent or separated by only two edges. So if some node has <i>d</i> neighbours, then all <i>d</i> neighbours of the node, as well as the node itself, must receive pairwise distinct colours. Hence, if the maximum degree in the tree is <i>D</i>, then we need at least <i>D </i>+ 1 colours.</p><p>It turns out that <i>D</i>+1 colours are always sufficient; in fact, we'll show how to construct a valid (<i>D</i>+1)-colouring. Root the tree at an arbitrary vertex, and assign it colour 1. The root has at most <i>D</i> children, so they can be assigned distinct colours in {2,\u2026,<i>D</i>+1}. Now we have at most <i>D</i> child subtrees, with the root of each subtree coloured. Every node which has not been coloured has distance 3 or more from any node in a different subtree, so we can colour the subtrees independently.</p><p>Pick a child <i>c</i> of the root, and suppose that it has colour <i>i</i>\u22601. There are at most <i>D</i>\u22121 children of <i>c</i>, so they can be assigned distinct colours in {2,\u2026,<i>i</i>\u22121,<i>i</i>+1,\u2026,<i>D</i>+1}. Once again, the at most <i>D</i>\u22121 subtrees can now be coloured independently.</p><p>This process continues until the tree is completely coloured. In general, any non-root node <i>u</i> has at most <i>D</i>\u22121 children, which can be assigned distinct colours in {1,\u2026,<i>D</i>+1} which avoid the colour of <i>u</i>, and the colour of <i>u</i>'s parent. This ensures that the colouring condition is satisfied: among any two adjacent nodes, one is a child of the other, and the child is assigned a different colour from the parent. For any two nodes separated by at most two edges, there are two cases. If the nodes are siblings, then they are assigned distinct colours simultaneously. Otherwise, one node is the grand-child of the other, and so avoids the colour of its grandparent.</p><p>Thus, the final algorithm is quite simple: compute the degree of every node, find the maximum, and add one.</p>"
+        },
+        "id": 416,
+        "input_format": "The first line of input contains N. Each of the remaining N\u22121 lines describes an edge in terms of the two nodes it connects.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>We require 4 different colours, colour(1) = 1, colour(2) = 2, colour(3) = 3, colour(4) = 1.</p>",
+        "output_format": "<p>Print the minimum number of colours require.</p>",
+        "samples": [
+            {
+                "input": "4\n1 2\n4 3\n2 3",
+                "output": "3"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Trees"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Colour Tree",
+        "video_editorial_id": 8201
+    },
+    "details": "Problem Details"
+}

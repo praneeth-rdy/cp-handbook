@@ -1,0 +1,56 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Write a function to detect if two trees are isomorphic. Two trees are called isomorphic if one of them can be obtained from other by a series of flips, i.e. by swapping left and right children of a number of nodes. Any number of nodes at any level can have their children swapped. Two empty trees are isomorphic.",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "Editorial Code data is currently empty.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:17:07.101708+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 676,
+        "input_format": "<p>The first line contains an integer T, (1 \u2264 T \u2264 10^5), the number of test cases.</p><p>The first line of each test case contains an integer N, the length of the array representing the serialized representation of a tree1.</p><p>The next line contains N-space-separated distinct integers.&nbsp;</p><p>The next line contains an integer M, the length of the array representing the serialized representation of a tree2.</p><p>The next line contains M-space-separated distinct integers.&nbsp;</p><p>The input is given as a serialized representation of a tree.</p><p>The following function parses the input:</p><p><i>Node* getBinaryTree(vector&lt;int&gt; &amp;num, int*ind)</i></p><p><i>Sum of N across all test cases \u2264 10^7.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Return true/false.</p>",
+        "samples": [
+            {
+                "input": "3\n11\n35111 -1 38067 -1 11935 -1 42935 -1 83239 -1 -1 \n11\n35111 38067 11935 -1 42935 -1 83239 -1 -1 -1 -1 \n9\n2139 98225 -1 -1 45038 -1 99680 -1 -1 \n7\n52567 13977 -1 -1 43379 -1 -1 \n21\n86370 -1 19958 -1 24504 -1 84868 -1 28556 -1 60837 -1 83207 -1 32194 -1 37682 -1 90797 -1 -1 \n21\n58627 76571 99757 61217 47021 8172 39465 16247 84989 20852 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ",
+                "output": "yes\nno\nno"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Binary Tree"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n\n</fix>\nbool isIsomorphic(Node * t1, Node * t2)\n{\n    // Complete the function.\n}\n<fix>\nNode* getBinaryTree(vector<int> &num, int*ind) {\n    if(num[*ind] == -1)\n        return NULL;\n    Node* node = new Node(num[*ind]);\n    (*ind)++;\n    node->left = getBinaryTree(num,ind);\n    (*ind)++;\n    node->right = getBinaryTree(num,ind);\n    return node;\n}\n\nvoid generateArray(Node* root, vector<int>&ans){\n    if(root==NULL){\n        ans.push_back(-1);\n        return;\n      }\n    ans.push_back(root->val);\n    generateArray(root->left,ans);\n    generateArray(root->right,ans);\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n;\n        cin>>n;\n        assert(n<=1000000);\n        vector<int>arr(n);\n        for(int i=0;i<n;i++)\n            cin>>arr[i];\n        int ind = 0;\n        Node* tree1 = getBinaryTree(arr,&ind);\n        arr.clear();\n        cin>>n;\n        assert(n<=1000000);\n        arr.resize(n);\n        for(int i=0;i<n;i++)\n            cin>>arr[i];\n        ind = 0;\n        Node* tree2 = getBinaryTree(arr,&ind);\n        if(isIsomorphic(tree1,tree2)){\n            cout<<\"yes\\n\";\n        }\n        else\n            cout<<\"no\\n\";\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Isomorphic Tree",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

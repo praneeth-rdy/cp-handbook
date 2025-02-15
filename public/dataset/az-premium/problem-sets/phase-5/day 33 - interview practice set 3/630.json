@@ -1,0 +1,58 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Sort an array A, of size N, containing only 0, 1, 2 as elements. Can you sort them **in-place**?",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 N \u2264 10<sup>6</sup><br>0 \u2264 A[i] \u2264 2</p>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid sort(int a[], int n)\n{\n    int lo = -1, mid = 0, hi = n;\n    while (mid < hi)\n    {\n        if (a[mid] == 0)\n        {\n            swap(a[lo + 1], a[mid]);\n            lo++;\n            mid++;\n        }\n        else if (a[mid] == 1)\n        {\n            mid++;\n        }\n        else\n        {\n            swap(a[hi - 1], a[mid]);\n            hi--;\n        }\n    }\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n;\n    cin >> n;\n    int a[n];\n    for (int i = 0; i < n; i++)\n    {\n        cin >> a[i];\n    }\n    sort(a, n);\n    for (int i : a)\n    {\n        cout << i << ' ';\n    }\n    cout << '\\n';\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:13:32.948367+00:00"
+        },
+        "hints": {
+            "hint1": "Can you solve this problem in linear time and constant auxiliary space?",
+            "hint2": "Maintain a count of the elements.",
+            "solution_approach": "This problem can be solved in two ways. One is the naive way where you maintain the count of the individual elements and then fill the elements in the array. This will be in linear time and constant space but will take two traversals of the array. We can do it in one traversal by the <strong><u>Dutch National Flag Algorithm</u></strong>. We divide the array into 4 parts:\nA[1\u2026.lo] - filled with 0\u2019s\nA[lo+1\u2026mid-1] - filled with 1\u2019s\nA[mid...hi-1] - unknown\nA[hi\u2026.n] - filled with 2\u2019s\nWe run the algorithm till mid<hi. Every iteration we check the value at A[mid]. If it is 0 we swap A[lo+1] with A[mid] and increment mid by 1. If it is 1 increment mid by 1. If it 2 we swap it with A[hi-1] and decrement hi by 1."
+        },
+        "id": 630,
+        "input_format": "The first line contains a single integer N - the size of the array.\nThe second line contains N integers - the elements of the array.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print the sorted array.",
+        "samples": [
+            {
+                "input": "6\n2 0 1 0 1 2",
+                "output": "0 0 1 1 2 2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Tricky",
+            "Two Pointers"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid sort(int a[], int n)\n</fix>\n{\n    //add code here\n}\n<fix>\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n;\n    cin >> n;\n    int a[n];\n    for (int i = 0; i < n; i++)\n    {\n        cin >> a[i];\n    }\n    sort(a, n);\n    for (int i : a)\n    {\n        cout << i << ' ';\n    }\n    cout << '\\n';\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "COLORSORT",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

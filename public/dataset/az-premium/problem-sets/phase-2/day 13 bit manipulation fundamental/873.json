@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given an integer <strong>t </strong>- the number of test cases. For each test case, read an integer <strong>n </strong>and answer the following 6 queries in the given order in a new line -:</p><ol><li>Output the 64 bit binary representation of number <strong>n</strong>.</li><li>Output the <strong>position</strong> of the most significant bit ( <strong>MSB</strong> ) or the leftmost set bit of <strong>n</strong> ( 0- indexed ). If n=0, output -1.</li><li>Output the <strong>position</strong> of the rightmost set bit of <strong>n</strong> ( 0- indexed ). If n=0, output -1.</li><li>Output 1 if <strong>n&nbsp;</strong> is a power of 2 i.e <strong>n==2<sup>X</sup> , x &gt; 0, </strong>else output 0.</li><li>Output the biggest power of 2, that is the divisor of <strong>n. </strong>i.e biggest <strong>2<sup>K</sup> </strong>such that <strong>n%2<sup>K </sup>== 0, k \u2265 0. </strong>If n=0, output -1.&nbsp;</li><li>Output the smallest power of 2, which is not smaller than <strong>n, </strong>i.e smallest <strong>2<sup>K</sup> </strong>such that <strong>2<sup>K </sup>\u2265 n, k&gt;0.</strong></li></ol>",
+        "complete_approach": "",
+        "constraints": "<ul><li>1 \u2264 t \u2264 10<sup>5</sup></li><li>- 10<sup>18</sup> \u2264 n \u2264 10<sup>18</sup>&nbsp;</li></ul>",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nvoid binary(ll x) {\n    for (int i = 63; i >= 0; i--) {\n        if (x & (1LL << i))cout << 1;\n        else cout << 0;\n    }\n    cout << endl;\n}\nint msb(ll x) {\n    if (x == 0)return -1;\n    if (x < 0)return 63; // negative numbers case.\n    return (int)__lg(x);\n}\nint rsb(ll x) {\n    if (x == 0)return -1;\n    return msb(x ^ (x - 1));\n}\nbool pow2(ll &x) {\n    if (x <= 1)return false;\n    return (__builtin_popcountll(x) == 1);\n}\nll pow2_div(ll x) {\n    if (x == 0)return -1;\n    return (1LL << __builtin_ctzll(x)); // 2^(trailing zeroes in bits).\n}\nll pow2_n(ll x) {\n    if (x <= 1)return 2;\n    return (1LL << (64 - __builtin_clzll(x - 1))); // 2^(64 - leading zeroes in bits).\n}\nvoid solve() {\n    ll n;\n    cin >> n;\n    binary(n);\n    assert(n == 0 || msb(n) == 63 - __builtin_clzll(n));\n    cout << msb(n) << endl;\n    assert(n == 0 || rsb(n) == __builtin_ctzll(n));\n    cout << rsb(n) << endl;\n    cout << pow2(n) << endl;\n    cout << pow2_div(n) << endl;\n    cout << pow2_n(n) << endl;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:39:38.819149+00:00"
+        },
+        "hints": {
+            "hint1": "The problem requires implementing several bit manipulation operations such as finding the most significant bit, the rightmost set bit, checking if a number is a power of two, finding the biggest power of two divisor, and finding the smallest power of two greater than or equal to the given number.",
+            "hint2": "To solve this problem, we need to implement the six required queries on the given integer n. The queries are as follows:\n\n1. Binary representation of n: To find the binary representation of n, we can use bitwise operators to extract each bit of the number from right to left and print it out.\n2. Most significant bit (MSB): To find the position of the most significant bit (MSB) or the leftmost set bit of n, we can use the built-in function __lg() in C++, which returns the position of the most significant set bit in the binary representation of a positive integer. If n is $0$, we return -$1$.\n3. Rightmost set bit (RSB): To find the position of the rightmost set bit of n, we can use another built-in function _\\_builtin\\_ctzll(), which returns the position of the rightmost set bit in the binary representation of a positive integer. If n is $0$, we return -$1$.\n4. Power of $2$: To check if n is a power of $2$, we can use the built-in function _\\_builtin\\_popcountll(), which returns the number of set bits in the binary representation of a positive integer. If n has only one set bit, then it is a power of $2$ and we return $1$. Otherwise, we return $0$.\n5. Biggest power of $2$ divisor: To find the biggest power of $2$ that is a divisor of n, we can use the built-in function _\\_builtin\\_ctzll() again, which returns the position of the rightmost set bit in the binary representation of n. The answer is then $2$ to the power of this position. If n is $0$, we return -$1$.\n6. Smallest power of $2$ greater than or equal to n: To find the smallest power of $2$ that is not smaller than n, we can use the built-in function _\\_builtin\\_clzll(), which returns the number of leading zeros in the binary representation of n minus $1$. The answer is then $2$ to the power of $64$ minus this value. If n is less than or equal to $1$, we return $2$.",
+            "solution_approach": "To solve this problem, we need to implement the six required queries on the given integer n. The queries are as follows:\n\n1. Binary representation of n: To find the binary representation of n, we can use bitwise operators to extract each bit of the number from right to left and print it out.\n2. Most significant bit (MSB): To find the position of the most significant bit (MSB) or the leftmost set bit of n, we can use the built-in function __lg() in C++, which returns the position of the most significant set bit in the binary representation of a positive integer. If n is $0$, we return -$1$.\n3. Rightmost set bit (RSB): To find the position of the rightmost set bit of n, we can use another built-in function _\\_builtin\\_ctzll(), which returns the position of the rightmost set bit in the binary representation of a positive integer. If n is $0$, we return -$1$.\n4. Power of $2$: To check if n is a power of $2$, we can use the built-in function _\\_builtin\\_popcountll(), which returns the number of set bits in the binary representation of a positive integer. If n has only one set bit, then it is a power of $2$ and we return $1$. Otherwise, we return $0$.\n5. Biggest power of $2$ divisor: To find the biggest power of $2$ that is a divisor of n, we can use the built-in function _\\_builtin\\_ctzll() again, which returns the position of the rightmost set bit in the binary representation of n. The answer is then $2$ to the power of this position. If n is $0$, we return -$1$.\n6. Smallest power of $2$ greater than or equal to n: To find the smallest power of $2$ that is not smaller than n, we can use the built-in function _\\_builtin\\_clzll(), which returns the number of leading zeros in the binary representation of n minus $1$. The answer is then $2$ to the power of $64$ minus this value. If n is less than or equal to $1$, we return $2$."
+        },
+        "id": 873,
+        "input_format": "<p>First-line contains an integer <strong>t -&nbsp;</strong> number of test cases.</p><p>Each next <strong>t</strong> lines contain an integer <strong>n.</strong></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case, answer the 6 queries in the given order in a new line.</p>",
+        "samples": [
+            {
+                "input": "10\n-3\n-2\n-1\n0\n1\n2\n3\n4\n5\n6",
+                "output": "1111111111111111111111111111111111111111111111111111111111111101\n63\n0\n0\n1\n2\n1111111111111111111111111111111111111111111111111111111111111110\n63\n1\n0\n2\n2\n1111111111111111111111111111111111111111111111111111111111111111\n63\n0\n0\n1\n2\n0000000000000000000000000000000000000000000000000000000000000000\n-1\n-1\n0\n-1\n2\n0000000000000000000000000000000000000000000000000000000000000001\n0\n0\n0\n1\n2\n0000000000000000000000000000000000000000000000000000000000000010\n1\n1\n1\n2\n2\n0000000000000000000000000000000000000000000000000000000000000011\n1\n0\n0\n1\n4\n0000000000000000000000000000000000000000000000000000000000000100\n2\n2\n1\n4\n4\n0000000000000000000000000000000000000000000000000000000000000101\n2\n0\n0\n1\n8\n0000000000000000000000000000000000000000000000000000000000000110\n2\n1\n0\n2\n8\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Bit Manipulation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "Bit Magic II",
+        "video_editorial_id": 8233
+    },
+    "details": "Problem Details"
+}

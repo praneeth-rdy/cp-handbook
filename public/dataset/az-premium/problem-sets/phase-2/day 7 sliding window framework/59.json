@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given an array of <i>N</i> integers, find the number of subarrays with a sum less than equal to <i>K</i>.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\ntypedef long long ll;\nsigned main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n    ll testcases;\n    cin >> testcases;\n    while (testcases--)\n    {\n        ll n, k;\n        cin >> n >> k;\n        ll arr[n];\n        for (ll i = 0; i < n; i++)\n            cin >> arr[i];\n        ll ans = 0;\n        ll start = 0;\n        ll current = 0;\n        ll currSum = 0;\n        while (current < n)\n        {\n            currSum += arr[current];\n            while (start <= current and currSum > k)\n            {\n                currSum -= arr[start];\n                start++;\n            }\n            ans += (current - start + 1);\n            current++;\n        }\n        cout << ans << \"\\n\";\n    }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:13:12.545363+00:00"
+        },
+        "hints": {
+            "hint1": "The problem can be solved using a two-pointer approach. where one pointer will keep track of the starting index of the subarray and the other pointer will keep moving to the right and add the elements to the current sum until the sum is greater than K. At this point, we will increment the starting pointer until the sum is less than or equal to K again. We will count the number of subarrays as we move along and return the count as the answer.",
+            "hint2": "The problem can be solved using a two-pointer approach, where one pointer will keep track of the starting index of the subarray. The other pointer will keep moving to the right and add the elements to the current sum until the sum is greater than K. At this point, we will increment the starting pointer until the sum is less than or equal to K again. We will count the number of subarrays as we move along and return the count as the answer.",
+            "solution_approach": "We initialize two pointers - start and current to 0. We also initialize the current sum to 0 and the answer to 0.\n\nWe start iterating through the array using the current pointer and add each element to the current sum. If the current sum is greater than K, we start incrementing the start pointer and subtracting the elements from the current sum until the sum is less than or equal to K. We count the number of subarrays using the formula (current-start+1) and increment the answer. Finally, we return the answer as the number of subarrays with a sum less than or equal to $K$.\n\n**Time complexity : O(N), where N is the size of the array.**  \nThe time complexity of the algorithm is O(N), as we are iterating through the array only once, and each element is processed once."
+        },
+        "id": 59,
+        "input_format": "<p>The first line contains <i>T</i>, the number of test cases <i>(1&lt;=T&lt;=10)</i>.</p><p>The first line of each test case contains two space-separated integers <i>N, K</i> where <i>1&lt;=N&lt;=10^5, 0&lt;=K&lt;=10^9</i>.</p><p>Next line contains <i>N</i> space-separated integers <i>(0&lt;=Ai&lt;=1e4)</i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>For the first test case, number of subarray with sum &lt;=5 -&gt; (1),(1,2),(2),(2,3),(3)</p><p>For the second test case, all the subarrays have sum &lt;=6.</p>",
+        "output_format": "<p>For each test case print the number of subarrays with a sum less than <i>K</i> in a newline.</p>",
+        "samples": [
+            {
+                "input": "5\n3 5\n1 2 3\n3 6\n3 2 1\n5 0\n2 1 0 4 5\n7 6\n1 2 3 0 1 5 2\n10 10\n1 0 1 1 10 2 3 7 5 9",
+                "output": "5\n6\n1\n18\n18"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Two Pointers",
+            "company-Amazon"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Number of Subarray with sum at most K",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

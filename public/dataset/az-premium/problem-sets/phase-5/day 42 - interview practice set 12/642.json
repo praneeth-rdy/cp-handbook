@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an array $A$ of binary strings, of size $N$, and two integers $x$ and $y$.\nReturn the size of the largest subset of $A$ such that there are at most $x$ 0's and $y$ 1's in the subset.\nA set $X$ is a subset of a set $Y$ if all elements of $X$ are also elements of $Y$.",
+        "complete_approach": "",
+        "constraints": "<p><i>1 \u2264 N \u2264 100</i></p><p><i>1 \u2264 x,y \u2264 100</i></p><p><i>1 \u2264 length of binary string A[i] \u2264 200</i></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n\nint findMaxSubset(vector<string> &v, int x, int y)\n{\n    // dp[i][j] will store Max subset size possible with zeros_limit = i, ones_limit = j\n    vector<vector<int>> dp(x + 1, vector<int>(y + 1, 0));\n    for (auto &str : v)\n    {\n        int zeros = count(begin(str), end(str), '0'), ones = str.size() - zeros;\n        for (int i = x; i >= zeros; i--)\n        {\n            for (int j = y; j >= ones; j--)\n            {\n                dp[i][j] = max(dp[i][j], dp[i - zeros][j - ones] + 1);\n            }\n        }\n    }\n    return dp[x][y];\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n, x, y;\n    cin >> n >> x >> y;\n    vector<string> v(n);\n    for (auto &i : v)\n    {\n        cin >> i;\n    }\n    cout << findMaxSubset(v, x, y) << '\\n';\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:37:09.631195+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "Can you think of Dynamic Programming? Consider the state dp[i][j] represents the max number of elements in the set with i zeros and j ones. Think of transition similar to 0-1 knapsack problem.",
+            "solution_approach": "This problem is similar to the 0-1 knapsack problem, the only difference being that there are two constraints instead of one in this one. We can maintain a 2D DP array, where $dp[i][j]$ will maintain the optimal solution when the limit on zeroes is $i$ and the limit on ones is $j$.\n\nFor each string, some number of 0's and 1's are required. Obviously, if our balance of zeroes and ones is less than what is required by the current string, we can't choose it. But in the case where our balance of **zeros** and **ones** is greater than the required, we have two cases:\n\n1. Either take the current string into our subset. The resultant count would be:\n   $$ 1 + \\text{optimal solution that we had when our balance was } i - \\text{zeros and } j - \\text{ones}. $$\n\n2. Or leave the current string, meaning the resultant count will remain the same.\n\n**Time Complexity:** $O(n \\cdot m \\cdot k)$  \n**Space Complexity:** $O(n \\cdot m)$\n"
+        },
+        "id": 642,
+        "input_format": "The first line contains 3 integers N, x, and y.\nN lines follow each containing a binary string.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>In the first test case, the largest subset with at most 5 0's and 3 1's is {\"10\", \"0001\", \"1\", \"0\"}, so the answer is 4.<br>In the second test case, the largest subset is {\"0\", \"1\"}, so the answer is 2.</p>",
+        "output_format": "Print the maximum possible size of the subset.",
+        "samples": [
+            {
+                "input": "5 5 3\n10\n0001\n111001\n1\n0",
+                "output": "4"
+            },
+            {
+                "input": "3 1 1\n10\n0\n1",
+                "output": "2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nint findMaxSubset(vector<string> &v, int x, int y)\n{\n    //Complete the function\n}\n<fix>\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n, x, y;\n    cin >> n >> x >> y;\n    vector<string> v(n);\n    for (auto &i : v)\n    {\n        cin >> i;\n    }\n    cout << findMaxSubset(v, x, y) << '\\n';\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "ONEZERO",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given an array A of N integers. A sequence is called good if the value x occurs x times in the array. Find the minimum number of integers you need to delete from A to make it good.</p>",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^5$  \n\n$1 \\leq N \\leq 10^5$  \n\n$1 \\leq A_i \\leq 10^9$  \n\nIt is guaranteed that the sum of $N$ over all test cases does not exceed $10^6$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint main() {\n    IOS\n    int t;\n    cin >> t;\n    while (t--) {\n        int n;\n        cin >> n;\n        map<int, int> m;\n        for (int i = 0; i < n; ++i) {\n            int x;\n            cin >> x;\n            m[x]++;\n        }\n        int ans = 0;\n        for (auto i : m) {\n            if(i.second >= i.first) {\n                ans += i.second - i.first;\n            }\n            else {\n                ans += i.second;\n            }\n        }\n        cout << ans << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:29:46.753236+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Take count of each number in a map. For any element `X` if it\u2019s count is more than `X`, delete the extra count and if it\u2019s count is less than `X`, delete all the occurrences of `X`.\n\nTime Complexity per test case: $O(N \\log N)$"
+        },
+        "id": 375,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer N - the length of the array. \n\nThe second line of each test case contains N space-separated integers.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, remove 2.  \n\nFor the second test case, remove 3 and 4.  \n\nFor the third test case, remove 6, 6, 1, and 2.",
+        "output_format": "For each test case, print the minimum number of integers you need to delete from A to make it good.",
+        "samples": [
+            {
+                "input": "3\n5\n3 2 3 3 1\n4\n3 2 2 4\n5\n6 6 1 1 2\n",
+                "output": "1\n2\n4\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Good Sequence AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

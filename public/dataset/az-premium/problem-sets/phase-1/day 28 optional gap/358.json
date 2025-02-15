@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You have an empty set and can perform the following operations on it:\n\n1. 1 x - Add integer x to the set\n2. 2 x - Find the smallest integer that is not present in the set, which is greater than or equal to x.",
+        "complete_approach": "",
+        "constraints": "- $1 \\leq T \\leq 10^5$\n- $1 \\leq Q \\leq 10^5$\n- $1 \\leq t_i \\leq 2$\n- $1 \\leq x_i \\leq 10^{12}$\n\nIt is guaranteed that the sum of $Q$ over all test cases does not exceed $10^6$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n#define int long long\n\nsigned main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int q;\n    cin >> q;\n    set<int> s, ns;\n    while (q--) {\n      int t, x;\n      cin >> t >> x;\n      if (t == 1) {\n        s.insert(x);\n        ns.erase(x);\n        if (!s.count(x + 1)) {\n          ns.insert(x + 1);\n        }\n      } else {\n        if (!s.count(x)) {\n          cout << x << \"\\n\";\n        } else {\n          cout << *ns.lower_bound(x) << \"\\n\";\n        }\n      }\n    }\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:15:23.442228+00:00"
+        },
+        "hints": {
+            "hint1": "Maintain two sets - one which contains the  values of xi and other which contains $x_i + 1$(erase it afterwards if it comes as $x_i$)",
+            "hint2": "",
+            "solution_approach": "This solution uses two sets `s` and `ns` to maintain the values of $x_i$ and $x_i+1$ , respectively. When we perform an operation of type `1 x`, we insert `x` into `s`. If $x+1$ is not already in `s`, we also insert it into `ns`. If $x+1$ is already in `s`, we remove it from `ns`. This is because if $xi+1$ is already in the set, we do not need to keep track of it separately, since we know that xi is present in the set.\n\nWhen we perform an operation of type `2 x`, we check if `x` is in `s`. If it is not, we return `x` as the smallest integer not present in the set that is greater than or equal to `x`. If `x` is in `s`, we use the lower_bound function on `ns` to find the smallest integer in `ns` that is greater than or equal to `x`, and return that as the answer.\n\nThe reason this solution works is because the values in `s` represent the integers that are present in the set, and the values in `ns` represent the integers that are not present in the set but have an immediate neighbor that is present in the set. This means that the smallest integer not present in the set that is greater than or equal to `x` will either be `x` itself (if `x` is not in the set), or the smallest value in `ns` that is greater than or equal to `x` (if `x` is in the set).\n\n\nTime Complexity per test case: $O(Q \\log Q)$, because each operation takes $O(\\log Q)$ time to perform (due to the use of sets and the `lower_bound` function)."
+        },
+        "id": 358,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer Q - the number of queries. \n\nEach of the next Q lines contain two space-separated integers t<sub>i</sub> and x<sub>i</sub> - type and value of the query.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, the set is [1, 3]. Value which is not present and is \u2265 1 is 2 and \u2265 4 is 4.\n\nFor the second test case, the value which is not present and is \u2265 4 is 4. Then set becomes [4]. Value which is not present and is \u2265 4 is 5 now.",
+        "output_format": "For each test case, print the answer for the queries.",
+        "samples": [
+            {
+                "input": "2\n4\n1 1\n1 3\n2 1\n2 4\n3\n2 4\n1 4\n2 4\n",
+                "output": "2\n4\n4\n5\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Set Queries AZ101",
+        "video_editorial_id": 8185
+    },
+    "details": "Problem Details"
+}

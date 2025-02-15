@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a grid of size n*m with 0s and 1s, you need to find the area of the largest square containing only 1.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 t \u2264 10<sup>5</sup></p><p>1 \u2264 n, m \u2264 10<sup>3</sup></p><p>0 \u2264 aij \u2264 1</p><p>It is guaranteed that the sum of n*m over all test cases does not exceed 10<sup>7</sup>.</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\nint dp[1005][1005];\nbool grid[1005][1005];\nsigned main(){\n   ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n   int t;\n   cin >> t;\n   while(t--) {\n       int n, m;\n       cin >> n >> m;\n       for (int i = 0; i < n; ++i) {\n           for (int j = 0; j < m; ++j) {\n               cin >> grid[i][j];\n           }\n       }\n       for (int i = 0; i <= n; ++i) {\n           for (int j = 0; j <= m; ++j) {\n               dp[i][j] = 0;\n           }\n       }\n       int ans = 0;\n       for (int i = 1; i <= n; ++i) {\n           for (int j = 1; j <= m; ++j) {\n               if(grid[i-1][j-1]) {\n                   dp[i][j] = min({dp[i-1][j], dp[i][j-1], dp[i-1][j-1]}) + 1;\n               }\n               ans = max(ans, dp[i][j]);\n           }\n       }\n       cout << ans*ans << \"\\n\";\n   }\n   return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:47:07.812993+00:00"
+        },
+        "hints": {
+            "hint1": "If the value of the cell at (i,j) is 1, to find the answer for the largest square with bottom right corner at (i, j), you will have to extend the square in left, top and diagonal direction.",
+            "hint2": "Instead of the area, store the length of the square in the dp array.",
+            "solution_approach": "<p>Define dp[i][j] which denotes the length of the largest square with its bottom right corner at (i, j). This can be given as: dp[i][j] = min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1. The area is equal to length<sup>2</sup>. You need to find the maximum answer for all (i,j). Use the same recurrence for finding length for all i,j.</p><p><span style=\"background-color:transparent;color:#000000;\">Time Complexity per test case: O(n*m)</span></p>"
+        },
+        "id": 494,
+        "input_format": "<p>The first line of the input contains one integer t - the number of test cases. Then t test cases follow.</p><p>The first line of each test case contains two space-separated integers n, m - the size of the grid.</p><p>Each of the next n lines contains m space-separated integers, aij - the number at that cell.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, print the maximum area.",
+        "samples": [
+            {
+                "input": "3\n2 3\n0 1 1\n0 0 0\n3 3\n1 0 1\n0 1 1\n0 1 1\n2 2\n0 0\n0 0",
+                "output": "1\n4\n0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "Maximum Area of Square",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

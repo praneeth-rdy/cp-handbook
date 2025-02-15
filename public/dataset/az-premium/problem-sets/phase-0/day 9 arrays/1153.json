@@ -1,0 +1,68 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a number $N$ and an array $A$ of $N$ numbers. Print the numbers after **sorting** them.\n\n**Note:**\n\nDon't use built-in functions.\n\nTry to solve it with bubble sort algorithm or Selection Sort.\n\nFor more information, watch: https://www.youtube.com/watch?v=Q-NXg6Tzyks",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10$\n$1 \\leq N \\leq 10^3$\n$-100 \\leq A_i \\leq 100$",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n\n    while (t--)\n    {\n        int n;\n        cin >> n;\n\n        int arr[n];\n        for (int i = 0; i < n; i++)\n        {\n            cin >> arr[i];\n        }\n\n        for (int i = 0; i < n - 1; i++) \n        {\n            for (int j = 0; j < n - i - 1; j++) \n            {\n                if (arr[j] > arr[j + 1]) \n                {\n                    int temp = arr[j];\n                    arr[j] = arr[j + 1];\n                    arr[j + 1] = temp;\n                }\n            }\n        }\n        \n        for (int i = 0; i < n; i++)\n        {\n            cout << arr[i] << \" \";\n        }\n        cout << \"\\n\";\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        int t = Integer.parseInt(br.readLine());\n        while (t-- > 0) {\n            int n = Integer.parseInt(br.readLine());\n            int[] arr = new int[n];\n            String[] tokens = br.readLine().split(\" \");\n            for (int i = 0; i < n; i++) {\n                arr[i] = Integer.parseInt(tokens[i]);\n            }\n\n            // Bubble Sort\n            for (int i = 0; i < n - 1; i++) {\n                for (int j = 0; j < n - i - 1; j++) {\n                    if (arr[j] > arr[j + 1]) {\n                        int temp = arr[j];\n                        arr[j] = arr[j + 1];\n                        arr[j + 1] = temp;\n                    }\n                }\n            }\n\n            // Print sorted array\n            for (int i = 0; i < n; i++) {\n                out.print(arr[i] + \" \");\n            }\n            out.println();\n        }\n\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n    for _ in range(t):\n        n = int(data[idx])\n        idx += 1\n        arr = [int(data[idx + i]) for i in range(n)]\n        idx += n\n\n        # Bubble Sort\n        for i in range(n - 1):\n            for j in range(n - i -1):\n                if arr[j] > arr[j +1]:\n                    arr[j], arr[j+1] = arr[j+1], arr[j]\n        # Print sorted array\n        print(' '.join(map(str, arr)))\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:31:50.391602+00:00"
+        },
+        "hints": {
+            "hint1": "Implement Bubble Sort or Selection Sort to sort the array without using built-in functions.",
+            "hint2": "In Bubble Sort, repeatedly compare adjacent elements and swap them if they are in the wrong order.",
+            "solution_approach": "We can use a standard Bubble Sort technique to sort the array.\n\nBubble Sort works by repeatedly swapping adjacent elements if they are in the wrong order.\n\nWe loop through the array, and for each pair of adjacent elements, we move the greater one to the right and the smaller one to the left.\n\nWe repeat this cycle $N$ times (or until no swaps are needed).\n\nThis will sort the array in ascending order.\n\nTime Complexity per test case: $O(N^2)$"
+        },
+        "id": 1153,
+        "input_format": "The first line contains $T$, the number of test cases.\nFor each test case:\n- The first line contains $N$, the number of elements.\n- The second line contains $N$ space-separated integers denoting the array.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For Sample Input 1:\nWe have one test case with $N = 3$.\nThe array is $[3, 1, 2]$.\nAfter sorting, the array becomes $[1, 2, 3]$.\nFor Sample Input 2:\nWe have two test cases.\n**Test case 1:**\n$N = 3$, array = $[3, 1, 2]$\nAfter sorting, array = $[1, 2, 3]$\n**Test case 2:**\n$N = 4$, array = $[5, 2, 7, 3]$\nAfter sorting, array = $[2, 3, 5, 7]$",
+        "output_format": "For each test case, print the numbers after **sorting** them.",
+        "samples": [
+            {
+                "input": "1\n3\n3 1 2",
+                "output": "1 2 3"
+            },
+            {
+                "input": "2\n3\n3 1 2\n4\n5 2 7 3",
+                "output": "1 2 3\n2 3 5 7"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Sorting",
+            "Implementation",
+            "Arrays"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Sorting",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

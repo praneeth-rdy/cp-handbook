@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Design a Data Structure which can support the following queries:</p><p>Initially, the structure is empty. You have given an integer <i>K</i>.&nbsp;</p><p>The structure is arranged in the order from greater elements to smaller elements. So when we say top <i>K</i> elements, we mean the top K largest elements.</p><p><strong>1 </strong><i><strong>x</strong></i>: Add <i>x</i> in structure.</p><p><strong>2 </strong><i><strong>x</strong></i>: Remove <i>x</i> from the structure if present in the structure. If <i>x</i> doesn't present in the structure, do nothing. If there are multiple occurrences of <i>x</i>, delete only one occurrence of <i>x</i>.</p><p><strong>3 ?</strong>: Print the sum of the top <i>K</i> elements. If the structure contains less than <i>K</i> elements, then print the sum of all elements present in the structure. If the structure is empty, then print 0.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>Q, K</i> \u2264 10<sup>5</sup><br>0 \u2264 <i>x</i> \u2264 10<sup>9</sup></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 200010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\n\nclass MyStructure {\nprivate:\n\tmultiset<int> M1, M2;\n\tll sum;\n\tint K;\n\npublic:\n\tMyStructure(int K) : K(K), sum(0LL) {};\n\n\tvoid add(int x) {\n\t\tM1.insert(x);\n\t\tsum += x;\n\t\tif((int)M1.size() > K) {\n\t\t\tint y = *(M1.begin());\n\t\t\tM1.erase(M1.find(y));\n\t\t\tsum -= y;\n\t\t\tM2.insert(y);\n\t\t}\n\t\treturn;\n\t}\n\n\tvoid remove(int x) {\n\t\tif(M2.find(x) != M2.end()) {\n\t\t\tM2.erase(M2.find(x));\n\t\t}\n\t\telse if(M1.find(x) != M1.end()) {\n\t\t\tsum -= x;\n\t\t\tM1.erase(M1.find(x));\n\t\t\tif(M2.empty()) return;\n\t\t\tint y = *(M2.rbegin());\n\t\t\tsum += y;\n\t\t\tM1.insert(y);\n\t\t\tM2.erase(M2.find(y));\n\t\t}\n\t\treturn;\n\t}\n\n\tll getSum() {\n\t\treturn sum;\n\t}\n};\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int Q, K; cin >> Q >> K;\n\n    MyStructure M(K);\n\n    while(Q--) {\n    \tint t; cin >> t;\n    \tif(t == 1) {\n    \t\tint x; cin >> x;\n    \t\tM.add(x);\n    \t}\n    \telse if(t == 2) {\n    \t\tint x; cin >> x;\n    \t\tM.remove(x);\n    \t}\n    \telse if(t == 3) {\n    \t\tchar c; cin >> c;\n    \t\tcout << M.getSum() << \"\\n\";\n    \t}\n    \telse {\n    \t\t//asserting this condition never happens\n    \t\tassert(1 == 0);\n    \t}\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:13:18.452443+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Try to use STL in C++. Or some similar Data structures in other languages.</p>",
+            "hint2": "<p>Use Multiset in C++, and similar structures in other languages.</p>",
+            "solution_approach": "<p>Maintain two multisets, lets call them M<sub>1</sub>, M<sub>2</sub>. M<sub>1</sub> multiset will store candidates elements for top <i>K</i> positions, i.e., greatest <i>K</i> elements. M<sub>2</sub> will store other remaining elements.<br>Note that at any point, it may be possible that both M<sub>1</sub> and M<sub>2</sub> are empty, or both M<sub>1</sub> and M<sub>2</sub> are non-empty, or M<sub>1</sub> is non-empty and M<sub>2</sub> is empty.</p><p>When add query comes, the following scenarios can possible to happen.</p><ul><li>If the size of M<sub>1</sub> is less than <i>K</i>, then add that element in M<sub>1</sub>.</li><li>If the current size of M<sub>1</sub> is equal to <i>K</i>, add the element in M<sub>1</sub> and remove the smallest element in M<sub>1</sub> and add that element in M<sub>2</sub>.</li></ul><p>When remove query comes, the following scenarios can possible to happen.</p><ul><li>If the query element <i>x</i> is present in M<sub>2</sub>, remove it directly from M<sub>2</sub>.</li><li>If the query element <i>x</i> is present in M<sub>1</sub>, remove it from M<sub>1</sub>. And<ul><li>if the size of M<sub>1</sub> is equal to <i>K </i>- 1 and M<sub>2</sub> is non-empty, the remove greatest element from M<sub>2</sub> and add that in M<sub>1</sub>. If M<sub>2</sub> is empty, that means so far we have &nbsp;- 1 element present in the structure.</li><li>if the size of M<sub>1</sub> is less than <i>K </i>- 1, that M<sub>2</sub> is empty.</li></ul></li></ul><p>See the code for more clarity.</p>"
+        },
+        "id": 98,
+        "input_format": "<p>The first line of input contains <i>Q</i> and <i>K</i> - the number of queries.<br>Next, <i>Q</i> lines contain queries of the format specified in the statement.&nbsp;</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For queries of type 3, print the answer in a new line.</p>",
+        "samples": [
+            {
+                "input": "17 3\n1 5\n1 2\n1 3\n1 6\n3 ?\n2 3\n3 ?\n2 2\n3 ?\n2 2\n3 ?\n2 5\n3 ?\n2 5\n3 ?\n2 6\n3 ?",
+                "output": "14\n13\n11\n11\n6\n6\n0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-Trilogy"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Support Queries II",
+        "video_editorial_id": 8150
+    },
+    "details": "Problem Details"
+}

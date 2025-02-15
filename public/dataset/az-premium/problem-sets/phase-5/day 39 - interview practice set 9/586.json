@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "There are n people standing in a circle waiting to be executed. The counting out begins at the person standing at the 1st position and proceeds around the circle in increasing order (after n we get 1). In each step, k-1 people are skipped and the kth person is executed. The elimination proceeds around the circle (which is becoming smaller and smaller as the executed people are removed), until only the last person remains, who is given freedom. Given the total number of person n and a number k which indicates that k-1 persons are skipped and kth person is killed in the circle. The task is to choose the place in the initial circle so that you are the last one remaining and so survive.",
+        "complete_approach": "",
+        "constraints": "1 <= n <= 10<sup>5</sup>\n1 <= k <= n",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n \nint josephus(int n, int k) {\n    if (n == 1)\n        return 1;\n    return ((josephus(n - 1, k) + k - 1) % n + 1);\n}\n \nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int n, k;\n    cin >> n >> k;\n    cout << josephus(n, k);\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:45:30.665458+00:00"
+        },
+        "hints": {
+            "hint1": "Can you think of a recursive solution?",
+            "hint2": "After the first elimination, the problem is reduced to a sub-problem with n decreased by 1 and the starting position shifted.",
+            "solution_approach": "We make a function josephus(n, k) which returns the safe position.\n\nIn the first turn, the kth person is eliminated and n-1 people are left. Now, the problem is to find the safe position when n-1 people are there starting from k+1 th person and every kth one being eliminated. So we can call josephus(n-1, k) to solve the subproblem. But for this subproblem the starting position is k%n+1 so we need to adjust the value returned. Since k-1 elements were skipped we add k-1 to the value returned."
+        },
+        "id": 586,
+        "input_format": "The only line of input contains two integers n and k.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "Let's represent the circle as an array.\n\nStarting point for the next turn is in bold.\n\n[1, 2, 3, 4, 5, 6]\n\n1) First 3 is eliminated. [1, 2, 4, 5, 6]\n\n2) 6 is eliminated. [1, 2, 4, 5]\n\n3) 4 is eliminated. [1, 2, 5]\n\n4) 2 is eliminated. [1, 5]\n\n5) 5 is eliminated so \n\n1 is the safe position.",
+        "output_format": "Output a single integer x (1 <= x <= n) which is the position at which you can survive.",
+        "samples": [
+            {
+                "input": "6 3",
+                "output": "1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-BNY Mellon"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Josephus Problem",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}
