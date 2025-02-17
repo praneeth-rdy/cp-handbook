@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "*Monkey D. Luffy*, on his journey of becoming the *\"King of Pirates\"* and to conquer the *\"One Piece\"*, wants to travel across the Grand Line. \nGrand Line is a mysterious sea, and is in the shape of a $N*M$ grid $S$ with each cell denoting the wind direction. The sign of $S[i][j]$ can be:\n\n- $1$ which means wind in the cell flows to the right. (i.e from $S[i][j]$ to $S[i][j + 1]$)\n- $2$ which means wind in the cell flows to the left. (i.e from $S[i][j]$ to $S[i][j - 1]$)\n- $3$ which means wind in the cell flows downwards. (i.e from $S[i][j]$ to $S[i + 1][j]$)\n- $4$ which means wind in the cell flows upwards. (i.e from $S[i][j]$ to $S[i - 1][j]$)    \n\nNotice that there could be some signs on the cells of the grid $S$ that point outside the Grand Line sea grid.\n\n- Luffy's ship *\"Merry\"* can only sail along the wind direction and can't go outside the Grand Line sea grid $S$ at any point. \n- Luffy can also modify the wind's direction on a cell with $cost = 1$. *( can modify the sign on a cell one time only )*\n\nFind the minimum cost to make Luffy's Voyage from the top left corner of the Grand line i.e $S[1][1]$ to its bottom right corner i.e $S[N][M]$  possible.",
+        "complete_approach": "",
+        "constraints": "$ 2 \u2264 N , M \u2264 1000$\n$N$ and $M$ are integers.\n1 \u2264 $S_{i,j}$ \u2264 4.",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\r\nusing namespace std;\r\n\r\n#define ll int64_t\r\n#define endl '\\n'\r\n\r\nint dx[4] = {0, 0, 1, -1};\r\nint dy[4] = {1, -1, 0, 0};\r\nint minCost(vector<vector<int>>& grid) {\r\n\tint n = grid.size(), m = grid[0].size();\r\n\tvector<vector<int>> dist(n, vector<int> (m, 1e9)); // defining distance matrix.\r\n\t// 01 BFS.\r\n\tdeque<pair<int, int>> dq;\r\n\tdq.push_back({0, 0});\r\n\tdist[0][0] = 0;\r\n\twhile (!dq.empty()) {\r\n\t\tint x = dq.front().first, y = dq.front().second;\r\n\t\tdq.pop_front();\r\n\t\tfor (int k = 0; k < 4; k++) {\r\n\t\t\tint i = dx[k] + x, j = dy[k] + y;\r\n\t\t\tint w = (k + 1 == grid[x][y]) ? 0 : 1; // important step.\r\n\t\t\tif (i >= 0 && i < n && j >= 0 && j < m && dist[i][j] > dist[x][y] + w) {\r\n\t\t\t\tdist[i][j] = dist[x][y] + w;\r\n\t\t\t\tif (w)dq.push_back({i, j});\r\n\t\t\t\telse dq.push_front({i, j});\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n\treturn dist[n - 1][m - 1];\r\n}\r\nvoid solve() {\r\n\tint n, m;\r\n\tcin >> n >> m;\r\n\tvector<vector<int>> v(n, vector<int>(m));\r\n\tfor (int i = 0; i < n; i++) {\r\n\t\tfor (int j = 0; j < m; j++)cin >> v[i][j];\r\n\t}\r\n\tcout << minCost(v);\r\n}\r\nint main() {\r\n\tios_base :: sync_with_stdio(0);\r\n\tcin.tie(nullptr); cout.tie(nullptr);\r\n\r\n#ifdef Mastermind_\r\n\tfreopen(\"input.txt\", \"r\", stdin); \\\r\n\tfreopen(\"output.txt\", \"w\", stdout);\r\n#endif\r\n\tint t = 1;\r\n\t// int i = 1;\r\n\t// cin >> t;\r\n\twhile (t--) {\r\n\t\t// cout << \"Case #\" << i << \": \";\r\n\t\tsolve();\r\n\t\t// i++;\r\n\t}\r\n\treturn 0;\r\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:43:22.245094+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "This problem is a basic shortest path problem. We need to reach $(m - 1, n - 1)$ from $(0, 0)$ using a path with minimum cost. Every field in the grid is reachable from any position including the target. Therefore the default algorithm of choice to solve the problem would be Dijkstra's with a time complexity of $O(E + V log V)$.\n\nIf we look at the problem conditions we can notice that the edges between neighboring nodes are binarily weighted: We can reach the neighbor of a node with a cost of 0 if the sign of the node points to the neighbor. Otherwise, we need to modify the sign and the cost for that is 1.\nThat allows us to use the more efficient 0-1 BFS algorithm that uses a double-ended queue instead of a heap and has a time complexity of $O(E + V)$:\n\n- We always pop the node at the left of the queue.\n- Neighbors with a cost of 0 have the same total cost as the current node. Therefore they are appended to the left of the queue.\n- Neighbors with a cost of 1 have the maximum cost of all nodes in the queue. Therefore they are appended to the right of the queue.\n- The maximum cost difference between the left-most and the right-most node in the queue is 1. Nodes with a higher cost difference will only be added to the queue when the first node with a difference of 1 is being visited. At that point all nodes with a difference of 0 have been processed. Therefore 1 is the new 0.\n\n####  Time complexity:\n\n$V = n * m$\n$E = 4 * V$\n$O(E + V) = O(5 * V) = O(V) = O(n * m)$"
+        },
+        "id": 902,
+        "input_format": "Input is given from Standard Input in the following format: \n\n$N$  $M$ \n$S_{1,1}$ . . . $S_{1,M}$\n:\n:\n$S_{N,1}$ . . . $S_{N,M}$",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For Sample 1, You will start at point $(0, 0)$.\nThe path to $(3, 3)$ is as follows. $(0, 0)$ --> $(0, 1)$ -->$(0, 2)$ --> $(0, 3)$ change the arrow to down with $cost = 1$ --> $(1, 3)$ --> $(1, 2)$ --> $(1, 1)$ --> $(1, 0)$ change the arrow to down with $cost = 1$ --> $(2, 0)$ --> $(2, 1)$ --> $(2, 2)$ --> $(2, 3)$ change the arrow to down with $cost = 1$ --> $(3, 3)$\nThe total cost = 3.",
+        "output_format": "Print the answer.",
+        "samples": [
+            {
+                "input": "4 4\n1 1 1 1\n2 2 2 2\n1 1 1 1\n2 2 2 2 \n",
+                "output": "3\n"
+            },
+            {
+                "input": "3 3\n1 1 3\n3 2 2\n1 1 4\n",
+                "output": "0\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Shortest Path",
+            "0-1 Bfs"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "One Piece",
+        "video_editorial_id": 8238
+    },
+    "details": "Problem Details"
+}

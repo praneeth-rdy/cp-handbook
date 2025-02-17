@@ -1,0 +1,69 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a letter $X$. Determine whether $X$ is Digit or Alphabet and if it is Alphabet determine if it is **Capital Case** or **Small Case**.\n\n**Note:**\n\n1. Digits in ASCII '0' = $48$, '1' = $49$ ... etc.\n2. Capital letters in ASCII 'A' = $65$, 'B' = $66$ ... etc.\n3. Small letters in ASCII 'a' = $97$, 'b' = $98$ ... etc.",
+        "complete_approach": "",
+        "constraints": "- The character $X$ is a digit ('0'-'9'), an uppercase letter ('A'-'Z'), or a lowercase letter ('a'-'z').",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <iostream>\nusing namespace std;\nint main()\n{\n    char x; cin >> x;\n    if (x >= 48 && x <= 57) {\n        cout << \"IS DIGIT\";\n    }\n    else if (x >= 65 && x <= 90) {\n        cout << \"ALPHA\" << endl << \"IS CAPITAL\";\n    }\n    else if (x >= 97 && x <= 122) {\n        cout << \"ALPHA\" << endl << \"IS SMALL\";\n    }\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        String line = br.readLine();\n        char x = line.charAt(0);\n\n        if (x >= '0' && x <= '9') {\n            out.print(\"IS DIGIT\");\n        } else if (x >= 'A' && x <= 'Z') {\n            out.println(\"ALPHA\");\n            out.print(\"IS CAPITAL\");\n        } else if (x >= 'a' && x <= 'z') {\n            out.println(\"ALPHA\");\n            out.print(\"IS SMALL\");\n        }\n\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    idx = 0\n    x = data[idx][0]\n    idx += 1\n\n    if '0' <= x <= '9':\n        print(\"IS DIGIT\")\n    elif 'A' <= x <= 'Z':\n        print(\"ALPHA\")\n        print(\"IS CAPITAL\")\n    elif 'a' <= x <= 'z':\n        print(\"ALPHA\")\n        print(\"IS SMALL\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:33:22.715972+00:00"
+        },
+        "hints": {
+            "hint1": "Consider the ASCII values for digits, uppercase letters, and lowercase letters.",
+            "hint2": "Use nested if-else statements to check the conditions in a structured manner.",
+            "solution_approach": "To solve this problem, we need to check the ASCII value of the input character and determine its category.\n\n1. **Check if it's a Digit**: Use the condition if $x \\geq 48$ and $x \\leq 57$ to check if the character is a digit (ASCII values for digits are from 48 to 57). If true, print **\"IS DIGIT\"**.\n\n2. **Check if it's an Uppercase Letter**: Use the condition else if $x \\geq 65$ and $x \\leq 90$ to check if the character is an uppercase letter (ASCII values for uppercase letters are from 65 to 90). If true, print **\"ALPHA\"** and then **\"IS CAPITAL\"**.\n\n3. **Check if it's a Lowercase Letter**: Use the condition else if $x \\geq 97$ and $x \\leq 122$ to check if the character is a lowercase letter (ASCII values for lowercase letters are from 97 to 122). If true, print **\"ALPHA\"** and then **\"IS SMALL\"**.\n\nBy structuring the conditions in this manner, we can accurately categorize the input character based on its ASCII value.\n\n**Time Complexity**: $O(1)$\n\n**Space Complexity**: $O(1)$"
+        },
+        "id": 1176,
+        "input_format": "Only one line containing a character $X$ which will be a capital or small letter or digit.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "**Sample Input 1 Explanation**\nThe character 'A' is an uppercase letter, so we print \"ALPHA\" and then \"IS CAPITAL\".\n**Sample Input 2 Explanation**\nThe character '9' is a digit, so we print \"IS DIGIT\".\n**Sample Input 3 Explanation**\nThe character 'a' is a lowercase letter, so we print \"ALPHA\" and then \"IS SMALL\".",
+        "output_format": "Print a single line contains **\"IS DIGIT\"** if $X$ is **digit** otherwise, print **\"ALPHA\"** in the first line followed by a new line that contains **\"IS CAPITAL\"** if $X$ is a **capital** letter and **\"IS SMALL\"** if $X$ is a **small** letter.",
+        "samples": [
+            {
+                "input": "A",
+                "output": "ALPHA\nIS CAPITAL"
+            },
+            {
+                "input": "a",
+                "output": "ALPHA\nIS SMALL"
+            },
+            {
+                "input": "9",
+                "output": "IS DIGIT"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Strings"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Capital or Small or Digit",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

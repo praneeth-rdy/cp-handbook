@@ -1,0 +1,64 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given $N$ integers, the price of a given stock on each day. You can buy and sell at most one stock. You cannot sell a stock before you buy one. You have to find the maximum profit you can make by buying and selling stocks.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 100$\n$2 \\leq N \\leq 10^5$\n$0 \\leq A_i \\leq 10^5$\n## Sample Input\n3\n5\n1 5 2 6 3\n4\n1 2 3 4\n4\n5 3 2 1\n## Sample Output\n5\n3\n0",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```c++\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint BuyAndSellStock(vector<int> &a) \n{\n    int n = (int)a.size();\n    int m = a[0], ans = 0;\n    for (int i = 1; i < n; ++i) {\n        ans = max(ans, a[i] - m);\n        m = min(m, a[i]);\n    }\n    return ans;\n}\n\nint main(){\n   IOS\n   \n   int t;\n   cin>>t;\n   \n   while(t--){\n       int n;\n       cin>>n;\n       \n       vector<int> a(n);\n\n       for (int i = 0; i < n; ++i) {\n           cin>>a[i];\n       }\n       \n       cout << BuyAndSellStock(a) << \"\\n\";\n   }\n\n   return 0;\n}\n```\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\n```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static int BuyAndSellStock(int[] a) {\n        int n = a.length;\n        int m = a[0], ans = 0;\n        for (int i = 1; i < n; ++i) {\n            ans = Math.max(ans, a[i] - m);\n            m = Math.min(m, a[i]);\n        }\n        return ans;\n    }\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int t = Integer.parseInt(br.readLine());\n        \n        while(t-- > 0){\n            int n = Integer.parseInt(br.readLine());\n            int[] a = new int[n];\n            String[] tokens = br.readLine().split(\" \");\n\n            for (int i = 0; i < n; ++i) {\n                a[i] = Integer.parseInt(tokens[i]);\n            }\n\n            out.println(BuyAndSellStock(a));\n        }\n\n        out.flush();\n        out.close();\n    }\n}\n```\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\n```python\nimport sys\nfrom sys import stdin, stdout\n\ndef BuyAndSellStock(a):\n    n = len(a)\n    m = a[0]\n    ans = 0\n    for i in range(1, n):\n        ans = max(ans, a[i] - m)\n        m = min(m, a[i])\n    return ans\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n    for _ in range(t):\n        n = int(data[idx])\n        idx += 1\n        a = [int(data[idx + i]) for i in range(n)]\n        idx += n\n\n        res = BuyAndSellStock(a)\n\n        print(res)\n\nif __name__ == \"__main__\":\n    main()\n```\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:14:49.170671+00:00"
+        },
+        "hints": {
+            "hint1": "For each day, find the minimum price of the stock before the current day.",
+            "hint2": "You can maintain the minimum price in a variable while traversing through the array.",
+            "solution_approach": "While traversing through the array, update the minimum price. If the current price is greater than the minimum price, update the profit. While calculating the profit in this way, we made sure that there was no better price to buy from the past.\n\nFor stock prices that are strictly decreasing, you don\u2019t do any transaction.\n\nTime Complexity per test case: $O(N)$."
+        },
+        "id": 175,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\nThe first line of each test case contains one integer $N$ - the length of the array.\nThe second line of each test case contains $N$ space-separated integers.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, you can buy stock on day $1$ and sell on day $4$. Profit $=6-1=5$.\nFor the second test case, you can buy stock on day $1$ and sell on day $4$. Profit $=4-1=3$.\nFor the third test case, you don\u2019t buy and sell any stock. Profit $=0$.",
+        "output_format": "For each test case, print the maximum profit you can make by buying and selling stocks.",
+        "samples": [
+            {
+                "input": "3\n5\n1 5 2 6 3\n4\n1 2 3 4\n4\n5 3 2 1",
+                "output": "5\n3\n0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Greedy",
+            "Arrays"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n</fix>\n\nint BuyAndSellStock(vector<int> &a) \n{\n    // Complete the function\n}\n\n<fix>\nint main(){\n   IOS\n   \n   int t;\n   cin>>t;\n   \n   while(t--){\n       int n;\n       cin>>n;\n       \n       vector<int> a(n);\n\n       for (int i = 0; i < n; ++i) {\n           cin>>a[i];\n       }\n       \n       cout << BuyAndSellStock(a) << \"\\n\";\n   }\n\n   return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Buy and Sell Stock - 1",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

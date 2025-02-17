@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>There are a total of <strong>n </strong>courses that you can take. The courses are labeled from 0 to n-1.<br>You are also given a <strong>prerequisites</strong> array where prerequisites[i] = [a<sub>i</sub>, b<sub>i</sub>] indicates that you <strong>must</strong> take course a<sub>i </sub>first if you want to take course b<sub>i</sub>.</p><p>For example, the pair [1, 2] indicates that in order to take course 2 you have to first take course 1.</p><p>You have to determine if you can finish all the courses following <strong>all </strong>the prerequisites given.</p>",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">1 &lt;= n &lt;= 100000\n0 &lt;= m &lt;= min(100000, n(n-1)/2)\n0 &lt;= ai,bi &lt; n\nEach pair (a, b) is distinct.</code></pre>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nvector <int> top;\nvector <vector <int>> adj(100005);\nvector <int> vis(100005);\n\nvoid dfs(int u) {\n\tfor (auto i : adj[u]) {\n\t\tif (!vis[i]) {\n\t\t\tvis[i] = 1;\n\t\t\tdfs(i);\n\t\t}\n\t}\n\ttop.push_back(u);\n}\n\n\nint main() {\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL);\n\tint n, m;\n\tcin >> n >> m;\n\tvector <pair<int, int>> edges;\n\tfor (int i = 0; i < m; i++) {\n\t\tint u, v;\n\t\tcin >> u >> v;\n\t\tadj[u].push_back(v);\n\t\tedges.push_back({u, v});\n\t}\n\tfor (int i = 0; i < n; i++) {\n\t\tif (!vis[i]) {\n\t\t\tvis[i] = 1;\n\t\t\tdfs(i);\n\t\t}\n\t}\n\treverse(top.begin(), top.end());\n\tvector <int> pos(n);\n\tfor (int i = 0; i < n; i++) {\n\t\tpos[top[i]] = i;\n\t}\n\tint f = 0;\n\tfor (auto i : edges) {\n\t\tif (pos[i.second] <= pos[i.first]) {\n\t\t\tf = 1;\n\t\t\tbreak;\n\t\t}\n\t}\n\tif (f)\n\t\tcout << \"No\";\n\telse\n\t\tcout << \"Yes\";\n\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:43:37.345285+00:00"
+        },
+        "hints": {
+            "hint1": "We visualize a graph with the courses as the nodes and the prerequisites as directed edges from a to b.",
+            "hint2": "We need to find if an ordering of the nodes (courses) exists such that for each directed edge from a to b, a occurs before b.",
+            "solution_approach": "We need to check if a Topological Sorting of the graph exists or not. We can do all the courses following all the prerequisites if and only if there is no cycle in the directed graph.\nIf there is a cycle, there will always be a conflict.\nWe can check if the graph is acyclic by finding the topological sort of the graph.\nAfter finding the ordering, for each edge (a\u2192b) we check if the position a in the ordering is before b. If we find any edge for which this condition is violated, the graph has a cycle and we cannot finish all the courses.\nBeware that the graph can have self-loops (a\u2192a)."
+        },
+        "id": 637,
+        "input_format": "<p>The first line contains two space-separated integers <strong>n</strong> and <strong>m</strong> - the total number of courses and the number of prerequisites.<br>Then m lines follow. The i-th line contains a pair of integers denoting the i-th prerequisite.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "1. We can take the courses in the following order : 0 1 2.\nAll prerequisites are followed.\n2. Course 0 needs course 1 as a prerequisite whereas course 1 needs course 0 as a prerequisite which is not possible.",
+        "output_format": "<p>Print \u2018<strong>Yes</strong>\u2019 if you can finish all the courses and \u2018<strong>No</strong>\u2019 otherwise.</p>",
+        "samples": [
+            {
+                "input": "3 3\n0 1\n1 2\n0 2",
+                "output": "Yes"
+            },
+            {
+                "input": "2 2\n0 1\n1 0",
+                "output": "No"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Course Scheduling",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

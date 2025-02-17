@@ -1,0 +1,62 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You have a rectangular sheet of paper with dimensions $H \\times W$. You make $N$ horizontal and vertical cuts in the sheet. Find the area of the maximum fragment after each cut.\n\nIt is guaranteed that there won't be any two identical cuts. Also, the cuts that you make in the previous queries persist on the paper for the next queries.",
+        "complete_approach": "",
+        "constraints": "- $1 \\leq T \\leq 10^5$\n- $1 \\leq N \\leq 10^5$\n- $2 \\leq W, H \\leq 10^9$\n- $1 \\leq Y \\leq H - 1$\n- $1 \\leq X \\leq W - 1$\nIt is guaranteed that the sum of $N$ over all test cases does not exceed $10^6$.",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```c++\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n#define int long long\n\nsigned main() {\n    IOS\n    int t;\n    cin >> t;\n    while (t--) {\n        int w, h, n;\n        cin >> h >> w >> n;\n        set<int> hori, verti;\n        hori.insert(0);\n        hori.insert(h);\n        verti.insert(0);\n        verti.insert(w);\n        multiset<int> w1, h1;\n        w1.insert(w);\n        h1.insert(h);\n        while(n--) {\n            char c;\n            int x;\n            cin >> c >> x;\n            if(c == 'H') {\n                hori.insert(x);\n                auto it = hori.lower_bound(x);\n                auto it1 = it, it2 = it;\n                it1--; it2++;\n                h1.erase(h1.find(*it2 - *it1));\n                h1.insert(*it2 - *it);\n                h1.insert(*it - *it1);\n            }\n            else {\n                verti.insert(x);\n                auto it = verti.lower_bound(x);\n                auto it1 = it, it2 = it;\n                it1--; it2++;\n                w1.erase(w1.find(*it2 - *it1));\n                w1.insert(*it2 - *it);\n                w1.insert(*it - *it1);\n            }\n            int ans = (*prev(w1.end())) * (*prev(h1.end()));\n            cout << ans << \"\\n\";\n        }\n    }\n    return 0;\n}\n```\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\n```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        StringTokenizer st = new StringTokenizer(br.readLine());\n        int t = Integer.parseInt(st.nextToken());\n\n        for (int test = 0; test < t; test++) {\n            st = new StringTokenizer(br.readLine());\n            long h = Long.parseLong(st.nextToken());\n            long w = Long.parseLong(st.nextToken());\n            int n = Integer.parseInt(st.nextToken());\n\n            TreeSet<Long> horiCuts = new TreeSet<>();\n            TreeSet<Long> vertCuts = new TreeSet<>();\n            horiCuts.add(0L);\n            horiCuts.add(h);\n            vertCuts.add(0L);\n            vertCuts.add(w);\n\n            TreeMap<Long, Integer> horiSizes = new TreeMap<>(Collections.reverseOrder());\n            TreeMap<Long, Integer> vertSizes = new TreeMap<>(Collections.reverseOrder());\n            horiSizes.put(h, 1);\n            vertSizes.put(w, 1);\n\n            for (int i = 0; i < n; i++) {\n                st = new StringTokenizer(br.readLine());\n                char c = st.nextToken().charAt(0);\n                long x = Long.parseLong(st.nextToken());\n\n                if (c == 'H') {\n                    horiCuts.add(x);\n                    Long lower = horiCuts.lower(x);\n                    Long higher = horiCuts.higher(x);\n                    long oldSize = higher - lower;\n\n                    int count = horiSizes.get(oldSize);\n                    if (count == 1) {\n                        horiSizes.remove(oldSize);\n                    } else {\n                        horiSizes.put(oldSize, count - 1);\n                    }\n\n                    long size1 = x - lower;\n                    long size2 = higher - x;\n                    horiSizes.put(size1, horiSizes.getOrDefault(size1, 0) + 1);\n                    horiSizes.put(size2, horiSizes.getOrDefault(size2, 0) + 1);\n                } else {\n                    vertCuts.add(x);\n                    Long lower = vertCuts.lower(x);\n                    Long higher = vertCuts.higher(x);\n                    long oldSize = higher - lower;\n\n                    int count = vertSizes.get(oldSize);\n                    if (count == 1) {\n                        vertSizes.remove(oldSize);\n                    } else {\n                        vertSizes.put(oldSize, count - 1);\n                    }\n\n                    long size1 = x - lower;\n                    long size2 = higher - x;\n                    vertSizes.put(size1, vertSizes.getOrDefault(size1, 0) + 1);\n                    vertSizes.put(size2, vertSizes.getOrDefault(size2, 0) + 1);\n                }\n\n                long maxH = horiSizes.firstKey();\n                long maxW = vertSizes.firstKey();\n                long ans = maxH * maxW;\n                out.println(ans);\n            }\n        }\n\n        out.flush();\n        out.close();\n    }\n}\n```\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\n```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    idx = 0\n\n    t = int(data[idx])\n    idx += 1\n\n    for _ in range(t):\n        h = int(data[idx])\n        idx += 1\n        w = int(data[idx])\n        idx += 1\n        n = int(data[idx])\n        idx += 1\n\n        hori_cuts = [0, h]\n        vert_cuts = [0, w]\n\n        from bisect import bisect_left, insort_left\n        from collections import Counter\n\n        hori_sizes_counter = Counter()\n        vert_sizes_counter = Counter()\n        hori_sizes_counter[h] = 1\n        vert_sizes_counter[w] = 1\n\n        for _ in range(n):\n            c = data[idx]\n            idx += 1\n            x = int(data[idx])\n            idx += 1\n\n            if c == 'H':\n                insort_left(hori_cuts, x)\n                i = hori_cuts.index(x)\n                lower = hori_cuts[i - 1]\n                higher = hori_cuts[i + 1]\n\n                old_size = higher - lower\n                hori_sizes_counter[old_size] -= 1\n                if hori_sizes_counter[old_size] == 0:\n                    del hori_sizes_counter[old_size]\n\n                size1 = x - lower\n                size2 = higher - x\n                hori_sizes_counter[size1] = hori_sizes_counter.get(size1, 0) + 1\n                hori_sizes_counter[size2] = hori_sizes_counter.get(size2, 0) + 1\n            else:\n                insort_left(vert_cuts, x)\n                i = vert_cuts.index(x)\n                lower = vert_cuts[i - 1]\n                higher = vert_cuts[i + 1]\n\n                old_size = higher - lower\n                vert_sizes_counter[old_size] -= 1\n                if vert_sizes_counter[old_size] == 0:\n                    del vert_sizes_counter[old_size]\n\n                size1 = x - lower\n                size2 = higher - x\n                vert_sizes_counter[size1] = vert_sizes_counter.get(size1, 0) + 1\n                vert_sizes_counter[size2] = vert_sizes_counter.get(size2, 0) + 1\n\n            max_h = max(hori_sizes_counter)\n            max_w = max(vert_sizes_counter)\n            ans = max_h * max_w\n            print(ans)\n\nif __name__ == \"__main__\":\n    main()\n```\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:14:29.408478+00:00"
+        },
+        "hints": {
+            "hint1": "The largest piece would have the largest height and width.",
+            "hint2": "Consider tracking the lengths between cuts to efficiently find the maximum area after each cut.",
+            "solution_approach": "To efficiently find the maximum area after each cut, we can use the following approach:\n\n- **Maintain Sets of Cut Positions:**\n  - Use two ordered sets to store the positions of the horizontal and vertical cuts. Initialize them with the borders of the sheet: for horizontal cuts, insert positions $0$ and $H$, and for vertical cuts, insert positions $0$ and $W$.\n\n- **Maintain Multisets of Segment Sizes:**\n  - Use two multisets (counters) to keep track of the lengths of the horizontal and vertical segments (the distances between consecutive cuts). Initialize them with the initial dimensions $H$ and $W$.\n\n- **Processing Each Cut:**\n  - When a new cut is made:\n    - Insert the new cut position into the respective set.\n    - Find the neighboring cuts (previous and next positions in the set).\n    - Remove the old segment length from the multiset (the segment that is being divided).\n    - Insert the two new segment lengths into the multiset.\n  - The maximum height and width at any time are the largest elements in the horizontal and vertical segment multisets.\n\n- **Calculating the Maximum Area:**\n  - After each cut, multiply the maximum height and maximum width to get the maximum area of a fragment.\n\n**Time Complexity per test case:** $O(N \\log N)$\n\n**Space Complexity per test case:** $O(N)$"
+        },
+        "id": 374,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\nThe first line of each test case contains three space-separated integers $H$, $W$, $N$ - the dimensions of the sheet and the number of cuts.\nEach of the next $N$ lines is of the form `H Y` or `V X`. For `H Y`, you make a horizontal cut at distance $Y$ from the lower edge of the sheet and for `V X`, you make a vertical cut at a distance $X$ from the left edge of the sheet.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "**Test case 1:**\nInitial sheet dimensions: Height = $5$, Width = $3$.\n1. After the first cut `H 1` (horizontal cut at $Y=1$):\n   - The sheet is divided horizontally at $Y=1$, resulting in two horizontal pieces with heights $1$ and $4$.\n   - The widths remain the same.\n   - The maximum area is $4 \\times 3 = 12$.\n2. After the second cut `V 1` (vertical cut at $X=1$):\n   - A vertical cut at $X=1$ divides the existing pieces vertically.\n   - The largest piece now has dimensions $4 \\times 2$.\n   - The maximum area is $4 \\times 2 = 8$.\n3. After the third cut `V 2` (vertical cut at $X=2$):\n   - Another vertical cut at $X=2$ splits the width further.\n   - The largest piece now has dimensions $4 \\times 1$.\n   - The maximum area is $4 \\times 1 = 4$.\n**Test case 2:**\nInitial sheet dimensions: Height = $3$, Width = $5$.\n1. After the first cut `H 2` (horizontal cut at $Y=2$):\n   - The sheet is divided horizontally at $Y=2$, resulting in pieces with heights $2$ and $1$.\n   - The maximum area is $2 \\times 5 = 10$.\n2. After the second cut `V 2` (vertical cut at $X=2$):\n   - The sheet is divided vertically at $X=2$.\n   - The maximum area is $2 \\times 3 = 6$.\n3. After the third cut `H 1` (horizontal cut at $Y=1$):\n   - Add a cut at $Y=1$, dividing the lower piece further.\n   - The maximum area is $1 \\times 3 = 3$.\n4. After the fourth cut `V 1` (vertical cut at $X=1$):\n   - Add a cut at $X=1$, dividing the leftmost vertical piece further.\n   - The maximum area remains $1 \\times 3 = 3$.",
+        "output_format": "For each test case, print the area of the maximum fragment after each cut.",
+        "samples": [
+            {
+                "input": "2\n5 3 3\nH 1\nV 1\nV 2\n3 5 4\nH 2\nV 2\nH 1\nV 1",
+                "output": "12\n8\n4\n10\n6\n3\n3"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Data Structures"
+        ],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "Maximum Area AZ101",
+        "video_editorial_id": 8190
+    },
+    "details": "Problem Details"
+}

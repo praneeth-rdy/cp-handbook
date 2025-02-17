@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Your task is to find the answer to the following sum.</p><figure class=\"image\"><img src=\"https://lh3.googleusercontent.com/Pg9_ZmO-6k3fD_6Rn2JA5MU8eB4CjF-TwQTPfd2AllMyGWCynn1I-qyqOxvi_CEUtPf8gpBzWrfxAMvpA6_vzuLBRO9gEPUcFzFAgrUIRqbAk2JFsPbqTzwU9TPQHqf1abpAMd2I\"></figure>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n</i> \u2264 10<sup>12</sup><br>1 \u2264 <i>m</i> \u2264 10<sup>9</sup></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\ntypedef long long ll;\n\nint mod = 1e9 + 7;\n\ninline void add(int &a, int b)\n{\n    a += b;\n    if (a >= mod)\n        a -= mod;\n}\n\ninline void sub(int &a, int b)\n{\n    a -= b;\n    if (a < 0)\n        a += mod;\n}\n\ninline int mul(int a, int b)\n{\n    return (int)((long long)a * b % mod);\n}\n\ninline int power(int a, long long b)\n{\n    int res = 1;\n    while (b > 0)\n    {\n        if (b & 1)\n        {\n            res = mul(res, a);\n        }\n        a = mul(a, a);\n        b >>= 1;\n    }\n    return res;\n}\n\nsigned main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n\n    ll n;\n    int m;\n    cin >> n >> m;\n\n    int ans = 0;\n\n    for (ll i = 1, la; i <= n; i = la + 1)\n    {\n        la = n / (n / i);\n        // n / x yields the same value for i <= x <= la.\n        ll x = n / i;\n        x %= mod;\n        if (x < 0)\n            x += mod;\n        int cur = power(x, m);\n        int y = 1LL * (la - i + 1) % mod;\n        if (y < 0)\n            y += mod;\n        cur = mul(cur, y);\n        add(ans, cur);\n    }\n\n    cout << ans << \"\\n\";\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:39:47.903518+00:00"
+        },
+        "hints": {
+            "hint1": "Find the largest $x$ such that $\\lfloor\\dfrac{n}{i}\\rfloor = \\lfloor\\dfrac{n}{x}\\rfloor$",
+            "hint2": "The value of $\\lfloor\\dfrac{n}{i}\\rfloor$ remains same from $i$ to $la$ where   \nValue of $la=  \\lfloor\\dfrac{n}{\\lfloor\\dfrac{n}{i}\\rfloor}\\rfloor$",
+            "solution_approach": "So from $i$ to $la$ there are $(la-i+1)$ values. All these will have the same fractional value of $\\lfloor\\dfrac{n}{i}\\rfloor$.  \nThe overall contribution of $\\lfloor\\dfrac{n}{i}\\rfloor$,  will be $(la-i+1)\\times \\lfloor\\dfrac{n}{i}\\rfloor$.   \nIn the same manner we can find the total summation from $i=1$ to $i=N$\n\nThe time complexity of the solution is $O(\\sqrt n * \\log(mod))$.\n\nThe loop in the program iterates over all positive integers $i$ that divide $n$, with a step size of $la-i+1$, where $la$ is the largest integer such that $\\dfrac{n}{la} = \\dfrac{n}{i}$. Since there are $O(\\sqrt n )$ divisors of $n$, the loop iterates $O(\\sqrt n)$ times.\n\nInside the loop, the program uses binary exponentiation to compute the value of $(\\dfrac{n}{i})^m$, which takes $O(\\log(m))$ time."
+        },
+        "id": 235,
+        "input_format": "<p>The only line of input contains two space-separated integers <i>n</i> and <i>m</i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print the answer on a new line.</p>",
+        "samples": [
+            {
+                "input": "4 2",
+                "output": "22"
+            },
+            {
+                "input": "100000000000 100000000",
+                "output": "728180943"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "Hard Floor",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

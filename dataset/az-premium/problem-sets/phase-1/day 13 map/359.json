@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given Q queries and have to perform the following operations:\n\n1. add x y - add student name X (string in lowercase alphabets) with marks y (integer). If it already exists, update.\n2. erase x - erase marks of student with name x, if the entry exists\n3. print x - print marks of student with name x, if entry is not there for x, print 0.",
+        "complete_approach": "",
+        "constraints": "1\u2264 T \u2264 10<sup>5</sup>\n\n1\u2264 Q \u2264 10<sup>5</sup>\n\n1\u2264 |S| \u2264 50\n\n1\u2264 Y \u2264 10<sup>6</sup>\n\nIt is guaranteed that the sum of Q over all test cases does not exceed 10<sup>5</sup>.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n\nint main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int q;\n    cin >> q;\n    map<string, int> m;\n    while (q--) {\n      string s;\n      cin >> s;\n      if (s == \"add\") {\n        string x;\n        int y;\n        cin >> x >> y;\n        m[x] = y;\n      } else if (s == \"erase\") {\n        string x;\n        cin >> x;\n        if (m.find(x) != m.end()) {\n          m.erase(x);\n        }\n      } else {\n        string x;\n        cin >> x;\n        if (m.count(x)) {\n          cout << m[x] << \"\\n\";\n        } else {\n          cout << \"0\\n\";\n        }\n      }\n    }\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:29:03.325952+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Add entry x, y using m[x]=y or using insert({x,y}).\nUse `erase(x)` for deleting entry of student with name x but first check using `find(x)` if the element x is in the map or not\nUse `count(x)` for checking if entry with name x exists\nPrint by accessing the entry using m[x]\nTime Complexity per test case: $O(Q \\times\\ log N)$ where $N$ is the size of the map."
+        },
+        "id": 359,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer Q - the number of queries.\n\nEach of the next Q ines contains queries.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "1. Map becomes: [alice: 24]\n2. Map becomes: [alice: 24, bob: 21]\n3. Value of key alice is 24\n4. Map becomes: [bob: 21]\n5. Key alice does not exist",
+        "output_format": "For each test case, print the required queries.",
+        "samples": [
+            {
+                "input": "1\n5\nadd alice 24\nadd bob 21\nprint alice\nerase alice\nprint alice\n",
+                "output": "24\n0\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Map AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

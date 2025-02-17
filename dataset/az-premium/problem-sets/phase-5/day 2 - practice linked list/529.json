@@ -1,0 +1,68 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given a singly linked list, rotate the list to the right by <i>K</i> places.</p><p>Complete the function</p><pre><code class=\"language-plaintext\">ListNode* rotateList(ListNode* head, int K)</code></pre><p><i>head </i>points to the beginning of the list.</p>",
+        "complete_approach": "",
+        "constraints": "<p>0 \u2264 Length of the linked list \u2264 10<sup>6</sup><br>0 \u2264 K \u2264 10<sup>9</sup><br>0 \u2264 Value stored in node \u2264 10<sup>9</sup></p>",
+        "difficulty": 2,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode() : val(0), next(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next) {}\n};\n\nListNode* rotateList(ListNode* head, int K) {\n    if(!head) return NULL;\n    if(!K) return head;\n\n    int n = 0;\n    ListNode *cur = head;\n    ListNode *last = head;\n\n    while(cur) {\n        n++;\n        last = cur;\n        cur = cur->next;\n    }\n\n    K %= n;\n\n    cur = head;\n\n    for(int i = 0; i < n - K - 1; i++)\n        cur = cur->next;\n\n    last->next = head;\n\n    ListNode *temp = cur->next;\n    cur->next = NULL;\n\n    return temp;\n}\n\nListNode* GetList(vector<int> &num) {\n    ListNode* head = nullptr;\n\n    if(num.empty()) {\n        return head;\n    }\n\n    ListNode* cur = head;\n    \n    for(int i  = 0; i < (int)num.size(); i++) {\n        ListNode* temp = new ListNode(num[i]);\n        if(!cur) {\n            cur = temp;\n            head = cur;\n        }\n        else {\n            cur->next = temp;\n            cur = temp;\n        }\n    }\n    \n    return head;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    vector<int> num;\n    for(int i = 0; i < n; i++) {\n        int x;\n        cin >> x;\n        num.push_back(x);\n    }\n\n    int K;\n    cin >> K;\n\n    ListNode* head = GetList(num);\n\n    head = rotateList(head, K);\n\n    while(head) {\n        cout << head->val << \" \";\n        head = head->next;\n    }\n    cout << \"\\n\";\n    \n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:15:08.116398+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 529,
+        "input_format": "<p>The first line of input contains <i>n </i>- the length of the linked list.<br>The second line contains <i>n </i>space-separated integers denoting the sequence of values stored in nodes of the linked list.<br>The last of the input contains <i>K.</i></p><p>The following function creates the linked list from the input</p><pre><code class=\"language-plaintext\">ListNode* GetList(vector&lt;int&gt; &amp;num)</code></pre>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "",
+        "samples": [
+            {
+                "input": "3\n1 2 3\n0",
+                "output": "1 2 3"
+            },
+            {
+                "input": "3\n1 2 3\n1",
+                "output": "3 1 2"
+            },
+            {
+                "input": "3\n1 2 3\n6",
+                "output": "1 2 3"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Linked List"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode() : val(0), next(nullptr) {}\n    ListNode(int x) : val(x), next(nullptr) {}\n    ListNode(int x, ListNode *next) : val(x), next(next) {}\n};\n</fix>\n\nListNode* rotateList(ListNode* head, int K) {\n    //Complete the function\n}\n\n<fix>\nListNode* GetList(vector<int> &num) {\n    ListNode* head = nullptr;\n\n    if(num.empty()) {\n        return head;\n    }\n\n    ListNode* cur = head;\n    \n    for(int i  = 0; i < (int)num.size(); i++) {\n        ListNode* temp = new ListNode(num[i]);\n        if(!cur) {\n            cur = temp;\n            head = cur;\n        }\n        else {\n            cur->next = temp;\n            cur = temp;\n        }\n    }\n    \n    return head;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int n;\n    cin >> n;\n\n    vector<int> num;\n    for(int i = 0; i < n; i++) {\n        int x;\n        cin >> x;\n        num.push_back(x);\n    }\n\n    int K;\n    cin >> K;\n\n    ListNode* head = GetList(num);\n\n    head = rotateList(head, K);\n\n    while(head) {\n        cout << head->val << \" \";\n        head = head->next;\n    }\n    cout << \"\\n\";\n    \n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Rotate List",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

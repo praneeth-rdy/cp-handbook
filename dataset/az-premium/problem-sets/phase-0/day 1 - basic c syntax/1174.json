@@ -1,0 +1,70 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given two numbers $X$ and $Y$. Print the summation, **multiplication**, and **subtraction** of these $2$ numbers.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq X, Y \\leq 10^5$",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    int x, y;\n    cin >> x >> y;\n    cout << x << \" + \" << y << \" = \" << x + y << endl;\n    cout << x << \" * \" << y << \" = \" << 1ll * x * y << endl; // multiply by 1ll to convert int to long long\n    cout << x << \" - \" << y << \" = \" << x - y << endl;\n    return 0;\n}\n```\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\n```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        StringTokenizer st = new StringTokenizer(br.readLine());\n        int x = Integer.parseInt(st.nextToken());\n        int y = Integer.parseInt(st.nextToken());\n        \n        out.println(x + \" + \" + y + \" = \" + (x + y));\n        out.println(x + \" * \" + y + \" = \" + ((long) x * y)); // multiply x by (long) to convert int to long\n        out.println(x + \" - \" + y + \" = \" + (x - y));\n        \n        out.flush();\n        out.close();\n    }\n}\n```\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\n```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    x = int(data[idx])\n    idx += 1\n    y = int(data[idx])\n    idx += 1\n    \n    stdout.write(f\"{x} + {y} = {x + y}\\n\")\n    stdout.write(f\"{x} * {y} = {x * y}\\n\")\n    stdout.write(f\"{x} - {y} = {x - y}\\n\")\n\nif __name__ == \"__main__\":\n    main()\n```\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:33:20.664240+00:00"
+        },
+        "hints": {
+            "hint1": "Use simple addition, subtraction, and multiplication operations.",
+            "hint2": "Be cautious of integer overflows during multiplication; consider using a larger data type if necessary.",
+            "solution_approach": "In addition and subtraction, the answer is simple, and they fit into a 32-bit integer. But the problem arises in multiplication because, in the worst case, the multiplication answer may overflow. So, we have to convert the 32-bit integers into 64-bit integers before multiplying them.\n\nThe time and space complexity of this approach is $O(1)$ because **summation**, **multiplication**, and **subtraction** are all constant time and space operations."
+        },
+        "id": 1174,
+        "input_format": "Only one line containing two numbers $X$ and $Y$ separated by a space.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In Sample Input 1, we have $X = 5$ and $Y = 10$.\n- Summation: $5 + 10 = 15$.\n- Multiplication: $5 \\times 10 = 50$.\n- Subtraction: $5 - 10 = -5$.",
+        "output_format": "Print 3 lines that contain the following in the same order:\nFirst, print `$X + Y =` followed by the summation result.\nSecond, print `$X * Y =` followed by the multiplication result.\nThird, print `$X - Y =` followed by the subtraction result.",
+        "samples": [
+            {
+                "input": "5 10",
+                "output": "5 + 10 = 15\n5 * 10 = 50\n5 - 10 = -5"
+            },
+            {
+                "input": "12345 54321",
+                "output": "12345 + 54321 = 66666\n12345 * 54321 = 670592745\n12345 - 54321 = -41976"
+            },
+            {
+                "input": "17 2",
+                "output": "17 + 2 = 19\n17 * 2 = 34\n17 - 2 = 15"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Math",
+            "Implementation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Simple Calculator",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

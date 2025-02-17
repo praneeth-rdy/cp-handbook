@@ -1,0 +1,56 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You will be given an array <strong>A</strong> of <strong>N</strong> non-negative integers. Your task is to find the rightmost non-zero digit&nbsp;in the&nbsp;product of array elements if exist.</p>",
+        "complete_approach": "",
+        "constraints": "<ul><li>1 \u2264 N \u2264 10<sup>5</sup></li><li>0 \u2264 A[i] \u2264 10<sup>5</sup>&nbsp;</li></ul>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nvoid solve() {\n    int n;\n    cin >> n;\n    int a[n];\n    bool flag = 1;\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n        if (a[i] == 0)flag = false;\n    }\n    if (!flag) { // when product of elements if 0.\n        cout << -1;\n        return;\n    }\n    int cnt2 = 0, cnt5 = 0;\n    for (int i = 0; i < n; i++) { // counting  frequency of 2 and 5 in the product.\n        int x = a[i];\n        while (x % 2 == 0)cnt2++, x /= 2;\n        while (x % 5 == 0)cnt5++, x /= 5;\n    }\n    int tens = min(cnt2, cnt5); // number of ending zeroes in the final product.\n    cnt2 = cnt5 = tens; // 2 and 5 cnts to be removed from product, to remove all ending zeroes.\n    ll prod = 1;\n    for (int i = 0; i < n; i++) { // O(n*logn)\n        while (cnt2 && a[i] % 2 == 0)cnt2--, a[i] /= 2;\n        while (cnt5 && a[i] % 5 == 0)cnt5--, a[i] /= 5;\n        (prod *= a[i]) %= 10; // prod will always have last non zero digit.\n    }\n    cout << prod;\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n    int t = 1;\n    // int i = 1;\n    // cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:13:49.261553+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Think in terms of prime factors- 2 and 5.<br>Number of zeroes at the end of the product = min( count of 2 as prime factor of product, count of 5 as prime factor of product ).&nbsp;<br>How can you remove these ending zeroes from the final product?</p>",
+            "hint2": "<p>We will count the frequency of 2 and 5 as a prime factor in the final product. let it be <strong>x </strong>and<strong> y </strong>respectively.</p><p>We will remove now remove all <strong>min(x,y) </strong>counts of 2 and 5 in the final product to remove all ending zeroes. Now final product will not have any ending zero.</p><p>While calculating the final product, how can you prevent the overflow? Do you still need to calculate the whole final product just to get the last non zero digit ?</p>",
+            "solution_approach": "<p>If the array has any element equal to 0, then the product will be equal to 0, in that case, print -1, as no non-zero digit exists.&nbsp;</p><p>It is given that you have to find the rightmost positive digit. Now a number is a multiple of 10 or have the last digit as 0 if both 2 and 5 are present as a prime factor.</p><p>We will count the frequency of 2 and 5 as a prime factor in the final product. let it be <strong>x </strong>and<strong> y </strong>respectively.<br>We will remove now remove all <strong>min(x,y) </strong>counts of 2 and 5 in the final product to remove all ending zeroes. Now final product will not have any ending zero.</p><p>While calculating the final product, we will % it by 10, to store only the last non-zero digit, and thus preventing overflow.</p><p>Refer to the editorial's code for the implementation details.</p><p><strong>Time Complexity : O(N*logN)&nbsp;</strong></p>"
+        },
+        "id": 870,
+        "input_format": "<p>First-line contains <strong>N</strong>, the size of the array <strong>A</strong>.<br>The second line contains <strong>N</strong> non-negative integers.&nbsp;</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>For Sample 1: Product of these numbers \nare 93150. Rightmost \nnon-zero digit is 5.</p>",
+        "output_format": "<p>Print the rightmost non-zero digit&nbsp;in the&nbsp;product of array elements, if there is no rightmost non-zero digit, then print -1.</p>",
+        "samples": [
+            {
+                "input": "4\n3 23 30 45",
+                "output": "5"
+            },
+            {
+                "input": "5\n1 0 2 3 4",
+                "output": "-1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-az",
+            "company-Paytm",
+            "company-Salesforce"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Non Zero Digit",
+        "video_editorial_id": 8231
+    },
+    "details": "Problem Details"
+}

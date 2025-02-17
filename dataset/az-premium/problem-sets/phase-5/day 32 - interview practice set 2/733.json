@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p><strong>Pumbaa</strong> stores some secret information about a farm with <strong>n\u2217m </strong>apples represent a rectangle. Each apple has its own number. The order of apples on the farm is changing. That's why <strong>Pumbaa</strong> receives the following instructions:</p><ul><li>The instruction to swap two rows of the farm;</li><li>The instruction to swap two columns of the farm;</li><li>The instruction to obtain the number of the apple that exists in some cell.</li></ul><p>As poor <strong>Pumbaa</strong> is not clever, he asked clever <strong>Timon</strong> to execute these instructions.</p>",
+        "complete_approach": "",
+        "constraints": "<ul><li>1 \u2264 n , m \u2264 1000</li><li>1 \u2264 k \u226410<sup>6</sup></li><li>0 \u2264 p \u2264 99</li><li>1 \u2264 x , y \u2264 m, n&nbsp;</li></ul>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nvoid solve() {\n    int n, m, q;\n    cin >> n >> m >> q;\n    int grid[n][m];\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < m; j++) {\n            cin >> grid[i][j];\n        }\n    }\n    int r[n], c[m]; // stores row's and column's indexes.\n\n    // initialising indexes of rows and columns.\n    for (int i = 0; i < n; i++)r[i] = i;\n    for (int j = 0; j < m; j++)c[j] = j;\n\n    // input and answer each query.\n    while (q--) {\n        int x, y;\n        char t;\n        cin >> t >> x >> y;\n        x--, y--; // 0-based indexing.\n        if (t == 'g') {\n            cout << grid[r[x]][c[y]] << endl;\n        }\n        else if (t == 'r') {\n            swap(r[x], r[y]); // swapping rows.\n        }\n        else {\n            swap(c[x], c[y]); // swapping columns.\n        }\n    }\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n    int t = 1;\n    // int i = 1;\n    // cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:30:11.812178+00:00"
+        },
+        "hints": {
+            "hint1": "<p>For each query, you can't iterate over rows or columns to swap their values, it will exceed the Time limit, <strong>O(N) for each query.</strong><br>Try to optimize the operation per query.</p>",
+            "hint2": "<p>Think about how can you perform each query in <strong>O(1)</strong> .</p>",
+            "solution_approach": "<p>Create an array that stores the current row and column indices for the original row and column indices.<br>During row and column swaps operations, just swaps the respective row or column values in the indices array.<br>To answer \u2018get\u2019 query, use the current indices value present in the row and column indices.</p><p>See Editorial's Code for the Implementation.</p><p><strong>Time Complexity : O(max(N*M, K)) overall, O(1) per query.</strong></p>"
+        },
+        "id": 733,
+        "input_format": "<p>The first line contains three space-separated integers <strong>n</strong>, <strong>m,</strong> and <strong>k</strong> - the number of farm rows and columns and the number of instructions, correspondingly.</p><p>Next <strong>n</strong> lines contain <strong>m</strong> space-separated numbers each \u2014 the initial state of the farm. Each number <strong>p</strong> in the table is an integer and satisfies the inequality.</p><p>Next <strong>k</strong> lines contain instructions in the format \"<strong>s<sub>i</sub></strong> <strong>x<sub>i</sub></strong> <strong>y<sub>i </sub></strong>\", where <strong>s<sub>i</sub></strong> is one of the characters \"<strong>\u0441</strong>\", \"<strong>r</strong>\" or \"<strong>g</strong>\", and <strong>x<sub>i</sub></strong>, <strong>y<sub>i</sub></strong> are two integers.</p><p>-If <strong>s<sub>i</sub></strong> = \"<strong>c</strong>\", then the current instruction is to swap columns with indexes <strong>x<sub>i</sub></strong> and <strong>y<sub>i&nbsp;</sub></strong></p><p>-If <strong>s<sub>i</sub></strong> = \"<strong>r</strong>\", then the current instruction is to swap rows with indexes <strong>x<sub>i</sub></strong> and <strong>y<sub>i</sub></strong></p><p>-If <strong>s<sub>i</sub></strong> = \"<strong>g</strong>\", then the current instruction is to obtain the number located in the <strong>x<sup>th</sup></strong> row and in the <strong>y<sup>th</sup></strong> column.</p><p>The farm rows are considered to be indexed from top to bottom from 1 to <strong>n</strong>, and the farm columns \u2014 from left to right from 1 to <strong>m</strong>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>Let's see how the farm changes in the second test case.</p><p>After the first instruction is fulfilled, the table looks like that:</p><p>2 1 4</p><p>1 3 5</p><p>After the second instruction is fulfilled, the table looks like that:</p><p>1 3 5</p><p>2 1 4</p><p>So the answer to the third instruction (the number located in the first row and in the third column) will be 5.</p>",
+        "output_format": "<p>For each instruction to obtain a number (<strong>s<sub>i</sub></strong>=\"<strong>g</strong>\") print the required number. Print the answers to the instructions in the order of the instruction in the input.</p>",
+        "samples": [
+            {
+                "input": "3 3 5\n1 2 3\n4 5 6\n7 8 9\ng 3 2\nr 3 2\nc 2 3\ng 2 2\ng 3 2",
+                "output": "8\n9\n6"
+            },
+            {
+                "input": "2 3 3\n1 2 4\n3 1 5\nc 2 1\nr 1 2\ng 1 3",
+                "output": "5"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Bit Manipulation",
+            "company-az"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Hakuna Matata !",
+        "video_editorial_id": 8220
+    },
+    "details": "Problem Details"
+}

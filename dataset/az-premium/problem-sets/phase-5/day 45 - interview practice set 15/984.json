@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given an integer $n$, find the $n^{th}$ positive number whose binary representation is a palindrome.\n\n**Note:**\nDo not consider the leading zeros, while considering the binary representation.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^6$\n$1 \\leq n \\leq 10^6$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nlong long nth_palindrome(int n) {\n    int64_t cnt = 1, p = 1, l = 0;\n    while (1) {\n        l++;\n        if (cnt + p > n) break;\n        cnt += p;\n        l++;\n        if (cnt + p > n) break;\n        cnt += p;\n        p *= 2;\n    }\n\n    int off = n - cnt;\n    vector<bool> bits(l, 0);\n    bits[0] = bits[l - 1] = 1;\n    int mid = l / 2;\n    for (int i = 0; off && i < mid; i++)\n    {\n        if (l & 1) {\n            bits[mid + i] = bits[mid - i] = (off & 1);\n        }\n        else {\n            bits[mid - i - 1] = bits[mid + i] = (off & 1);\n        }\n        off /= 2;\n    }\n    int64_t ans = 0, x = 1;\n    assert(l <= 63);\n    for (int i = 0; i < l; i++) {\n        ans += bits[i] * x;\n        x <<= 1;\n    }\n\n    return ans;\n\n}\nvoid solve() {\n    int n;\n    cin >> n;\n    ll x = nth_palindrome(n);\n    cout << x << endl;\n    int msb = __lg(x);\n    for (int i = 0; i < msb / 2; i++) {\n        assert(((x >> i) & 1) == ((x >> (msb - i)) & 1));\n    }\n}\nint main() {\n    ios_base :: sync_with_stdio(0);\n    cin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n    freopen(\"input.txt\", \"r\", stdin); \\\n    freopen(\"output.txt\", \"w\", stdout);\n#endif\n    int t = 1;\n    // int i = 1;\n    cin >> t;\n    while (t--) {\n        // cout << \"Case #\" << i << \": \";\n        solve();\n        // i++;\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:35:59.582105+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "We can construct the nth binary palindrome in its binary representation directly using the below approach. \nIf we observe the first few binary palindromes \n\n\nGroup 0\n    \n    1 --->  1 (1)\n    \n\nGroup 1 (Will have binary representation of length 2*(1) and 2*(1) + 1)\n\n    Fix the first and last bit as 1 and insert nothing\n    (|) in between. Length is 2*(1)\n    2 --->  1|1 (3)     \n\n    Fix the first and last bit as 1 and insert bit 0\n    in between. Length is 2*(1) + 1\n    3 --->  101 (5)    \n\n    Fix the first and last bit as 1 and insert bit 1 \n    in between. Length is 2*(1) + 1 \n    4 --->  111 (7)    \n    \n\nGroup 2 (Will have binary representation of length 2*(2) and 2*(2) + 1).  \n    \n    Fix the first and last \n    bit as 1 and insert nothing (|) at middle. \n    And put 0 in binary format in both directions \n    from middle. Length is 2*(2)\n    5 --->  10|01       \n    \n    Fix the first and last bit as 1 and insert \n    nothing (|) at middle. And put 1 in binary \n    format in both directions from middle. \n    Length is 2*(2)\n    6 --->  11|11      \n    \n    7 --->  10001      \n    8 --->  10101     \n    9 --->  11011     \n    10 --->  11111      \n    \nGroup 3 (Will have binary representation of length 2*(3) and 2*(3) + 1)\n    \n    11 ---> 100|001    \n    12 ---> 101|101    \n    13 ---> 110|011    \n    14 ---> 111|111  \n    \n    15 ---> 1000001  \n    16 ---> 1001001  \n    17 ---> 1010101  \n    18 ---> 1011101  \n    19 ---> 1100011  \n    20 ---> 1101011  \n    21 ---> 1110111    \n    22 ---> 1111111 \n\n\n**Algorithm:**\n\n1. We can divide the set of palindrome numbers into some groups. \n2. n-th group will have $(2^{n-1} + 2^n = 3 * 2^{n-1} )$ number of binary palindromes \n3. With the given number, we can find the group to which it belongs and the offset in that group. \n4. As the leading zeros are not to be considered, we should use bit 1 as the starting bit and the ending bit of the number in binary representation \n5. And we will fill other bits based on the groupno and groupoffset \n6. Based on the offset, we can find which bit should be inserted at the middle (|(nothing) or 0 or 1) and which number(in binary form) (1 or 2 or 3 or 4 or ..) should be placed in both directions from the middle.\n\n**Time Complexity** : $O(log(n))$ per test case."
+        },
+        "id": 984,
+        "input_format": "The first line contains $T$ - the number of test cases.\nFirst line of each test case contains $n$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, output the $n^{th}$ positive number whose binary representation is a palindrome.",
+        "samples": [
+            {
+                "input": "5\n1\n2\n1000000\n10\n11\n",
+                "output": "1\n3\n249410884119\n31\n33\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "Binary Palindrome",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given a binary tree, return the preorder traversal of its nodes\u2019 values.</p><p>Complete the function:</p><p><i>vector&lt;int&gt; getPreorderTraversal(Node* root)</i></p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 2,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n\nvoid preorderTraversal(Node* root, vector<int>&ans){\n   if(root==NULL)\n       return;\n   ans.push_back(root->val);\n   preorderTraversal(root->left,ans);\n   preorderTraversal(root->right,ans);\n}\n\nvector<int> getPreorderTraversal(Node* root) {\n   vector<int> ans;\n   if(root==NULL)\n       return ans;\n   preorderTraversal(root, ans);\n   return ans;\n}\n\nNode* getBinaryTree(vector<int> &num, int*ind) {\n    if(num[*ind] == -1)\n        return NULL;\n    Node* node = new Node(num[*ind]);\n    (*ind)++;\n    node->left = getBinaryTree(num,ind);\n    (*ind)++;\n    node->right = getBinaryTree(num,ind);\n    return node;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n;\n        cin>>n;\n        assert(n<=1000000);\n        vector<int>arr(n);\n        for(int i=0;i<n;i++)\n            cin>>arr[i];\n        int ind = 0;\n        Node* tree = getBinaryTree(arr,&ind);\n        vector<int> ans = getPreorderTraversal(tree);\n        for(auto v:ans){\n            cout<<v<<\" \";\n        }\n        cout<<\"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "Solution Approach is missing"
+            ],
+            "last_updated": "2024-06-22T02:32:44.114935+00:00"
+        },
+        "hints": {
+            "hint1": "<p>First, print the value of the current node.</p><p>Then go to the left tree and print the preorder traversal of the left tree.&nbsp;</p><p>Then go to the right tree and print the preorder traversal of the right</p>",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 574,
+        "input_format": "<p>The first line contains an integer T, (1 \u2264 T \u2264 10^5), the number of test cases.</p><p>The first line of each test case contains an integer N, &nbsp;the length of the array representing the serialized representation of a tree.</p><p>The next line contains N-space-separated integers.&nbsp;</p><p>The input is given as a serialized representation of a tree.</p><p>The following function parses the input:</p><p><i>Node* getBinaryTree(vector&lt;int&gt; &amp;num, int*ind)</i></p><p><i>Sum of N across all test cases \u2264 10^7.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<pre><code class=\"language-cpp\">Test case 2- \n 5222\n    \\\n   3819\n    /\n  6801\n\t\nTest case 3 - \n   8901\n   /\n  7891\n   /   \\\n  5407 1720</code></pre>",
+        "output_format": "<p>Return the preorder traversal of the tree.</p>",
+        "samples": [
+            {
+                "input": "3\n3\n6004 -1 -1 \n7\n5222 -1 3819 6801 -1 -1 -1 \n9\n8901 7891 5407 -1 -1 1720 -1 -1 -1 ",
+                "output": "6004 \n5222 3819 6801 \n8901 7891 5407 1720 "
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Frequently Asked Questions",
+            "Binary Tree"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n</fix>\n\nvector<int> getPreorderTraversal(Node* root) {\n    //Complete the function\n}\n\n<fix>\nNode* getBinaryTree(vector<int> &num, int*ind) {\n    if(num[*ind] == -1)\n        return NULL;\n    Node* node = new Node(num[*ind]);\n    (*ind)++;\n    node->left = getBinaryTree(num,ind);\n    (*ind)++;\n    node->right = getBinaryTree(num,ind);\n    return node;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n;\n        cin>>n;\n        assert(n<=1000000);\n        vector<int>arr(n);\n        for(int i=0;i<n;i++)\n            cin>>arr[i];\n        int ind = 0;\n        Node* tree = getBinaryTree(arr,&ind);\n        vector<int> ans = getPreorderTraversal(tree);\n        for(auto v:ans){\n            cout<<v<<\" \";\n        }\n        cout<<\"\\n\";\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Preorder Traversal",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

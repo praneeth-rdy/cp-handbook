@@ -1,0 +1,178 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "course_name": "Day 1 - Basic C++ Syntax",
+            "resource_id": 1133
+        },
+        {
+            "course_name": "Day 1 - Basic C++ Syntax",
+            "resource_id": 1167
+        },
+        {
+            "course_name": "Day 1 - Basic C++ Syntax",
+            "resource_id": 1174
+        },
+        {
+            "course_name": "Day 2 - Variables and & Operators",
+            "resource_id": 1178
+        },
+        {
+            "course_name": "Day 2 - Variables and & Operators",
+            "resource_id": 1176
+        },
+        {
+            "course_name": "Day 2 - Variables and & Operators",
+            "resource_id": 1228
+        },
+        {
+            "course_name": "Day 2 - Variables and & Operators",
+            "resource_id": 1163
+        },
+        {
+            "course_name": "Day 3 : if-else",
+            "resource_id": 1162
+        },
+        {
+            "course_name": "Day 3 : if-else",
+            "resource_id": 1183
+        },
+        {
+            "course_name": "Day 4 :  Loops",
+            "resource_id": 1221
+        },
+        {
+            "course_name": "Day 4 :  Loops",
+            "resource_id": 1215
+        },
+        {
+            "course_name": "Day 4 :  Loops",
+            "resource_id": 1206
+        },
+        {
+            "course_name": "Day 4 :  Loops",
+            "resource_id": 1207
+        },
+        {
+            "course_name": "Day 4 :  Loops",
+            "resource_id": 1209
+        },
+        {
+            "course_name": "Day 5 :  Functions",
+            "resource_id": 1224
+        },
+        {
+            "course_name": "Day 5 :  Functions",
+            "resource_id": 1208
+        },
+        {
+            "course_name": "Day 5 :  Functions",
+            "resource_id": 1212
+        },
+        {
+            "course_name": "Day 6: Time complexity",
+            "resource_id": 1214
+        },
+        {
+            "course_name": "Day 6: Time complexity",
+            "resource_id": 1217
+        },
+        {
+            "course_name": "Day 7: Pattern Building",
+            "resource_id": 1089
+        },
+        {
+            "course_name": "Day 7: Pattern Building",
+            "resource_id": 1090
+        },
+        {
+            "course_name": "Day 7: Pattern Building",
+            "resource_id": 1091
+        },
+        {
+            "course_name": "Day 7: Pattern Building",
+            "resource_id": 317
+        },
+        {
+            "course_name": "Day 7: Pattern Building",
+            "resource_id": 1094
+        },
+        {
+            "course_name": "Day 9: Arrays",
+            "resource_id": 1158
+        },
+        {
+            "course_name": "Day 9: Arrays",
+            "resource_id": 1155
+        },
+        {
+            "course_name": "Day 9: Arrays",
+            "resource_id": 1153
+        },
+        {
+            "course_name": "Day 9: Arrays",
+            "resource_id": 1157
+        },
+        {
+            "course_name": "Day 10: Structures & More array problems",
+            "resource_id": 1149
+        },
+        {
+            "course_name": "Day 10: Structures & More array problems",
+            "resource_id": 1151
+        },
+        {
+            "course_name": "Day 10: Structures & More array problems",
+            "resource_id": 1146
+        },
+        {
+            "course_name": "Day 10: Structures & More array problems",
+            "resource_id": 1140
+        },
+        {
+            "course_name": "Day 11: Strings",
+            "resource_id": 1188
+        },
+        {
+            "course_name": "Day 11: Strings",
+            "resource_id": 1193
+        },
+        {
+            "course_name": "Day 11: Strings",
+            "resource_id": 1198
+        },
+        {
+            "course_name": "Day 11: Strings",
+            "resource_id": 1191
+        },
+        {
+            "course_name": "Day 12: 2D Arrays",
+            "resource_id": 1145
+        },
+        {
+            "course_name": "Day 12: 2D Arrays",
+            "resource_id": 1144
+        },
+        {
+            "course_name": "Day 12: 2D Arrays",
+            "resource_id": 1141
+        },
+        {
+            "course_name": "Day 12: 2D Arrays",
+            "resource_id": 1142
+        },
+        {
+            "course_name": "Day 13: Interesting Ideas",
+            "resource_id": 1192
+        },
+        {
+            "course_name": "Day 13: Interesting Ideas",
+            "resource_id": 1201
+        },
+        {
+            "course_name": "Day 13: Interesting Ideas",
+            "resource_id": 1199
+        }
+    ],
+    "details": "Chapter 503 Problems"
+}

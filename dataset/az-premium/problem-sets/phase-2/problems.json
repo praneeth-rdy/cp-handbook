@@ -1,0 +1,178 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "course_name": "Day 1: Binary search Fundamentals",
+            "resource_id": 108
+        },
+        {
+            "course_name": "Day 1: Binary search Fundamentals",
+            "resource_id": 107
+        },
+        {
+            "course_name": "Day 1: Binary search Fundamentals",
+            "resource_id": 26
+        },
+        {
+            "course_name": "Day 2: Application Ideas 1",
+            "resource_id": 472
+        },
+        {
+            "course_name": "Day 2: Application Ideas 1",
+            "resource_id": 46
+        },
+        {
+            "course_name": "Day 3: Application Ideas 2",
+            "resource_id": 102
+        },
+        {
+            "course_name": "Day 3: Application Ideas 2",
+            "resource_id": 44
+        },
+        {
+            "course_name": "Day 4: Application Ideas 3",
+            "resource_id": 471
+        },
+        {
+            "course_name": "Day 4: Application Ideas 3",
+            "resource_id": 377
+        },
+        {
+            "course_name": "Day 4: Application Ideas 3",
+            "resource_id": 105
+        },
+        {
+            "course_name": "Day 6 [Optional]:",
+            "resource_id": 104
+        },
+        {
+            "course_name": "Day 7: Sliding Window Framework",
+            "resource_id": 59
+        },
+        {
+            "course_name": "Day 8: Extended Ideas",
+            "resource_id": 60
+        },
+        {
+            "course_name": "Day 9: Sliding window Practice",
+            "resource_id": 64
+        },
+        {
+            "course_name": "Day 9: Sliding window Practice",
+            "resource_id": 371
+        },
+        {
+            "course_name": "Day 9: Sliding window Practice",
+            "resource_id": 57
+        },
+        {
+            "course_name": "Day 10: Two Pointer",
+            "resource_id": 65
+        },
+        {
+            "course_name": "Day 11:  Challenger [Optional]",
+            "resource_id": 45
+        },
+        {
+            "course_name": "Day 11:  Challenger [Optional]",
+            "resource_id": 51
+        },
+        {
+            "course_name": "Day 12: Techniques Revisited [Optional]",
+            "resource_id": 63
+        },
+        {
+            "course_name": "Day 12: Techniques Revisited [Optional]",
+            "resource_id": 62
+        },
+        {
+            "course_name": "Day 13: Bit manipulation Fundamental",
+            "resource_id": 884
+        },
+        {
+            "course_name": "Day 13: Bit manipulation Fundamental",
+            "resource_id": 873
+        },
+        {
+            "course_name": "Day 16: Application Idea 2",
+            "resource_id": 49
+        },
+        {
+            "course_name": "Day 17: Application Idea 3",
+            "resource_id": 52
+        },
+        {
+            "course_name": "Day 17: Application Idea 3",
+            "resource_id": 810
+        },
+        {
+            "course_name": "Day 18: Application Idea 4",
+            "resource_id": 54
+        },
+        {
+            "course_name": "Day 19 : Application Idea 5",
+            "resource_id": 50
+        },
+        {
+            "course_name": "Day 22: Backtracking",
+            "resource_id": 272
+        },
+        {
+            "course_name": "Day 23 :",
+            "resource_id": 475
+        },
+        {
+            "course_name": "Day 24 : Finding Kth Solution",
+            "resource_id": 476
+        },
+        {
+            "course_name": "Day 24 : Finding Kth Solution",
+            "resource_id": 477
+        },
+        {
+            "course_name": "Day 25: More LCCM Framework Practice",
+            "resource_id": 143
+        },
+        {
+            "course_name": "Day 25: More LCCM Framework Practice",
+            "resource_id": 484
+        },
+        {
+            "course_name": "Day 25: More LCCM Framework Practice",
+            "resource_id": 485
+        },
+        {
+            "course_name": "Day 25: More LCCM Framework Practice",
+            "resource_id": 486
+        },
+        {
+            "course_name": "Day 26:  Extended Practice",
+            "resource_id": 274
+        },
+        {
+            "course_name": "Day 26:  Extended Practice",
+            "resource_id": 142
+        },
+        {
+            "course_name": "Day 26:  Extended Practice",
+            "resource_id": 276
+        },
+        {
+            "course_name": "Day 28 :  Meet in the Middle",
+            "resource_id": 141
+        },
+        {
+            "course_name": "Day 28 :  Meet in the Middle",
+            "resource_id": 280
+        },
+        {
+            "course_name": "Day 29 : More Meet in the Middle Practice",
+            "resource_id": 487
+        },
+        {
+            "course_name": "Day 29 : More Meet in the Middle Practice",
+            "resource_id": 281
+        }
+    ],
+    "details": "Chapter 512 Problems"
+}

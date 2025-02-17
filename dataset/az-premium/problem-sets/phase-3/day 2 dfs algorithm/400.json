@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have given an undirected graph <i>G</i> with <i>N</i> nodes and <i>M</i> edges. You've to answer <i>Q</i> queries. Each query is either of the following two types:</p><ul><li>1 <i>X</i>: Print the size of the connected components containing node <i>X</i>.</li><li>2 <i>X</i> <i>Y</i>: Print \u2018YES\u2019 (without quotes) if node <i>X</i> and <i>Y</i> belong to the same connected component, else print \u2018NO\u2019 (without quotes).</li></ul>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nvector<int> graph[N];\nint sz[N], id[N];\nint CUR_ID = 1;\nbool visited[N];\n\nvoid dfs(int cur) {\n    if(visited[cur]) return;\n    visited[cur] = true;\n    id[cur] = CUR_ID;\n    sz[CUR_ID]++;\n    for(int u : graph[cur])\n        dfs(u);\n}\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int n, m, q;\n    cin >> n >> m >> q;\n\n    for(int i = 0; i < m; i++) {\n        int u, v;\n        cin >> u >> v;\n        graph[u].push_back(v);\n        graph[v].push_back(u);\n    }\n\n    for(int i = 1; i <= n; i++) {\n        if(!visited[i]) {\n            dfs(i);\n            CUR_ID++;\n        }\n    }\n\n    while(q--) {\n        int t; cin >> t;\n        if(t == 1) {\n            int x; cin >> x;\n            cout << sz[id[x]] << \"\\n\";\n        }\n        else {\n            int x, y;\n            cin >> x >> y;\n            if(id[x] == id[y]) cout << \"YES\\n\";\n            else cout << \"NO\\n\";\n        }\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:43:59.963442+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Use DFS!</p>",
+            "hint2": "<p>Run DFS and mark each connected components by a unique id.</p>",
+            "solution_approach": "<p>Run DFS and for every node that will be visiting in the DFS mark them by a unique identifier. For that identifier maintain a count of a number of nodes equals to that unique identifier. For query of first type, you need to directly print the stored count of the unique identifier for the node X. For the query of the second type, you only need to only compare their unique id.</p><p>See the editorial code for a more detailed explanation.</p>"
+        },
+        "id": 400,
+        "input_format": "<p>The first line of input contains three space-separated integers <i>N</i>, <i>M</i>, and <i>Q </i>(1 \u2264 <i>N, M, Q</i> \u2264 10<sup>5</sup>).<br>Next <i>M</i> lines contain two space-separated integers <i>u</i> and <i>v </i>(1 \u2264 <i>u, v</i> \u2264 <i>N</i>).<br>Each of the next <i>Q</i> lines contains queries of one of the types as described in the statement.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Print <i>Q</i> lines as the answer to the <i>Q</i> queries, each on a new line.</p>",
+        "samples": [
+            {
+                "input": "6 5 5\n1 2\n2 3\n1 3\n4 4\n5 6\n1 2\n1 4\n2 3 4\n1 5\n2 5 6",
+                "output": "3\n1\nNO\n2\nYES"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Dfs"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Easy Graph Queries",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

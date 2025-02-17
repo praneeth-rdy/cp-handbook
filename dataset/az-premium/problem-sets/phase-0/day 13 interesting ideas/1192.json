@@ -1,0 +1,63 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given two strings $S$ and $T$. Print a new string that contains the following:\n\n1. The first letter of the string $S$ followed by the first letter of the string $T$.\n2. The second letter of the string $S$ followed by the second letter of the string $T$.\n3. And so on...\n\nIn other words, the new string should be $(S_0 + T_0 + S_1 + T_1 + \\ldots)$.\n\n**Note:** If the length of $S$ is greater than the length of $T$ then you have to add the rest of $S$ letters at the end of the new string and **vice versa**.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq N \\leq 50$\n$1 \\leq |S|, |T| \\leq 50$",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include<bits/stdc++.h>\nusing namespace std;\n\nvoid solution() {\n    string s, t;\n    cin >> s >> t;\n    int s_size = s.size(), t_size = t.size();\n    int m = min(s_size, t_size);\n    string ans;\n    for (int i = 0; i < m; i++) {\n        ans += s[i];\n        ans += t[i];\n    }\n    for (int i = m; i < s_size; i++) {\n        ans += s[i];\n    }\n    for (int i = m; i < t_size; i++) {\n        ans += t[i];\n    }\n    cout << ans << endl;\n}\n\nint main() {\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n    int n; cin >> n;\n    while (n--) {\n        solution();\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int n = Integer.parseInt(br.readLine());\n        while (n-- > 0) {\n            String line = br.readLine();\n            String[] parts = line.trim().split(\"\\\\s+\");\n            String s = parts[0];\n            String t = parts[1];\n            int s_size = s.length(), t_size = t.length();\n            int m = Math.min(s_size, t_size);\n            StringBuilder ans = new StringBuilder();\n            for (int i = 0; i < m; i++) {\n                ans.append(s.charAt(i));\n                ans.append(t.charAt(i));\n            }\n            if (s_size > m) {\n                ans.append(s.substring(m));\n            }\n            if (t_size > m) {\n                ans.append(t.substring(m));\n            }\n            out.println(ans.toString());\n        }\n        \n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    n = int(data[idx])\n    idx += 1\n    for _ in range(n):\n        s = data[idx]\n        idx += 1\n        t = data[idx]\n        idx += 1\n        s_size = len(s)\n        t_size = len(t)\n        m = min(s_size, t_size)\n        ans = []\n        for i in range(m):\n            ans.append(s[i])\n            ans.append(t[i])\n        if s_size > m:\n            ans.append(s[m:])\n        if t_size > m:\n            ans.append(t[m:])\n        print(''.join(ans))\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:42:21.736319+00:00"
+        },
+        "hints": {
+            "hint1": "Consider traversing both strings simultaneously and constructing the new string by picking characters from each.",
+            "hint2": "Iterate up to the minimum length of the two strings, alternately adding characters from each. Then, add the remaining characters from the longer string.",
+            "solution_approach": "To solve this problem, we iterate through both strings simultaneously up to the length of the shorter string. At each iteration, we append the current character from the first string followed by the current character from the second string to the result string.\n\nAfter reaching the end of the shorter string, we check if any string has remaining characters. If so, we append the remaining characters from that string to the result string.\n\nThis approach ensures that we combine the strings as per the problem's requirements.\n\n**Time Complexity per test case:** $O(|S| + |T|)$\n\n**Space Complexity per test case:** $O(|S| + |T|)$"
+        },
+        "id": 1192,
+        "input_format": "The first line contains an integer $N$, the number of test cases.\nEach of the $N$ following lines contains two strings $S$ and $T$ consisting of lower and upper English letters.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "**Test Case 1:**\nS = \"ipAsu\", T = \"ccsit\"\nWe combine letters as:\n- 'i' + 'c' = \"ic\"\n- 'p' + 'c' = \"pc\"\n- 'A' + 's' = \"As\"\n- 's' + 'i' = \"si\"\n- 'u' + 't' = \"ut\"\nResulting in \"icpcAssiut\"\n**Test Case 2:**\nS = \"ey\", T = \"gpt\"\nWe combine up to the length of S:\n- 'e' + 'g' = \"eg\"\n- 'y' + 'p' = \"yp\"\nRemaining letter in T: 't'\nAdd the remaining letter 't' at the end.\nResulting in \"egypt\"",
+        "output_format": "For each test case, print the required string.",
+        "samples": [
+            {
+                "input": "2\nipAsu ccsit\ney gpt",
+                "output": "icpcAssiut\negypt"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Strings"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "I Love Strings",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

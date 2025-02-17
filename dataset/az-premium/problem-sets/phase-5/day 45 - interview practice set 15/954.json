@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given two integers $dividend$ and $divisor$, divide two integers without using multiplication, division, and mod operator.\n\nThe integer division should truncate toward zero, which means losing its fractional part. For example, $8.345$ would be truncated to $8$, and $-2.7335$ would be truncated to $-2$.\n\nReturn the quotient after dividing the dividend by the divisor.\n\n### Note: \n-   Assume we are dealing with an environment that could only store integers within the $32$-bit signed integer range: $[\u22122^{31}, 2^{31}-1]$. \n( **This means no long long or unsigned int** )\n-   For this problem, if the quotient is strictly greater than $2^{31} - 1$, then return $2^{31} - 1$, and if the quotient is strictly less than $-2^{31}$, then return $-2^{31}$.\n-   No multiplication, division, or mod operator.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^{5}$.\n$-2^{31} \\leq dividend, divisor \\leq 2^{31} - 1$.\n$divisor \\neq 0$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nint divide(int dividend, int divisor) {\n\n\t// Edge Case-: INT_MIN\n\tif (dividend == INT_MIN) {\n\t\tif (divisor == -1) {return INT_MAX;}\n\t\telse if (divisor == INT_MIN) {return 1;}\n\t\telse if (divisor < 0) {\n\t\t\t// do this so we can avoid abs(dividend) overflowing the upper int limit\n\t\t\treturn 1 + divide(dividend - divisor, divisor);\n\t\t}\n\t\telse {\n\t\t\t// same as above comment\n\t\t\treturn -1 + divide(dividend + divisor, divisor);\n\t\t}\n\t}\n\telse if (divisor == INT_MIN) {return 0;}\n\n\n\tint ans = 0, sign = 1; // keeping track of sign.\n\tif ((dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0))sign = -1;\n\n\tdividend = abs(dividend), divisor = abs(divisor); // taking both +ve value.\n\n\tfor (int i = __builtin_clz(divisor) - 1; i >= 0; i--) {\n\t\tif (dividend >= (divisor << i))dividend -= (divisor << i), ans += (1 << i);\n\t}\n\n\treturn sign * ans;\n}\nvoid solve() {\n\tint a, b;\n\tcin >> a >> b;\n\tcout << divide(a, b) << endl;\n}\nint main() {\n\tios_base :: sync_with_stdio(0);\n\tcin.tie(nullptr); cout.tie(nullptr);\n\n#ifdef Mastermind_\n\tfreopen(\"input.txt\", \"r\", stdin); \\\n\tfreopen(\"output.txt\", \"w\", stdout);\n#endif\n\tint t = 1;\n\t// int i = 1;\n\tcin >> t;\n\twhile (t--) {\n\t\t// cout << \"Case #\" << i << \": \";\n\t\tsolve();\n\t\t// i++;\n\t}\n\treturn 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:17:10.898348+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "### Note: \n-   Assume we are dealing with an environment that could only store integers within the $32$-bit signed integer range: $[\u22122^{31}, 2^{31}-1]$. \n( **This means no long long or unsigned int** )\n-   For this problem, if the quotient is strictly greater than $2^{31} - 1$, then return $2^{31} - 1$, and if the quotient is strictly less than $-2^{31}$, then return $-2^{31}$.\n-   No multiplication, division, or mod operator.\n\n\nThe general idea is similar to many others. We change both the dividend and divisor to positive and then add in the negative sign at the end if needed. But firstly, we have a few edge cases:\n\n-   If dividend = INT_MIN and divisor = -1, then the actual result of the divison would be -INT_MIN, or +2147483648. But this overflows INT_MAX, so we just return INT_MAX in this case.\n-   If dividend = INT_MIN and divisor = INT_MIN, then return 1.\n-   Even if the above two cases do not happen, we still need to modify dividend. The reason is if dividend = INT_MIN, then abs(dividend) would overflow INT_MAX, so we can't allow this to happen. I take care of this by simply subtracting or adding one divisor from dividend, based on the sign of divisor. If you don't understand this, consider the following logic: The quotient when 10000 is divided by 3 is also equal to 1 + the quotient of 9997 / 3. We basically remove one instance of divisor from the dividend so that abs(dividend) no longer overflows.\n-   If none of the above happens (basically, if dividend != INT_MIN), but divisor is INT_MIN, then obviously the correct quotient is 0.\n\nWithout multiplication, division, or modulo operators, the only way we can do this is through bit shift operators. But more specifically, this program mainly relies on the binary right shift (>>) operator, because this helps us avoid overflow. This loop is the main part of the program:\n\n```\nint result = 0;\nfor(int i = 31; i >= 0; --i) {\n\tint shifted_dividend = (dividend >> i); // = floor(dividend / 2^i)\n\tif(shifted_dividend >= divisor) { // then divisor * 2^i <= dividend\n\t\tresult += (1 << i);\n\t\tdividend -= (divisor << i);\n\t}\n}\n```\n\nWhat happens here is the following.\n\n-   Loop from the most significant bit to the least significant bit in a 32-bit number. For each bit, we determine if the final quotient (result) should have this bit set or not. How do we decide this for each position i? Just do the following:\n-   Let shifted_dividend = (dividend >> i), which is the quotient of dividend / 2^i. Basically, this is just how many times 2^i can go into dividends. Now, obviously, if 2^i can go into dividend at least divisor times, then we know that divisor * 2^i <= dividend, which means that we should add 2^i to the quotient, and subtract divisor * 2^i from dividend!\n-   Notice how (dividend >> i) never overflows, since it must result in a number smaller than the dividend. Also, it never becomes negative; if i is too large, then (dividend >> i) would just equal 0. This fits up with the conceptual definition that this is the number of times 2^i can go into the dividend.\n-   Obviously, we return results and make sure to take care of whether it's negative or positive.\n\n**Note about C++ Undefined Behavior:** Right-shifting a negative signed integer is undefined behavior, but right-shifting a positive signed integer isn't. cppreference.com says that \"For unsigned a and for signed and non-negative a, the value of a >> b is the integer part of a/(2^b).\" This is one of the main reasons why we choose to change both numbers to positive before finding the quotient (and only adding the negative sign at the very end).\n\n**Time Complexity:** $O(32)$"
+        },
+        "id": 954,
+        "input_format": "The First line contains $T$ - the number of test cases.\nThe first line of each test case contains two integers - $dividend$ and $divisor$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, output the $quotient$ after dividing $dividend$ by $divisor$.",
+        "samples": [
+            {
+                "input": "8\n-2147483648 -1\n-2147483648 1\n-2147483648 -2147483648\n-2147483648 2147483647\n10 3\n7 -3\n0 1\n1 5\n",
+                "output": "2147483647\n-2147483648\n1\n-1\n3\n-2\n0\n0\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Hard Division",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

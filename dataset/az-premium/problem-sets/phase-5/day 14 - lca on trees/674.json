@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Find the LCA of two nodes of a BBST. You may assume that both the values exist in the tree.<br>BBST - Balanced Binary Search Tree (height of BST is around O(logN)).</p><p><i>Let T be a rooted tree. The lowest common ancestor between two nodes n1 and n2 is defined as the lowest node in T that has both n1 and n2 as descendants (where we allow a node to be a descendant of itself).</i></p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "Editorial Code data is currently empty.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:43:45.492952+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 674,
+        "input_format": "<p>The first line contains an integer T, (1 \u2264 T \u2264 10^5), the number of test cases.</p><p>The first line of each test case contains an integer N, Q the length of the array representing the serialized representation of a tree, the number of queries.</p><p>The next line contains N-space-separated distinct integers.&nbsp;</p><p>The next Q lines contain 2-space-separated integers.&nbsp;</p><p>The input is given as a serialized representation of a tree.</p><p>The following function parses the input:</p><p><i>Node* getBinaryTree(vector&lt;int&gt; &amp;num, int*ind)</i></p><p><i>Sum of N across all test cases \u2264 10^7.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each query return the LCA node of two nodes.</p>",
+        "samples": [
+            {
+                "input": "1\n19 9\n677 260 180 -1 -1 386 -1 -1 848 680 -1 -1 897 890 -1 -1 913 -1 -1 \n897 890\n890 386\n180 386\n890 260\n897 890\n890 677\n848 913\n677 890\n848 260",
+                "output": "897 677 260 677 897 677 848 677 677"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Binary Tree",
+            "Binary Search Tree"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n</fix>\nNode *getLCANode(Node* root, int n1, int n2)\n{\n    // Complete the function.\n}\n<fix>\nNode* getBinaryTree(vector<int> &num, int*ind) {\n    if(num[*ind] == -1)\n        return NULL;\n    Node* node = new Node(num[*ind]);\n    (*ind)++;\n    node->left = getBinaryTree(num,ind);\n    (*ind)++;\n    node->right = getBinaryTree(num,ind);\n    return node;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n,q;\n        cin>>n>>q;\n        assert(n<=1000000);\n        vector<int>arr(n);\n        for(int i=0;i<n;i++){\n            cin>>arr[i];\n        }\n        int ind = 0;\n        Node* tree = getBinaryTree(arr,&ind);\n        for(int i=0;i<q;i++){\n            int k1,k2;\n            cin>>k1>>k2;\n            cout<<getLCANode(tree,k1,k2)->val<<\" \";\n        }\n        cout<<\"\\n\";\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 3.0,
+        "title": "BBST LCA",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

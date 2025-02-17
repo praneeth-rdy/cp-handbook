@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given four integers - $A, B, C$, and $P$. $P$ is a prime number.\nFind $A^{B ^ C}  \\%  P$.\n\n**NOTE**: $0^0 = 1$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 2 \\times 10^5$\n$0 \\leq A, B, C \\leq 10^9$\n$2 \\leq P \\leq 10^4$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n// Enter your code below\n#include <bits/stdc++.h>\nusing namespace std;\ntypedef long long int ll;\nll expo(ll a, ll x, ll p)  //(a^x)%p\n{\n  ll n, ans = 1;\n  // prod= (a^(2^p1))\n  while (x) {\n    if (x % 2) {\n      ans = ((ans % p) * (a % p)) % p;\n    }\n    a = ((a % p) * (a % p)) % p;\n    x = x / 2;\n  }\n  return ans;\n}\nvoid solve() {\n  // write your code here\n  ll n, res, ans, a, b, c, p;\n  cin >> a >> b >> c >> p;\n  if (b == 0 && c != 0) {\n    cout << '1' << '\\n';\n  }\n\n  else if (a % p == 0 || a == 0) {\n    cout << \"0\\n\";\n  } else {\n    res = expo(b, c, p - 1);\n    ans = expo(a, res, p);\n    cout << ans << endl;\n  }\n}\n\nint main() {\n  ios_base::sync_with_stdio(false);\n  cin.tie(NULL);\n  int i, T;\n\n  T = 1;\n  cin >> T;\n\n  for (i = 1; i <= T; i++) {\n    solve();\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:42:59.721983+00:00"
+        },
+        "hints": {
+            "hint1": "Remember little Fermat's theorem is just to make your simplification simpler. Try to think logically about a few test cases.\nIf you directly try to apply little fermats and then print the answer without taking care of edge cases these are the difficulties which you may face.\nRemember $0^0$=1 always.",
+            "hint2": "* 0 2 9 3. The correct answer should be 0 without any doubt. Because no matter how many times you multiply 0 with itself it will always be 0. Correct??\n\nBut what happens when we apply little fermats theorem directly?? We get $$(2^9) \\bmod 2 = 0$$ and this simplifies the problem as $0^0$ and we get the wrong answer as $1$. This should not be the case. So handling edge cases are necessary.\n\nSome other edge cases to consider are \n* 6 8 9 3\n* 0 0 0 13",
+            "solution_approach": "The edge cases which we need to take care of are as follows\n1. If $(B^C)=0$ i.e., $B=0$ and $C \\neq 0$, then answer is $1$.\n2. If $A=0$ and $(B^C) \\neq 0$ , then answer is 0.\n3. If $A \\neq 0$ and $(B^C) \\neq 0$ , and $A$ is divisible by $P$, then answer is $0$.\n4. If $A \\neq 0$ and $(B^C) \\neq 0$ , and $A$ is not divisible by $P$, then we need to use Fermat's Little Theorem which states that $A^{P-1} =1\\mod P$, if $P$ is prime.  \nLet $(B^C) = X \\times(P-1)+Y $, which means that $A^{B^C} = A^Y$.  \nFind $Z=(B^C)(\\mod P-1)$ and then find $A^Z(\\mod P)$.  \n\nTime Complexity per test case: $O(\\log C + \\log P)$"
+        },
+        "id": 387,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\nThe first line of each test case contains four space-separated integers $A, B, C, P$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, $2 ^ {4 ^ 2} \\% 7 = 2^{16} \\% 7 = 65536 \\% 7 = 2$.\nFor the second test case, $1 ^ {6 ^ {20}} \\% 5 = 1 \\% 5 = 1$.\nFor the third test case, $3 ^ {1 ^ {200}} \\% 3 = 3 ^ 1 \\% 3 = 3 \\% 3 = 0$.",
+        "output_format": "For each test case, print&nbsp; $A^{B ^ C}  \\%  P$",
+        "samples": [
+            {
+                "input": "3\n2 4 2 7\n1 6 20 5\n3 1 200 3\n",
+                "output": "2\n1\n0\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Exponentiation AZ101",
+        "video_editorial_id": 8196
+    },
+    "details": "Problem Details"
+}

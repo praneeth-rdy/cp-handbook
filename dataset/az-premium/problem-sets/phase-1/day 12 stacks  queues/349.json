@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given $Q$ queries and have to perform the following operations:\n\n1. **add x** - add element $x$ at the end of the queue\n2. **remove** - delete the front element of the queue, if the queue is not empty\n3. **print** - print the element at the first position, if the queue is not empty, otherwise print 0",
+        "complete_approach": "",
+        "constraints": "$$ 1 \\leq T \\leq 10^6 $$  \n$$ 1 \\leq Q \\leq 10^6 $$  \n$$ 1 \\leq X \\leq 10^6 $$  \n\nIt is guaranteed that the sum of $Q$ over all test cases does not exceed \n\n$$ 10^6. $$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n\nint main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int q1;\n    cin >> q1;\n    queue<int> q;\n    while (q1--) {\n      string s;\n      cin >> s;\n      if (s == \"add\") {\n        int x;\n        cin >> x;\n        q.push(x);\n      } else if (s == \"remove\") {\n        if (!q.empty()) {\n          q.pop();\n        }\n      } else {\n        if (!q.empty()) {\n          cout << q.front() << \"\\n\";\n        } else {\n          cout << \"0\\n\";\n        }\n      }\n    }\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:26:51.505320+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "Use `push()` for inserting element at end of queue\nUse `pop()` for deleting element at front of queue.Before popping make sure to check if the stack is empty or not using `empty()` function.\nUse `front()` for printing element at front of queue.Again check emptiness using `empty()` function\nTime Complexity per test case: $O(1)$"
+        },
+        "id": 349,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer Q - the number of queries.\n\nEach of the next Q ines contains queries.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "1. Queue becomes [3]\n2. Queue becomes [3, 4]\n3. Element at front = 3\n4. Queue becomes [4]\n5. Element at front = 4",
+        "output_format": "For each test case, print the required queries.",
+        "samples": [
+            {
+                "input": "1\n5\nadd 3\nadd 4\nprint\nremove\nprint\n",
+                "output": "3\n4\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Queue AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

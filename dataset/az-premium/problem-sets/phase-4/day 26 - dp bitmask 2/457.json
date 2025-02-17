@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Find the minimum number of edges to be deleted to make a Directed Graph a DAG (directed acyclic graph).</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\n\nbool isEdge[15][15];\nint dp[(1<<15)];\nint n;\n\nint dfs(int vis) {\n    int pos = __builtin_popcount(vis);\n    if(pos == n) {\n        return 0;\n    }\n    if(dp[vis] != -1) {\n        return dp[vis];\n    }\n    int ans = 2e18;\n    for (int i = 0; i < n; ++i) {\n        if((vis & (1<<i)) == 0) {\n            int temp = 0;\n            for (int j = 0; j < n; ++j) {\n                if(vis & (1<<j)) {\n                    temp += isEdge[i][j];\n                }\n            }\n            ans = min(ans, dfs(vis | (1<<i)) + temp);\n        }\n    }\n\n    dp[vis] = ans;\n    return ans;\n}\n\nsigned main(){\n    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n    int t;\n    cin >> t;\n    while(t--) {\n        cin >> n;\n        for (int j = 0; j < (1<<n); ++j) {\n            dp[j] = -1;\n        }\n        for (int i = 0; i < n; ++i) {\n            for (int j = 0; j < n; ++j) {\n                cin >> isEdge[i][j];\n            }\n        }\n        cout << dfs(0) << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:43:16.803694+00:00"
+        },
+        "hints": {
+            "hint1": "<p>We need to make the directed graph, acyclic. This can be done by removing any cycles in the graph. It would be difficult to think in terms of finding cycles and then removing the edges. Can you use topological sorting to find the cycles?</p>",
+            "hint2": "<p>If we find the topological sorting of a graph, the back edges, i.e. any edge from j to i (i &lt; j), if removed will result in a DAG. But there are multiple number of topological sortings present in a graph, so you need to consider all of them and find the minimum edges to remove.</p>",
+            "solution_approach": "<p>We would make the DP array as DP[pos][vis] which denotes the minimum edges to delete to make the graph DAG, pos denotes the current vertex we are at and vis denotes the subset of vertices we have visited. When we need to assign a vertex to the current position, we need to ensure that the vertex has not been visited and for finding the back edges from i to the vertices already visited, we would use another loop and check this.</p><p>Optimisation similar to the problem Chess and GCD can be made here. The current vertex, pos would be equal to the number of vertices we have already visited, so the DP array can be made as DP[vis].</p><p>Time Complexity per test case: O(N^2 * 2^N)</p>"
+        },
+        "id": 457,
+        "input_format": "<p>The first line contains an integer T (1 \u2264 T \u2264 50) - the number of testcases.</p><p>The first line of each test case contains an integer N. 1 \u2264 N \u2264 15.</p><p>The next N lines contains N space-separated integers, IsEdge[i][j] which denotes if there is an edge from node i to node j. IsEdge[i][j] = 0 if there is no edge from node i to node j and IsEdge[i][j] = 1 if there is an edge from node i to node j.</p><p><strong>Given graph is directed.</strong></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case print the output in a new line.</p>",
+        "samples": [
+            {
+                "input": "10\n8\n1 0 0 1 1 0 0 0\n0 0 0 1 1 0 0 0\n0 1 1 0 1 0 0 0\n0 0 0 1 1 0 0 0\n1 0 0 0 0 0 1 1\n0 0 0 0 0 1 1 0\n0 0 0 0 0 0 0 0\n0 0 0 0 0 0 0 1\n5\n1 1 0 0 0\n0 1 0 1 1\n0 1 0 1 1\n0 1 0 0 0\n0 0 1 1 1\n2\n0 1\n0 0\n6\n0 1 0 0 1 0\n0 1 0 0 0 1\n0 1 0 0 0 0\n0 0 0 1 0 0\n0 0 0 0 0 0\n1 0 0 0 1 1\n11\n0 1 0 0 0 0 1 1 0 0 0\n1 0 0 0 0 0 0 0 0 0 0\n0 0 1 0 1 0 0 1 1 1 1\n0 0 0 0 1 0 1 1 0 0 1\n1 0 1 1 0 0 0 1 0 0 1\n1 0 0 0 0 0 0 0 0 0 0\n0 1 0 0 0 0 0 0 0 0 0\n0 0 1 0 0 1 0 0 0 0 0\n0 1 0 0 0 1 0 0 0 0 1\n0 0 0 0 0 0 0 0 1 1 0\n1 1 1 0 0 0 0 0 0 0 1\n2\n1 1\n0 0\n4\n0 0 1 1\n0 0 0 0\n1 1 0 0\n1 0 0 0\n5\n0 1 0 0 0\n1 0 0 0 1\n0 0 0 0 1\n0 0 0 1 0\n1 0 1 0 0\n3\n0 0 0\n0 0 0\n0 0 0\n8\n0 0 0 0 0 1 0 0\n0 1 0 0 0 0 0 0\n1 0 0 0 0 0 0 1\n1 0 0 0 1 1 0 0\n0 0 0 0 0 0 1 0\n0 0 0 1 1 0 0 1\n0 0 1 0 0 0 1 0\n0 0 0 0 0 0 1 0 ",
+                "output": "1\n2\n0\n1\n6\n0\n2\n2\n0\n2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Dynamic Programming",
+            "Topological Ordering",
+            "Tricky",
+            "Bitmask"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "Minimum Edge Deletion to make DAG",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

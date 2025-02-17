@@ -1,0 +1,60 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are going back to KGP and want to travel from Delhi to Kolkata by plane. You would like to find answers to the following questions:\n\n$1.$ What is the minimum price of such a route?\n$2.$ How many minimum-price routes are there? (modulo $10^{9}+7$)\n$3.$ What is the minimum number of flights in a minimum-price route?\n$4.$ What is the maximum number of flights in a minimum-price route?",
+        "complete_approach": "",
+        "constraints": "$ 1 \u2264 n \u2264 10^{5}$\n$ 0 \u2264 m \u2264 2\u22c510^{5}$\n$ 1 \u2264 a , b \u2264 n$\n$ 1 \u2264 c \u2264 10^{9}$",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\r\nusing namespace std;\r\n\r\n#define ll int64_t\r\n#define endl '\\n'\r\n\r\n\r\nconst ll MOD = 1e9 + 7;\r\nint n, m;\r\nvector<vector<array<int, 2>>> adj;\r\nvector<ll> dist, cnt, d, mnd, mxd;\r\n\r\n//State(node):{ min price,node,cnt of min price routes, min lenght path, max lenght path for min price }\r\n\r\nvoid dijktra(int src) {\r\n\tdist.assign(n + 1, 1e18);\r\n\tcnt.assign(n + 1, 0);\r\n\td.assign(n + 1, 0);\r\n\tmnd.assign(n + 1, 0);\r\n\tmxd.assign(n + 1, 0);\r\n\tdist[src] = 0;\r\n\tcnt[src] = 1;\r\n\tpriority_queue<array<ll, 2>, vector<array<ll, 2>>, greater<array<ll, 2>>> pq;\r\n\tpq.push({0, src});\r\n\twhile (!pq.empty()) {\r\n\t\tauto x = pq.top();\r\n\t\tpq.pop();\r\n\t\tint u = x[1];\r\n\t\tif (x[0] > dist[u])continue;\r\n\t\tfor (auto y : adj[u]) {\r\n\t\t\tint v = y[0], w = y[1];\r\n\t\t\tif (dist[v] > dist[u] + w) {\r\n\t\t\t\tdist[v] = dist[u] + w;\r\n\t\t\t\tpq.push({dist[v], v});\r\n\t\t\t\tcnt[v] = cnt[u];\r\n\t\t\t\tmnd[v] = mnd[u] + 1;\r\n\t\t\t\tmxd[v] = mxd[u] + 1;\r\n\t\t\t}\r\n\t\t\telse if (dist[v] == dist[u] + w) {\r\n\t\t\t\t(cnt[v] += cnt[u]) %= MOD;\r\n\t\t\t\tmnd[v] = min({mnd[v], mnd[u] + 1, mxd[u] + 1});\r\n\t\t\t\tmxd[v] = max({mxd[v], mnd[u] + 1, mxd[u] + 1});\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}\r\nvoid solve() {\r\n\tcin >> n >> m;\r\n\tint u, v, w;\r\n\tadj.assign(n + 1, vector<array<int, 2>>());\r\n\tfor (int i = 0; i < m; i++) {\r\n\t\tcin >> u >> v >> w;\r\n\t\tadj[u].push_back({v, w});\r\n\t}\r\n\tdijktra(1);\r\n\tif (dist[n] == 1e18)cout << -1 << endl;\r\n\telse cout << dist[n] << \" \" << cnt[n] << \" \" << mnd[n] << \" \" << mxd[n] << endl;\r\n}\r\nint main() {\r\n\tios_base :: sync_with_stdio(0);\r\n\tcin.tie(nullptr); cout.tie(nullptr);\r\n\r\n#ifdef Mastermind_\r\n\tfreopen(\"input.txt\", \"r\", stdin); \\\r\n\tfreopen(\"output.txt\", \"w\", stdout);\r\n#endif\r\n\tint t = 1;\r\n\t// int i = 1;\r\n\t// cin >> t;\r\n\twhile (t--) {\r\n\t\t// cout << \"Case #\" << i << \": \";\r\n\t\tsolve();\r\n\t\t// i++;\r\n\t}\r\n\treturn 0;\r\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:23:10.830197+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "We can run Dijkstra keeping track of\n\nthe distance: $\\texttt{dist}[]$\nthe number of ways with the minimum distance: $\\texttt{num}[]$\nthe minimum flights with the minimum distance: $\\texttt{minf}[]$, and\nthe maximum flights with the minimum distance: $\\texttt{maxf}[]$.\n\n\nFor every node, $v$, we take into consideration all of its neighbors, $u$. If we\ncan reach $u$ in a shorter distance than its current minimum, we update the\ndistance and reset $\\texttt{num}[u]$, $\\texttt{minf}[u]$, and $\\texttt{maxf}[u]$.\n\nWe also have to take into\nconsideration if we can reach $u$ in an equivalent distance. If so, we update:\n\n- $\\texttt{num}[u] = \\texttt{num}[v] + \\texttt{num}[u]$\n\n- $\\texttt{minf}[u] = \\min(\\texttt{minf}[u], \\texttt{minf}[v] + 1)$\n\n- $\\texttt{maxf}[u] = \\max(\\texttt{maxf}[u], \\texttt{maxf}[v] + 1)$\n\nTime Complexity: $\\mathcal{O}((N + M)*\\log N)$"
+        },
+        "id": 885,
+        "input_format": "The first input line contains two integers $n$ and $m$: the number of cities and the number of flights. The cities are numbered $1,2,\u2026,n$. City $1$ is Delhi, and city $n$ is Kolkata.\n\nAfter this, there are $m$ lines describing the flights. Each line has three integers $a$, $b$, and $c$: there is a flight from city $a$ to city $b$ with price $c$. All flights are one-way flights.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print four integers according to the problem statement in a single line. If there is no route from Delhi to Kolkata, then print $-1$.",
+        "samples": [
+            {
+                "input": "4 5\n1 4 5\n1 2 4\n2 4 5\n1 3 2\n3 4 3\n",
+                "output": "5 2 1 2\n"
+            },
+            {
+                "input": "5 5\n1 2 4\n3 4 6\n2 1 3\n3 5 10\n5 4 6\n",
+                "output": "-1\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Single Source Shortest Path",
+            "Dijkstra"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Back to KGP",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

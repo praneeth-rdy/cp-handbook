@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Find the number of diagonals in the Convex <i>N</i>-gon.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nlong long mod = 1000000007;\n\nvoid solve() {\n  long long n;\n  cin >> n;\n  long long ans = (n * (n - 1)) / 2 - n;\n  cout << (ans % mod) << '\\n';\n}\nsigned main() {\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n  long long _t;\n  cin >> _t;\n  while (_t--) solve();\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:23:57.648598+00:00"
+        },
+        "hints": {
+            "hint1": "Choose $2$ points as opposite ends of diagonals, but sides are not diagonal",
+            "hint2": "If we combinatorially formulate Hint 1, we get ${N\\choose2} - N$.",
+            "solution_approach": "$({N\\choose2} - N)\\% 1000000007$.\n\nTime Complexity : $O(1)$"
+        },
+        "id": 68,
+        "input_format": "<p>The first line contains <i>T</i> (1 \u2264 <i>T</i> \u2264 100000), the number of test cases.<br>Each of the next <i>T</i> lines contains a positive integer <i>N</i> denoting the number of sides of convex polygon (3 \u2264 <i>N</i> \u2264 10<sup>9</sup>).</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<figure class=\"image\"><img src=\"https://lh6.googleusercontent.com/raeG_AVhmc_YQbwMQlZ5G4tKqP52vZJhIqWGtDC1o9l87w1U0crsIBn5iI_9ZmjRDG7b7GoD79AXs1k4H_ukwdwckLpIO2loNc_l1OD3ve7T1O4RwH87UtwPdB4RjexDG_LD37KW\"></figure>",
+        "output_format": "<p>For each test case, print a single number denoting the number of diagonals in the convex N-gon. Since answer can be large, print it with modulo 1000000007.</p>",
+        "samples": [
+            {
+                "input": "2\n4\n5",
+                "output": "2\n5"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Number of Diagonals",
+        "video_editorial_id": 10672
+    },
+    "details": "Problem Details"
+}

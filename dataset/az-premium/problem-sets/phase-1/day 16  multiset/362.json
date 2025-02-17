@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given N blocks. You have to build towers by placing blocks on top of each other with the condition that the upper block must be smaller than the lower block. You have to process the blocks in the given order. Find the minimum possible number of towers you can create.</p>",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^5$  \n\n$1 \\leq N \\leq 10^5$  \n\n$1 \\leq A_i \\leq 10^9$  \n\nIt is guaranteed that the sum of $N$ over all test cases does not exceed $10^6$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n#define int long long\n\nsigned main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int n;\n    cin >> n;\n    multiset<int> s;\n    for (int i = 0; i < n; ++i) {\n      int x;\n      cin >> x;\n      auto it = s.upper_bound(x);\n      if (it == s.end()) {\n        s.insert(x);\n      } else {\n        s.erase(it);\n        s.insert(x);\n      }\n    }\n    cout << s.size() << \"\\n\";\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:46:05.857809+00:00"
+        },
+        "hints": {
+            "hint1": "Store the blocks in a multiset as you iterate through the array and find the maximum block which is strictly smaller than the current block. If it exists, put the current block there, otherwise, start a new tower.",
+            "hint2": "",
+            "solution_approach": "The key idea here is that we want to maintain a set of blocks that can be used as the top of a tower. Initially, the set is empty, so any block can be used to start a new tower. For each subsequent block, we want to find the smallest block in the set that is just greater than the current block. If such a block exists, we can add the current block to the top of that tower by replacing the old block in the set with the new block. Otherwise, we must start a new tower with the current block and insert this number in the set. By maintaining this set, we can ensure that we always use the smallest possible block as the top of each tower, which will minimize the total number of towers required.\nFor each test case:\n* Read the number of blocks.\n* Create an empty multiset to keep track of the blocks used to build towers.\n* For each block in the given order:\n    * Find the iterator to the smallest element in the multiset that is greater than the current block.\n    * If such an iterator is not found (i.e., the current block is greater than all blocks in the multiset), insert the block into the multiset.\n    * If such an iterator is found, erase that element from the multiset and insert the current block.\n    * The size of the multiset after all blocks have been processed gives the minimum number of towers that can be built.\nTime Complexity per test case: $O(N \\log N)$"
+        },
+        "id": 362,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\n\nThe first line of each test case contains one integer $N$ - the length of the array.\n\nThe second line of each test case contains $N$ space-separated integers.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, the towers would be: [3, 2, 1] and [5, 4].\n\nFor the second test case, the towers would be: [1], [1], [1], [1].\n\nFor the third test case, the towers would be: [5, 4, 3] and [5, 2].",
+        "output_format": "<p>For each test case, print the minimum possible number of towers you can create.</p>",
+        "samples": [
+            {
+                "input": "3\n5\n3 2 5 1 4\n4\n1 1 1 1\n5\n5 4 5 3 2 \n",
+                "output": "2\n4\n2\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Towers AZ101",
+        "video_editorial_id": 8186
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given are two sequences a={a<sub>0</sub>,\u2026,a<sub>N\u22121</sub>} and b={b<sub>0</sub>,\u2026,b<sub>N\u22121</sub>} of N non-negative integers each.</p><p>You will choose an integer k such that 0\u2264k&lt;N and an integer x not less than 0, to make a new sequence of length N, a\u2032={a\u2032<sub>0</sub>,\u2026,a\u2032<sub>N\u22121</sub>}, as follows:</p><ul><li>a\u2032<sub>i</sub>=a<sub>(i+k)modN</sub>&nbsp;XOR&nbsp;x</li></ul><p>Find all pairs (k,x) such that a\u2032 will be equal to b.</p>",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">1 \u2264 N  \u2264 2*10^5.\n0 \u2264 ai &lt; 2^30.\n0 \u2264 bi &lt; 2^30.</code></pre>",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "```cpp\n# include <bits/stdc++.h>\n#include <string>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\nusing lli =  int long long;\nusing ii = pair<int,int>;\n#define F first\n#define S second\n//#define ld long double;\n\nconst int tot = 1e6+100;\nconst lli mod = 1e9+7;\nint n;\n\nvector<lli> Z;\n\n//Code for Z algo\nvoid Zalgo(vector<lli> &s){\n\n  int n = s.size();\n  Z.assign(n,0);\n\n  int l = 0, r = 0;\n  for (int i = 1; i < n; i++){\n\n    if (i > r){\n\n      l = r = i;\n      while (r<n && s[r-l] == s[r]){\n        r++;\n      }\n      Z[i] = r-l; \n      r--;\n    } \n    else{\n      int k = i-l;\n      if (Z[k] < r-i+1){\n        Z[i] = Z[k];\n      } \n      else{\n        l = i;\n        while (r < n && s[r-l] == s[r]){\n          r++;\n        }\n        Z[i] = r-l; \n        r--;\n      }\n    }\n  }\n\n}\n\nint main(){\n    #ifndef ONLINE_JUDGE\n    // for getting input from input.txt\n    freopen(\"input.txt\", \"r\", stdin);\n    // for writing output to output.txt\n    freopen(\"output.txt\", \"w\", stdout);\n    #endif\n    IOS\n    \n    cin >> n;\n    vector<lli> a(n);\n    vector<lli> b(n);\n\n    for(int i=0;i<n;i++){\n        cin >> a[i];\n    }\n\n    for(int i=0;i<n;i++){\n        cin >> b[i];\n    }\n\n    vector<lli> c(n,0); //stores adjacent xor of a\n    vector<lli> d(n,0); //stores adjacent xor of b\n\n    for(int i=0;i<n;i++){\n        c[i] = a[i]^a[(i+1)%n]; \n    }\n\n    for(int i=0;i<n;i++){\n        d[i] = b[i]^b[(i+1)%n]; \n    }\n\n    // form the string S = (d)+(-1)+(c)+(c)\n    vector<lli> s;\n    s.insert(s.end(),d.begin(),d.end());\n    s.push_back(-1);\n    s.insert(s.end(),c.begin(),c.end());\n    s.insert(s.end(),c.begin(),c.end());\n\n\n    Zalgo(s);\n\n    lli x;\n\n    //find the values of k and x.\n    for(int k=0;k<n;k++){\n      if(Z[k+n+1]==n){\n        x = b[0]^a[k];\n        cout << k << \" \" << x << \"\\n\";\n      }\n    }\n\n    return 0;\n}```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:28:12.140940+00:00"
+        },
+        "hints": {
+            "hint1": "Here we have to shift the array a by some distance k such that , on taking xor with a number x , it corresponds to array b. In other words we have to convert array a to array b , after some cyclic shift and taking xor with a number x.  ",
+            "hint2": "<p>For any such pair to exist , every element of array b , must follow this relation:</p><p>b<sub>i </sub>= a<sub>(i+k)modN</sub> ^ x.</p><p>If we are able to find out the value of k , i.e. (the shift of array a) , then we can easily calculate its corresponding \u2018x\u2019 value , by changing the above relation into x = a<sub>(i+k)modN</sub> ^ b<sub>i&nbsp;</sub></p><p><br>&nbsp;</p>",
+            "solution_approach": "<p>Take the xor of every adjacent element of a and b in a cyclic way. Eventually if the adjacent xor&nbsp; arrays of both a and b are similar (i.e. shifted by some places) , then it means pairs of k and x exist.&nbsp;</p><p>Let array a = a0 , a1 , a2 , a3 , a4 , a5 and array b = b0 , b1 , b2 , b3 , b4 , b5</p><p>Take adjacent xor of a : c = a0^a1 , a1^a2 , a2^a3 , a3^a4 , a4^a5 , a5^a0<br>and adjacent xor of b : d = b0^b1 , b1^b2 , b2^b3 , b3^b4 , b4^b5 , b5^b0</p><p>For a valid pair of k and x :-</p><p>bi ^ bi+1 = aj ^ aj+1&nbsp; s.t. j = (i+k)MOD n</p><p>Hence the above relation can also be written as :-</p><p>bi ^ bi+1 = a(i+k)modN ^ aj+1 =&gt; bi&nbsp; = (a(i+k)modN ^ aj+1 )^ bi+1<br>Which eventually becomes :- b<sub>i </sub>= a<sub>(i+k)modN</sub> ^ x.&nbsp; &nbsp; Where x = aj+1 ^ bi+1<br>&nbsp;</p><p>Hence we see that the pattern of b can be obtained from a , when we take adjacent xor of both a and b.</p><p>We use a string matching algorithm to match the pattern. We try to match array c with array d. Every valid match (of length n) , of array c with d will give a different value of k (which indicates the shift of array a required to get array b) . And from each k value , we can easily calculate the corresponding x value.</p><p>Which string matching algorithm will be suitable for this ? We can use Z algo , where</p><p>Z[i] = largest x such that S[0,1,2\u2026...x] = S[i,i+1,i+2\u2026...i+x-1]</p><p><br>&nbsp;</p><p>We apply Zalgo to this array :&nbsp;</p><p>S = b0^b1 , b1^b2 \u2026... bn^b0 , -1 , a0^a1, a1^a2 \u2026... an^a0 , a0^a1 a1^a2 \u2026... an^a0</p><p>&nbsp;</p><p>We add the array a twice , because this is a cyclic shift and we have to check at all possible starting points.&nbsp;</p><p>-1 acts like an indicator to the starting point . After that point we start checking , at which index we are getting a match of length n. This gives the value of k and correspondingly x.</p><p>&nbsp;</p><p><strong>EXAMPLE RUN:</strong></p><p>6</p><p>0 1 3 7 6 4</p><p>1 5 4 6 2 3</p><p>&nbsp;</p><p>Given : n=6</p><p>a = 0 1 3 7 6 4</p><p>b = 1 5 4 6 2 3</p><p>&nbsp;</p><p>Corresponding adjacent xor array formed from a and b.</p><p> = 1 2 4 1 2 4&nbsp;</p><p>d = 4 1 2 4 1 2&nbsp;</p><p>&nbsp;</p><p>S = 4 1&nbsp; 2 4 1 2 -1 1 2 <strong>4</strong> 1 2<strong> 4</strong> 1 2 4 1 2 4 .</p><p>Now corresponding Z array Z = 0&nbsp; 0 0 3 0 0&nbsp; 0&nbsp; 0 0 <strong>6</strong> 0 0 <strong>6</strong> 0 0 4 0 0 1</p><p>&nbsp;</p><p>At 2 positions we are getting a n=6 length match i.e. at index (9-6-1 = 2) and index (12-6-1=5).</p><p>These are the 2 values of k.</p><p>For k=2 x = b[0]^a[k] = 1^3 = 2</p><p>For k=5 x = b[0]^a[k] = 1^4 = 5</p><p><br>The answer is&nbsp;</p><p>2 2</p><p>5 5 &nbsp;</p>"
+        },
+        "id": 442,
+        "input_format": "<p>First line contains an integer N, 1 \u2264 N \u2264 2*10^5.</p><p>Second line contains N space-separated integers, &nbsp;0\u2264 a<i><sub>i </sub>&lt; 2^30.</i></p><p>Third line contains N space-separated integers, &nbsp;0\u2264 b<i><sub>i </sub>&lt; 2^30.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>For Sample 1,</p><p>The array a = 1 4 2 3 0</p><p>The array b = 6 7 4 5 0</p><p>Convert a such that , a\u2032<sub>i</sub>=a<sub>(i+2)mod5</sub> ^ 4</p><p>The converted array : (2 3 0 1 4)</p><p>Taking xor with 4 , the array finally becomes :- 6 7 4 5 0</p><p>This is the same as array b. Hence only one pair is obtained.</p>",
+        "output_format": "<p>Print all pairs&nbsp;<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo stretchy=\"false\">(</mo><mi>k</mi><mo>,</mo><mi>x</mi><mo stretchy=\"false\">)</mo></math>&nbsp;such that&nbsp;<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><msup><mi>a</mi><mo>\u2032</mo></msup></math>&nbsp;and&nbsp;<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>b</mi></math>&nbsp;will be equal, using one line for each pair, in ascending order of&nbsp;<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>k</mi></math>&nbsp;(ascending order of&nbsp;<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi></math>&nbsp;for pairs with the same&nbsp;<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>k</mi></math>).</p><p>If there are no such pairs, the output should be empty.</p>",
+        "samples": [
+            {
+                "input": "5\n1 4 2 3 0\n6 7 4 5 0",
+                "output": "2 4"
+            },
+            {
+                "input": "6\n0 1 3 7 6 4\n1 5 4 6 2 3",
+                "output": "2 2\n5 5"
+            },
+            {
+                "input": "2\n1 2\n0 0",
+                "output": ""
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Strings",
+            "Z Algo"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "XORney",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given a rotated sorted array. Find the index of the minimum element in the array.</p><p><strong>All the elements are distinct.</strong></p><p>&nbsp;</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\nint n;\nvector<int> arr;\n\nbool check(int i){\n   if(arr[i]<arr[0])return 1;\n   else return 0;\n}\n\nvoid solve(){\n   cin>>n;\n   arr.resize(n);\n   for(int i=0;i<n;i++){\n       cin>>arr[i];\n   }\n\n   int lo = 1;\n   int hi = n-1;\n   int ans = 0;\n   while(lo<=hi){\n       int mid = (lo+hi)/2;\n       if(check(mid)){\n           ans = mid;\n           hi = mid - 1;\n       }else{\n           lo = mid + 1;\n       }\n   }\n   cout<<ans<<endl;\n}  \n\nsigned main(){\n   ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);\n   int _t;cin>>_t;while(_t--)\n   solve();\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:42:19.817101+00:00"
+        },
+        "hints": {
+            "hint1": "The array was sorted in ascending order originally. When it is rotated, there would be a point in the array where the element is smaller than the element before it, i.e. A[i-1] > A[i]. You need to find this point.",
+            "hint2": "You can use the fact that all numbers to the left of the inflection point (where the element is smaller than the element before it) are greater than the first number and all numbers to the right of the inflection point are smaller than the first number.",
+            "solution_approach": "<p>We will use binary search on the given array in a different way since the array is not sorted. We take the left pointer as L = 0 and the right pointer as R = N-1. If at any point, we get A[L] \u2264 A[R], that means the array from L to R is sorted and the smallest number would be A[L]. We take mid = (L+R)/2.</p><p>If A[L] \u2264 A[mid], that means the array is sorted from L to mid, mid+1 could be a possible answer and then we continue binary search from L = mid+1 to R. Otherwise, A[L] &gt; A[mid], that means the minimum number would be somewhere between L to mid, because if the array is not increasing in this range there will be an inflection point where the element is smaller than the element before it, so we continue binary search from L to R = mid.</p><p>Time Complexity per test case: O(N + log<sub>2</sub>N) (since we are performing binary search on the length of the given array)</p>"
+        },
+        "id": 108,
+        "input_format": "<p>The first line contains <i>T</i>, the number of test cases (<i>1&lt;=T&lt;=10000</i>).</p><p>The first line contains an integer <i>N</i> where 1<i>&lt;=N&lt;=10^5</i>.</p><p>The second line contains <i>N</i> space-separated integers A<sub>1</sub>,A<sub>2</sub>....A<sub>N</sub> where <i>-1e9&lt;=Ai&lt;=1e9</i>.</p><p>Sum of <i>N</i> over all test cases <i>\u226410^6</i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case print the index of the minimum element in the array.</p><p><strong>0-indexed.</strong></p>",
+        "samples": [
+            {
+                "input": "5\n5\n3 4 5 1 2\n5\n4 5 1 2 3\n5\n5 1 2 3 4\n5\n1 2 3 4 5\n5\n2 3 4 5 1",
+                "output": "3\n2\n1\n0\n4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-ByteDance"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Rotated Sorted Array",
+        "video_editorial_id": 10697
+    },
+    "details": "Problem Details"
+}

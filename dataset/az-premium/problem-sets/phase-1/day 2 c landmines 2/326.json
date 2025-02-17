@@ -1,0 +1,55 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an integer N. You have to tell whether the number is a perfect square/cube according to the given query. Do not use inbuilt sqrt() and cube() function. As sqrt(4) can be equal to 1.9999999 and int(1.999999). = 1. Due to precision issue do not use sqrt() if you are dealing with integers.",
+        "complete_approach": "",
+        "constraints": "1 \u2264 T \u2264 100\n\n1 \u2264 N \u2264 10<sup>7</sup>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <iostream>\nusing namespace std;\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint main() {\n    IOS\n    int t; cin >> t;\n    while (t--) {\n        int q, n; cin >> q >> n;\n        if (q == 1) {\n            bool is_perf_sq = false;\n            for (int i = 1; i * i <= n; ++i) {\n                if (i * i == n) {\n                    is_perf_sq = true;\n                }\n            }\n            if (is_perf_sq) {\n                cout << \"YES\\n\";\n            } else {\n                cout << \"NO\\n\";\n            }\n        } else {\n            bool is_perf_cube = false;\n            for (int i = 1; i * i * i <= n; ++i) {\n                if (i * i * i == n) {\n                    is_perf_cube = true;\n                }\n            }\n            if (is_perf_cube) {\n                cout << \"YES\\n\";\n            } else {\n                cout << \"NO\\n\";\n            }\n        }\n    }\n    return 0;\n}\n```\n\n\n\n",
+                "language": "C++14"
+            },
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint main() {\n    IOS\n    int t; cin >> t;\n    while (t--) {\n        int q, n; cin >> q >> n;\n        if (q == 1) {\n            int x = sqrt(n);\n            if (x * x == n) {\n                cout << \"YES\\n\";\n            } else {\n                cout << \"NO\\n\";\n            }\n        } else {\n            int x = cbrt(n);\n            if (x * x * x == n) {\n                cout << \"YES\\n\";\n            } else {\n                cout << \"NO\\n\";\n            }\n        }\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:45:05.515770+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "If x is a divisor of N, then for x to be the square root of N, it has to be equal to N/x. Either x \u2264 \u221aN or N/x \u2264 \u221aN. So we iterate from 1 to \u221aN to check if N is a perfect square. Similarly for checking if N is a perfect cube, we iterate from 1 to cube root(N).\n\nTime Complexity per test case: O(\u221aN)\n\nWe can also solve this using the builtin function, sqrt() and cbrt() but you need to keep in mind that the return type is double for sqrt() and cbrt(). \n\nTime Complexity per test case: O(1)"
+        },
+        "id": 326,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains two space-separated integers Q, N - Q=1 denotes that you have to check if N is a perfect square and Q=2 denotes that you have to check if N is a perfect cube.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>For the first test case, 8*8 = 64, hence it is a perfect square.</p><p>For the second test case, 4*4*4 = 64, hence it is a perfect cube.</p><p>For the third test case, 9 is not a perfect cube.</p><p>For the fourth test case, 5 is not a perfect square.</p>",
+        "output_format": "For each test case, print \u201cYES\u201d if the number is a perfect square/cube and \u201cNO\u201d if the number is not a perfect square/cube, according to the given query.",
+        "samples": [
+            {
+                "input": "4\n1 64\n2 64\n2 9\n1 5\n",
+                "output": "YES\nYES\nNO\nNO\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Perfect Square Cube Check",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

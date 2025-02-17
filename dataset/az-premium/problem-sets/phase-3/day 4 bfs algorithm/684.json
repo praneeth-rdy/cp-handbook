@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have a 2-D array of size <strong>N x M</strong>. Consider connected <strong>0</strong>s (which share a common edge) as one single component and <strong>1</strong>s as walls. Replace <strong>0</strong>s with the size of the connected component but if the size of the component is one, then leave it with <strong>0</strong>.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 Sum of (N x M) over all test cases \u2264 2 x 10<sup>5</sup><br>0 \u2264 A<sub>i</sub> \u2264 1</p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define pii pair<int, int>\n#define mp make_pair\n\nvoid bfs(vector<vector<int>> &arr, vector<vector<int>> &vis, int i, int j)\n{\n    int dx[] = {0, 0, 1, -1}, dy[] = {1, -1, 0, 0};\n    int n = arr.size(), m = arr[0].size();\n\n    vis[i][j] = 2;\n    int sz = 1;\n\n    queue<pii> q;\n    q.push(mp(i, j));\n    while (!q.empty())\n    {\n        int x = q.front().first, y = q.front().second;\n        q.pop();\n        for (int k = 0; k < 4; k++)\n        {\n            int nx = x + dx[k], ny = y + dy[k];\n            if ((nx >= 0 && nx < n && ny >= 0 && ny < m) && vis[nx][ny] == 0)\n            {\n                vis[nx][ny] = 2, sz++;\n                q.push(mp(nx, ny));\n            }\n        }\n    }\n\n    vis[i][j] = 1;\n    if (sz == 1)\n        return;\n    arr[i][j] = sz;\n\n    q.push(mp(i, j));\n    while (!q.empty())\n    {\n        int x = q.front().first, y = q.front().second;\n        q.pop();\n        for (int k = 0; k < 4; k++)\n        {\n            int nx = x + dx[k], ny = y + dy[k];\n            if ((nx >= 0 && nx < n && ny >= 0 && ny < m) && vis[nx][ny] == 2)\n            {\n                vis[nx][ny] = 1, arr[nx][ny] = sz;\n                q.push(mp(nx, ny));\n            }\n        }\n    }\n}\n\nvoid solve()\n{\n    int n, m;\n    cin >> n >> m;\n    vector<vector<int>> arr(n, vector<int>(m));\n    for (int i = 0; i < n; i++)\n        for (int j = 0; j < m; j++)\n            cin >> arr[i][j];\n\n    // <0 -> not visited, 1 -> completed, 2 -> visited but not completed>\n    vector<vector<int>> vis(n, vector<int>(m));\n    for (int i = 0; i < n; i++)\n        for (int j = 0; j < m; j++)\n            vis[i][j] = arr[i][j];\n\n    for (int i = 0; i < n; i++)\n        for (int j = 0; j < m; j++)\n            if (vis[i][j] == 0)\n                bfs(arr, vis, i, j);\n    for (int i = 0; i < n; i++)\n    {\n        for (int j = 0; j < m; j++)\n            cout << arr[i][j] << \" \";\n        cout << \"\\n\";\n    }\n}\n\nsigned main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n    int _t = 1; // number of test cases\n    cin >> _t;\n    while (_t--)\n        solve();\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:20:24.951559+00:00"
+        },
+        "hints": {
+            "hint1": "Use simple BFS.",
+            "hint2": "Use BFS to determine the component size and then replace them with the size value.",
+            "solution_approach": "<p>Keep a visited array. If the <i>Visited[i]</i> value is 0, then that node is not visited, 2 means visited but the value is not updated, 1 means the value is updated too. Now, we can perform two BFS - one for getting the exact size and another to replace all the 0s accordingly. The time complexity will be O(N x M).</p>"
+        },
+        "id": 684,
+        "input_format": "<p>The first line contains a single integer <strong>t</strong>, the number of test cases.<br>For each test case, the first line contains two integers <strong>N</strong> and <strong>M</strong> and then there are N lines containing M 0s and 1s, representing a N x M binary matrix.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In the first test case, we have only 2 components and both have size 1. So nothing is replaced.\nIn the second test case, we have a total of 5 components of size 7, 4, 3, 1, 1 respectively. So all the 0s are replaced accordingly.",
+        "output_format": "For each test case, print the final matrix after replacing all the 0s accordingly.",
+        "samples": [
+            {
+                "input": "2\n2 2\n0 1\n1 0\n6 5\n1 0 0 1 0\n0 1 0 0 0\n0 0 1 1 0\n0 1 1 0 1\n1 1 1 1 1\n0 1 0 0 0",
+                "output": "0 1 \n1 0 \n1 7 7 1 7\n4 1 7 7 7\n4 4 1 1 7\n4 1 1 0 1\n1 1 1 1 1\n0 1 3 3 3"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Dfs",
+            "company-Cisco"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Connected Component Size",
+        "video_editorial_id": 10668
+    },
+    "details": "Problem Details"
+}

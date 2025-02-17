@@ -1,0 +1,56 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an integer array **nums** with **n** integers in it. You have to move all the zeros present in the array to the end of the array while maintaining the relative order of the rest of the elements. \nSolve this problem using constant extra space.\nTry to solve the problem using minimum number of swap operations.",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">1 &lt;= n &lt;= 100000\n-100000 &lt;= nums[i] &lt;= 100000</code></pre>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid MovingZeros(vector <int>& nums) {\n\tint n = nums.size();\n\tint lastnonzero = 0;\n\tint cur = 0;\n\twhile (cur < n) {\n\t\tif (nums[cur] != 0) {\n\t\t\tswap(nums[lastnonzero++], nums[cur]);\n\t\t}\n\t\tcur++;\n\t}\n}\n\nint main() {\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL);\n\tint n;\n\tcin >> n;\n\tvector <int> nums(n);\n\tfor (auto &i : nums)\n\t\tcin >> i;\n\tMovingZeros(nums);\n\tfor (auto i : nums)\n\t\tcout << i << \" \";\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:15:39.002460+00:00"
+        },
+        "hints": {
+            "hint1": "<p>If the current element is non-0, its' correct position can at best be its current position or a position earlier.</p>",
+            "hint2": "The i-th non zero element of the array will be at the i-th index in the resultant array.",
+            "solution_approach": "We use a two-pointer approach to solve this problem. \nThe first pointer is the slow pointer (lastnonzero) which represents the number of non-zero elements found.\nThe second pointer (cur) represents the current number.\nThe i-th non zero element of the array will be at the i-th index in the resultant array.\nIf the current number is non-zero we swap it with the number present at the slow pointer because that is the index where this number should end up.\n\nThe code will maintain the following invariant:\n\n1. All elements before the slow pointer (lastnonzero) are non-zeroes.\n2. All elements between the current and slow pointer are zeroes.\n\nIf the current number is zero, we just move to the next index."
+        },
+        "id": 597,
+        "input_format": "Implement the **MovingZeros** function that takes the array **nums**.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "The relative ordering of the non-zeros elements is maintained and the zeros are moved to the end of the array.",
+        "output_format": "The function should make changes in the array itself. No need to return anything.",
+        "samples": [
+            {
+                "input": "6\n0 2 0 0 1 3",
+                "output": "2 1 3 0 0 0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Greedy",
+            "Two Pointers"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nvoid MovingZeros(vector <int>& nums) {\n\n}\n\n<fix>\nint main() {\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL);\n\tint n;\n\tcin >> n;\n\tvector <int> nums(n);\n\tfor (auto &i : nums)\n\t\tcin >> i;\n\tMovingZeros(nums);\n\tfor (auto i : nums)\n\t\tcout << i << \" \";\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Moving Zeros",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

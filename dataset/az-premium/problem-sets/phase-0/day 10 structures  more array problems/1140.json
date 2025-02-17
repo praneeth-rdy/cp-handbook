@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given $2$ numbers $N$, $M$ and an array $A$ of $N$ numbers. For every number from $1$ to $M$, print how many times this number **appears** in this array.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10$\n$1 \\leq N, M \\leq 10^5$\n$1 \\leq A[i] \\leq M$\n## Sample Input\n1\n10 5\n1 2 3 4 5 3 2 1 5 3\n## Sample Output\n2\n2\n3\n1\n2",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n\n    while (t--)\n    {\n        int n, m;\n        cin >> n >> m;\n\n        int arr[n];\n        int count[(int)(1e5+1)] = {0};\n        for (int i = 0; i < n; i++)\n        {\n            cin >> arr[i];\n            count[arr[i]]++;\n        }\n\n        for (int i = 1; i <= m; i++)\n        {\n            cout << count[i] << \"\\n\";\n        }\n        \n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        int t = Integer.parseInt(br.readLine());\n\n        while (t-- > 0) {\n            StringTokenizer st = new StringTokenizer(br.readLine());\n            int n = Integer.parseInt(st.nextToken());\n            int m = Integer.parseInt(st.nextToken());\n\n            int[] arr = new int[n];\n            int[] count = new int[100001];\n\n            st = new StringTokenizer(br.readLine());\n            for (int i = 0; i < n; i++) {\n                arr[i] = Integer.parseInt(st.nextToken());\n                count[arr[i]]++;\n            }\n\n            for (int i = 1; i <= m; i++) {\n                out.println(count[i]);\n            }\n        }\n\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n    for _ in range(t):\n        n = int(data[idx])\n        idx += 1\n        m = int(data[idx])\n        idx += 1\n        arr = [int(data[idx + i]) for i in range(n)]\n        idx += n\n        count = [0] * (100001)\n        for num in arr:\n            count[num] += 1\n        for i in range(1, m + 1):\n            print(count[i])\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:37:18.844663+00:00"
+        },
+        "hints": {
+            "hint1": "Did you notice the max value of any element in the array?",
+            "hint2": "How about we use each element as index of some other frequency array? Then we can count the number of times an element appears in the array.",
+            "solution_approach": "To solve this problem efficiently, we can use a frequency (count) array of size $M + 1$ (since the numbers range from $1$ to $M$). Initialize this array with zeros.\n\nWhile reading the input array $A$, we increment the count of each number encountered in the frequency array. Specifically, for each element $A[i]$, we increment `count[A[i]]` by one.\n\nAfter processing the entire array, we iterate from $i = 1$ to $M$, and for each $i$, we output `count[i]`, which represents the number of times the number $i$ appears in the array $A$.\n\nThis approach ensures that we count the frequency of each number in a single pass through the array, achieving an efficient solution.\n\n**Time Complexity per test case:** $O(N)$, where $N$ is the number of elements in the array $A$.\n\n**Space Complexity per test case:** $O(M)$, since we use a frequency array of size $M + 1$."
+        },
+        "id": 1140,
+        "input_format": "The first line contains $T$, the number of test cases.\nFor each test case:\nThe first line contains two space separated integers $N$ and $M$.\nThe second line contains $N$ space separated integers each denoting an element of the array $A$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "Numbers from $1$ to $5$ appear in the array as follows:\n$1$ appears **2** times in the array.\n$2$ appears **2** times in the array.\n$3$ appears **3** times in the array.\n$4$ appears once in the array.\n$5$ appears **2** times in the array.",
+        "output_format": "Print $M$ lines, the $i^{th}$ line should contain number of times that the number $i$ appears in $A$.",
+        "samples": [
+            {
+                "input": "1\n10 5\n1 2 3 4 5 3 2 1 5 3\n",
+                "output": "2\n2\n3\n1\n2\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Arrays"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Frequency Array",
+        "video_editorial_id": 10649
+    },
+    "details": "Problem Details"
+}

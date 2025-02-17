@@ -1,0 +1,60 @@
+{
+    "code": 200,
+    "data": {
+        "body": "There are $n$ cities and $m$ roads between them. Your task is to process $q$ queries where you have to determine the length of the shortest route between two given cities.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n </i>\u2264 500<br>1 \u2264 <i>m </i>\u2264 <i>n</i><sup>2</sup><br>1 \u2264 <i>q </i>\u2264 10<sup>5</sup><br>1 \u2264 <i>a</i>, <i>b </i>\u2264 <i>n</i><br>1 \u2264 <i>c </i>\u2264 10<sup>9</sup></p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n\nusing namespace std;\n\ntypedef long long ll;\n\nint mod = 1e9 + 7;\n\nconst int N = 100010;\n\nsigned main()\n{\n\tios_base::sync_with_stdio(0);\n\tcin.tie(0); cout.tie(0);\n\n\tint n, m, q;\n\tcin >> n >> m >> q;\n\n\tll dist[n + 1][n + 1];\n\tfor(int i = 1; i <= n; i++) {\n\t\tfor(int j = 1; j <= n; j++) {\n\t\t\tdist[i][j] = 1e18;\n\t\t}\n\t\tdist[i][i] = 0;\n\t}\n\n\tfor(int i = 0; i < m; i++) {\n\t\tint a, b, c;\n\t\tcin >> a >> b >> c;\n\t\tdist[a][b] = dist[b][a] = min(dist[a][b], 1LL * c);\n\t}\n\n\tfor(int k = 1; k <= n; k++) {\n\t\tfor(int i = 1; i <= n; i++) {\n\t\t\tfor(int j = 1; j <= n; j++) {\n\t\t\t\tdist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]); \n\t\t\t}\n\t\t}\n\t}\n\n\twhile(q--) {\n\t\tint a, b;\n\t\tcin >> a >> b;\n\t\tif(dist[a][b] == 1e18) cout << \"-1\\n\";\n\t\telse cout << dist[a][b] << \"\\n\";\n\t}\n\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:37:26.779631+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": "<p>Use Floyd Warshall Algorithm.</p>"
+        },
+        "id": 208,
+        "input_format": "The first input line has three integers n, m and q: the number of cities, roads, and queries.\nThen, there are m lines describing the roads. Each line has three integers a, b and c: there is a road between cities a and b whose length is c. All roads are two-way roads.\nFinally, there are q lines describing the queries. Each line has two integers a and b: determine the length of the shortest route between cities a and b.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print the length of the shortest route for each query. If there is no route, print \u22121 instead.",
+        "samples": [
+            {
+                "input": "4 3 5\n1 2 5\n1 3 9\n2 3 3\n1 2\n2 1\n1 3\n1 4\n3 2",
+                "output": "5\n5\n8\n-1\n3"
+            },
+            {
+                "input": "2 2 1\n1 2 1\n1 2 2\n1 2",
+                "output": "1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Floyd Warshall",
+            "All Pair Shortest Path"
+        ],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "Shortest Path II",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

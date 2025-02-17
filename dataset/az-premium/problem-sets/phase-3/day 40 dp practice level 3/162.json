@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given N elements, in an array A. You are also given 3 constants X, Y, and Z. You can take any 2 consecutive elements a and b and merge them. On merging you get a single element with value (aX+bY+Z)%50 and this process costs you a*b. After merging you will place this element in place of those 2 elements.<br>&nbsp;</p><p>If the sequence is [A1, A2, A3, A4] and you merge A2 and A3, you incur a cost of A2*A3 and the array becomes [A1, (A2*X+A3*Y+Z)%50, A4].<br>&nbsp;</p><p>Find the Minimum cost to merge all the elements into a single element.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\nint n,x,y,z;\nint arr[51];\nbool done[51][51];\nint memo[51][51][51];\n\nint dp(int l,int r,int xx){\n    if(l==r){\n        if(arr[l]==xx)return 0;\n        else return 1e9;\n    }\n    if(done[l][r]){\n        return memo[l][r][xx];\n    }\n\n    for(int i=0;i<50;i++)memo[l][r][i]=1e9;    \n\n    for(int mid=l;mid<r;mid++){\n        for(int fs=0;fs<50;fs++){\n            for(int ls=0;ls<50;ls++){\n                memo[l][r][(fs*x+ls*y+z)%50] = min(memo[l][r][(fs*x+ls*y+z)%50], dp(l,mid,fs)+ dp(mid+1,r,ls) + fs*ls);\n            }\n        }\n    }\n    done[l][r]=1;\n    return memo[l][r][xx];\n}\n\nvoid solve(){\n    memset(memo,-1,sizeof(memo));\n    cin>>n>>x>>y>>z;\n    for(int i=0;i<n;i++){\n        cin>>arr[i];\n    }\n    int ans = 1e9;\n    for(int i=0;i<50;i++){\n        ans=min(ans,dp(0,n-1,i));\n    }\n    cout<<ans<<endl;\n}   \n\nsigned main(){\n    ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);\n    //int _t;cin>>_t;while(_t--)\n    solve();\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:13:34.548850+00:00"
+        },
+        "hints": {
+            "hint1": "<p>The answer is going to change as the elements are capped by Modulo. How do you design an efficient DP that takes care of all possible ordering? Think Backwards from 1 element.</p>",
+            "hint2": "<p>What if we keep DP(l,r,x) as the cost to merge the segment into one element with value x, would that help?&nbsp;</p>",
+            "solution_approach": "<p>So we can design a DP with the states<br>DP(l,r,x) = minimum cost to merge the segment into one element of value x. if x is not possible, then this store +INF cost.</p><p><br>Now range (l,r) will form one element from 2 elements in the final step.<br>So let's say the (l, mid) and (mid+1,r) range equivalents merge and produce the final element.</p><p><br>So DP(l,r,(A*X+B*Y+C)%50) = min(DP(l,mid,A) + DP(mid+1,r,B) + A*B ) for all mid,A,B in range [l,r).</p><p>Now if for every l,r,z we iterate on all mid and A, B \u2026 it turns out to be O(N^6) solution.</p><p>This can be optimized to O(N^5) using the following logic.</p><p>We can calculate the DP(l,r,z) for all values of z altogether. So keep a done for (l,r) pair.</p><p>For a certain range (L,R) \u2192 We iterate on mid, and them lets say the left side has value A and the right side as B. So this particular portion updates at (A*X+B*Y+C)%50 and value is (DP(l,mid,A) + DP(mid+1,r,B) + A*B&nbsp;</p><p>So we are sort of keeping DP(L,R) only and this basically returns an array for all values of merging what is the optimal value.</p><p>This makes the code given below O(N^5).</p>"
+        },
+        "id": 162,
+        "input_format": "<p>The first line contains 4 integers, N, X, Y, Z. 1 &lt;= N &lt;= 50, 0&lt;= X,Y,Z &lt; 50.</p><p>The Second line contains N space-separated integers, the Ai for the Array. &nbsp;0 &lt;= Ai &lt; 50</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Output a single integer, the Minimum cost to Merge all the elements.</p>",
+        "samples": [
+            {
+                "input": "3 1 2 3\n1 2 4",
+                "output": "21"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Merge Elements 2",
+        "video_editorial_id": 8156
+    },
+    "details": "Problem Details"
+}

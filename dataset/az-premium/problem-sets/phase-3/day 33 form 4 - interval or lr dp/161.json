@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given N elements, in an array A. You can take any 2 consecutive elements a and b and merge them. On merging you get a single element with value (a+b)%100 and this process costs you a*b. After merging you will place this element in place of those 2 elements.<br>&nbsp;</p><p>If the sequence is [A1, A2, A3, A4] and you merge A2 and A3, you incur a cost of A2*A3 and the array becomes [A1, (A2+A3)%100, A4].<br>&nbsp;</p><p>Find the Minimum cost to merge all the elements into a single element.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\nint n;\nint arr[501];\nint dp[501][501];\n\nint rec(int l,int r){\n    if(l==r){\n        return 0;\n    }\n    if(dp[l][r]==-1){\n        int ans = 1e9;\n        int tot = 0;\n        for(int i=l;i<=r;i++){\n            tot+=arr[i];\n        }\n        int sum = 0;\n        for(int mid=l;mid<r;mid++){\n            sum += arr[mid];\n            ans = min(ans,rec(l,mid)+rec(mid+1,r)+ ((sum)%100)*((tot-sum)%100));\n        }\n        dp[l][r]=ans;\n    }\n    return dp[l][r];\n}\n\nvoid solve(){\n    cin>>n;\n    for(int i=0;i<n;i++){\n        cin>>arr[i];\n    }\n    memset(dp,-1,sizeof(dp));\n    cout<<rec(0,n-1)<<endl;\n}    \n\nsigned main(){\n    ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);\n    //int _t;cin>>_t;while(_t--)\n    solve();\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:37:13.400826+00:00"
+        },
+        "hints": {
+            "hint1": "<p>The answer is going to change as the elements are capped by Modulo. How do you design an efficient DP that takes care of all possible ordering? Think Backwards from 1 element.</p>",
+            "hint2": "<p>What if we keep DP(l,r) as the cost to merge the segment into one element, would that help? What would be the final value of the element if we merge range [l,r]?</p>",
+            "solution_approach": "<p>The nice observation here is the value of the Final element remains fixed and is the sum of the range %100.</p><p>So we can design a DP with the states<br>DP(l,r) = minimum cost to merge the segment into one element.</p><p>Now range (l,r) will form one element from 2 elements in the final step.<br>So let's say the (l, mid) and (mid+1,r) range equivalents merge and produce the final element.</p><p>So DP(l,r) = min(DP(l,mid) + DP(mid+1,r) + (sum(l,mid)%100)*(sum(mid+1,r)%100) ) for all mid in range [l,r).</p>"
+        },
+        "id": 161,
+        "input_format": "<p>The first line contains a single element N. 1 &lt;= N &lt;= 500</p><p>The Second line contains N space separated integers, the Ai for the Array. &nbsp;0 &lt;= Ai &lt; 100</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>If you merge elements 1 and 2 first, You get [3,4] and pay a cost of 1*2=2. Then if you merge 3 and 3, You get [7] and pay a cost of 3*4=12.</p><p>Total cost incurred = 2+12 = 14.</p><p>If you merge elements 2 and 4 first, You get [1,6] and pay a cost of 2*4=8. Then if you merge 1 and 6, You get [7] and pay a cost of 1*6=6.</p><p>Total cost incurred = &nbsp;8+6 = 14.</p><p>So the best you can do is at cost 14.</p>",
+        "output_format": "<p>Output a single integer, the Minimum cost to Merge all the elements.</p>",
+        "samples": [
+            {
+                "input": "3\n1 2 4 ",
+                "output": "14"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Merge Elements 1",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given two integers representing the numerator and denominator of a fraction, print the fraction in string format.<br>If the fractional part is repeating, enclose the repeating part in parentheses.<br>If multiple answers are possible, print the one which has the smallest length.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n#define endl '\\n'\nsigned main() {\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n  int n;\n  cin >> n;\n\n  for (int i1 = 0; i1 < n; ++i1) {\n    int a, b, num1, num2;\n    char ch = '+';\n    cin >> a >> b;\n    // checking whether the final answer will be -ve or +ve\n    if (a * b < 0) ch = '-';\n    a = abs(a);\n    b = abs(b);\n    if (a % b == 0)  // Case 1 : When the numerator is completely divisible by\n                     // denominator\n    {\n      if (ch == '-')\n        cout << ch << a / b << endl;\n      else\n        cout << a / b << endl;\n    }\n\n    else {\n      // Case 2 and 3 , Terminating and recurring\n      // Using a map to store the repetition of remainders and their positions\n      map<int, int> m1;\n      int i = 0, pos;\n      string s = \"\";\n      bool flag = true;\n      num1 = a / b;\n      a = a % b;\n      m1.insert({a, i});\n      a = a * 10;\n      ++i;\n      while (1) {\n        int x, rem;\n        x = a / b;\n        rem = a % b;\n        if (rem == 0)  // If rem is 0 that means terminating decimal\n        {\n          s += char(x + 48);\n          break;\n        } else if (m1.count(rem))  // Checking if the rem has occured previously\n        {\n          s += char(x + 48);\n          pos = m1[rem];  // position for opening parenthesis\n          flag = false;\n          break;\n        }\n        // When rem is neither zero or not repeated just insert rem in map\n        else {\n          m1.insert({rem, i});\n          ++i;\n          s += char(x + 48);\n          a = rem * 10;\n        }\n      }\n      if (flag == false) {\n        if (ch == '-')\n          cout << ch << num1 << '.' << s.substr(0, pos) << '('\n               << s.substr(pos, s.length() - pos) << ')' << endl;\n        else\n          cout << num1 << '.' << s.substr(0, pos) << '('\n               << s.substr(pos, s.length() - pos) << ')' << endl;\n\n      }\n\n      else {\n        if (ch == '-')\n          cout << ch << num1 << '.' << s << endl;\n        else\n          cout << num1 << '.' << s << endl;\n      }\n    }\n  }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:47:54.621075+00:00"
+        },
+        "hints": {
+            "hint1": "Just break the problem into subparts such as \n* Whether the final answer is negative or positive\n* Whether the answer would be terminating or recurring",
+            "hint2": "The sign part would be easy to find, the problem lies in finding whether the answer is terminating or decimal, and if recurring where to put the brackets?\nNotice that once the remainder starts repeating, so does the divided result. Make sure to handle edge cases properly.",
+            "solution_approach": "* When the numerator is 0, then the answer is \"0\".\n* When the numerator is non-zero\n    * Find the sign of the answer.\n    * If the numerator is divisible by the denominator, then just print it with the proper sign.\n    * If the numerator is not divisible by the denominator, then try to find digits in decimal representation using the reminder in long division (high-school method of division).\n    * Also, store the position of the remainder that we used to calculate the digit in decimal-form. Once the remainder starts repeating, so the portion of the decimal part. Now you can calculate the repeating part of decimal.\n\nIn our code, we have adopted the following methodology:\n* The program checks if the numerator is completely divisible by the denominator, in which case it directly outputs the quotient.\n* If the numerator is not completely divisible by the denominator, the program checks if the decimal is terminating or recurring.\n* For this purpose, a map 'm1' is created to store the remainders and their positions. If the remainder repeats, it is a recurring decimal, otherwise it is a terminating decimal.\n* The program then calculates the quotient and remainder and updates the map 'm1' with the remainder and its position.\n* The loop continues until the remainder becomes zero or repeats.\n* If the remainder becomes zero, it is a terminating decimal and the program simply outputs the quotient and decimal point followed by the remaining digits.\n* If the remainder repeats, it is a recurring decimal and the program finds the position where the remainder repeats and outputs the quotient, decimal point, and the recurring digits enclosed in parentheses.\n* The program also checks whether the final answer will be negative or positive and outputs accordingly.\n\nThe time complexity would be of the order of $O(den - 1)$ because we need to keep going on dividing until we get a same remainder again. To get the same remainder again in the worst case we need to divide $den-1$ number of times. So worst case time complexity per test case is $O(100)$"
+        },
+        "id": 72,
+        "input_format": "The first line contains \\( T \\) ($$1 \\leq T \\leq 100000$$), the number of test cases.  \nEach of the next \\( T \\) lines contains two space-separated integers representing numerator and denominator respectively:  \n$$0 \\leq |\\text{numerator}| \\leq 100$$ and $$1 \\leq |\\text{denominator}| \\leq 100$$.  \n\nIt is guaranteed that the denominator is always a non-zero integer.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><i><strong>Explanation 1:</strong></i><br>1 / 2 = 0.5</p><p><i><strong>Explanation 2:</strong></i><br>2 / 1 = 2</p><p><i><strong>Explanation 3:</strong></i><br>2 / 3 = 0.(6). Note that 0.(66) is also the correct representation in decimal format, but it has a greater length than 0.(6).</p>",
+        "output_format": "<p>For each test case, print the fraction in string format.</p>",
+        "samples": [
+            {
+                "input": "4\n1 2\n2 1\n2 3\n-3 7",
+                "output": "0.5\n2\n0.(6)\n-0.(428571)"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Recurring Fractions",
+        "video_editorial_id": 8140
+    },
+    "details": "Problem Details"
+}

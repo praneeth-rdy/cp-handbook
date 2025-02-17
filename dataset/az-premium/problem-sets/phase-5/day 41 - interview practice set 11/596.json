@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given an array A of size N, you have to find the longest sub-array of such that the sum of all elements in the sub-array is divisible by K.",
+        "complete_approach": "",
+        "constraints": "<p><i>1 \u2264 N \u2264 2 x 10<sup>5</sup></i><br><i>1 \u2264 K \u2264 2 x 10<sup>5</sup></i><br><i>-10<sup>9</sup> \u2264 A[i] \u2264 10<sup>9</sup></i><br>&nbsp;</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    cout.tie(NULL);\n\n    ll n, k;\n    cin >> n >> k;\n\n    ll a[n + 1], sum = 0, first_idx[k], ans = 0;\n    \n    memset(first_idx, -1, sizeof(first_idx));\n    \n    for (int i = 0; i < n; i++)\n        cin >> a[i + 1];\n    \n    first_idx[sum] = 0;\n    \n    for (int i = 1; i <= n; i++)\n    {\n        (sum += a[i]) %= k;\n        sum = (sum + k) % k;\n        \n        if (first_idx[sum] == -1)\n            first_idx[sum] = i;\n        else\n            ans = max(ans, i - first_idx[sum]);\n    }\n    \n    cout << ans << '\\n';\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:18:50.290229+00:00"
+        },
+        "hints": {
+            "hint1": "Maintain prefix sums modulo K.",
+            "hint2": "Store the first index for every modulo value.",
+            "solution_approach": "Maintain the prefix sum modulo K for every index and store the index where every modulo sum value first occurs. For every index we check if the current modulo value has been encountered before. If we have seen this value before we update the answer by the length of this segment else we update the first seen index of the current value."
+        },
+        "id": 596,
+        "input_format": "The first line of each test case contains two integers N and K.\nThe second line contains N integers - the elements of the array A.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In the first test case the sum of the segment [7 6 1 4] is 18 which is divisible by 3 and it is the longest segment with sum divisible by 3.",
+        "output_format": "For each test case, print the length of the longest sub-array satisfying the given condition in a new line.",
+        "samples": [
+            {
+                "input": "6 3\n2 7 6 1 4 5",
+                "output": "4"
+            },
+            {
+                "input": "14 10\n10 16 8 13 19 16 2 2 12 6 4 15 13 2",
+                "output": "11"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-az"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "KSUM",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

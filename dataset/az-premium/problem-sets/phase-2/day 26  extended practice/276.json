@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "There are $88418$ paths in a $7 \\times 7$ grid from the upper-left square to the lower-left square. Each path corresponds to a $48$-character description consisting of characters **D** (down), **U** (up), **L** (left), and **R** (right).\n\nFor example, the path:\n\n![Grid Path Example](https://lh5.googleusercontent.com/W5SQNDF90l8RCGOD1OKdoK8uHRDbgc_SeGwwVW8iWo3fPQnmj0X4UxekYO1bs4EAWRv99Mg_srUpGbOFf_Malf7BBuWMs3eQ0AEu26f9mzIVhj7EqbNjJMcGgU1lLZBSM329Nwf8)\n\ncorresponds to the description:\n\nDRURRRRRDDDLUULDDDLDRRURDDLLLLLURULURRUULDLLDDDD.\n\nYou are given a description of a path which may also contain characters **?** (any direction). Your task is to calculate the number of paths that match the description.",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\n#define lli long long int\n#define li long int\n#define ld long double\nusing namespace std;\nconst lli mod = 1e9 + 7;\nconst int n = 7;\nbool visited[n][n];\nint reserved[49];\n\nvoid move(int r, int c, int &ans, int &steps)\n{\n    if (r == n - 1 && c == 0)\n    {\n        ans += (steps == n * n - 1);\n        return;\n    }\n\n    // if you hit a wall or a path (can only go left or right); return\n    if (((r + 1 == n || (visited[r - 1][c] && visited[r + 1][c])) && c - 1 >= 0 && c + 1 < n && !visited[r][c - 1] && !visited[r][c + 1]) ||\n        ((c + 1 == n || (visited[r][c - 1] && visited[r][c + 1])) && r - 1 >= 0 && r + 1 < n && !visited[r - 1][c] && !visited[r + 1][c]) ||\n        ((r == 0 || (visited[r + 1][c] && visited[r - 1][c])) && c - 1 >= 0 && c + 1 < n && !visited[r][c - 1] && !visited[r][c + 1]) ||\n        ((c == 0 || (visited[r][c + 1] && visited[r][c - 1])) && r - 1 >= 0 && r + 1 < n && !visited[r - 1][c] && !visited[r + 1][c]))\n        return;\n\n    visited[r][c] = true;\n\n    if (reserved[steps] != -1)\n    {\n        switch (reserved[steps])\n        {\n        case 0:\n            if (r - 1 >= 0)\n            {\n                if (!visited[r - 1][c])\n                {\n                    steps++;\n                    move(r - 1, c, ans, steps);\n                    steps--;\n                }\n            }\n            break;\n\n        case 1:\n            if (c + 1 < n)\n            {\n                if (!visited[r][c + 1])\n                {\n                    steps++;\n                    move(r, c + 1, ans, steps);\n                    steps--;\n                }\n            }\n            break;\n\n        case 2:\n            if (r + 1 < n)\n            {\n                if (!visited[r + 1][c])\n                {\n                    steps++;\n                    move(r + 1, c, ans, steps);\n                    steps--;\n                }\n            }\n            break;\n\n        case 3:\n            if (c - 1 >= 0)\n            {\n                if (!visited[r][c - 1])\n                {\n                    steps++;\n                    move(r, c - 1, ans, steps);\n                    steps--;\n                }\n            }\n            break;\n        }\n        visited[r][c] = false;\n        return;\n    }\n\n    // move down\n    if (r + 1 < n)\n    {\n        if (!visited[r + 1][c])\n        {\n            steps++;\n            move(r + 1, c, ans, steps);\n            steps--;\n        }\n    }\n\n    // move right\n    if (c + 1 < n)\n    {\n        if (!visited[r][c + 1])\n        {\n            steps++;\n            move(r, c + 1, ans, steps);\n            steps--;\n        }\n    }\n\n    // move up\n    if (r - 1 >= 0)\n    {\n        if (!visited[r - 1][c])\n        {\n            steps++;\n            move(r - 1, c, ans, steps);\n            steps--;\n        }\n    }\n\n    // move left\n    if (c - 1 >= 0)\n    {\n        if (!visited[r][c - 1])\n        {\n            steps++;\n            move(r, c - 1, ans, steps);\n            steps--;\n        }\n    }\n    visited[r][c] = false;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    string path;\n    cin >> path;\n    for (int i = 0; i < path.length(); i++)\n    {\n        if (path[i] == '?')\n            reserved[i] = -1;\n        else if (path[i] == 'U')\n            reserved[i] = 0;\n        else if (path[i] == 'R')\n            reserved[i] = 1;\n        else if (path[i] == 'D')\n            reserved[i] = 2;\n        else if (path[i] == 'L')\n            reserved[i] = 3;\n    }\n    int ans = 0, steps = 0;\n    move(0, 0, ans, steps);\n    cout << ans;\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:47:50.835051+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Generate all paths and try to check which one is matching with the given string.&nbsp;</p>",
+            "hint2": "<p>Complete brute force will not pass the test cases. You have to prune your algorithm. There are several ways to do that. But you've to avoid travelling through the path, which we can guarantee that will never lead us to the correct path.</p>",
+            "solution_approach": "<p>Do complete space search of the grid. But this would be slow. You have to optimize your code.</p><p>Some of the optimizations that you can do.</p><ol><li>In any solution, we first move one step down or right. There are always two paths that are symmetric about the diagonal of the grid after the first step.</li><li>If the path reaches the lower-right square before it has visited all other squares of the grid, it is clear that it will not be possible to complete the solution.</li><li>If the path touches a wall and can turn either left or right, the grid splits into two parts that contain unvisited squares.</li><li>The idea of Optimization 3 can be generalized: if the path cannot continue forward but can turn either left or right, the grid splits into two parts that both contain unvisited squares.</li></ol><p><i>Note: The editorial solution uses different optimization tricks. You can look into it.</i></p>"
+        },
+        "id": 276,
+        "input_format": "The only input line contains a 48-character string of characters **?**, **D**, **U**, **L**, and **R**.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "",
+        "output_format": "Print one integer: the total number of paths.",
+        "samples": [
+            {
+                "input": "??????R??????U??????????????????????????LD????D?",
+                "output": "201"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Recursion",
+            "Backtracking"
+        ],
+        "template_code": [],
+        "time_limit_sec": 3.0,
+        "title": "Count Valid Grid Paths",
+        "video_editorial_id": 8180
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,70 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given two integers $N$ and $M$, print a hollow rectangle pattern of length $N$ and width $M$ using the '*' character.\n\nA hollow rectangle is a rectangle where the borders are filled with '*' and the interior is empty (spaces).",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 100$\n$2 \\leq N, M \\leq 200$",
+        "difficulty": 2,
+        "editorial_code": [
+            {
+                "code": "```c++\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nsigned main() {\n  ios_base::sync_with_stdio(false);\n  cin.tie(0);\n  cout.tie(0);\n  int t;\n  cin >> t;\n\n  for (int tt = 1; tt <= t; tt++) {\n    int n, m;\n    cin >> n >> m;\n    for (int i = 0; i < m; ++i) {\n      cout << \"*\";\n    }\n    cout << \"\\n\";\n    for (int i = 0; i < n - 2; ++i) {\n      cout << \"*\";\n      for (int i = 0; i < m - 2; ++i) {\n        cout << \" \";\n      }\n      cout << \"*\\n\";\n    }\n    for (int i = 0; i < m; ++i) {\n      cout << \"*\";\n    }\n    cout << \"\\n\";\n  }\n\n  return 0;\n}\n```\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\n```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        int t = Integer.parseInt(br.readLine().trim());\n\n        for (int tt = 1; tt <= t; tt++) {\n            String[] tokens = br.readLine().trim().split(\" \");\n            int n = Integer.parseInt(tokens[0]);\n            int m = Integer.parseInt(tokens[1]);\n\n            for (int i = 0; i < m; ++i) {\n                out.print(\"*\");\n            }\n            out.println();\n\n            for (int i = 0; i < n - 2; ++i) {\n                out.print(\"*\");\n                for (int j = 0; j < m - 2; ++j) {\n                    out.print(\" \");\n                }\n                out.println(\"*\");\n            }\n\n            if (n > 1) {\n                for (int i = 0; i < m; ++i) {\n                    out.print(\"*\");\n                }\n                out.println();\n            }\n            out.println();\n        }\n\n        out.flush();\n        out.close();\n    }\n}\n```\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\n```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n\n    for tt in range(t):\n        n = int(data[idx])\n        idx += 1\n        m = int(data[idx])\n        idx += 1\n\n        for i in range(m):\n            stdout.write('*')\n        stdout.write('\\n')\n\n        for i in range(n - 2):\n            stdout.write('*')\n            for j in range(m - 2):\n                stdout.write(' ')\n            stdout.write('*\\n')\n\n        if n > 1:\n            for i in range(m):\n                stdout.write('*')\n            stdout.write('\\n')\n\n        stdout.write('\\n')\n\nif __name__ == \"__main__\":\n    main()\n```\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:39:14.612956+00:00"
+        },
+        "hints": {
+            "hint1": "Think about how to print the borders of the rectangle differently from the interior.",
+            "hint2": "For the first and last lines, print '*' characters for the entire width. For the middle lines, print '*' at the beginning and end with spaces in between.",
+            "solution_approach": "To print a hollow rectangle of size $N \\times M$:\n\n- For the first line, print $M$ '*' characters.\n\n- For the lines from the second to the $(N-1)$-th line, print '*' at the beginning and end, with $(M - 2)$ spaces in between.\n\n- For the last line, print $M$ '*' characters.\n\nSince the rectangle has a height of $N$ and a width of $M$, we need to handle the first and last lines separately because they are completely filled with '*' characters.\n\nFor each test case, we can follow these steps:\n\n1. Print the first line of $M$ '*' characters.\n\n2. For the next $(N - 2)$ lines, print '*' at the beginning and end, with spaces in between.\n\n3. Print the last line of $M$ '*' characters.\n\n**Time Complexity per test case:** $O(N \\times M)$\n\n**Space Complexity per test case:** $O(1)$ (excluding the space used for output)"
+        },
+        "id": 1089,
+        "input_format": "The first line contains an integer $T$ denoting the number of test cases.\nFor each test case, there is a line containing two numbers $N$ and $M$, the length and width of the rectangle.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In Sample Input 1, for $N = 2$ and $M = 2$, the rectangle is:\n```\n**\n**\n```\nIn Sample Input 2, for $N = 4$ and $M = 5$, the rectangle is:\n```\n*****\n*   *\n*   *\n*****\n```\nIn Sample Input 3, there are two test cases with $N = 4$ and $M = 4$, so the pattern is printed twice, each separated by a blank line as per the code's output.",
+        "output_format": "For each test case, print the pattern.",
+        "samples": [
+            {
+                "input": "1\n2 2",
+                "output": "**\n**"
+            },
+            {
+                "input": "2\n4 4\n4 4",
+                "output": "****\n*  *\n*  *\n****\n\n****\n*  *\n*  *\n****"
+            },
+            {
+                "input": "1\n4 5",
+                "output": "*****\n*   *\n*   *\n*****"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Hollow Pattern",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

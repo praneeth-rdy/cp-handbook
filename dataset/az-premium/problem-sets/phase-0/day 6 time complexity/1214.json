@@ -1,0 +1,62 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a number $N$. Print the first $N$ numbers of the Fibonacci sequence.\n\n**Note**: In order to create the **Fibonacci** sequence, use the following function:\n\n$fib(1) = 0$.\n\n$fib(2) = 1$.\n\n$fib(N) = fib(N - 1) + fib(N - 2)$ for $N > 2$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq N \\leq 45$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "#include <bits/stdc++.h>\nusing namespace std;\n// O(N) time\n// O(1) space\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n;\n    cin >> n;\n    // base case if n is 1\n    if (n == 1)\n    {\n        cout << \"0\";\n    }\n    else\n    {\n        int a = 0; // f(1)\n        int b = 1; // f(2)\n        cout << a << \" \" << b << \" \";\n        // n>=2 so print first two terms\n        for (int i = 3; i <= n; i++)\n        {\n            cout << a + b << \" \"; // f(i) = f(i-1)+f(i-2)\n            int t = b;            // t = f(i-1)\n            b = a + b;            // b = f(i) = f(i-1)+f(i-2)\n            a = t;                // a = f(i-1)\n        }\n    }\n    return 0;\n}",
+                "language": "C++14"
+            },
+            {
+                "code": "import sys\nfrom sys import stdin, stdout\n\n# O(N) time\n# O(1) space\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    n = int(data[idx])\n    idx += 1\n\n    # base case if n == 1\n    if n == 1:\n        stdout.write(\"0\")\n    else:\n        a = 0  # f(1)\n        b = 1  # f(2)\n        stdout.write(f\"{a} {b} \")  # n>=2 so print first two terms\n        for i in range(3, n + 1):\n            stdout.write(f\"{a + b} \")  # f(i) = f(i-1)+f(i-2)\n            t = b             # t = f(i-1)\n            b = a + b         # b = f(i) = f(i-1)+f(i-2)\n            a = t             # a = f(i-1)\n\nif __name__ == \"__main__\":\n    main()",
+                "language": "Python3"
+            },
+            {
+                "code": "import java.io.*;\nimport java.util.*;\n\n// O(N) time\n// O(1) space\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int n = Integer.parseInt(br.readLine());\n        // base case if n is 1\n        if (n == 1) {\n            out.print(\"0\");\n        } else {\n            int a = 0; // f(1)\n            int b = 1; // f(2)\n            out.print(a + \" \" + b + \" \");\n            // n>=2 so print first two terms\n            for (int i = 3; i <= n; i++) {\n                out.print((a + b) + \" \"); // f(i) = f(i-1)+f(i-2)\n                int t = b;               // t = f(i-1)\n                b = a + b;               // b = f(i) = f(i-1)+f(i-2)\n                a = t;                   // a = f(i-1)\n            }\n        }\n        out.flush();\n        out.close();\n    }\n}",
+                "language": "Java"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:36:04.621030+00:00"
+        },
+        "hints": {
+            "hint1": "The recurrence formula is already given. You can store the previous numbers and use it to calculate next term.\n",
+            "hint2": "Since each new term depends only on the previous two terms, you can maintain only two variables to represent these, updating them as you generate the sequence.\n",
+            "solution_approach": "To generate the Fibonacci sequence up to the $N^{th}$ term, we can use the recurrence relation:\n\n$fib(1) = 0$\n\n$fib(2) = 1$\n\n$fib(N) = fib(N - 1) + fib(N - 2)$ for $N > 2$\n\nWe can implement this using iteration, starting from the first two terms. Since each new term depends only on the previous two terms, we can use two variables to keep track of these.\n\nWe start by initializing $a = 0$ (which is $fib(1)$) and $b = 1$ (which is $fib(2)$). We then iterate from $i = 3$ to $N$, at each step calculating the new term as $a + b$, printing it, and updating $a$ and $b$ accordingly.\n\nThis approach uses constant space, $O(1)$, since we only store two variables regardless of $N$.\n\n**Time Complexity per test case**: $O(N)$\n\n**Space Complexity per test case**: $O(1)$\n"
+        },
+        "id": 1214,
+        "input_format": "Only one line containing a number $N$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For $N = 7$, the first seven numbers of the Fibonacci sequence are $0, 1, 1, 2, 3, 5, 8$.",
+        "output_format": "Print the first $N$ numbers from the **Fibonacci** Sequence.",
+        "samples": [
+            {
+                "input": "7\n",
+                "output": "0 1 1 2 3 5 8\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Math",
+            "Dynamic Programming",
+            "Implementation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 0.5,
+        "title": "Easy Fibonacci",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

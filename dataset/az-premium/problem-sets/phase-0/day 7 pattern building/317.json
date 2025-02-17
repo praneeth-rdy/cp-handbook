@@ -1,0 +1,62 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Using characters: . (dot) and * (asterisk) print a grid-like pattern as shown in the sample test case.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^4$\n$1 \\leq N, M \\leq 1000$\nIt is guaranteed that the sum of $N \\times M$ over all test cases does not exceed $10^6$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint main() {\n    IOS\n    int t;\n    cin >> t;\n    while (t--) {\n        int n, m;\n        cin >> n >> m;\n        for (int i = 0; i < 3*n+1; ++i) {\n            for (int j = 0; j < 3*m + 1; ++j) {\n                if(i%3==0 || j%3 == 0) cout << \"*\";\n                else cout << \".\";\n            }\n            cout << \"\\n\";\n        }\n    }\n    return 0;\n}",
+                "language": "C++14"
+            },
+            {
+                "code": "import sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n    for _ in range(t):\n        n = int(data[idx])\n        idx += 1\n        m = int(data[idx])\n        idx +=1\n        for i in range(3 * n + 1):\n            line = []\n            for j in range(3 * m + 1):\n                if i % 3 == 0 or j % 3 == 0:\n                    line.append('*')\n                else:\n                    line.append('.')\n            print(''.join(line))\n\nif __name__ == \"__main__\":\n    main()",
+                "language": "Python3"
+            },
+            {
+                "code": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int t = Integer.parseInt(br.readLine());\n        for (int testCase = 0; testCase < t; testCase++) {\n            String inputLine = br.readLine();\n            while (inputLine.trim().isEmpty()) {\n                inputLine = br.readLine();\n            }\n            StringTokenizer st = new StringTokenizer(inputLine);\n            int n = Integer.parseInt(st.nextToken());\n            int m = Integer.parseInt(st.nextToken());\n\n            for (int i = 0; i < 3 * n + 1; ++i) {\n                for (int j = 0; j < 3 * m + 1; ++j) {\n                    if (i % 3 == 0 || j % 3 == 0) {\n                        out.print(\"*\");\n                    } else {\n                        out.print(\".\");\n                    }\n                }\n                out.println();\n            }\n        }\n        out.flush();\n        out.close();\n    }\n}",
+                "language": "Java"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:14:47.126280+00:00"
+        },
+        "hints": {
+            "hint1": "Observe the sample patterns carefully and look for any repeating sequences or patterns in the positions of '*' and '.'.\n",
+            "hint2": "Notice that the '*' characters occur at every position where either the row index or the column index is divisible by 3 (when indexing from 0). Use this property to decide which character to print at each position in the grid.\n",
+            "solution_approach": "To generate the required pattern, we need to print a grid of size $(3N+1) \\times (3M+1)$. For each position in the grid, we check its row and column indices (starting from 0). If either the row index or the column index is divisible by 3, we print a '*' (asterisk); otherwise, we print a '.' (dot). By iterating over all positions in the grid and applying this rule, we can construct the desired pattern.\n\n**Time Complexity per test case:** $O(N \\times M)$\n\n**Space Complexity per test case:** $O(1)$ (excluding the space required for the output)\n"
+        },
+        "id": 317,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\nThe first line of each test case contains two space-separated integers $N$, $M$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In each test case, a grid is printed where the pattern is formed using '*' and '.' characters. The pattern is designed such that every third row and every third column (starting from index 0) is a '*' (asterisk), and the other positions are filled with '.' (dot). The dimensions of the grid depend on the values of $N$ and $M$ given in each test case.",
+        "output_format": "For each test case, print the required pattern.",
+        "samples": [
+            {
+                "input": "3\n3 4\n4 2\n3 3\n",
+                "output": "*************\n*..*..*..*..*\n*..*..*..*..*\n*************\n*..*..*..*..*\n*..*..*..*..*\n*************\n*..*..*..*..*\n*..*..*..*..*\n*************\n*******\n*..*..*\n*..*..*\n*******\n*..*..*\n*..*..*\n*******\n*..*..*\n*..*..*\n*******\n*..*..*\n*..*..*\n*******\n**********\n*..*..*..*\n*..*..*..*\n**********\n*..*..*..*\n*..*..*..*\n**********\n*..*..*..*\n*..*..*..*\n**********\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Pattern Problem 1 AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

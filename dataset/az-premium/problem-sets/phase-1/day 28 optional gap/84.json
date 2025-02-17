@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Alice read <i>N</i> books. The <i>i</i>-th book has <i>A<sub>i</sub></i> pages. After every book Alice reads, you have to tell the largest integer <i>B</i> such that Alice has read <i>B</i> books that have at least <i>B</i> pages.</p>",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 100$  \n\n$1 \\leq N \\leq 10^5$  \n\n$1 \\leq A_i \\leq 10^5$",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n \n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n \nint main() {\n    IOS\n    int t;\n    cin >> t;\n    while(t--) {\n        int n;\n        cin >> n;\n        multiset<int> s;\n        int b = 1;\n        for (int i = 0; i < n; ++i) {\n            int x;\n            cin >> x;\n            if(x > b) {\n                s.insert(x);\n            }\n            while(!s.empty() && *s.begin() <= b) {\n                s.erase(s.begin());\n            }\n            if(s.size() > b) {\n                b++;\n            }\n            cout << b << \" \";\n \n        }\n        cout << \"\\n\";\n    }\n    return 0;\n}\n```\n",
+                "language": "C++14"
+            },
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n \n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n \nint main() {\n    IOS\n    int t;\n    cin >> t;\n    while(t--) {\n        int n;\n        cin >> n;\n        int freq[100001] = {};\n        int b = 0, cnt = 0;\n        for (int i = 0; i < n; ++i) {\n            int x;\n            cin >> x;\n            freq[x]++;\n            if(x > b) {\n                cnt++;\n            }\n            if(cnt > b) {\n                b++;\n                cnt -= freq[b];\n            }\n            cout << b << \" \";\n        }\n        cout << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:46:47.857302+00:00"
+        },
+        "hints": {
+            "hint1": "<p>You need to store those integers which contain numbers greater than the current <i>B</i> books which have at least <i>B</i> pages and remove the rest. Think about how you can store these integers.</p>",
+            "hint2": "Think of a data structure that can efficiently remove and insert integers.",
+            "solution_approach": "Initially, the number of books read is 0. After each book is read, we need to update the answer. We can use priority queue/multiset to store the number of books. For each book read, you have to do the following:\n\n1. If the number of pages is greater than the current answer, add it in the priority queue/multiset.\n2. Remove the books which have pages not greater than the current answer.\n3. If the size of priority queue/multiset is greater than the current answer, increment the answer by 1.\n\n**Time Complexity per test case:** O(N*logN)\n\nA solution with linear time complexity is possible if we store the number of pages in each book in a frequency array. Initially, the number of books read is 0. For each book read, you have to do the following:\n\n1. Increase the frequency of the number of pages.\n2. If the number of pages is greater than the current answer, increase the count of books that have a greater number of pages than the current answer.\n3. If the count of books that have a greater number of pages than the current answer is greater than the current answer, increment the current answer by 1. This is because now we have more than cur books with at least cur number of pages. (here cur denotes the current answer). Reduce the frequency of the current answer from the count of books that have a greater number of pages than the current answer.\n\n**Time Complexity per test case:** O(N)"
+        },
+        "id": 84,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\nThe first line of each test case contains one integer N - the length of the array. \nThe second line of each test case contains N space-separated integers.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 1024000,
+        "note": "In the first test case of the example, Alice reads N=4 books.\nAfter reading the 1st book, she has read 1 book with at least 1 page i.e. book with page 2.\nAfter reading the 2nd book, the answer remains the same as she has read 1 book with at least 1 page.\nAfter reading the 3rd book, she has read 2 books with at least 2 pages i.e. book with pages 2 and 4.\nAfter reading the 4th book, the answer remains the same as she has read 2 books with at least 2 pages.\n\nIn the third test case of the example, Alice reads N=5 books.",
+        "output_format": "<p>For each test case, print <i>N</i> integers, <i>A<sub>1</sub>, A<sub>2</sub>, ... A<sub>N</sub></i>, where <i>A<sub>i</sub></i> is the largest integer <i>B</i> such that Alice has read <i>B</i> books that have at least <i>B</i> pages after reading the <i>i</i>-th book.</p>",
+        "samples": [
+            {
+                "input": "4\n4\n2 1 4 4\n2\n5 1\n5\n1 3 2 3 5\n4\n3 3 3 3",
+                "output": "1 1 2 2\n1 1\n1 1 2 2 3\n1 2 3 3"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 10.0,
+        "title": "Alice and Books",
+        "video_editorial_id": 8143
+    },
+    "details": "Problem Details"
+}

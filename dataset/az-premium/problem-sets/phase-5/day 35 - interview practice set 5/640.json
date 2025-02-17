@@ -1,0 +1,64 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Alice and Bob have a keyboard that can type lowercase English alphabets. The keyboard also has a **backspace** key. When the backspace key is pressed, the last character from the string is removed, and if the string is empty, nothing happens.\n\nAlice and Bob have both typed a string on their respective computers with this keyboard. When they pressed the backspace key, `#` was inserted into the string.\n\nThey want to know whether their strings are equal when typed into a text editor.\n\n### Example:\nWhen the string **`aab#a`** is typed into a text editor, we obtain **`aaa`**.",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">1 &lt;= |s| &lt;= 100000\n1 &lt;= |t| &lt;= 100000</code></pre>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nbool StringCompare(string s, string t) {\n\tint n, m;\n\tn = s.length();\n\tm = t.length();\n\tstack <char> cur;\n\tfor (int i = 0; i < n; i++) {\n\t\tif (s[i] == '#') {\n\t\t\tif (cur.empty())\n\t\t\t\tcontinue;\n\t\t\tcur.pop();\n\t\t}\n\t\telse\n\t\t\tcur.push(s[i]);\n\t}\n\ts = \"\";\n\twhile (!cur.empty()) {\n\t\tchar ch = cur.top();\n\t\tcur.pop();\n\t\ts += ch;\n\t}\n\treverse(s.begin(), s.end());\n\tfor (int i = 0; i < m; i++) {\n\t\tif (t[i] == '#') {\n\t\t\tif (cur.empty())\n\t\t\t\tcontinue;\n\t\t\tcur.pop();\n\t\t}\n\t\telse\n\t\t\tcur.push(t[i]);\n\t}\n\tt = \"\";\n\twhile (!cur.empty()) {\n\t\tchar ch = cur.top();\n\t\tcur.pop();\n\t\tt += ch;\n\t}\n\treverse(t.begin(), t.end());\n\tif (s == t)\n\t\treturn true;\n\telse\n\t\treturn false;\n}\n\nint main() {\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL);\n\tstring s, t;\n\tcin >> s >> t;\n\tif (StringCompare(s, t))\n\t\tcout << \"Yes\";\n\telse\n\t\tcout << \"No\";\n}\n```\n\n",
+                "language": "C++14"
+            },
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nbool StringCompare(string s, string t) {\n\tint i = (int)s.length() - 1;\n\tint j = (int)t.length() - 1;\n\tint skips = 0;\n\tint skipt = 0;\n\twhile (i >= 0 || j >= 0) {\n\t\twhile (i >= 0) {\n\t\t\tif (s[i] == '#') {\n\t\t\t\tskips++;\n\t\t\t\ti--;\n\t\t\t}\n\t\t\telse if (skips > 0) {\n\t\t\t\tskips--;\n\t\t\t\ti--;\n\t\t\t}\n\t\t\telse\n\t\t\t\tbreak;\n\t\t}\n\t\twhile (j >= 0) {\n\t\t\tif (t[j] == '#') {\n\t\t\t\tskipt++;\n\t\t\t\tj--;\n\t\t\t}\n\t\t\telse if (skipt > 0) {\n\t\t\t\tskipt--;\n\t\t\t\tj--;\n\t\t\t}\n\t\t\telse\n\t\t\t\tbreak;\n\t\t}\n\t\tif (i >= 0 && j >= 0 && s[i] != t[j])\n\t\t\treturn false;\n\t\tif ((i >= 0) != (j >= 0))\n\t\t\treturn false;\n\t\ti--;\n\t\tj--;\n\t}\n\treturn true;\n}\n\nint main() {\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL);\n\tstring s, t;\n\tcin >> s >> t;\n\tif (StringCompare(s, t))\n\t\tcout << \"Yes\";\n\telse\n\t\tcout << \"No\";\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:19:30.943674+00:00"
+        },
+        "hints": {
+            "hint1": "Can you think of a data structure that can help us do the backspace operations easily?",
+            "hint2": "\nA Stack of characters can be used to implement the backspace operations.",
+            "solution_approach": "<p><u>Solution 1</u></p><p>To implement the functions of the keyboard we use a stack. We push the characters of the string into the stack one by one and when we encounter the backspace \u2018#\u2019 character, we pop the character present at the top of the stack and if the stack is empty we do nothing.</p><p>When the entire string has been traversed, the characters left in the stack represent the string typed into the text editor. So we pop all the characters in the stack one by one and add them to the final string. The string is currently in reverse order so we can reverse the two final strings and compare them.</p><p><u>Solution 2</u></p><p>When writing a character, it may or may not be part of the final string depending on how many backspace keystrokes occur in the future.<br>If instead, we iterate through the string in reverse, then we will know how many backspace characters we have seen, and therefore whether the result includes our character.<br>Iterate through the string in reverse. If we see a backspace character, the next non-backspace character is skipped. If a character isn't skipped, it is part of the final answer.</p>"
+        },
+        "id": 640,
+        "input_format": "Implement the StringCompare function that takes in the two strings s and t.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<ol><li>Both strings become \u201cb\u201d in the text editor.</li><li>String s becomes&nbsp; \u201cb\u201d while the string t becomes \u201cc\u201d</li></ol>",
+        "output_format": "Return true if the two strings are equal and false otherwise.",
+        "samples": [
+            {
+                "input": "a##b\n#a#b",
+                "output": "Yes"
+            },
+            {
+                "input": "a##b\n#a#c",
+                "output": "No"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-Apple",
+            "company-az"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nbool StringCompare(string s, string t) {\n\t\n}\n\n<fix>\nint main() {\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL);\n\tstring s, t;\n\tcin >> s >> t;\n\tif (StringCompare(s, t))\n\t\tcout << \"Yes\";\n\telse\n\t\tcout << \"No\";\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "String Compare",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,72 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given the boundaries of two intervals. Print the boundaries of their **intersection**.\n\n**Note:** Boundaries mean the two ends of an interval which are the starting number and the ending number.\n\nFor any interval $[l, r]$, if $l > r$, print $-1$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^5$\n$1 \\leq l_1, l_2, r_1, r_2 \\leq 10^9$",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include<bits/stdc++.h>\nusing namespace std;\n\nvoid solution() {\n    int l1, r1, l2, r2;\n    cin >> l1 >> r1 >> l2 >> r2;\n    if (r2 < l1 || l2 > r1) {\n        cout << -1 << endl;\n        return;\n    }\n    if (r1 < l2 || l1 > r2) {\n        cout << -1 << endl;\n        return;\n    }\n    int l = max(l1, l2);\n    int r = min(r1, r2);\n    cout << l << \" \" << r << endl;\n}\n\nint main() {\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n    int T;\n    cin >> T;\n    while (T--) {\n      solution();\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        int t = Integer.parseInt(br.readLine());\n        \n        while (t-- > 0) {\n            StringTokenizer st = new StringTokenizer(br.readLine());\n            int l1 = Integer.parseInt(st.nextToken());\n            int r1 = Integer.parseInt(st.nextToken());\n            int l2 = Integer.parseInt(st.nextToken());\n            int r2 = Integer.parseInt(st.nextToken());\n\n            if (r2 < l1 || l2 > r1) {\n                out.println(-1);\n            } else if (r1 < l2 || l1 > r2) {\n                out.println(-1);\n            } else {\n                int l = Math.max(l1, l2);\n                int r = Math.min(r1, r2);\n                out.println(l + \" \" + r);\n            }\n        }\n\n        out.flush();\n        out.close();\n    }\n}\n\n\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    T = int(data[idx])\n    idx += 1\n    \n    for _ in range(T):\n        l1 = int(data[idx])\n        idx += 1\n        r1 = int(data[idx])\n        idx += 1\n        l2 = int(data[idx])\n        idx += 1\n        r2 = int(data[idx])\n        idx += 1\n\n        if r2 < l1 or l2 > r1:\n            print(-1)\n            continue\n        if r1 < l2 or l1 > r2:\n            print(-1)\n            continue\n\n        l = max(l1, l2)\n        r = min(r1, r2)\n        print(f\"{l} {r}\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:14:14.501385+00:00"
+        },
+        "hints": {
+            "hint1": "Consider how to determine whether two intervals overlap.",
+            "hint2": "If two intervals overlap, their intersection starts at the maximum of their starting points and ends at the minimum of their ending points.",
+            "solution_approach": "To determine the intersection of two intervals $[l_1, r_1]$ and $[l_2, r_2]$, we first check whether they overlap. Two intervals do not overlap if one ends before the other begins. Specifically, if $r_1 < l_2$ or $r_2 < l_1$, the intervals do not overlap, and we print $-1$.\n\nIf the intervals do overlap, the intersection's starting point is the maximum of their starting points, i.e., $l = \\max(l_1, l_2)$, and the ending point is the minimum of their ending points, i.e., $r = \\min(r_1, r_2)$. We then print these boundaries.\n\n**Time Complexity:** $O(1)$\n\n**Space Complexity:** $O(1)$"
+        },
+        "id": 1183,
+        "input_format": "The first line of input contains $T$, number of test cases.\nFor each test case, contains only one line - two intervals $[l_1, r_1], [l_2, r_2]$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In Sample Input 1, the intervals are $[1,15]$ and $[5,27]$. Their intersection is $[5,15]$.\nIn Sample Input 2, the intervals are $[2,5]$ and $[6,12]$. They do not intersect, so we print $-1$.\nIn Sample Input 3, the intervals are $[3,9]$ and $[5,6]$. Their intersection is $[5,6]$.",
+        "output_format": "For each test case, if there is an **intersection** between these $2$ intervals, print its boundaries; otherwise, print $-1$.",
+        "samples": [
+            {
+                "input": "1\n1 15 5 27",
+                "output": "5 15"
+            },
+            {
+                "input": "1\n3 9 5 6",
+                "output": "5 6"
+            },
+            {
+                "input": "1\n2 5 6 12",
+                "output": "-1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Math",
+            "Implementation",
+            "company-Flipkart"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Two Intervals",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

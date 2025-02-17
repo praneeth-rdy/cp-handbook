@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given $Q$ queries and have to perform the following operations:\n\n1. **add x** - If $x$ doesn't exist in the set, add element $x$ to the set. Otherwise, do nothing.  \n2. **remove x** - Remove element $x$ from the set, if it exists. Otherwise, do nothing.  \n3. **find x** - Find the value at position $x$ (0-indexing) if it exists. Otherwise, print -1.  \n4. **findpos x** - Find the position (0-indexing) of the element with value $x$ if it exists. Otherwise, find the position where the element $x$ would be in the set.\n\nThe set is ordered in non-decreasing order of the elements.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^5$  \n\n$1 \\leq Q \\leq 10^5$  \n\n$1 \\leq x \\leq 10^5$  \n\nIt is guaranteed that the sum of $Q$ over all test cases does not exceed $10^6$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\n#include <ext/pb_ds/assoc_container.hpp>\nusing namespace __gnu_pbds;\ntypedef tree<int, null_type, less<int>, rb_tree_tag,\n             tree_order_statistics_node_update>\n    ordered_set;\n/*\n    order_of_key (k)\n    find_by_order(k)\n*/\n\nsigned main() {\n  // freopen(\"IN\", \"r\", stdin);\n  // freopen(\"OUT\", \"w\", stdout);\n\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n\n  int T;\n  cin >> T;\n\n  while (T--) {\n    int Q;\n    cin >> Q;\n\n    ordered_set s;\n\n    while (Q--) {\n      string op;\n      int x;\n      cin >> op >> x;\n\n      if (op == \"add\") {\n        s.insert(x);\n      } else if (op == \"remove\") {\n        if (s.find(x) != s.end()) {\n          s.erase(s.find(x));\n        }\n      } else if (op == \"find\") {\n        if (x >= (int)s.size()) {\n          cout << \"-1\\n\";\n        } else {\n          cout << *(s.find_by_order(x)) << \"\\n\";\n        }\n      } else {\n        cout << s.order_of_key(x) << \"\\n\";\n      }\n    }\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:15:32.901546+00:00"
+        },
+        "hints": {
+            "hint1": "For inserting and removing elements from set you already know the stl functions.What about finding element at position `x` and finding position of element `x`.",
+            "hint2": "Set does not store the elements in a contiguous fashion in memory, so accessing an element at a position x is not possible like we do in vectors.",
+            "solution_approach": "### add x\n `insert(x)` for inserting element x in the set.\n \n### remove x\nUse `erase(x)` for deleting element x from the set.\n\nIn this code, we use the GNU Policy-Based Data Structures library to implement the ordered set. The `tree_order_statistics_node_update` class provides the necessary functions for maintaining the order of the set and querying for the position of an element. The `order_of_key` function returns the number of elements in the set that are strictly less than the given element, while the `find_by_order` function returns an iterator to the element at the given position.\n\n### find x\nUse `find_by_order(x)` for finding the iterator to the xth location. It takes $O(\\log N)$ in place of the linear $O(N)$ time which we would have encountered if we did a complete traversal of the set.\n### findpos x\nUse `order_of_key(x)` to find the index of the element x, if x doesn\u2019t exist it finds the position that the element would have in the set. It takes $O(\\log N)$ in place of the linear $O(N)$ time which we would have encountered if we did a complete traversal of the set.\nTime Complexity per test case: $O(Q \\log N)$"
+        },
+        "id": 367,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\n\nThe first line of each test case contains one integer $Q$ - the number of queries.\n\nEach of the next $Q$ lines contains a query.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "1. Set becomes: [4]  \n2. Set becomes: [1, 4]  \n3. Set becomes: [1, 4, 6]  \n4. $S[1] = 4$  \n5. 7 doesn\u2019t exist in the set, but if it did, the set would be: [1, 4, 6, 7] and $S[3] = 7$  \n6. $S[3] = 6$",
+        "output_format": "For each test case, print the required queries.",
+        "samples": [
+            {
+                "input": "1\n6\nadd 4\nadd 1\nadd 6\nfind 1\nfindpos 7\nfindpos 6",
+                "output": "4\n3\n2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Indexed Set",
+        "video_editorial_id": 10686
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,56 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Design a Data Structure which can support the following queries:</p><p><strong>1 </strong><i><strong>x</strong></i>: Add <i>x</i> in structure<br><strong>2 x</strong>: Remove <i>x</i> from the structure if present in the structure. If <i>x</i> doesn't present in the structure, do nothing. If there are multiple occurrences of <i>x</i>, delete only one occurrence of <i>x</i>.<br><strong>3 ?</strong>: Print the minimum number present in the structure. If the structure is empty, print -1.<br><strong>4 ?</strong>: Print the maximum number present in the structure. If the structure is empty, print -1.<br><strong>5 ?</strong>: Print the sum of all numbers present in the structure. If the structure is empty, print 0.</p><p>Initially, the structure is empty.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>Q</i> \u2264 10<sup>5</sup><br>0 \u2264 <i>x</i> \u2264 10<sup>9</sup></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing ll = long long;\nusing namespace std;\n\nstruct data {\n  map<ll, ll> mp;\n  ll sum = 0;\n  void add(ll x) {\n    sum += x;\n    mp[x]++;\n  }\n  void remove(ll x) {\n    if (mp.find(x) != mp.end()) {\n      if (mp[x] != 0) {\n        sum -= x;\n        mp[x]--;\n      }\n      if (mp[x] == 0)\n        mp.erase(x);  // If the element count becomes 0 its better to remove the\n                      // key x from the map\n    }\n  }\n  void min() {\n    if ((int)mp.size() != 0)\n      cout << mp.begin()->first << '\\n';\n    else\n      cout << \"-1\\n\";\n  }\n  void max() {\n    if ((int)mp.size() != 0)\n      cout << (*mp.rbegin()).first << '\\n';\n    else\n      cout << \"-1\\n\";\n  }\n  void cur_sum() { cout << sum << '\\n'; }\n};\n\nvoid solve() {\n  data mystructure;\n  ll q;\n  cin >> q;\n  while (q--) {\n    int x, t;\n    char y;\n    cin >> t;\n    if (t == 1) {\n      cin >> x;\n      mystructure.add(x);\n    } else if (t == 2) {\n      cin >> x;\n      mystructure.remove(x);\n    } else if (t == 3) {\n      cin >> y;\n      mystructure.min();\n    } else if (t == 4) {\n      cin >> y;\n      mystructure.max();\n    } else if (t == 5) {\n      cin >> y;\n      mystructure.cur_sum();\n    }\n  }\n}\nint main() {\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n  // int t;cin >> t;while(t--)\n  solve();\n}\n```\n\n",
+                "language": "C++14"
+            },
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nconst int mod = 1e9 + 7;\ntypedef long long ll;\n#define endl '\\n'\n\nstruct data {\n  multiset<int> st;\n  ll sm = 0;\n\n  void insert(int x) {\n    st.insert(x);\n    sm += x;\n  }\n\n  void remove(int x) {\n    auto it = st.find(x);\n    if (it != st.end()) {\n      st.erase(it);\n      sm -= x;\n    }\n  }\n\n  int maximum() {\n    if (!st.empty())\n      return *(--st.end());\n    else\n      return -1;\n  }\n\n  int minimum() {\n    if (!st.empty())\n      return *(st.begin());\n    else\n      return -1;\n  }\n\n  ll sum() {\n    if (!st.empty())\n      return sm;\n    else\n      return 0;\n  }\n};\n\nint main() {\n  ios_base::sync_with_stdio(false);\n  cin.tie(0);\n  cout.tie(0);\n  // freopen(\"IN\", \"r\", stdin);\n  // freopen(\"OUT\", \"w\", stdout);\n  int q;\n  cin >> q;\n  data mystructure;\n  while (q--) {\n    int option;\n    cin >> option;\n    if (option == 1) {\n      int x;\n      cin >> x;\n      mystructure.insert(x);\n    } else if (option == 2) {\n      int x;\n      cin >> x;\n      mystructure.remove(x);\n    } else if (option == 3) {\n      char x;\n      cin >> x;\n      cout << mystructure.minimum() << endl;\n    } else if (option == 4) {\n      char x;\n      cin >> x;\n      cout << mystructure.maximum() << endl;\n    } else if (option == 5) {\n      char x;\n      cin >> x;\n      cout << mystructure.sum() << endl;\n    }\n  }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:13:50.967238+00:00"
+        },
+        "hints": {
+            "hint1": "Decide the data structure which can handle all the queries easily.",
+            "hint2": "Finding minimum and maximum is involved so the first thing which comes to mind is to keep the values sorted. Think about containers which can keep elements in sorted order. Sets, Maps, Multisets. Since same value can be present multiple times so using a set would not solve our purpose. Use maps/ multisets.",
+            "solution_approach": "To find sum, you can use a variable to store the dynamic sum. To find minimum and maximum there are relevant functions in multisets and maps to find the first and last elements. To remove an occurence of an element use `find` function to get the iterator to that element and then delete its occurence. Why aren't we directly using `erase(x)` functionality available in maps and multisets?? Well think about what would happen to multiple occurences in that case.\n\nTime Complexity : Sum : $O(1)$, Extracting minimum and maximum : $O(1)$.\nThe overall time complexity of this solution is $O(Q \\log N)$, where $Q$ is the number of queries and $N$ is the number of elements in the map/multiset. This is because the map data structure has a logarithmic time complexity for search and insert operations."
+        },
+        "id": 83,
+        "input_format": "<p>The first line of input contains <i>Q</i> - the number of queries.<br>Next, <i>Q</i> lines contain queries of the format specified in the statement.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For queries of type 3, 4 and 5, print the answer in a new line.</p>",
+        "samples": [
+            {
+                "input": "18\n1 5\n1 4\n1 4\n3 ?\n4 ?\n5 ?\n2 4\n3 ?\n4 ?\n5 ?\n2 4\n3 ?\n4 ?\n5 ?\n2 5\n3 ?\n4 ?\n5 ?",
+                "output": "4\n5\n13\n4\n5\n9\n5\n5\n5\n-1\n-1\n0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-DE Shaw"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Support Queries I",
+        "video_editorial_id": 10657
+    },
+    "details": "Problem Details"
+}

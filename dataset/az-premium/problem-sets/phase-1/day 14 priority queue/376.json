@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an array of N integers. In one operation, remove any two elements in the array and add their sum to the array. The cost of this operation will be the sum of the two elements. Print the minimum cost till the size of the array does not become 1.",
+        "complete_approach": "",
+        "constraints": "1\u2264 T \u2264 10<sup>6</sup>\n\n1\u2264 N \u2264 10<sup>6</sup>\n\n1\u2264 A<sub>i</sub> \u2264 10<sup>9</sup>\n\nIt is guaranteed that the sum of N over all test cases does not exceed 10<sup>6</sup>.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n#define int long long\n\nsigned main() {\n    IOS\n    int t;\n    cin >> t;\n    while (t--) {\n        priority_queue<int, vector<int>, greater<int>> q;\n        int n;\n        cin >> n;\n        for (int i = 0; i < n; ++i) {\n            int x;\n            cin >> x;\n            q.push(x);\n        }\n        int ans = 0;\n        while(q.size() > 1) {\n            int x = q.top();\n            q.pop();\n            int y = q.top();\n            q.pop();\n            ans += x+y;\n            q.push(x+y);\n        }\n        cout << ans << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:39:00.106008+00:00"
+        },
+        "hints": {
+            "hint1": "Use multiset/priority queue.",
+            "hint2": "",
+            "solution_approach": "Store all the elements in the priority queue and in each turn remove the smallest two integers, add their sum to the multiset and to the answer.\n\nTime Complexity per test case: O(N log N)"
+        },
+        "id": 376,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer N - the length of the array. \n\nThe second line of each test case contains N space-separated integers.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, take 5 and 6 to get sum (5+6) = 11\n\nFor the second test case, take 1 and 1, array becomes [2, 1] and then take 2 and 1 to get sum (1+1) + (2+1) = 5\n\nFor the third test case, take 1 and 2, array becomes [3, 3, 3] and then take 3 and 3, array becomes [6, 3] and then take 6 and 3 to get sum (1+2) + (3+3) + (6+3) = 18",
+        "output_format": "For each test case, print the minimum cost till the size of the array does not become 1.",
+        "samples": [
+            {
+                "input": "3\n4\n3 1 4 2\n3\n1 1 1\n4\n2 3 1 3\n",
+                "output": "19\n5\n18\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Reduce the Array AZ101",
+        "video_editorial_id": 10659
+    },
+    "details": "Problem Details"
+}

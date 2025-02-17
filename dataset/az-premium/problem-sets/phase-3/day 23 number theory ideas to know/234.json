@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Find all prime numbers between the range from <i>L</i> to <i>R</i> (endpoints inclusive). Print them in non-decreasing order.</p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>L</i> \u2264 <i>R</i> \u2264 10<sup>12</sup><br><i>R</i> - <i>L</i> + 1 \u2264 10<sup>6</sup>&nbsp;</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\ntypedef long long ll;\n\nvector<bool> segmentedSieve(long long L, long long R)\n{\n    // generate all primes up to sqrt(R)\n    long long lim = sqrt(R);\n    vector<bool> mark(lim + 1, false);\n    vector<long long> primes;\n    for (long long i = 2; i <= lim; ++i)\n    {\n        if (!mark[i])\n        {\n            primes.emplace_back(i);\n            for (long long j = i * i; j <= lim; j += i)\n                mark[j] = true;\n        }\n    }\n\n    vector<bool> isPrime(R - L + 1, true);\n    for (long long i : primes)\n        for (long long j = max(i * i, (L + i - 1) / i * i); j <= R; j += i)\n            isPrime[j - L] = false;\n    if (L == 1)\n        isPrime[0] = false;\n    return isPrime;\n}\n\nsigned main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n\n    ll L, R;\n    cin >> L >> R;\n    vector<bool> isPrime = segmentedSieve(L, R);\n\n    set<ll> primes;\n\n    for (int i = 0; i < (int)isPrime.size(); i++)\n    {\n        if (isPrime[i])\n        {\n            primes.insert(i + L);\n        }\n    }\n\n    cout << (int)primes.size() << \"\\n\";\n    for (ll u : primes)\n    {\n        cout << u << \" \";\n    }\n    cout << \"\\n\";\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:28:05.602453+00:00"
+        },
+        "hints": {
+            "hint1": "To find all primes in a range, we can use the segmented sieve algorithm, which generates primes up to the square root of the upper limit, and then uses those primes to sieve the range in segments.",
+            "hint2": "The solution approach uses the segmented sieve algorithm to generate primes in the range [L, R]. First, we generate all primes up to $\\sqrt R$  using the regular sieve of Eratosthenes. Then, we use these primes to sieve the range [L, R] in segments, marking all composite numbers that are multiples of any prime in the prime list. Finally, we output all the unmarked numbers as prime numbers.",
+            "solution_approach": "The complete approach begins by generating all primes up to $\\sqrt R$ using the sieve of Eratosthenes. We first initialize a boolean vector mark of size $lim + 1$, where $lim = \\sqrt R $ . We set all elements of mark to false, indicating that all numbers in the range [2, lim] are prime. We then iterate over all numbers from $2$ to $\\sqrt R$, marking all multiples of each prime as composite. At the end of this process, all unmarked numbers are primes, and we store them in a vector called primes.\n\nNext, we use the segmented sieve algorithm to sieve the range [L, R]. We initialize another boolean vector isPrime of size $R - L + 1$, where each element initially corresponds to a number in the range [L, R] and is set to true. For each prime p in the primes vector, we start sieving the range by setting isPrime[j - L] to false for all multiples of p in the range [L, R], starting from the first multiple greater than or equal to $p^2$, to avoid marking composite numbers that are already marked by smaller primes. Finally, we output all unmarked numbers in the isPrime vector as prime numbers.\n\nThe time complexity of the segmented sieve algorithm is $O((R - L + 1) \\log \\log R)$   \n  \nNote: We used a set to store the primes in the solution code to eliminate duplicates and print primes in non-decreasing order. The time complexity of the set operations is O(log n) per insertion or deletion, where n is the number of elements in the set. Since the maximum size of the set is $R - L + 1$ in our case, the total time complexity of set operations is $O((R - L + 1) \\log(R - L + 1))$. However, this is a sub-dominant term in the overall time complexity, and we can ignore it."
+        },
+        "id": 234,
+        "input_format": "<p>The only line of input contains <i>L</i> and <i>R</i>, representing the range.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>The first line of output contains <i>n</i> - the number of prime numbers in between [<i>L, R</i>].<br>The second line contains <i>n</i> space-separated integers denoting the prime numbers between [<i>L, R</i>] in <strong>non-decreasing order</strong>.</p>",
+        "samples": [
+            {
+                "input": "1 20",
+                "output": "8\n2 3 5 7 11 13 17 19"
+            },
+            {
+                "input": "100000000000 100000000020",
+                "output": "2\n100000000003 100000000019"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Sieve of Eratosthenes Revisited",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

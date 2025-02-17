@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": {
+        "body": "**Check if a binary tree is BST or not.**\n\nA binary search tree (BST) is a node-based binary tree data structure which has the following properties.\n\n- The left subtree of a node contains only nodes with keys less than the node\u2019s key.\n- The right subtree of a node contains only nodes with keys greater than the node\u2019s key.\n- Both the left and right subtrees must also be binary search trees.\n- From the above properties it naturally follows that:\n  - Each node (item in the tree) has a distinct key.",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "Editorial Code data is currently empty.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:20:19.130830+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 671,
+        "input_format": "<p>The first line contains an integer T, (1 \u2264 T \u2264 10^5), the number of test cases.</p><p>The first line of each test case contains an integer N the length of the array representing the serialized representation of a tree.</p><p>The next line contains N-space-separated integers (1 <= N < 10000000).&nbsp;</p><p>The input is given as a serialized representation of a tree.</p><p>The following function parses the input:</p><p><i>Node* getBinaryTree(vector&lt;int&gt; &amp;num, int*ind)</i></p><p><i>Sum of N across all test cases \u2264 10^7.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Return true/false.</p>",
+        "samples": [
+            {
+                "input": "6\n17\n113169 111387 -1 -1 209114 -1 957726 786099 643981 -1 -1 821914 -1 -1 990181 -1 -1 \n7\n566098 413153 -1 -1 797870 -1 -1 \n3\n964901 -1 -1 \n19\n14136 -1 35825 -1 37940 -1 264128 -1 370052 -1 545817 -1 659383 -1 678544 -1 682492 -1 -1 \n13\n7813 6718 -1 5816 -1 -1 5249 -1 3912 8623 -1 -1 -1 \n15\n8359 8305 9109 6276 -1 -1 6626 -1 -1 2942 -1 -1 8575 -1 -1 ",
+                "output": "yes\nyes\nyes\nyes\nno\nno"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Frequently Asked Questions",
+            "Binary Tree"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n</fix>\nbool isBst(Node* root) {\n    //Complete the function\n}\n<fix>\nNode* getBinaryTree(vector<int> &num, int*ind) {\n    if(num[*ind] == -1)\n        return NULL;\n    Node* node = new Node(num[*ind]);\n    (*ind)++;\n    node->left = getBinaryTree(num,ind);\n    (*ind)++;\n    node->right = getBinaryTree(num,ind);\n    return node;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n;\n        cin>>n;\n        assert(n<=1000000);\n        vector<int>arr(n);\n        for(int i=0;i<n;i++)\n            cin>>arr[i];\n        int ind = 0;\n        Node* tree = getBinaryTree(arr,&ind);\n        if(isBst(tree)){\n            cout<<\"yes\\n\";\n        } else {\n            cout<<\"no\\n\";\n        }\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 2.0,
+        "title": "IsBst",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

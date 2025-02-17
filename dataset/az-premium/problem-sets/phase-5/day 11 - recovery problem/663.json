@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Construct Tree from given Inorder and Postorder traversals",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "Solution Approach is missing",
+                "Editorial Code data is currently empty.",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:34:38.075002+00:00"
+        },
+        "hints": {
+            "hint1": "",
+            "hint2": "",
+            "solution_approach": ""
+        },
+        "id": 663,
+        "input_format": "<p>The first line contains an integer T, (1 \u2264 T \u2264 10^5), the number of test cases.</p><p>The first line of each test case contains an integer N, &nbsp;the length of the array representing the serialized representation of a tree.</p><p>The next line contains N-space-separated distinct integers representing the Inorder Traversal of the tree.&nbsp;</p><p>The next line contains N-space-separated distinct integers representing the Postorder Traversal of the tree.&nbsp;</p><p><i>Sum of N across all test cases \u2264 10^7.</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case find the Binary Tree and return the Root Node of the binary tree. Complete this function -&nbsp;</p><p>Node* getBinaryTree(vector&lt;int&gt;&amp;inorder,vector&lt;int&gt;&amp;preorder)<br>{</p><p>}</p><p>A function in the main converts the Binary Tree Root returned into serialized array structure and prints it.</p>",
+        "samples": [
+            {
+                "input": "7\n4\n5096 3880 9002 8750 \n8750 9002 3880 5096 \n8\n213 1746 332 4793 7083 1732 384 7576 \n1746 213 4793 332 1732 7083 7576 384 \n4\n5400 3001 339 7702 \n5400 339 7702 3001 \n2\n7466 5992 \n5992 7466 \n4\n5156 7626 2362 2601 \n5156 7626 2362 2601 \n10\n6402 3772 1983 7765 4414 2719 8960 1670 2682 3815 \n6402 1983 7765 2719 4414 1670 3815 2682 8960 3772 \n1\n7859 \n7859 ",
+                "output": "<p>5096 -1 3880 -1 9002 -1 8750 -1 -1&nbsp;</p><p>384 7083 332 213 -1 1746 -1 -1 4793 -1 -1 1732 -1 -1 7576 -1 -1&nbsp;</p><p>3001 5400 -1 -1 7702 339 -1 -1 -1&nbsp;</p><p>7466 -1 5992 -1 -1&nbsp;</p><p>2601 2362 7626 5156 -1 -1 -1 -1 -1&nbsp;</p><p>3772 6402 -1 -1 8960 4414 7765 1983 -1 -1 -1 2719 -1 -1 2682 1670 -1 -1 3815 -1 -1&nbsp;</p><p>7859 -1 -1&nbsp;</p>"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Frequently Asked Questions",
+            "Binary Tree"
+        ],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\n\nusing namespace std;\n\nstruct Node {\n    int val;\n    Node *left, *right;\n    Node(int x) : val(x), left(NULL), right(NULL) {}\n};\n\n</fix>\nNode* getBinaryTree(vector<int>&inorder,vector<int>&postorder)\n{\n  // Complete the function.\n}\n<fix>\nvoid generateArray(Node* root, vector<int>&ans){\n    if(root==NULL){\n        ans.push_back(-1);\n        return;\n      }\n    ans.push_back(root->val);\n    generateArray(root->left,ans);\n    generateArray(root->right,ans);\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0); cout.tie(0);\n\n    int t;\n    cin >> t;\n    while(t--){\n        int n;\n        cin>>n;\n        assert(n<=1000000);\n        vector<int>arr1(n);\n        for(int i=0;i<n;i++)\n            cin>>arr1[i];\n        vector<int>arr2(n);\n        for(int i=0;i<n;i++)\n            cin>>arr2[i];\n        Node* tree = getBinaryTree(arr1,arr2);\n        vector<int>ans;\n        generateArray(tree,ans);\n        for(auto v:ans)cout<<v<<\" \";\n        cout<<\"\\n\";\n    }\n    return 0;\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 3.0,
+        "title": "Tree from inorder and postoder",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

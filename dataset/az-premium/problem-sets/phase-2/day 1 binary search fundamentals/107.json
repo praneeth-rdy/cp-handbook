@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>Given a bitonic array <i>A</i> consisting of <i>N</i> integers and an integer <i>Q</i>. In each query, you will be given an integer <i>K</i>, find the positions of <i>K</i> in <i>A</i>. Integer <i>K </i>exists in<i> A.</i></p><p>Bitonic array - A bitonic sequence is a sequence with A[1]&lt;A[2]&lt;A[3]....A[k]&gt;A[k+1]&gt;A[k+2]....&gt;A[N] for some 1&lt;=K\u2264N.&nbsp;</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\nint n,q;\nvector<int> arr;\n\nbool check(int i){\n   if(arr[i]>arr[i-1])return 1;\n   else return 0;\n}\n\nvoid solve(){\n   cin>>n>>q;\n   arr.resize(n);\n   for(int i=0;i<n;i++){\n       cin>>arr[i];\n   }\n\n   int lo = 1;\n   int hi = n-1;\n   int peak = 0;\n   while(lo<=hi){\n       int mid = (lo+hi)/2;\n       if(check(mid)){\n           peak = mid;\n           lo = mid + 1;\n       }else{\n           hi = mid - 1;\n       }\n   }\n\n   while(q--){\n       int k;\n       cin>>k;\n\n       vector<int> final;\n       lo = 0;\n       hi = peak-1;\n       while(lo<=hi){\n           int mid = (lo+hi)/2;\n           if(arr[mid]==k){\n               final.push_back(mid+1);\n               break;\n           }else if(arr[mid]>k){\n               hi=mid-1;\n           }else{\n               lo=mid+1;\n           }\n       }\n\n       lo = peak;\n       hi = n-1;\n       while(lo<=hi){\n           int mid = (lo+hi)/2;\n           if(arr[mid]==k){\n               final.push_back(mid+1);\n               break;\n           }else if(arr[mid]>k){\n               lo=mid+1;\n           }else{\n               hi=mid-1;\n           }\n       }\n\n       for(auto v:final){\n           cout<<v<<\" \";\n       }  \n       cout<<endl;\n   }\n}\n\nsigned main(){\n   ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);\n   int _t;cin>>_t;while(_t--)\n   solve();\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:13:22.248190+00:00"
+        },
+        "hints": {
+            "hint1": "The given array can be seen as two different arrays which are merged together, one is in increasing order and the other in decreasing order.",
+            "hint2": "First, find the peak of the given array using binary search and since both the parts of the array are sorted, we can use binary search on both of them to find the given query number.",
+            "solution_approach": "<p>We will use binary search on the given array in a different way since the array is not sorted. First we need to find the peak of the array. This would be done by binary search, since the peak point would be the only point that is greater than elements to both sides, its left and right. We take the left pointer L = 1, the right pointer R = N (since the array is 1-indexed) and mid = (L+R)/2. If we get A[mid-1] &lt; A[mid], that means mid could be a possible peak, since the peak cannot exist at any point lower than mid, so we continue binary search on L = mid+1 to R. Otherwise, A[mid-1] &gt; A[mid], the peak would be lower than mid, so we continue binary search on L to R = mid-1. If peak is the index of the given query number, that would be the answer.</p><p>After finding the peak, we apply binary search on both sides of the peak, i.e. from L = 1 to R = peak -1 and L = peak + 1 to R = N, separately. Note that it is possible that an element can exist in the left part as well as the right part of the peak of the array.</p><p>Time Complexity per test case: O(Q log<sub>2</sub>N) (since we are performing binary search on the length of the given array)</p>"
+        },
+        "id": 107,
+        "input_format": "<p>The first line contains <i>T</i>, the number of test cases (<i>1&lt;=T&lt;=10000</i>).</p><p>The first line contains two space separated-integer <i>N, Q</i> where <i>1&lt;=N&lt;=10^5, 1&lt;=Q&lt;=10^6.</i></p><p>The second line contains N space-separated integers A<sub>1</sub>,A<sub>2</sub>....A<sub>N</sub> where <i>-1e9&lt;=A<sub>i</sub>&lt;=1e9</i>.</p><p>Next Q lines contains an integer <i>K</i>, <i>-1e9&lt;=K&lt;=1e9</i>.</p><p>Sum of <i>N,</i> <i>Q </i>across all test case<i> \u226410^6</i></p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>For each test case print the positions of <i>K</i> in <i>A</i> in sorted order in a new line.</p><p><strong>Positions are 1-indexed.</strong></p>",
+        "samples": [
+            {
+                "input": "1\n6 4\n1 2 5 3 2 1\n1\n2\n5\n3",
+                "output": "1 6\n2 5\n3\n4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Bitonic Array",
+        "video_editorial_id": 10661
+    },
+    "details": "Problem Details"
+}

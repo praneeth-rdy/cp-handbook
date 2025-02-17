@@ -1,0 +1,66 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given two numbers $X$, $Y$ which denote the coordinates of a point in a 2D plane. Determine in which quadrant it belongs.\n\n**Note:**\n\nIf the point is at the origin ($X=0$ and $Y=0$), print **\"Origem\"**. If the point is on the X-axis ($Y=0$ and $X \\ne 0$), print **\"Eixo X\"**. If the point is on the Y-axis ($X=0$ and $Y \\ne 0$), print **\"Eixo Y\"**. Otherwise, print **Q1**, **Q2**, **Q3**, or **Q4** according to the quadrant in which the point is located.\n\nThe quadrants are defined as follows: **Q1** when $X > 0$ and $Y > 0$, **Q2** when $X < 0$ and $Y > 0$, **Q3** when $X < 0$ and $Y < 0$, and **Q4** when $X > 0$ and $Y < 0$.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^6$\n$-1000 \\leq X, Y \\leq 1000$",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main()\n{\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int t;\n    cin >> t;\n\n    while (t--)\n    {\n        double x, y;\n        cin >> x >> y;\n        if (x == 0 && y == 0) {\n            cout << \"Origem\" << \"\\n\";\n        } else if (x == 0) {\n            cout << \"Eixo Y\" << \"\\n\";\n        } else if (y == 0) {\n            cout << \"Eixo X\" << \"\\n\";\n        } else {\n            if (x > 0 && y > 0) {\n                cout << \"Q1\" << \"\\n\";\n            } else if (x < 0 && y > 0) {\n                cout << \"Q2\" << \"\\n\";\n            } else if (x < 0 && y < 0) {\n                cout << \"Q3\" << \"\\n\";\n            } else {\n                cout << \"Q4\" << \"\\n\";\n            }\n        }\n    }\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        int t = Integer.parseInt(br.readLine());\n\n        while (t-- > 0) {\n            StringTokenizer st = new StringTokenizer(br.readLine());\n            double x = Double.parseDouble(st.nextToken());\n            double y = Double.parseDouble(st.nextToken());\n\n            if (x == 0 && y == 0) {\n                out.println(\"Origem\");\n            } else if (x == 0) {\n                out.println(\"Eixo Y\");\n            } else if (y == 0) {\n                out.println(\"Eixo X\");\n            } else {\n                if (x > 0 && y > 0) {\n                    out.println(\"Q1\");\n                } else if (x < 0 && y > 0) {\n                    out.println(\"Q2\");\n                } else if (x < 0 && y < 0) {\n                    out.println(\"Q3\");\n                } else {\n                    out.println(\"Q4\");\n                }\n            }\n        }\n\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    idx = 0\n    T = int(data[idx])\n    idx += 1\n    for _ in range(T):\n        x = float(data[idx])\n        idx += 1\n        y = float(data[idx])\n        idx += 1\n        if x == 0 and y == 0:\n            print(\"Origem\")\n        elif x == 0:\n            print(\"Eixo Y\")\n        elif y == 0:\n            print(\"Eixo X\")\n        else:\n            if x > 0 and y > 0:\n                print(\"Q1\")\n            elif x < 0 and y > 0:\n                print(\"Q2\")\n            elif x < 0 and y < 0:\n                print(\"Q3\")\n            else:\n                print(\"Q4\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:32:12.380670+00:00"
+        },
+        "hints": {
+            "hint1": "Try to use if-else conditional statements in a logical way to determine the quadrant.",
+            "hint2": "Consider the signs of $X$ and $Y$ to identify the quadrant according to the coordinate plane rules.",
+            "solution_approach": "To solve this problem, we'll read the coordinates $(X, Y)$ and determine the location of the point based on the following conditions:\n\n1. **Origin**: If $X = 0$ and $Y = 0$, the point is at the origin. Output **\"Origem\"**.\n\n2. **X-axis**: If $Y = 0$ and $X \\ne 0$, the point lies on the X-axis. Output **\"Eixo X\"**.\n\n3. **Y-axis**: If $X = 0$ and $Y \\ne 0$, the point lies on the Y-axis. Output **\"Eixo Y\"**.\n\n4. **Quadrants**:\n\n   - **Q1**: If $X > 0$ and $Y > 0$, output **\"Q1\"**.\n   - **Q2**: If $X < 0$ and $Y > 0$, output **\"Q2\"**.\n   - **Q3**: If $X < 0$ and $Y < 0$, output **\"Q3\"**.\n   - **Q4**: If $X > 0$ and $Y < 0$, output **\"Q4\"**.\n\nWe'll use conditional statements to check these conditions in order.\n\n**Time Complexity per test case**: $O(1)$\n\n**Space Complexity per test case**: $O(1)$"
+        },
+        "id": 1163,
+        "input_format": "The first line contains $T$, the number of test cases.\nFor each test case, the first line contains two space-separated floating point numbers $X$ and $Y$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "**Sample Input 1:**\nThe point is at $(X, Y) = (4.5, -2.2)$. Since $X > 0$ and $Y < 0$, the point lies in Quadrant 4, so the output is **Q4**.\n**Sample Input 2:**\nThe point is at $(X, Y) = (0.1, 0.1)$. Since $X > 0$ and $Y > 0$, the point lies in Quadrant 1, so the output is **Q1**.",
+        "output_format": "For each test case, print the output in a separate line.",
+        "samples": [
+            {
+                "input": "1\n4.5 -2.2",
+                "output": "Q4"
+            },
+            {
+                "input": "1\n0.1 0.1",
+                "output": "Q1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Math",
+            "Implementation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Coordinates of a Point",
+        "video_editorial_id": 10656
+    },
+    "details": "Problem Details"
+}

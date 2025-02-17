@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an array of N integers. For each position, find the nearest position to its left having a smaller value. (1-based indexing)",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^5$  \n\n$1 \\leq N \\leq 10^5$  \n\n$1 \\leq A_i \\leq 10^9$  \n\nIt is guaranteed that the sum of $N$ over all test cases does not exceed $10^6$.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n\nint main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int n;\n    cin >> n;\n    int a[n];\n    stack<int> s;\n    for (int i = 0; i < n; ++i) {\n      cin >> a[i];\n      while (!s.empty() && a[s.top()] >= a[i]) {\n        s.pop();\n      }\n      if (s.empty()) {\n        cout << \"0 \";\n      } else {\n        cout << s.top() + 1 << \" \";\n      }\n      s.push(i);\n    }\n    cout << \"\\n\";\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:36:37.885162+00:00"
+        },
+        "hints": {
+            "hint1": "Maintain a stack with the given array values. Pop the elements which are greater than the current element.",
+            "hint2": "",
+            "solution_approach": "This problem can be solved efficiently using a stack. The idea is to traverse the array from left to right, and maintain a stack of indices. For each index `i`, we keep popping indices from the stack until we find an index `j` such that $a[j] < a[i]$. The answer for index `i` is then `j`, or $-1$ if no such index exists.\n\nHere is the step-by-step algorithm:\n* Initialize an empty stack.\n* Traverse the array from left to right.\n* For each index `i`:\n   * While the stack is not empty and a[top of stack] >= a[i], pop the stack.\n   * If the stack is empty, the answer for index `i` is $-1$.\n   * Otherwise, the answer for index `i` is the index at the top of the stack.\n   * Push index `i` onto the stack.\nReturn the list of answers.\n\nTime Complexity per test case: $O(N)$"
+        },
+        "id": 378,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer N - the length of the array. \n\nThe second line of each test case contains N space-separated integers.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, for 3 there is no smaller value, for 5, A[1] = 3, for 1, there is no smaller value, for 6 A[3] = 1, for 2, A[3] = 1.\n\nFor the second test case, for all 1 there is no smaller value, for 2, A[2] = 1.\n\nFor the third test case, for 1 there is no smaller value, for 3 and 2, A[1] = 1, for 6 and 6, A[3] = 2",
+        "output_format": "For each test case, print N space-separated integers, for each position, the nearest position to its left having a smaller value.  If no position to its left has a smaller value, print 0.",
+        "samples": [
+            {
+                "input": "3\n5\n3 5 1 6 2\n4\n1 1 2 1\n5\n1 3 2 6 6\n",
+                "output": "0 1 0 3 3 \n0 0 2 0 \n0 1 1 3 3\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Nearest Smaller Values AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

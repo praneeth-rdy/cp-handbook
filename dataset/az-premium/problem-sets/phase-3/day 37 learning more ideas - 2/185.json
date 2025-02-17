@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are standing on the lowest row of a chessboard and can only move, upwards and leftwards or upwards and rightwards. There is a predefined score on each cell of the chessboard. You can start from any cell in the lowest row and you have to reach the uppermost row such that your score is the maximum possible and it is divisible by K. You have to find the maximal score you can achieve.",
+        "complete_approach": "",
+        "constraints": "<p>1\u2264 T \u2264 100</p><p>1 \u2264 N, M \u2264 100</p><p>1\u2264 K \u2264 11</p><p>&nbsp;</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint n,m,k;\nint a[101][101];\nint dp[101][101][12];\nint main(){\n    IOS\n    int t;\n    cin>>t;\n    while(t--){\n        cin>>n>>m>>k;\n        for(int i=1; i<=n; ++i){\n            for(int j=1; j<=m; ++j){\n                char c;\n                cin>>c;\n                a[i][j]=c-'0';\n            }\n        }\n        memset(dp,-1,sizeof(dp));\n        for(int j=1; j<=m; ++j){\n            int t=a[n][j]%k;\n            dp[n][j][t] = a[n][j];\n        }\n        for(int i=n-1; i>=1; --i){\n            for(int j=1; j<=m; ++j){\n                for(int l=0; l<k; ++l){\n                    if(j>1 && dp[i+1][j-1][l]>=0){\n                        int t=dp[i+1][j-1][l]+a[i][j];\n                        if(dp[i][j][t%k]<t){\n                            dp[i][j][t%k]=t;\n                        }\n                    }\n                    if(j<m && dp[i+1][j+1][l]>=0){\n                        int t=dp[i+1][j+1][l]+a[i][j];\n                        if(dp[i][j][t%k]<t){\n                            dp[i][j][t%k]=t;\n                        }\n                    }\n                }\n            }\n        }\n        int ans=-1;\n        for(int j=1; j<=m; ++j){\n            if(ans < dp[1][j][0]){\n                ans=dp[1][j][0];\n            }\n        }\n        cout<<ans<<\"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:33:46.862779+00:00"
+        },
+        "hints": {
+            "hint1": "For each cell of the table store K\u2009+\u20091 values, where the i-th value is the maximum number of peas the pawn can take while he is at that cell and this number mod K\u2009+\u20091 is i.",
+            "hint2": "Make a DP array DP[n][m][k] where DP[i][j][l] denotes the maximum score you can obtain in the i-th row and j-th column while the remainder divided by k is l.",
+            "solution_approach": "<p>Suppose that another array A[i][j] denotes the score in the i-th row and j-th column. Then,</p><p>DP[i][j][l]=max(DP[i-1][j-1][(l-A[i][j])%k], DP[i-1][j+1][(l-A[i][j])%k]).</p><p>Time Complexity per test case: O(N*M*K)</p>"
+        },
+        "id": 185,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains three space-separated integers N, M, and K - the length of the array.\n\nEach of the next N lines contains M digits from 0-9 indicating the score at that cell.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, we start from A[4][3] and get the score as 3+3+7+9 = 22 which is divisible by 11.\n\nFor the second test case, we start from A[2][1] and get the score as 9+9 = 18, which is divisible by 2. You can also start from A[2][3] to get the same result.\n\nFor the third test case, there is no way to reach the top row with the score as a multiple of k.",
+        "output_format": "For each test case, if it is possible, you have to find the maximal score you can achieve. If it is impossible print -1.",
+        "samples": [
+            {
+                "input": "3\n4 3 11\n194\n707\n733\n633\n2 4 2\n3916\n9593\n2 2 4\n15\n52",
+                "output": "22\n18\n-1"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-Tibra"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Maximum Score",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,142 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "course_name": "Day 1: More of Combinatorial Numbers",
+            "resource_id": 204
+        },
+        {
+            "course_name": "Day 2: Inclusion Exclusion Ideas",
+            "resource_id": 177
+        },
+        {
+            "course_name": "Day 2: Inclusion Exclusion Ideas",
+            "resource_id": 198
+        },
+        {
+            "course_name": "Day 3: More Ideas to know [Optional Hard]",
+            "resource_id": 202
+        },
+        {
+            "course_name": "Day 3: More Ideas to know [Optional Hard]",
+            "resource_id": 79
+        },
+        {
+            "course_name": "Day 4: Segment Tree basics",
+            "resource_id": 401
+        },
+        {
+            "course_name": "Day 5",
+            "resource_id": 405
+        },
+        {
+            "course_name": "Day 6",
+            "resource_id": 403
+        },
+        {
+            "course_name": "Day 6",
+            "resource_id": 404
+        },
+        {
+            "course_name": "Day 6",
+            "resource_id": 402
+        },
+        {
+            "course_name": "Day 7",
+            "resource_id": 406
+        },
+        {
+            "course_name": "Day 9 - Kth Segment Tree",
+            "resource_id": 409
+        },
+        {
+            "course_name": "Day 9 - Kth Segment Tree",
+            "resource_id": 408
+        },
+        {
+            "course_name": "Day 13 - String Algorithms",
+            "resource_id": 423
+        },
+        {
+            "course_name": "Day 13 - String Algorithms",
+            "resource_id": 424
+        },
+        {
+            "course_name": "Day 14 - Manacher\u2019s Algorithm",
+            "resource_id": 337
+        },
+        {
+            "course_name": "Day 14 - Manacher\u2019s Algorithm",
+            "resource_id": 442
+        },
+        {
+            "course_name": "Day 15 - String Trie Fundamentals",
+            "resource_id": 426
+        },
+        {
+            "course_name": "Day 16 - More practice on String Trie",
+            "resource_id": 421
+        },
+        {
+            "course_name": "Day 17 - Bit Trie",
+            "resource_id": 420
+        },
+        {
+            "course_name": "Day 18 - More Bit Trie Ideas",
+            "resource_id": 420
+        },
+        {
+            "course_name": "Day 18 - More Bit Trie Ideas",
+            "resource_id": 418
+        },
+        {
+            "course_name": "Day 19 - Digit DP",
+            "resource_id": 302
+        },
+        {
+            "course_name": "Day 19 - Digit DP",
+            "resource_id": 304
+        },
+        {
+            "course_name": "Day 20 - More Digit DP practice",
+            "resource_id": 305
+        },
+        {
+            "course_name": "Day 20 - More Digit DP practice",
+            "resource_id": 307
+        },
+        {
+            "course_name": "Day 22 - DP on Tree",
+            "resource_id": 451
+        },
+        {
+            "course_name": "Day 23 - DP on Tree 2",
+            "resource_id": 449
+        },
+        {
+            "course_name": "Day 24 - DP on Tree 3",
+            "resource_id": 448
+        },
+        {
+            "course_name": "Day 25 - DP Bitmask 1",
+            "resource_id": 452
+        },
+        {
+            "course_name": "Day 25 - DP Bitmask 1",
+            "resource_id": 454
+        },
+        {
+            "course_name": "Day 26 - DP Bitmask 2",
+            "resource_id": 453
+        },
+        {
+            "course_name": "Day 26 - DP Bitmask 2",
+            "resource_id": 457
+        },
+        {
+            "course_name": "Day 27 - DP Bitmask 3",
+            "resource_id": 455
+        }
+    ],
+    "details": "Chapter 559 Problems"
+}

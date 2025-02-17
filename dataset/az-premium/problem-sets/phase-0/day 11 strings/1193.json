@@ -1,0 +1,70 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given two numbers $N$, $Q$ and a string $S$ of size $N$, followed by $Q$ lines of the following queries:\n\n1. **pop\\_back** : remove the last character in the string.\n\n2. **front** : print the first character in the string.\n\n3. **back** : print the last character in the string.\n\n4. **sort $l$ $r$** : where $1 \\leq l, r \\leq |S|$, sort all characters of $S$ from $l$ to $r$.\n\n5. **reverse $l$ $r$** : where $1 \\leq l, r \\leq |S|$, reverse all characters of $S$ from $l$ to $r$.\n\n6. **print $pos$** : where $1 \\leq pos \\leq |S|$, print the character at index $pos$.\n\n7. **substr $l$ $r$** : where $1 \\leq l, r \\leq |S|$, print substring of $S$ from $l$ to $r$.\n\n8. **push\\_back $x$** : add character $x$ to the end of the string.\n\n**Note:** If $l > r$, then swap them.\n\nFor each query, print the answer associated with it in a single line.\n\n**It's guaranteed that in the first 7 types of queries, the string is not empty.**\n\n**It's recommended to use built-in string functions.**",
+        "complete_approach": "",
+        "constraints": "$1 \\leq N, Q \\leq 10^3$",
+        "difficulty": 2,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include<bits/stdc++.h>\nusing namespace std;\n\nvoid solution() {\n    int size, query;\n    cin >> size >> query;\n    string s; cin >> s;\n    int l, r;\n    while (query--) {\n        string type; cin >> type;\n        if (type == \"pop_back\") {\n            s.pop_back();\n        } else if (type == \"front\") {\n            cout << s.front() << endl;\n        } else if (type == \"back\") {\n            cout << s.back() << endl;\n        } else if (type == \"sort\") {\n            cin >> l >> r;\n            if (l > r) {\n                swap(l, r);\n            }\n            sort(s.begin() + l - 1, s.begin() + r);\n        } else if (type == \"reverse\") {\n            cin >> l >> r;\n            if (l > r) {\n                swap(l, r);\n            }\n            reverse(s.begin() + l - 1, s.begin() + r);\n        } else if (type == \"print\") {\n            int pos; cin >> pos;\n            cout << s[pos - 1] << endl;\n        } else if (type == \"substr\") {\n            cin >> l >> r;\n            if (l > r) {\n                swap(l, r);\n            }\n            string substr = s.substr(l - 1, r - l + 1);\n            cout << substr << endl;\n        } else {\n            char c; cin >> c;\n            s.push_back(c);\n        }\n    }\n}\n\nint main() {\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n    solution();\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        StringTokenizer st = new StringTokenizer(br.readLine());\n        int N = Integer.parseInt(st.nextToken());\n        int Q = Integer.parseInt(st.nextToken());\n        \n        String s = br.readLine();\n        \n        for (int i = 0; i < Q; i++) {\n            String line = br.readLine();\n            st = new StringTokenizer(line);\n            String type = st.nextToken();\n            if (type.equals(\"pop_back\")) {\n                s = s.substring(0, s.length() - 1);\n            } else if (type.equals(\"front\")) {\n                out.println(s.charAt(0));\n            } else if (type.equals(\"back\")) {\n                out.println(s.charAt(s.length() - 1));\n            } else if (type.equals(\"sort\")) {\n                int l = Integer.parseInt(st.nextToken());\n                int r = Integer.parseInt(st.nextToken());\n                if (l > r) {\n                    int temp = l; l = r; r = temp;\n                }\n                char[] subarray = s.substring(l - 1, r).toCharArray();\n                Arrays.sort(subarray);\n                s = s.substring(0, l - 1) + new String(subarray) + s.substring(r);\n            } else if (type.equals(\"reverse\")) {\n                int l = Integer.parseInt(st.nextToken());\n                int r = Integer.parseInt(st.nextToken());\n                if (l > r) {\n                    int temp = l; l = r; r = temp;\n                }\n                String reversedSub = new StringBuilder(s.substring(l - 1, r)).reverse().toString();\n                s = s.substring(0, l - 1) + reversedSub + s.substring(r);\n            } else if (type.equals(\"print\")) {\n                int pos = Integer.parseInt(st.nextToken());\n                out.println(s.charAt(pos - 1));\n            } else if (type.equals(\"substr\")) {\n                int l = Integer.parseInt(st.nextToken());\n                int r = Integer.parseInt(st.nextToken());\n                if (l > r) {\n                    int temp = l; l = r; r = temp;\n                }\n                out.println(s.substring(l - 1, r));\n            } else if (type.equals(\"push_back\")) {\n                char c = st.nextToken().charAt(0);\n                s = s + c;\n            }\n        }\n        \n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    N = int(data[idx])\n    idx += 1\n    Q = int(data[idx])\n    idx += 1\n    s = data[idx]\n    idx += 1\n\n    for _ in range(Q):\n        cmd = data[idx]\n        idx += 1\n        if cmd == 'pop_back':\n            s = s[:-1]\n        elif cmd == 'front':\n            print(s[0])\n        elif cmd == 'back':\n            print(s[-1])\n        elif cmd == 'sort':\n            l = int(data[idx])\n            idx += 1\n            r = int(data[idx])\n            idx += 1\n            if l > r:\n                l, r = r, l\n            l -= 1\n            sublist = sorted(s[l:r])\n            s = s[:l] + ''.join(sublist) + s[r:]\n        elif cmd == 'reverse':\n            l = int(data[idx])\n            idx += 1\n            r = int(data[idx])\n            idx += 1\n            if l > r:\n                l, r = r, l\n            l -= 1\n            sublist = s[l:r][::-1]\n            s = s[:l] + sublist + s[r:]\n        elif cmd == 'print':\n            pos = int(data[idx])\n            idx += 1\n            print(s[pos - 1])\n        elif cmd == 'substr':\n            l = int(data[idx])\n            idx += 1\n            r = int(data[idx])\n            idx += 1\n            if l > r:\n                l, r = r, l\n            print(s[l - 1:r])\n        elif cmd == 'push_back':\n            c = data[idx]\n            idx += 1\n            s += c\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:14:41.848464+00:00"
+        },
+        "hints": {
+            "hint1": "$l > r$ might be possible; keep this in mind when processing queries.",
+            "hint2": "Consider using built-in functions for string manipulation to handle queries efficiently.",
+            "solution_approach": "We can handle each query by utilizing built-in string functions to manipulate the string efficiently.\n\n- For **pop_back**, remove the last character of the string.\n\n- For **front**, output the first character of the string.\n\n- For **back**, output the last character of the string.\n\n- For **sort $l$ $r$**, extract the substring from position $l$ to $r$, sort it, and then replace it back into the original string.\n\n- For **reverse $l$ $r$**, extract the substring from position $l$ to $r$, reverse it, and then replace it back into the original string.\n\n- For **print $pos$**, output the character at position $pos$.\n\n- For **substr $l$ $r$**, output the substring from position $l$ to $r$.\n\n- For **push_back $x$**, append the character $x$ to the end of the string.\n\nNote that if $l > r$, we swap them before performing the operation.\n\nSince $N$ and $Q$ are up to $10^3$, we can perform these operations directly on the string without worrying about performance issues.\n\n**Time Complexity per query:** $O(K)$, where $K$ is the length of the substring being manipulated (up to $N$).\n\n**Space Complexity per query:** $O(N)$ for storing the string."
+        },
+        "id": 1193,
+        "input_format": "The first line contains two integers $N$, $Q$, where $N$ denotes the size of the string and $Q$ the number of queries.\nThe second line contains the string $S$ consisting of only lowercase English letters.\nNext $Q$ lines contain the queries.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "After performing the queries:\n1. **substr 1 6** outputs \"assiut\".\n2. **sort 5 8** sorts characters from position 5 to 8.\n3. **pop_back** removes the last character of the string.\n4. **back** outputs the last character, which is 'p'.\n5. **reverse 1 6** reverses characters from position 1 to 6.\n6. **front** outputs the first character, which is 'n'.\n7. **push_back i** adds 'i' to the end of the string.\n8. **print 4** outputs the character at position 4, which is 's'.\nAfter performing the queries:\n1. **substr 5 6** outputs \"ze\".\n2. **sort 5 8** sorts characters from position 5 to 8.\n3. **pop_back** removes the last character of the string.\n4. **back** outputs the last character, which is 't'.\n5. **reverse 5 6** reverses characters from position 5 to 6.\n6. **front** outputs the first character, which is 'a'.\n7. **push_back a** adds 'a' to the end of the string.\n8. **print 5** outputs the character at position 5, which is 'i'.\nAfter performing the queries:\n1. **sort 5 8** sorts characters from position 5 to 8.\n2. **reverse 3 6** reverses characters from position 3 to 6.\n3. **sort 2 5** sorts characters from position 2 to 5.\n4. **push_back a** adds 'a' to the end of the string.\n5. **substr 1 10** outputs the substring from position 1 to 10.",
+        "output_format": "For each query, print the answer associated with it in a single line. If a query does not require an output, do not print anything.",
+        "samples": [
+            {
+                "input": "18 8\nassiutinupperegypt\nsubstr 1 6\nsort 5 8\npop_back\nback\nreverse 1 6\nfront\npush_back i\nprint 4",
+                "output": "assiut\np\nn\ns"
+            },
+            {
+                "input": "10 5\nalgozenith\nsort 5 8\nreverse 3 6\nsort 2 5\npush_back a\nsubstr 1 10",
+                "output": "aeilognzth"
+            },
+            {
+                "input": "10 8\nalgozenith\nsubstr 5 6\nsort 5 8\npop_back\nback\nreverse 5 6\nfront\npush_back a\nprint 5",
+                "output": "ze\nt\na\ni"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Strings"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "String Functions",
+        "video_editorial_id": 10663
+    },
+    "details": "Problem Details"
+}

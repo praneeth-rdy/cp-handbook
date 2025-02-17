@@ -1,0 +1,63 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Using the characters: `.` (dot), `*` (asterisk), `/` (slash), and `\\` (backslash), print a grid-like pattern as shown in the sample test cases.\n\nThe diagonal of the first square of the grid is directed towards the down-right corner; use the `\\` (backslash) character to print it. The next diagonal will be directed towards the upper-right corner; use the `/` (slash) character to print it.",
+        "complete_approach": "",
+        "constraints": "- $1 \\leq T \\leq 100$\n- $1 \\leq N, M \\leq 100$\n- $1 \\leq P \\leq 100$\nIt is guaranteed that the sum of $N \\times M \\times P \\times P$ for all test cases does not exceed $10^6$.",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint main() {\n    IOS\n    int t;\n    cin >> t;\n    while (t--) {\n        int n, m, p;\n        cin >> n >> m >> p;\n        for (int i = 0; i < (p+1)*n+1; ++i) {\n            for (int j = 0; j < (p+1)*m + 1; ++j) {\n                if(i%(p+1) == 0 || j%(p+1) == 0) cout<<\"*\";\n                else if((i+j)%((p+1)*2)==0) cout<<\"/\";\n                else if((i-j)%((p+1)*2)==0) cout<<\"\\\\\";\n                else cout<<\".\";\n            }\n            cout<<\"\\n\";\n        }\n        cout<<\"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int t = Integer.parseInt(br.readLine());\n        while (t-- > 0) {\n            String[] tokens = br.readLine().trim().split(\"\\\\s+\");\n            int n = Integer.parseInt(tokens[0]);\n            int m = Integer.parseInt(tokens[1]);\n            int p = Integer.parseInt(tokens[2]);\n            \n            int blockSize = p + 1;\n            int doubleBlockSize = blockSize * 2;\n            int rows = blockSize * n + 1;\n            int cols = blockSize * m + 1;\n            \n            for (int i = 0; i < rows; ++i) {\n                StringBuilder sb = new StringBuilder();\n                for (int j = 0; j < cols; ++j) {\n                    if (i % blockSize == 0 || j % blockSize == 0) {\n                        sb.append(\"*\");\n                    } else if ((i + j) % doubleBlockSize == 0) {\n                        sb.append(\"/\");\n                    } else if ((i - j + doubleBlockSize) % doubleBlockSize == 0) {\n                        sb.append(\"\\\\\");\n                    } else {\n                        sb.append(\".\");\n                    }\n                }\n                out.println(sb.toString());\n            }\n            out.println();\n        }\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n    for _ in range(t):\n        n = int(data[idx])\n        idx += 1\n        m = int(data[idx])\n        idx += 1\n        p = int(data[idx])\n        idx += 1\n        block_size = p + 1\n        double_block_size = block_size * 2\n        rows = block_size * n + 1\n        cols = block_size * m + 1\n        for i in range(rows):\n            row = []\n            for j in range(cols):\n                if i % block_size == 0 or j % block_size == 0:\n                    row.append(\"*\")\n                elif (i + j) % double_block_size == 0:\n                    row.append(\"/\")\n                elif (i - j) % double_block_size == 0:\n                    row.append(\"\\\\\")\n                else:\n                    row.append(\".\")\n            print(''.join(row))\n        print()\n    \nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:15:03.931280+00:00"
+        },
+        "hints": {
+            "hint1": "The total number of rows is $(P+1) \\times N + 1$ and columns is $(P+1) \\times M + 1$.",
+            "hint2": "For the left and right diagonals, use the conditions $(i + j) \\mod (P+1) == 0$ and $(i - j) \\mod (P+1) == 0$, respectively.",
+            "solution_approach": "To generate the required pattern, follow these steps for each test case:\n\n1. Calculate the total number of rows as `rows = (P + 1) * N + 1` and columns as `cols = (P + 1) * M + 1`.\n\n2. Iterate over each position in the grid with indices `i` (row index) and `j` (column index), starting from `0`.\n\n3. At each position `(i, j)`:\n   - If `i % (P + 1) == 0` or `j % (P + 1) == 0`, print `*` (asterisk).\n   - Else if `(i + j) % ((P + 1) * 2) == 0`, print `/` (slash).\n   - Else if `(i - j + ((P + 1) * 2)) % ((P + 1) * 2) == 0`, print `\\` (backslash).\n   - Else, print `.` (dot).\n\n4. After printing each row, print a newline character.\n\nBy following this logic, we ensure that:\n\n- The asterisks `*` create the grid lines.\n- The slashes `/` and backslashes `\\` create the alternating diagonals within the grid cells.\n- The dots `.` fill the remaining spaces.\n\n### Time Complexity\n\n- The time complexity per test case is $O(N \\times M \\times (P+1)^2)$, which is acceptable given the constraints.\n\n### Space Complexity\n\n- The space complexity per test case is $O(1)$, as we are only using constant extra space."
+        },
+        "id": 318,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\nThe first line of each test case contains three space-separated integers $N$, $M$, $P$. $P$ denotes the size of `.` (dot) and `/`, `\\` (slash) block.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In the first sample, for each test case, the grid pattern is generated according to the following logic:\n- An index will have `*` (asterisk) if its row or column number is a multiple of $(P+1)$ (0-indexing).\n- It will have `/` (slash) if $(i + j) \\mod (P+1) == 0$.\n- It will have `\\` (backslash) if $(i - j) \\mod (P+1) == 0$.\n- Otherwise, the character will be `.` (dot).\nThe printed patterns match the sample outputs.\nIn the second sample input, we have $N = 3$, $M = 1$, and $P = 3$.\nFollowing the same logic as above, the generated grid pattern matches the sample output.",
+        "output_format": "For each test case, print the required pattern.",
+        "samples": [
+            {
+                "input": "3\n3 4 3\n4 2 1\n3 3 2",
+                "output": "*****************\n*\\..*../*\\..*../*\n*.\\.*./.*.\\.*./.*\n*..\\*/..*..\\*/..*\n*****************\n*../*\\..*../*\\..*\n*./.*.\\.*./.*.\\.*\n*/..*..\\*/..*..\\*\n*****************\n*\\..*../*\\..*../*\n*.\\.*./.*.\\.*./.*\n*..\\*/..*..\\*/..*\n*****************\n\n*****\n*\\*/*\n*****\n*/*\\*\n*****\n*\\*/*\n*****\n*/*\\*\n*****\n\n**********\n*\\.*./*\\.*\n*.\\*/.*.\\*\n**********\n*./*\\.*./*\n*/.*.\\*/.*\n**********\n*\\.*./*\\.*\n*.\\*/.*.\\*\n**********"
+            },
+            {
+                "input": "1\n3 1 3",
+                "output": "*****\n*\\..*\n*.\\.*\n*..\\*\n*****\n*../*\n*./.*\n*/..*\n*****\n*\\..*\n*.\\.*\n*..\\*\n*****"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Brute Force",
+            "Implementation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Pattern Problem 2 AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

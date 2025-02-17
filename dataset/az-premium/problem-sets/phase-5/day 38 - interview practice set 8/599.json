@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>There are <strong>n </strong>types of 3-D rectangular boxes. Each box has a height <strong>h</strong>, a width <strong>w</strong> and a length <strong>l</strong>. You are allowed to rotate the boxes so that any side can function as its base. Your task is to create the <strong>tallest stack</strong> by stacking the boxes on top of each other but you are allowed to stack a box on top of the other only if the <strong>dimensions </strong>of the 2-D base of the lower box are strictly larger than those of the higher box, i.e, you can stack a box with dimensions {h1, w1, l1} on top of another box with dimensions {h2, w2, l2} only if <strong>h1 &lt; h2 </strong>and<strong> w1 &lt; w2.</strong> You are also allowed to use multiple instances of the same box.&nbsp;<br>You need to print the height of the tallest possible stack that follows the above conditions.</p>",
+        "complete_approach": "",
+        "constraints": "<pre><code class=\"language-plaintext\">1 &lt;= n &lt;= 1000\n1 &lt;= h,w,l &lt;= 1000</code></pre>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n#define ff first\n#define ss second\n#define pb push_back\n\nint main() {\n\tios_base::sync_with_stdio(false);\n\tcin.tie(NULL);\n\tint n;\n\tcin >> n;\n\tvector <pair<pair<int, int>, int>> boxes;\n\tfor (int i = 0; i < n; i++) {\n\t\tint h, w, l;\n\t\tcin >> h >> w >> l;\n\t\tboxes.pb({{h, w}, l}); // taking all possible rotations of the boxes\n\t\tboxes.pb({{w, h}, l});\n\t\tboxes.pb({{h, l}, w});\n\t\tboxes.pb({{l, h}, w});\n\t\tboxes.pb({{w, l}, h});\n\t\tboxes.pb({{l, w}, h});\n\t}\n\tsort(boxes.begin(), boxes.end());\n\treverse(boxes.begin(), boxes.end());\n\tvector <int> dp(6 * n);\n\tint ans = 0;\n\tfor (int i = 0; i < 6 * n; i++) {\n\t\tdp[i] = boxes[i].ss;\n\t\tfor (int j = 0; j < i; j++) {\n\t\t\tif (boxes[j].ff.ss > boxes[i].ff.ss && boxes[j].ff.ff > boxes[i].ff.ff)\n\t\t\t\tdp[i] = max(dp[i], dp[j] + boxes[i].ss);\n\t\t}\n\t\tans = max(ans, dp[i]);\n\t}\n\tcout << ans;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:18:53.683489+00:00"
+        },
+        "hints": {
+            "hint1": "Can this problem be reduced to the well-known LIS problem?",
+            "hint2": "If we sort the array according to one of the dimensions of the base, the problem becomes similar to the LIS problem.",
+            "solution_approach": "\n\nThis problem can be solved using Dynamic Programming. We take all 6 possible rotations of each box. If we sort the boxes in decreasing order according to one of the dimensions of the base, the problem becomes similar to the LIS (Longest Increasing Subsequence) problem, which can be solved using $O(n^2)$ DP.\n\nLet `dp[i]` = Length of the tallest stack with the `i`th box at the top.\n\nWe initialize `dp[i]` with the height of the `i`th box:\n- `dp[i] = height[i]`\n\n\nWe calculate `dp[i]` by iterating over all `j < i`. If the length and width of the `j`th box are strictly greater than those of the `i`th box, we can place the `i`th box on top of the stack ending at the `j`th box. Thus:\n\n- `dp[i] = max(dp[i], dp[j] + height[i])`  \n  for all `j` for which the following conditions are valid:\n  1. `j < i`\n  2. `length[j] > length[i]` and `width[j] > width[i]`\n\n### Explanation\nSince we have sorted the boxes in decreasing order of the length of the base, we can place the `i`th box on top of only the boxes that appear before `i` and none of the boxes after `i`.\n\nThus, the above DP will always yield the optimal answer.\n\n### Final Answer\nThe final answer will be:\n- `max(dp[i])`\n"
+        },
+        "id": 599,
+        "input_format": "<p>The first line contains a single integer <strong>n.</strong><br>Then <strong>n </strong>lines follow. The ith line contains three space-separated integers denoting the height, width, and length of the ith box respectively.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "One of the optimal ways is:\n\n(15, 8, 7) -> (8, 7, 15) -> (6, 4, 2) -> (3, 2, 8) -> (2, 1, 3)\nTherefore height of the stack = 7+15+2+8+3\n                = 35.\nWe can see that the dimensions of the base are strictly decreasing.\nNo other combination of boxes produces height greater than this.",
+        "output_format": "Print the height of the tallest stack possible.",
+        "samples": [
+            {
+                "input": "4\n2 6 4\n1 2 3\n15 7 8\n8 2 3",
+                "output": "35"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Tallest Stack",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

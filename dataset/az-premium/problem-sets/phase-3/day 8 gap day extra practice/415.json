@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You have been given a vertical grid of size <i>N</i> x 10, and a number <i>K</i>. Since it's vertical, gravity shows its effect on it. Each cell in the grid contains a ball which has some colour. Colour values can vary between 1 to 9<i>.</i><br>Each cell in the grid is represented by a number, <i>c<sub>ij </sub></i>for cell (<i>i, j</i>). If <i>c<sub>ij</sub> </i>= 0, then the cell (<i>i, j</i>) is empty. Otherwise, it contains a ball with colour <i>c<sub>ij</sub>. </i><span style=\"background-color:rgb(255,255,255);color:rgb(0,0,0);\">Each cell is either empty (indicated by a 0), or a ball in one of nine different colours (indicated by characters 1..9). Gravity causes balls to fall downward, so there is never a 0 cell below a ball.</span><br><span style=\"background-color:rgb(255,255,255);color:rgb(0,0,0);\">Two cells belong to the same connected region if they are directly adjacent either horizontally or vertically, and they have the same non-zero </span>colour<span style=\"background-color:rgb(255,255,255);color:rgb(0,0,0);\">. Any time a connected region exists with at least <i>K</i> cells, its balls all disappear, turning into zeros. If multiple such connected regions exist at the same time, they all disappear simultaneously. Afterwards, gravity might cause balls to fall downward to fill some of the resulting cells that became zeros. In the resulting configuration, there may again be connected regions of size at least <i>K</i> cells. If so, they also disappear (simultaneously, if there are multiple such regions), then gravity pulls the remaining balls downward, and the process repeats until no connected regions of size at least <i>K</i> exist.</span><br><span style=\"background-color:rgb(255,255,255);color:rgb(0,0,0);\">Given the initial vertical grid, your task is to output a final picture of the grid after these operations have occurred.</span></p>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>N</i> \u2264 100<br>1 \u2264 <i>K</i> \u2264 10<i>N</i></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <iostream>\n#include <fstream>\nusing namespace std;\n\nint N, K, board[100][10], region[100][10], regsizes[1001];\n\nvoid gravity(void)\n{\n    for (int j=0; j<10; j++) {\n        int top = N-1, bottom = N-1;\n        while (top >= 0) {\n            while (top >= 0 && board[top][j] == 0) top--;\n            if (top >= 0)\n                board[bottom--][j] = board[top--][j];\n        }\n        while (bottom >= 0) board[bottom--][j] = 0;\n    }\n}\n\nvoid visit(int i, int j, int r, int c)\n{\n    if (i<0 || i>=N || j<0 || j>9 || board[i][j]!=c || region[i][j]!=0) return;\n    region[i][j] = r;\n    regsizes[r]++;\n    visit(i-1,j,r,c);\n    visit(i+1,j,r,c);\n    visit(i,j-1,r,c);\n    visit(i,j+1,r,c);\n}\n\nbool iterate(void)\n{\n    int r = 1;\n    for (int i=0; i<N; i++)\n        for (int j=0; j<10; j++)\n            region[i][j] = 0;\n    for (int i=0; i<N; i++)\n        for (int j=0; j<10; j++)\n            if (board[i][j] && !region[i][j]) visit(i,j,r++,board[i][j]);\n    bool progress = false;\n    for (int i=0; i<N; i++)\n        for (int j=0; j<10; j++)\n            if (board[i][j] && regsizes[region[i][j]]>=K) {\n                board[i][j] = 0;\n                progress = true;\n            }\n    gravity();\n    while (r) regsizes[r--] = 0;\n    return progress;\n}\n\nint main(void)\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    cin >> N >> K;\n    string s;\n\n    for (int i=0; i<N; i++) {\n        cin >> s;\n        for (int j=0; j<10; j++) board[i][j] = s[j]-'0';\n    }\n\n    while (iterate());\n\n    for (int i=0; i<N; i++) {\n        for (int j=0; j<10; j++) cout << board[i][j];\n        cout << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:47:47.765843+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Try to figure out the different components of the solution.</p>",
+            "hint2": "<p>There are three components to this implementation problem:</p><ul><li>Figuring out which cells should be deleted</li><li>Deleting them</li><li>Applying gravity</li></ul><p>Once we have implementations for these, we can simply repeatedly do these things in order until no cells should be deleted, and then output the state.</p>",
+            "solution_approach": "<p>To figure out which cells should be deleted, we first consider every cell in the array in sequence. We start a flood fill from that cell if the cell is nonempty (and hasn't already been handled by a previous flood fill). We keep track of all points that we touch with the flood fill in an array. If the array's length ends up being larger than <i>K</i>, then all those points need to be deleted.</p><p>To delete cells, we just replace them in the array with '0'. We can even do this after each flood-fill, and we don't need to wait until we've finished flood-filling all the regions.</p><p>Finally, to apply gravity, we can simply count the number of '0' squares in each column (from the bottom going up) until we reach an occupied square. Then, we shift that column down by that number of squares.</p>"
+        },
+        "id": 415,
+        "input_format": "The first line of input contains *N* and *K*. The remaining *N* lines specify the initial state of the vertical grid.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In the example above, if *K* = 3, then there is a connected region of size at least *K* with colour 1 and also one with colour 2. Once these are simultaneously removed, the grid temporarily looks like this:\n\n```\n0000000000\n0000000300\n0054000300\n1054500030\n2200000000\n0000000003\n```\n\nThen, gravity takes effect and the balls drop to this configuration:\n\n```\n0000000000\n0000000000\n0000000000\n0000000000\n1054000300\n2254500333\n```\n\nAgain, there is a region of size at least *K* (with colour 3). Removing it yields the final grid configuration:\n\n```\n0000000000\n0000000000\n0000000000\n0000000000\n1054000000\n2254500000\n```",
+        "output_format": "Please output *N* lines, describing a picture of the final vertical grid.",
+        "samples": [
+            {
+                "input": "6 3\n0000000000\n0000000300\n0054000300\n1054502230\n2211122220\n1111111223",
+                "output": "0000000000\n0000000000\n0000000000\n0000000000\n1054000000\n2254500000"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Vertical Grid",
+        "video_editorial_id": 8200
+    },
+    "details": "Problem Details"
+}

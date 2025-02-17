@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a grid of size n*m with 0s and 1s, you need to find the area of the largest rectangle containing only 1.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 t \u2264 10<sup>5</sup></p><p>1 \u2264 n, m \u2264 200</p><p>0 \u2264 aij \u2264 1</p><p>It is guaranteed that the sum of n*m over all test cases does not exceed 10<sup>5</sup>.</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define int long long\n\nsigned main(){\n   ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n   int t;\n   cin >> t;\n   while(t--) {\n       int n, m;\n       cin >> n >> m;\n       bool grid[n][m];\n       for (int i = 0; i < n; ++i) {\n           for (int j = 0; j < m; ++j) {\n               cin >> grid[i][j];\n           }\n       }\n       int dp[n][m];\n       memset(dp, 0, sizeof(dp));\n       int ans = 0;\n       for (int i = 0; i < n; ++i) {\n           for (int j = 0; j < m; ++j) {\n               if(grid[i][j]) {\n                   dp[i][j] = j == 0 ? 1 : dp[i][j-1] + 1;\n                   int width = dp[i][j];\n                   \n                   for (int k = i; k >= 0; --k) {\n                       width = min(width, dp[k][j]);\n                       ans = max(ans, width * (i - k + 1));\n                   }\n               }\n           }\n       }\n       cout << ans << \"\\n\";\n   }\n   return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:42:04.023406+00:00"
+        },
+        "hints": {
+            "hint1": "If the value of the cell at (i,j) is 1, to find the answer for the largest rectangle with bottom right corner at (i, j), you can find the width using dp and iterate on the height.",
+            "hint2": "Instead of the area, store the width of the rectangle in the dp array.",
+            "solution_approach": "<p>Define dp[i][j] which denotes the maximum width (number of consecutive ones) in row i and ending at j. Iterate through the height, k \u2264 i and take the minimum for the width. The area of rectangle is given by height*width, take the max for each (i, j).</p><p>&nbsp;</p><p>Time Complexity per test case: O(n<sup>2</sup> *m)</p>"
+        },
+        "id": 495,
+        "input_format": "<p>The first line of the input contains one integer t - the number of test cases. Then t test cases follow.</p><p>The first line of each test case contains two space-separated integers n, m - the size of the grid.</p><p>Each of the next n lines contains m space-separated integers, aij - the number at that cell.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "For each test case, print the maximum area.",
+        "samples": [
+            {
+                "input": "3\n2 3\n0 1 1\n0 0 0\n3 3\n1 0 1\n0 1 1\n0 1 1\n2 2\n0 0\n0 0",
+                "output": "2\n4\n0"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Maximum Area of Rectangle",
+        "video_editorial_id": 8213
+    },
+    "details": "Problem Details"
+}

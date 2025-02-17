@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given a sequence <i>A<sub>1</sub>, A<sub>2</sub>, \u2026, A<sub>N</sub></i>. Let's call a subsequence <i>A<sub>i1</sub>, A<sub>i2</sub>, \u2026, A<sub>ik</sub></i> (for any <i>k</i> &gt; 0, 1 \u2264 <i>i<sub>1</sub></i> &lt; <i>i<sub>2</sub></i> &lt; \u2026 &lt; <i>i<sub>k</sub></i> \u2264 <i>N</i>) good if the median of this subsequence is an element of this subsequence.&nbsp;<br>Find the number of good subsequences. Since this number may be large, compute it modulo 1000000007 (10<sup>9</sup>+7).</p><p><i>Note:</i></p><ol><li>The median of a set of data is the middlemost number in the set. The median is also the number that is halfway into the set. To find the median, the data should first be arranged in order from least to greatest.</li><li>For odd length sequence, the median is the middle element in the sorted sequence. While for even length sequence, it is the average of the middle two elements.</li></ol>",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>T</i> \u2264 30<br>1 \u2264 <i>N</i> \u2264 1000<br>1 \u2264 <i>A<sub>i</sub></i> \u2264 2<i>N</i></p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nusing ll = long long;\nvector<ll> fact;\nvector<ll> factInv;\nint mod = 1e9 + 7;\n\nll binpow(ll a, ll b) {\n  ll ans = 1;\n  while (b) {\n    if (b % 2) ans = (ans * a) % mod;\n    a = (a * a) % mod;\n    b /= 2;\n  }\n  return ans;\n}\n\nll ncr(ll n, ll r) {\n  return (((fact[n] * factInv[n - r]) % mod) * factInv[r]) % mod;\n}\n\nvoid solve() {\n  int n;\n  cin >> n;\n  vector<int> v(n);\n  vector<int> pos(n, 1);\n  for (int i = 0; i < n; i++) {\n    cin >> v[i];\n  }\n  sort(v.begin(), v.end());\n\n  for (int i = n - 2; i >= 0; i--) {\n    if (v[i] == v[i + 1]) {\n      pos[i] += pos[i + 1];\n    }\n  }\n\n  ll ans = binpow(2, n - 1);\n\n  for (int i = 0; i < n; i++) {\n    if (pos[i] == 1) continue;\n    int temp = min(i, n - i - 1 - 1);\n    for (int j = 0; j <= temp; j++) {\n      if (j == 0) {\n        ans = (ans + ncr(pos[i + 1], j + 1)) % mod;\n        continue;\n      }\n      ans += (ncr(i, j) * ncr(n - 1 - i, j + 1)) % mod;\n      ans %= mod;\n      if (n - 1 - i - pos[i + 1] >= (j + 1)) {\n        ans -= (ncr(i, j) * ncr(n - 1 - i - pos[i + 1], j + 1)) % mod;\n        ans = (ans + mod) % mod;\n      }\n    }\n  }\n  cout << ans << \"\\n\";\n}\n\nsigned main() {\n  ios_base::sync_with_stdio(0);\n  cin.tie(0);\n  cout.tie(0);\n  fact = vector<ll>(2001);\n  factInv = vector<ll>(2001);\n  fact[0] = 1;\n  for (int i = 1; i <= 2000; i++) {\n    fact[i] = (i * fact[i - 1]) % mod;\n  }\n  factInv[2000] = binpow(fact[2000], mod - 2);\n  for (int i = 2000; i > 0; i--) {\n    factInv[i - 1] = (i * factInv[i]) % mod;\n  }\n\n  int _t;\n  cin >> _t;\n  while (_t--) solve();\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:46:21.147888+00:00"
+        },
+        "hints": {
+            "hint1": "<ul><li>Every subset of odd size has its median present in the subset, so, we can directly add 2<i>N </i>\u2212 1 to answer.</li><li>For even size subset, The subset is good, if and only if the middle two elements are equal.</li></ul>",
+            "hint2": "We can fix the left middle element, and for every possible even size of the subset, say 2X, try to find count.",
+            "solution_approach": "<p>First of all, let us formulate the definition of median. If the size of the selected subset is odd, the median is just the middle element of subset after sorting. Since the middle element is present in the subset, all subsets of odd size are valid. It can be easily proven that there are 2<i><sup>N</sup></i>\u22121 such subsets. So, we can directly count these and move toward even size subsets.<br>If the size of the selected subset is even, the median is defined as the average of two middlemost elements after sorting. Now, say we have two middle elements <i>x</i> and <i>y</i>, with condition <i>x </i>\u2264 <i>y</i>. Let <i>z </i>= (<i>x </i>+ <i>y</i>) / 2 be the median of sequence. If we write <i>y </i>= <i>x </i>+ <i>d</i>, <i>d </i>\u2265 0, we can see, <i>z </i>= <i>x </i>+ <i>d </i>/ 2 and also, <i>z </i>= <i>y </i>\u2212 <i>d </i>/ 2. This way, we can see, that the median of a sequence can never be smaller than <i>x</i> and greater than <i>y</i>. So, For <i>z</i> to be present in subset, we need either <i>z </i>= <i>x</i> or <i>z </i>= <i>y</i>. But, this would imply <i>d </i>= 0, Hence leading to the conclusion that f<strong>or an even size subset to be valid, the two middlemost elements should be equal.</strong> This forms the crux of our solution, and now, we need to count the number of even sized subsets with equal middle elements.<br>After all this, there are a number of approaches to solving this problem, all of which required us to sort the array&nbsp;A<i>A</i> first.</p><p>Let us consider a <i>O</i>(<i>N</i><sup>3</sup>) solution first. Iterate over every pair of equal elements (<i>i</i>, <i>j</i>) such that <i>A<sub>i </sub></i>\u200b= <i>A<sub>j</sub></i>\u200b and iterate over the size 2<i>X</i> of subset from <i>X </i>= 1 to <i>N</i>. The number of ways to make the subset of size <i>X</i> with two fixed middle elements is just the product of the number of ways we can select <i>X </i>\u2212 1 elements from [1, <i>i </i>\u2212 1] and <i>X </i>\u2212 1 elements from [<i>j </i>+ 1, <i>N</i>].</p><p>This solution requires to iterate over every pair (<i>i</i>, <i>j</i>) which takes <i>O</i>(<i>N</i><sup>2</sup>) time and <i>O</i>(<i>N</i>) time per pair, leading to Overall time complexity <i>O</i>(<i>N</i><sup>3</sup>).</p><p>We were fixing two equal elements and tried to count the number of ways we can make subsets of all sizes. Now, We shall fix only the <strong>Left Middle Element</strong> (Or Right one, whichever implementation you prefer).</p><p>Suppose we fixed the <i>i</i>th element as the left middle element. Now, We will iterate over all sizes 2<i>X</i> and try to include <i>X </i>\u2212 1 elements from [1, <i>i </i>\u2212 1] and <i>X</i> elements from [<i>i </i>+ 1, <i>N</i>]. We need the right middle element to be same as the left middle element. So, When choosing <i>X</i> elements from [<i>i</i>+1,<i>N</i>], we need at least one occurrence of <i>A</i>[<i>i</i>]. This is same as subtracting all the ways to select <i>X</i> elements in the range [<i>i </i>+ 1, <i>N</i>] which do not have <i>A</i>[<i>i</i>] at all. Suppose Number of occurrence of <i>A</i>[<i>i</i>] in range [<i>i </i>+ 1, <i>N</i>] is <i>f</i>, then we can count the number of ways to select <i>X</i> elements from range [<i>i </i>+ 1, <i>N</i>] such that it contains at least one occurrence of <i>A</i>[<i>i</i>] as <i>T</i> = Number of ways to select <i>X</i> elements out of <i>N</i>\u2212<i>i</i> elements less Number of ways to select <i>X</i> elements out of <i>N</i>\u2212<i>i</i>\u2212<i>f</i> elements.</p><p>We can select <i>X</i>\u22121 elements from [1, <i>i </i>\u2212 1] in suppose <i>U</i> ways. Then, Number of ways we can have good subsets with <i>A</i>[<i>i</i>] as the left middle element is&nbsp;<i>UT</i>. Summation of this product for all sizes for all elements gives us the number of good subsets of even size. We can add to it, the number of good odd sized subsets and print the answer.</p>"
+        },
+        "id": 198,
+        "input_format": "<p>The first line of input contains <i>T</i> - the number of test cases.<br>The first line of each test case contains a number <i>N</i> - the size of the array.<br>The second line of each test case contains <i>N</i> space-separated integers <i>A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>N</sub></i>.&nbsp;</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>The good subsequences are [2], [3], [2], [2,2], [2,3,2].</p>",
+        "output_format": "<p>For each test case, print the number of good subsequences on a new line.</p>",
+        "samples": [
+            {
+                "input": "1\n3\n2 3 2",
+                "output": "5"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 4.0,
+        "title": "Count Good Subsequences",
+        "video_editorial_id": 8167
+    },
+    "details": "Problem Details"
+}

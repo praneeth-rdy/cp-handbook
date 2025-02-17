@@ -1,0 +1,71 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Given a string $S$. For each word in $S$, reverse its letters then print it.\n\n**Note:** Words are separated by space.",
+        "complete_approach": "",
+        "constraints": "$1 \\leq |S| \\leq 10^6$, where $|S|$ is the length of the string.\nThe string consists of **lowercase** and **uppercase** English letters and spaces.",
+        "difficulty": 1,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include<bits/stdc++.h>\nusing namespace std;\n\nvoid solution() {\n    string s;\n    int flag = 0;\n    while (cin >> s) {\n        reverse(s.begin(), s.end());\n        if (flag) {\n            cout << \" \";\n        }\n        flag = 1;\n        cout << s;\n    }\n}\n\nint main() {\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n    solution();\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        StringBuilder sbInput = new StringBuilder();\n        String line;\n        while ((line = br.readLine()) != null) {\n            sbInput.append(line).append(\" \");\n        }\n\n        String input = sbInput.toString().trim();\n        if (input.isEmpty()) {\n            out.flush();\n            out.close();\n            return;\n        }\n        String[] words = input.split(\"\\\\s+\");\n\n        boolean flag = false;\n        for (String word : words) {\n            StringBuilder sbWord = new StringBuilder(word);\n            sbWord.reverse();\n            if (flag) {\n                out.print(\" \");\n            }\n            out.print(sbWord.toString());\n            flag = true;\n        }\n\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    n = len(data)\n    output_words = []\n    while idx < n:\n        word = data[idx]\n        idx += 1\n        word_reversed = word[::-1]\n        output_words.append(word_reversed)\n    result = ' '.join(output_words)\n    stdout.write(result)\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing",
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:34:20.383678+00:00"
+        },
+        "hints": {
+            "hint1": "Consider how you can process each word in the string separately.",
+            "hint2": "You can split the string into words, reverse each word individually, and then join them back together maintaining the original word order.",
+            "solution_approach": "To solve this problem, we need to reverse each word in the input string individually while maintaining the original order of words.\n\nHere are the steps:\n\n1. Read the entire line as a string.\n2. Split the string into words based on spaces.\n3. For each word, reverse its letters.\n4. Join the reversed words back into a single string with spaces in between.\n5. Output the resulting string.\n\n**Time Complexity:** O(N), where N is the length of the string, because we're processing each character once.\n\n**Space Complexity:** O(N), as we need extra space to store the list of words and the reversed words."
+        },
+        "id": 1198,
+        "input_format": "One line contains a string $S$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "In each test case, each word in the input string is reversed individually, and the words are printed in the same order separated by spaces.",
+        "output_format": "Print the answer required above.",
+        "samples": [
+            {
+                "input": "I love you",
+                "output": "I evol uoy"
+            },
+            {
+                "input": "We are a happy family",
+                "output": "eW era a yppah ylimaf"
+            },
+            {
+                "input": "You love me",
+                "output": "uoY evol em"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Strings"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Reverse Words",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Zenithland has n cities and m roads between them. Your task is to check for the existence of a round trip that begins in a city, goes through two or more other cities, and finally returns to the starting city. Every intermediate city on the route has to be distinct.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n</i> \u2264 10<sup>5</sup><br>1 \u2264 <i>m</i> \u2264 2 x 10<sup>5</sup><br>1 \u2264 <i>a, b</i> \u2264 <i>n</i></p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n\nconst int N = 100010;\n\nint mod = 1e9 + 7;\n\nint n;\nvector<vector<int>> adj;\nvector<int> color;\nvector<int> parent;\nint cycle_start, cycle_end;\n\nbool dfs(int v, int par) { // passing vertex and its parent vertex\n    color[v] = 1;\n    for (int u : adj[v]) {\n        if(u == par) continue; // skipping edge to parent vertex\n        if (color[u] == 0) {\n            parent[u] = v;\n            if (dfs(u, parent[u]))\n                return true;\n        } else if (color[u] == 1) {\n            cycle_end = v;\n            cycle_start = u;\n            return true;\n        }\n    }\n    color[v] = 2;\n    return false;\n}\n\nvoid find_cycle() {\n    color.assign(n + 1, 0);\n    parent.assign(n + 1, -1);\n    cycle_start = -1;\n\n    for (int v = 1; v <= n; v++) {\n        if (color[v] == 0 && dfs(v, parent[v]))\n            break;\n    }\n\n    if (cycle_start == -1) {\n        cout << \"NO\\n\";\n    } else {\n        cout << \"YES\\n\";\n    /***********************************************************\n        --CODE TO PRINT CYCLE--\n        vector<int> cycle;\n        cycle.push_back(cycle_start);\n        for (int v = cycle_end; v != cycle_start; v = parent[v])\n            cycle.push_back(v);\n        cycle.push_back(cycle_start);\n        reverse(cycle.begin(), cycle.end());\n\n        cout << (int)cycle.size() << \"\\n\";\n        for (int v : cycle) cout << v << \" \";\n        cout << \"\\n\";\n    ************************************************************/\n    }\n}\n\nsigned main()\n{\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int m;\n    cin >> n >> m;\n\n    adj.resize(n + 1);\n    \n    for(int i = 0; i < m; i++) {\n        int u, v; cin >> u >> v;\n        adj[u].push_back(v);\n        adj[v].push_back(u);\n    }\n\n    find_cycle();\n\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:13:47.338171+00:00"
+        },
+        "hints": {
+            "hint1": "Apply DFS to find the cycle with length \u2265 2 in the graph.",
+            "hint2": "To check if a cycle exists in a directed graph, you can use a modified depth-first search (DFS) algorithm.\n\n1. First, you can represent the graph as an adjacency list or matrix.\n2. Next, you can perform a DFS starting from each vertex in the graph. During the DFS, you can keep track of the visited vertices and mark each visited vertex as you visit it. If you encounter a visited vertex again during the DFS, then you have found a cycle in the graph.\n3. However, in a directed graph, you need to consider the direction of the edges. Therefore, you need to keep track of not only visited vertices, but also which vertices are on the current path being traversed.\n4. To do this, you can use a color array to keep track of each vertex's state during the DFS. The color array can have the following values:  \n        $0$: the vertex is completely unvisited.   \n        $1$: the vertex whose some but not all children are visited.   \n        $2$: the vertex whose all the children are visited.    \n5. During the DFS, if you encounter a vertex that is already on the current path being traversed (i.e. has a color value of $1$), then you have found a cycle.  \n\nTime complexity : $O(V+E)$\n\n\n*Note : It is important to note that when dealing with graphs that are not explicitly stated to be connected, one must perform a depth-first search (DFS) on all unvisited nodes to ensure that all components of the graph are explored. This is because running DFS only on one starting node may miss components of the graph that are not connected to that starting node.*",
+            "solution_approach": "To check if a cycle exists in a directed graph, you can use a modified depth-first search (DFS) algorithm.\n\n1. First, you can represent the graph as an adjacency list or matrix.\n2. Next, you can perform a DFS starting from each vertex in the graph. During the DFS, you can keep track of the visited vertices and mark each visited vertex as you visit it. If you encounter a visited vertex again during the DFS, then you have found a cycle in the graph.\n3. However, in a directed graph, you need to consider the direction of the edges. Therefore, you need to keep track of not only visited vertices, but also which vertices are on the current path being traversed.\n4. To do this, you can use a color array to keep track of each vertex's state during the DFS. The color array can have the following values:  \n        $0$: the vertex is completely unvisited.   \n        $1$: the vertex whose some but not all children are visited.   \n        $2$: the vertex whose all the children are visited.    \n5. During the DFS, if you encounter a vertex that is already on the current path being traversed (i.e. has a color value of $1$), then you have found a cycle.  \n\nTime complexity : $O(V+E)$\n\n\n*Note : It is important to note that when dealing with graphs that are not explicitly stated to be connected, one must perform a depth-first search (DFS) on all unvisited nodes to ensure that all components of the graph are explored. This is because running DFS only on one starting node may miss components of the graph that are not connected to that starting node.*"
+        },
+        "id": 194,
+        "input_format": "The first input line has two integers n and m: the number of cities and roads. The cities are numbered 1, 2, \u2026, n.\nThen, there are m lines describing the roads. Each line has two integers a and b: there is a road between those cities.\nEvery road is between two different cities, and there is at most one road between any two cities.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "",
+        "output_format": "<p>Print \u2018YES\u2019 if such round trip exists, otherwise print \u2018NO\u2019.</p>",
+        "samples": [
+            {
+                "input": "5 6\n1 3\n1 2\n5 3\n1 5\n2 4\n4 5",
+                "output": "YES"
+            },
+            {
+                "input": "4 3\n1 2\n1 3\n3 4",
+                "output": "NO"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Dfs"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Round Trip",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,53 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given a list of **n** integers. The **super frequent** number of the array is the number that is present in the array more than $$ \\lfloor \\frac{n}{2} \\rfloor $$ times. You need to print the super frequent number of the array. Assume that such a number is always present in the input array.\n\nTry to solve the problem in linear time and constant extra space.",
+        "complete_approach": "",
+        "constraints": "```cpp\n1 <= n <= 100000\n1 <= v[i] <= 100000\n```",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint SuperFrequentElement(vector<int> &v)\n{\n    int n = (int)v.size();\n\n    int cnt = 0;\n    int ans;\n    for (int i = 0; i < n; i++)\n    {\n        if (cnt == 0)\n            ans = v[i];\n        if (v[i] == ans)\n            cnt++;\n        else\n            cnt--;\n    }\n\n    return ans;\n}\n\nint main()\n{\n    ios_base::sync_with_stdio(NULL);\n    cin.tie(NULL);\n    cout.tie(NULL);\n    int n;\n    cin >> n;\n    vector<int> v(n);\n    for (auto &i : v)\n        cin >> i;\n\n    cout << SuperFrequentElement(v) << \"\\n\";\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:43:24.179980+00:00"
+        },
+        "hints": {
+            "hint1": "This problem can be solved using Hashmaps in O(n) space. Can you think of a solution that uses constant extra space?",
+            "hint2": "Boyer-Moore Voting Algorithm",
+            "solution_approach": "We maintain a **candidate** for our super frequent element and a **count** which is incremented whenever we see an instance of our current candidate for the super frequent element and decremented whenever we see anything else.\n\nWhenever `count` equals 0, we effectively forget about everything in the array up to the current index and consider the current number as the candidate for the super frequent element.\n\nSince we forget the prefix when the count becomes zero, we never remove more super frequent elements than other elements. So, the super frequent element of the array is still the super frequent element for the current suffix.\n\nTherefore, given that it is impossible to discard more super frequent elements than other elements, we are safe in discarding the prefix and attempting to recursively solve the super frequent element problem for the suffix. Eventually, a suffix will be found for which `count` does not hit 0, and the super frequent element of that suffix will necessarily be the same as that of the overall array.\n"
+        },
+        "id": 591,
+        "input_format": "The first line contains a single integer n.\nThe next line contains n integers representing the input array.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<strong>4</strong> is present more than n/2 times in the array. So it is the super frequent number.",
+        "output_format": "Print the super frequent element of the array.",
+        "samples": [
+            {
+                "input": "7\n4 1 4 1 1 4 4",
+                "output": "4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [
+            {
+                "code": "<fix>\n#include <bits/stdc++.h>\nusing namespace std;\n</fix>\n\nint SuperFrequentElement(vector<int> &v)\n{\n    // Complete the function\n}\n\n<fix>\nint main()\n{\n    ios_base::sync_with_stdio(NULL);\n    cin.tie(NULL);\n    cout.tie(NULL);\n    int n;\n    cin >> n;\n    vector<int> v(n);\n    for (auto &i : v)\n        cin >> i;\n\n    cout << SuperFrequentElement(v) << \"\\n\";\n}\n</fix>",
+                "language": "C++14"
+            }
+        ],
+        "time_limit_sec": 1.0,
+        "title": "Super Frequent Number",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p><i>Baburao Ganpatrao Apte</i> a.k.a \u201c<i>Babu Bhaiya</i>\u201d created a new strong password for his locker, to save his money from <i>Raju</i>, who is promising to double his money in 21 days! :P</p><p>The new password <strong>z </strong>is a positive integer of at most 19 digits. <i>Babu Bhaiya</i> is bad at remembering passwords and doesn't want to take risks ( as he says <i>\u201c bilkul ricks nhi lena ka \u201d</i> ), so he divided his integer password into 2 positive integers <strong>a</strong> and <strong>b, </strong>such that <strong>z = a + b</strong>, and wrote down <strong>a&amp;b</strong> and <strong>a|b</strong> values in his diary.</p><p>As expected, he forgot his password after a few days. Help him to retrieve his password <strong>z.</strong>&nbsp;</p><p>It is given that <strong>a&amp;b</strong> should be a sub-mask of <strong>a|b.</strong></p>",
+        "complete_approach": "",
+        "constraints": "<ul><li><strong>z </strong>is a positive integer of at most 19 digits and less than LLONG_MAX.</li><li><strong>a&amp;b</strong> should be a sub-mask of <strong>a|b.</strong></li></ul>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define ll int64_t\n#define endl '\\n'\n\nvoid solve() {\n\tll x, y;\n\tcin >> x >> y;\n\tcout << x + y << endl;\n}\nint main() {\n\tios_base :: sync_with_stdio(0);\n\tcin.tie(nullptr); cout.tie(nullptr);\n\tint t = 1;\n\t// int i = 1;\n\t// cin >> t;\n\twhile (t--) {\n\t\t// cout << \"Case #\" << i << \": \";\n\t\tsolve();\n\t\t// i++;\n\t}\n\treturn 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:47:11.725235+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Can you retrieve <strong>a</strong> and <strong>b</strong> values from <strong>a&amp;b</strong> and <strong>a|b </strong>values? &nbsp;&nbsp;</p>",
+            "hint2": "<p>Try to write <strong>a&amp;b</strong> and <strong>a|b</strong> values for some <strong>a</strong> and <strong>b</strong>, and try to observe some relationship b/w them.</p>",
+            "solution_approach": "<p>Identity: &nbsp;<strong>a&amp;b + a|b = a + b ( Observation )</strong></p><p>using above identity, we get <strong>z = a&amp;b + a|b.</strong></p><p><strong>Time Complexity: O(1)</strong></p>"
+        },
+        "id": 810,
+        "input_format": "<p>The input contains a single line having <strong>a&amp;b </strong>and<strong> a|b</strong> values.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "<p>Output a single integer <strong>z, </strong>the password.&nbsp;</p>",
+        "samples": [
+            {
+                "explanation": "Since &nbsp;a&amp;b =1 and a|b = 7, then a=3 and b=5, therefore z = a + b = 8.</p>",
+                "input": "1 7",
+                "output": "8"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Frequently Asked Questions",
+            "Bit Manipulation"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Bilkul ricks nhi lena ka",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

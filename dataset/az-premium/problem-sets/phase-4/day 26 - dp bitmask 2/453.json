@@ -1,0 +1,51 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>There are <i>2*N</i> Chess players and <i>N</i> Boards in a chess tournament. The rating of the Chess Player is given by array <i>A</i>. Every player can play only with one player.<i> </i>N board pairing to be done, and if you match Player i and Player j in the board K, then the Happiness Score increases by K*abs(A[i]-A[j])*gcd(A[i],A[j]). Find the Maximum Happiness score you can make by designing an ideal pairing. Every player should play a match.</p><p>&nbsp;</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n#pragma GCC optimize(\"Ofast\")\n#pragma GCC optimize (\"unroll-loops\")\n#pragma GCC target(\"sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native\")\n#pragma comment(linker, \"/stack:200000000\")\n#define mod 1000000007\n#define pb emplace_back\n#define mp make_pair\n#define fi first\n#define sec second\ntypedef long long int ll;\ntypedef long double  ld;\n#define pii pair<ll,ll> \n#define vi vector< ll > \n#define vvi vector< vi > \n#define vpi vector< pii > \n#define vvpi vector< vpi > \n#define fast ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0)\n#define test(t) ll t;cin>>t;while(t--)\n#define mem(a,b) memset(a,b,sizeof(a))\n#define inn freopen(\"input.txt\", \"r\", stdin)\n#define outt freopen(\"output.txt\", \"w\", stdout)\n#define all(arr) arr.begin(),arr.end()\n#define fr(i,n) for(ll i=0;i<(n);++i)\n#define rep(i,a,b) for(ll i=a;i<=b;++i)\n#define per(i,a,b) for(ll i=a;i>=b;i--)\n#define remin(a,b) (a=min((a),(b)))\n#define remax(a,b) (a=max((a),(b)))\n#ifndef ONLINE_JUDGE\n#define debarr(a,n)cerr<<#a<<\":\";for(ll i=0;i<n;i++)cerr<<a[i]<<\" \";cerr<<endl;\n#define debmat(mat,row,col)cerr<<#mat<<\":\\n\";for(ll i=0;i<row;i++){for(ll j=0;j<col;j++)cerr<<mat[i][j]<<\" \";cerr<<endl;}\n#define pr(...)dbs(#__VA_ARGS__,__VA_ARGS__)\ntemplate<class S,class T>ostream &operator<<(ostream &os,const pair<S,T> &p){return os<<\"(\"<<p.first<<\",\"<<p.second<<\")\";}\ntemplate<class T>ostream &operator<<(ostream &os,const vector<T> &p){os<<\"[\";for(auto&it:p)os<<it<<\" \";return os<<\"]\";}\ntemplate<class T>ostream &operator<<(ostream &os,const set<T>&p){os<<\"[\";for(auto&it:p)os<<it<<\" \";return os<<\"]\";}\ntemplate<class T>ostream &operator<<(ostream &os,const multiset<T>&p){os<<\"[\";for(auto&it:p)os<<it<<\" \";return os<<\"]\";}\ntemplate<class S,class T>ostream &operator<<(ostream &os,const map<S,T>&p){os<<\"[\";for(auto&it:p)os<<it<<\" \";return os<<\"]\";}\ntemplate<class T>void dbs(string str,T t){cerr<<str<<\":\"<<t<<\"\\n\";}\ntemplate<class T,class...S>void dbs(string str,T t,S... s){ll idx=str.find(',');cerr<<str.substr(0,idx)<<\":\"<<t<<\",\";dbs(str.substr(idx+1),s...);}\n#else\n#define pr(...){}\n#define debarr(a,n){}\n#define debmat(mat,row,col){}\n#endif\nll power(ll x,ll y){ll res = 1;while(y){if(y&1) res = (res*x)%mod;y=y/2,x=(x*x)%mod;}return res%mod;}\nll dp[1<<20];\nvvi pre_bits(1<<20);\nll pre_gcd[20][20];\nll arr[20];\nll n;\nll gcd(ll a, ll b)\n{\n    if (b == 0)\n        return a;\n    return gcd(b, a % b); \n     \n}\nll func(ll mask){\n    if(mask==((1<<n)-1)){\n        return 0;\n    }\n    ll &ret = dp[mask];\n    if(ret!=-1)return ret;\n    ret = 0;\n    ll k = (n-pre_bits[mask].size())/2+1;\n    fr(i,pre_bits[mask].size()){\n        rep(j,i+1,pre_bits[mask].size()-1){\n            ret = max(ret,k*abs(arr[pre_bits[mask][i]]-arr[pre_bits[mask][j]])*pre_gcd[pre_bits[mask][i]][pre_bits[mask][j]] + func(mask|(1<<pre_bits[mask][i])|(1<<pre_bits[mask][j])));\n        }\n    }\n    return ret;\n}\nsigned main()\n{\n    fast;\n    test(t){\n        cin>>n;\n        n*=2;\n        fr(i,(1<<n)){\n            pre_bits[i].clear();\n            fr(j,n){\n                if(i&(1<<j))continue;\n                pre_bits[i].pb(j);\n            }\n        }\n        fr(i,n)cin>>arr[i];\n        mem(dp,-1);\n        fr(i,n)fr(j,n)pre_gcd[i][j] = gcd(arr[i],arr[j]);\n        cout<<func(0)<<\"\\n\";\n    }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:42:54.200663+00:00"
+        },
+        "hints": {
+            "hint1": "\nCan we use Bitmask DP in some way?",
+            "hint2": "<p>We would make the DP array as DP[pos][vis] which denotes the maximum happiness that could be achieved by taking pos number of chess boards and vis is the subset of people assigned any chess board. Any board would be assigned to two people, this can be done by taking a nested loop and assigning two people, who have not been assigned a board yet. The base case would be when all the boards have been assigned. But this solution would result in TLE as it is O(N^3 * 2^(2*N)). Can you optimise the solution by removing \u2018pos\u2019 from the DP array?</p>",
+            "solution_approach": "<p>It can be seen that any chess board is assigned to exactly two people, so the number of chess boards would be equal to half of the subset of people who have been assigned a chess board. Doing this optimisation would reduce the time complexity from O(N^3 * 2^(2*N)) to O(N^2 * 2^(2*N)). Note that you need to use memoization otherwise the answer will result in TLE.</p><p>Time Complexity per test case: O(N^2 * 2^(2*N))</p>"
+        },
+        "id": 453,
+        "input_format": "<p>The first line contains an integer T (1 \u2264 T \u2264 2) - the number of test cases.</p><p>The first line of each test case contains an integer N. 1 \u2264 N \u2264 10.</p><p>The next line contains 2*N space-separated integers, 1 \u2264 A[i] \u2264 10^6.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>Third test case - Optimal pairing is (2,10),(4,8),(1,6).</p>",
+        "output_format": "<p>For each test case print the output in a new line.</p>",
+        "samples": [
+            {
+                "input": "3\n3\n55 86 61 8 9 39 \n7\n35 68 51 23 66 61 85 34 2 65 64 6 7 32 \n3\n2 10 1 6 4 8",
+                "output": "654\n19318\n85"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Dynamic Programming",
+            "Bitmask"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "Chess And GCD",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

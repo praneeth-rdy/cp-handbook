@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>There are <i>N</i> students and ith student likes all numbers in the range [<i>l<sub>i</sub></i> ,<i>r<sub>i </sub></i>]<i>, </i>both inclusive<i>.</i> A number is good if it is liked by at least <i>K</i> students.</p><p>You are even <i>Q</i> queries. Each query consists of two numbers L, R. You have to find how many numbers in the range <i>[L,R]</i> is good.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nconst int N = 1000005;\nsigned main() {\n  ios_base::sync_with_stdio(false);\n  cin.tie(0);\n  cout.tie(0);\n  int n, k, q;\n  cin >> n >> k >> q;\n  int arr[N];  // note that N and n are different.\n  for (int i = 0; i < N; i++) arr[i] = 0;\n\n  for (int i = 1; i <= n; i++) {\n    int l, r;\n    cin >> l >> r;\n    // use the technique of Partial sum to build the value at each index.\n    arr[l]++;\n    arr[r + 1]--;\n  }\n  // finally build the prefix sum.\n  for (int i = 1; i < N; i++) arr[i] += arr[i - 1];\n\n  // keep the values 1 where values >=k or else 0.\n  for (int i = 1; i < N; i++) arr[i] = (arr[i] >= k);\n\n  // now to answer query in O(1), we will build prefix sum on this 0/1 array to\n  // get count of positions.\n  int prefixSum[N];\n  prefixSum[0] = 0;\n  for (int i = 1; i < N; i++) {\n    prefixSum[i] = prefixSum[i - 1] + arr[i];\n  }\n\n  while (q--) {\n    int l, r;\n    cin >> l >> r;\n    // gives the count of 1 positions in O(1).\n    int ans = prefixSum[r] - prefixSum[l - 1];\n    cout << ans << \"\\n\";\n  }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:31:41.247301+00:00"
+        },
+        "hints": {
+            "hint1": "Use partial sum and then get the final array where $arr[i] =$ the number of students who like the ith number.",
+            "hint2": "We know that a student i likes all the numbers between $l_i$ and $r_i$.So the effect of that student on the likeness of all the numbers between $l_i$ and $r_i$ is $1$. This is similar to adding $+1$ to all the numbers in the range $l_i$ and $r_i$. We can solve this using partial sums concept. Make an array $arr$ in which whenever we find a student likes numbers between l and r we take care of its contribution using partial sums as follows,  \n$arr[l]+=1$,  \n$arr[r+1]+ = -1$  \nAfter performing prefix sum on the partial sum array $arr$ we can get a count of the number of students liking a number $i$.  \n$arr[i]+=arr[i-1]$",
+            "solution_approach": "Now that we have got the number of students liking the number $i$, we can find which are good numbers and which are not by simply finding which number has been liked by $K$ or greater than $K$ number of students,  \nIf $arr[i]>=k$ then $arr[i] = 1$ which means it is a good number otherwise $0$.  \nNow we have the array $arr$ which simply stores whether a number is good number or not. So if a number $i$ is good $arr[i]=1$ else $arr[i]=0$ and we are to find the number of good numbers in a range $l$ to $r$.  \n Doesn't it seem familiar??  \n  Well you are right!  \n   We need to find the prefix sum of this array $arr$ to find the number of good numbers in a range. After doing a prefix sum any index i gives the number of good numbers from the beginning of the array to the index $i$. So to find the number of good numbers between range $l$ and $r$ we can do,  \n$ans = arr[r]-arr[l-1]$\n\nTime complexity of this solution is $O(n+ N + Q)$, where $N$ is the maximum number $r_i$, we take it to be around $1000005$, $n$ is the number of students and $Q$ is the number of queries."
+        },
+        "id": 23,
+        "input_format": "<p>The first line of input contains three integers, <i>N</i>, <i>K</i> (1\u2009\u2264\u2009<i>K</i>\u2009\u2264\u2009<i>N</i>\u2009\u2264\u20091000000), and <i>Q</i> (1\u2009\u2264\u2009<i>Q</i>\u2009\u2264\u20091000000).</p><p>The next <i>N</i> lines contain two integers <i>l<sub>i</sub></i> and <i>r<sub>i</sub></i> (1\u2009\u2264\u2009<i>l<sub>i</sub></i>\u2009\u2264\u2009<i>r<sub>i</sub></i>\u2264\u20091000000), describing that the i-th student likes all the numbers <i>[l<sub>i</sub>,r<sub>i</sub>]</i>.</p><p>The next <i>Q</i> lines contain <i>L</i> and <i>R</i>, (1\u2009\u2264\u2009<i>L</i>\u2009\u2264\u2009<i>R</i>\u2009\u2264\u20091000000).</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "",
+        "output_format": "<p>For each query print how many numbers in the range <i>[L,R]</i> is good in a new line.</p>",
+        "samples": [
+            {
+                "input": "10 3 10\n1 5\n2 7\n3 9\n1 5\n3 8\n4 10\n7 10\n8 8\n5 5\n6 7\n1 5\n3 8\n4 9\n3 10\n2 6\n3 9\n7 7\n5 5\n8 8\n3 7",
+                "output": "4\n6\n6\n7\n5\n7\n1\n1\n1\n5"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Prefix And Partial Sums"
+        ],
+        "template_code": [],
+        "time_limit_sec": 4.0,
+        "title": "Good Numbers",
+        "video_editorial_id": 10654
+    },
+    "details": "Problem Details"
+}

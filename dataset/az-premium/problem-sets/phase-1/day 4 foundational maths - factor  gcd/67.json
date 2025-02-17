@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>There are <i>N</i> piles of stones in front of you. ith pile contains <i>A<sub>i</sub></i> number of stones.<br>You want to find whether it is possible to split each pile into <i>1</i> or more piles of <i>X (</i>\u2265 <i>2)</i> stones such that each splitted-pile has exactly <i>X</i> stones.<br>Note that <i>X</i> should be the same for each pile.</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int T; cin >> T;\n    while(T--) {\n        int n; cin >> n;\n        int g = 0;\n        for(int i = 0; i < n; i++) {\n            int x; cin >> x;\n            g = __gcd(g, x);\n        }\n        if(g > 1) cout << \"Yes\\n\";\n        else cout << \"No\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:24:28.589132+00:00"
+        },
+        "hints": {
+            "hint1": "$X$ has to be a divisor of each $A_is$.",
+            "hint2": "Try to find the maximum number $X$ such that it divides each of $A_is$. That is, find the GCD of all $A_is$.",
+            "solution_approach": "$X = GCD(A_1, A_2, ..., A_N)$\nIf $X \\geq 2$, then print \"Yes\". Otherwise, print \"No\"."
+        },
+        "id": 67,
+        "input_format": "<p>The first line contains <i>T</i> (1 \u2264 <i>T</i> \u2264 100000), the number of test cases. The description of each test case is as follows:<br>The first line contains <i>N</i>, the number of piles (1 \u2264 <i>N</i> \u2264 100000).<br>The second line contains <i>N</i> space-separated positive integers <i>A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>N</sub></i> (2 \u2264 <i>A<sub>i</sub></i> \u2264 10<sup>9</sup>).<br>It is guaranteed that sum of <i>N</i> over all test cases doesn't exceed 10<sup>6</sup>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><i><strong>Explanation 1:</strong></i><br>For <i>X = 2</i>, you can divide each pile into smaller piles of size 2.</p><p><i><strong>Explanation 2:</strong></i><br>It is not possible to divide piles into smaller piles with size \u2265 2.</p>",
+        "output_format": "<p>For each test case, print \"<i>Yes</i>\" (without quotes) if it is possible to split. Otherwise, print \"<i>No</i>\" (without quotes).</p>",
+        "samples": [
+            {
+                "input": "2\n5\n2 2 6 8 12\n4\n2 6 3 8",
+                "output": "Yes\nNo"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Divide the Piles",
+        "video_editorial_id": 10678
+    },
+    "details": "Problem Details"
+}

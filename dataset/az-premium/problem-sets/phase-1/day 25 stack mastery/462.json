@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an array A, where each i<sup>th</sup> index represents an elevation on that index. The width of each bar is 1. You have to compute how much water it is able to trap after raining.",
+        "complete_approach": "",
+        "constraints": "1 \u2264 **T** \u2264 100 \n1 \u2264 **N** \u2264 10<sup>5</sup> \n0 \u2264 **A<sub>i</sub>** \u2264 10<sup>5</sup>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint main(){\n    IOS\n    int t;\n    cin>>t;\n    while(t--){\n        int n;\n        cin>>n;\n        int a[n];\n        for (int i = 0; i < n; ++i) {\n            cin>>a[i];\n        }\n        int pre[n], suff[n];\n        pre[0]=a[0];\n        suff[n-1]=a[n-1];\n        for (int i = 1; i < n; ++i) {\n            pre[i]=max(pre[i-1], a[i]);\n        }\n        for (int i = n-2; i >= 0; --i) {\n            suff[i]=max(suff[i+1], a[i]);\n        }\n        long long ans = 0;\n        for (int i = 0; i < n; ++i) {\n            ans+=min(pre[i], suff[i]) - a[i];\n        }\n        cout<<ans<<\"\\n\";\n    }\n    return 0;\n}\n```\n\n\n",
+                "language": "C++14"
+            },
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n\nint main(){\n    IOS\n    int t;\n    cin>>t;\n    while(t--){\n        int n;\n        cin>>n;\n\n        int a[n];\n\n        for (int i = 0; i < n; ++i) {\n            cin>>a[i];\n        }\n\n        long long ans = 0;\n\n        stack<int> s;\n\n        for(int i = 0; i < n; i++) {\n            while(!s.empty()) {\n                if(a[s.top()] > a[i]) break;\n\n                int x = s.top();\n                s.pop();\n\n                if(s.empty()) break;\n                int y = s.top();\n                ans += 1LL * (min(a[y], a[i]) - a[x]) * (i - y - 1);\n            }\n            s.push(i);\n        }\n        cout<<ans<<\"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:43:41.710427+00:00"
+        },
+        "hints": {
+            "hint1": "An element of the given array can store rainwater if there are taller elevations on its left and right side.",
+            "hint2": "<p>If there exists an elevation that is taller than the current on its left and right, then rainwater can be trapped above the current elevation. To calculate this, subtract the current elevation\u2019s height from the result of the minimum of the maximum elevation on its left and right.</p><p>Time Complexity per test case: O(N)</p>",
+            "solution_approach": "<p>We can use the stack to keep track of the bars that are bounded by longer bars and hence, may store water. Using the stack, we can do the calculations in only one iteration.</p><p>We keep a stack and iterate over the array. We add the index of the bar to the stack if the bar is smaller than or equal to the bar at top of the stack, which means that the current bar is bounded by the previous bar in the stack. If we found a bar longer than that at the top, we are sure that the bar at the top of the stack is bounded by the current bar and a previous bar in the stack, hence, we can pop it and add resulting trapped water to <i>ans</i>.</p>"
+        },
+        "id": 462,
+        "input_format": "<p>=The first line of the input contains one integer <i>T</i> - the number of test cases. Then <i>T</i> test cases follow.<br>The first line of each test case contains one integer <i>N</i> - the length of the array.&nbsp;<br>The second line of each test case contains <i>N</i> space-separated integers, where <i>A<sub>i</sub></i> denotes the height of the <i>i<sup>th</sup></i> bar.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>For the first test case:</p><figure class=\"image\"><img src=\"https://docs.google.com/drawings/u/0/d/s2WaCP1JOxBBBM4xnk_-ocQ/image?w=76&amp;h=76&amp;rev=10&amp;ac=1&amp;parent=1EwEPxxRd3IzB98YLm0jNnvDJe2S-_IAVrBeSWYA0WmI\"></figure><p>For the second test case:</p><figure class=\"image\"><img src=\"https://docs.google.com/drawings/u/0/d/skPlTxXR_YYQT-GnG8IeuYQ/image?w=105&amp;h=84&amp;rev=10&amp;ac=1&amp;parent=1EwEPxxRd3IzB98YLm0jNnvDJe2S-_IAVrBeSWYA0WmI\"></figure><p>For the third test case:</p><figure class=\"image\"><img src=\"https://docs.google.com/drawings/u/0/d/s5OXwMYvoNTfpjB3oBCGfpg/image?w=131&amp;h=131&amp;rev=13&amp;ac=1&amp;parent=1EwEPxxRd3IzB98YLm0jNnvDJe2S-_IAVrBeSWYA0WmI\"></figure>",
+        "output_format": "For each test case, you have to print how much water it is able to trap after raining.",
+        "samples": [
+            {
+                "input": "3\n3\n3 0 2\n5\n2 0 0 4 3\n5\n1 2 3 1 5",
+                "output": "2\n4\n2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-az"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Rain Water",
+        "video_editorial_id": 10673
+    },
+    "details": "Problem Details"
+}

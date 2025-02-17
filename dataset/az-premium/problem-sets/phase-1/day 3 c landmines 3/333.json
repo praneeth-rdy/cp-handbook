@@ -1,0 +1,62 @@
+{
+    "code": 200,
+    "data": {
+        "body": "",
+        "complete_approach": "",
+        "constraints": "$1 \\leq T \\leq 10^6$\n$1 \\leq A_i \\leq 10^7$\n$1 \\leq |S| \\leq 10^6$\nIt is guaranteed that the sum of $|S|$ over all test cases does not exceed $10^6$.\n## Sample Input\n3\n1 2 3 4 5 6\nNE\n2 4 5 3 1 7\nSWN\n3 4 5 6 7 8\nSSEN\n## Sample Output\n4\n2\n7",
+        "difficulty": 4,
+        "editorial_code": [
+            {
+                "code": "```c++\n#include <iostream>\nusing namespace std;\n\nint main() {\n    int t;\n    cin >> t;\n    while (t--) {\n        int a[7]; // Using 1-based indexing for ease of understanding.\n        for (int i = 0; i < 6; ++i) {\n            cin >> a[i+1];\n        }\n        string s;\n        cin >> s;\n        for (int i = 0; i < s.size(); ++i) {\n            if (s[i] == 'N') {\n                int t = a[1];\n                a[1] = a[2];\n                a[2] = a[6];\n                a[6] = a[5];\n                a[5] = t;\n            } else if (s[i] == 'S') {\n                int t = a[1];\n                a[1] = a[5];\n                a[5] = a[6];\n                a[6] = a[2];\n                a[2] = t;\n            } else if (s[i] == 'E') {\n                int t = a[1];\n                a[1] = a[4];\n                a[4] = a[6];\n                a[6] = a[3];\n                a[3] = t;\n            } else { // Assuming 'W' for West\n                int t = a[1];\n                a[1] = a[3];\n                a[3] = a[6];\n                a[6] = a[4];\n                a[4] = t;\n            }\n        }\n        cout << a[1] << \"\\n\"; // Output the top face of the dice\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            },
+            {
+                "code": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n        \n        int t = Integer.parseInt(br.readLine());\n        while (t-- > 0) {\n            String line = br.readLine();\n            while (line == null || line.isEmpty()) {\n                line = br.readLine();\n            }\n            StringTokenizer st = new StringTokenizer(line);\n            int[] a = new int[7]; // Using 1-based indexing\n            for (int i = 1; i <= 6; i++) {\n                a[i] = Integer.parseInt(st.nextToken());\n            }\n            String s = br.readLine();\n            while (s == null || s.isEmpty()) {\n                s = br.readLine();\n            }\n            for (int i = 0; i < s.length(); i++) {\n                char c = s.charAt(i);\n                if (c == 'N') {\n                    int temp = a[1];\n                    a[1] = a[2];\n                    a[2] = a[6];\n                    a[6] = a[5];\n                    a[5] = temp;\n                } else if (c == 'S') {\n                    int temp = a[1];\n                    a[1] = a[5];\n                    a[5] = a[6];\n                    a[6] = a[2];\n                    a[2] = temp;\n                } else if (c == 'E') {\n                    int temp = a[1];\n                    a[1] = a[4];\n                    a[4] = a[6];\n                    a[6] = a[3];\n                    a[3] = temp;\n                } else { // Assuming 'W' for West\n                    int temp = a[1];\n                    a[1] = a[3];\n                    a[3] = a[6];\n                    a[6] = a[4];\n                    a[4] = temp;\n                }\n            }\n            out.println(a[1]);\n        }\n        out.flush();\n        out.close();\n    }\n}\n```",
+                "language": "Java"
+            },
+            {
+                "code": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    idx = 0\n    t = int(data[idx])\n    idx += 1\n    for _ in range(t):\n        a = [0]*7  # Using 1-based indexing\n        for i in range(1, 7):\n            a[i] = int(data[idx])\n            idx += 1\n        s = data[idx]\n        idx += 1\n        for c in s:\n            if c == 'N':\n                temp = a[1]\n                a[1] = a[2]\n                a[2] = a[6]\n                a[6] = a[5]\n                a[5] = temp\n            elif c == 'S':\n                temp = a[1]\n                a[1] = a[5]\n                a[5] = a[6]\n                a[6] = a[2]\n                a[2] = temp\n            elif c == 'E':\n                temp = a[1]\n                a[1] = a[4]\n                a[4] = a[6]\n                a[6] = a[3]\n                a[3] = temp\n            else:  # Assuming 'W' for West\n                temp = a[1]\n                a[1] = a[3]\n                a[3] = a[6]\n                a[6] = a[4]\n                a[4] = temp\n        print(a[1])\n\nif __name__ == \"__main__\":\n    main()\n```",
+                "language": "Python3"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "First Hint is missing",
+                "Second Hint is missing"
+            ],
+            "last_updated": "2024-06-22T02:15:20.698864+00:00"
+        },
+        "hints": {
+            "hint1": "Simulate the dice rotations step by step according to the commands.",
+            "hint2": "Represent the dice faces in an array and update their positions after each command.",
+            "solution_approach": "The dice is represented such that `$a[1]$` is the top face, and the other numbers represent the sides and bottom face. The rotations are simulated according to the instructions given in the input string `$S$`. Each rotation adjusts the indices of the array `$a$` to reflect the new top face after the rotation. The simulation involves swapping the face values according to the rotation direction.\n\n**Time Complexity per test case:** $O(|S|)$, where $|S|$ is the length of the string."
+        },
+        "id": 333,
+        "input_format": "The first line of the input contains one integer $T$ - the number of test cases. Then $T$ test cases follow.\nThe first line of each test case contains six space-separated integers $A_i$ - values on each face.\nThe second line of each test case contains a string $S$ - the sequence of commands.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, initially 1 is at top, rotating N, 2 is at top, rotating E, 4 is at top.\nFor the second test case, initially 2 is at top, rotating S, 1 is at top, rotating W, 5 is at top, rotating N, 2 is at top.\nFor the third test case, initially 3 is at top, rotating S, 7 is at top, rotating S, 8 is at top, rotating E, 6 is at top, rotating N, 7 is at top.",
+        "output_format": "For each test case, print the integer at the top of the face after the sequence of commands to roll the dice is done.",
+        "samples": [
+            {
+                "input": "3\n1 2 3 4 5 6\nNE\n2 4 5 3 1 7\nSWN\n3 4 5 6 7 8\nSSEN\n",
+                "output": "4\n2\n7\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Implementation",
+            "Arrays"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Dice Simulation AZ101",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

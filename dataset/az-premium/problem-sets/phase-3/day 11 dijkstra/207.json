@@ -1,0 +1,54 @@
+{
+    "code": 200,
+    "data": {
+        "body": "There are $n$ cities and $m$ roads. The capital is located at $1$. Your task is to determine the length of the shortest route from the capital to every city.",
+        "complete_approach": "",
+        "constraints": "<p>1 \u2264 <i>n </i>\u2264 10<sup>5</sup><br>1 \u2264 <i>m </i>\u2264 2 x 10<sup>5</sup><br>1 \u2264 <i>a</i>, <i>b </i>\u2264 <i>n</i><br>1 \u2264 <i>c </i>\u2264 10<sup>9</sup></p>",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n\n#include <bits/stdc++.h>\n#define int long long\nusing namespace std;\n\nvector<vector<pair<int, int>>> g;\nvector<bool> vis;\nvector<int> dis;\nint n, m;\n\nclass comp{\n    public:\n    bool operator()(pair<int, int> p1, pair<int, int> p2){\n        return p1.second > p2.second;\n    }\n};\n\n\nvoid dijkstra(){\n    dis[1] = 0;\n    priority_queue<pair<int, int>, vector<pair<int, int>>, comp> pq;\n    pq.push({1, 0});\n\n    while(!pq.empty()){\n        auto val = pq.top();\n        int node = val.first;\n        int curWeight = val.second;\n\n        pq.pop();\n        if(vis[node]) continue;\n        vis[node] = true;\n\n        for(auto neighNode : g[node]){\n            int neigh = neighNode.first;\n            int weight = neighNode.second;\n            if(dis[neigh] > dis[node] + weight){\n                dis[neigh] = dis[node] + weight;\n                pq.push(make_pair(neigh, dis[neigh]));\n            }\n        }\n    }\n}\n\nvoid solve(){\n    cin >> n >> m;\n    g.assign(n+1, vector<pair<int, int>>());\n    vis.assign(n+1, false);\n    dis.assign(n+1, 1e18);\n    for(int i=0; i<m; i++){\n        int a, b, c; cin >> a >> b >> c;\n        g[a].push_back({b, c});\n    }\n    dijkstra();\n\n    for(int i=1; i<=n; i++) cout << dis[i] << \" \";\n}\n\nsigned main(){\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    //int _t; cin >> _t; while(_t--)\n    solve();\n    \n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "No sample explanation provided."
+            ],
+            "last_updated": "2024-06-22T02:19:27.005843+00:00"
+        },
+        "hints": {
+            "hint1": "This problem requires finding the shortest path from the capital (vertex 1) to every other vertex in a graph with weighted edges.",
+            "hint2": "This problem can be solved using Dijkstra's algorithm. Dijkstra's algorithm is a greedy algorithm that finds the shortest path between nodes in a weighted graph.",
+            "solution_approach": "1. Initialize an array of distances called dist, with the distance to the starting vertex set to 0 and all other distances set to infinity.\n\n2. Create a priority queue called pq to store vertices and their distances. Insert the starting vertex with distance 0 into the priority queue.\n\n3. While the priority queue is not empty, remove the vertex with the smallest distance from the queue.\n\n4. For each neighbor of the removed vertex, calculate the tentative distance to that neighbor by adding the distance to the removed vertex and the weight of the edge connecting them.\n\n5. If the tentative distance is less than the current distance stored in the dist array for that neighbor, update the dist array with the new distance and insert the neighbor into the priority queue with its updated distance.\n\n6. Repeat steps 3-5 until all vertices have been visited or the destination vertex has been removed from the queue.\n\n7. The shortest path to any vertex from the starting vertex is the distance stored in the dist array for that vertex.\n\nDijkstra's algorithm guarantees finding the shortest path in a graph with non-negative edge weights. The algorithm works by maintaining a set of visited vertices and a set of unvisited vertices, and at each iteration, it selects the unvisited vertex with the smallest tentative distance and adds it to the visited set. The algorithm then relaxes all the edges of the selected vertex, updating the tentative distances of its neighbors if a shorter path is found.\n\nThe priority queue is used to efficiently retrieve the vertex with the smallest tentative distance. By using a priority queue, we avoid the need to search through the entire set of unvisited vertices for the vertex with the smallest tentative distance, which would result in a time complexity of $O(V^2)$. Instead, the priority queue provides a faster time complexity of $O(E \\log V)$ for processing all the edges and vertices in the graph, where E is the number of edges and V is the number of vertices."
+        },
+        "id": 207,
+        "input_format": "The first input line has two integers $n$ and $m$: the number of cities and road connections. The cities are numbered $1$, $2$, \u2026, $n$, and city $1$ is Capital.\n\nAfter that, there are $m$ lines describing the roads. Each line has three integers $a$, $b$, and $c$: a road begins at city $a$, ends at city $b$, and its length is $c$. Each road is a one-way road.\n\nYou can assume that it is possible to travel from Capital to all other cities.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "",
+        "output_format": "Print $n$ integers: the shortest route lengths from Capital to cities $1$, $2$, \u2026, $n$.",
+        "samples": [
+            {
+                "input": "3 4\n1 2 6\n1 3 2\n3 2 3\n1 3 4",
+                "output": "0 5 2"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Graphs",
+            "Single Source Shortest Path",
+            "Dijkstra"
+        ],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Shortest Path I",
+        "video_editorial_id": 10669
+    },
+    "details": "Problem Details"
+}

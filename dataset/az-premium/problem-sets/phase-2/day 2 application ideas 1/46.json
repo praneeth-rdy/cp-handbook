@@ -1,0 +1,52 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given <i>N</i> distinct points on the number line in a sorted array <i>A</i>. You can place at most <i>K</i> more points on the Line (Integer coordinates only). You have to make the maximum separation between any two consecutive points in the final configuration as minimum as possible. Output this minimal value. &nbsp;</p><p>Note - You can place the points anywhere you like, but you cannot place more than one point at the same position on the line.&nbsp;</p>",
+        "complete_approach": "",
+        "constraints": "",
+        "difficulty": 3,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n#define int long long\n\nint arr[100001];\nint n, k;\n\nbool check(int maxDiffAllowed) {\n    int pointsRequired = 0;\n    int i = 1;\n    while (i < n) {\n        pointsRequired += (arr[i] - arr[i - 1] + maxDiffAllowed - 1) / maxDiffAllowed - 1;\n        i++;\n    }\n    return pointsRequired <= k;\n}\n\nsigned main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int testcases;\n    cin >> testcases;\n\n    while (testcases--) {\n        cin >> n >> k;\n        for (int i = 0; i < n; i++) {\n            cin >> arr[i];\n        }\n\n        int low = 1, high = 1e9;\n        int ans = high;\n\n        while (low <= high) {\n            int mid = (low + high) / 2;\n            if (check(mid)) {\n                ans = mid;\n                high = mid - 1;\n            } else {\n                low = mid + 1;\n            }\n        }\n\n        cout << ans << \"\\n\";\n    }\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [
+                "Solution Approach is missing"
+            ],
+            "last_updated": "2024-06-22T02:45:23.389368+00:00"
+        },
+        "hints": {
+            "hint1": "If maximum separation, X is possible by placing at most K more points, then it is possible to have maximum separation lesser than X as well. That means this is a monotonic function and we can apply binary search.",
+            "hint2": "<p>We would be doing binary search on the minimum answer possible. We take the left pointer as L = 1(since it is given that all the numbers have to be distinct) and R = A[N-1] - A[0]. We take mid = (L+R)/2. We find the number of points we need to place to have the answer as mid. This can be done by placing the K points in between any two given points (array A) greedily since we want the distance between any two points to be at most mid. If there are two points, x and y present in the original array, we will place points x + mid, x + 2*mid, \u2026 x + X*mid in between them such that x + X*mid &lt; y.</p><p>If the number of points we need to place to have the answer as mid is \u2264 K, that means it could be a possible answer and so we continue binary search from L to R = mid-1(since we want to minimize the answer). Otherwise, we need to increase the value of the answer and hence we continue binary search from L = mid+1 to R.</p><p>Time Complexity per test case: O(N * log2(A[N-1] - A[0]))</p>",
+            "solution_approach": ""
+        },
+        "id": 46,
+        "input_format": "<p>The first line contains an integer <i>T</i>, the number of test cases <i>(1&lt;=T&lt;=10000)</i>.</p><p>The first line of each test case contains two space-separated integers <i>N, K</i>, 2<i>&lt;=N&lt;=10^5</i>, <i>0&lt;=K&lt;=10^9</i>.</p><p>Next line contains <i>N</i> space-separated distinct integers (<i>0&lt;=A<sub>i</sub>&lt;=1e9</i>).</p><p>Sum of N across all test cases &lt;= 10^6.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 512000,
+        "note": "<p>For the first test case - do not place any additional points or place points at 6,7.</p><p>For the third test case - place the points at 133, 166. So final configuration = [100, 133, 166, 200, 230] and maximum difference between two consecutive numbers = 34.</p><p>For fourth test case - place the points at 2, 4, 6, 8, 10. So final configuration = [1,2,3,4,5,6,7,8,9,10,11] and maximum difference between two consecutive numbers = 1.</p>",
+        "output_format": "<p>For each test case output the minimum maximum separation between any two consecutive points possible in a new line.</p>",
+        "samples": [
+            {
+                "input": "5\n5 5\n1 2 3 4 5\n5 0\n2 5 7 8 10\n3 2\n100 200 230\n6 5\n1 3 5 7 9 11\n6 4\n1 4 8 13 19 26",
+                "output": "1\n3\n34\n1\n4"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Binary Search"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Minimise Max Diff",
+        "video_editorial_id": 10680
+    },
+    "details": "Problem Details"
+}

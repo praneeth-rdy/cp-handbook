@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "Bob is standing in a park at (0,0) facing north. He is given a series of instructions to move around the park. The instructions can be:\n\n1. \u2018W\u2019: go straight 1 unit\n2. \u2018L\u2019: turn 90 degrees left\n3. \u2018R\u2019: turn 90 degrees right\n\nBob has to perform the given instructions forever. If he is going in a circle forever, print \u2018YES\u2019. Otherwise, print \u2018NO\u2019 (without the quotes).",
+        "complete_approach": "",
+        "constraints": "<p>1\u2264 <i>T</i> \u2264 100<br>1\u2264 |<i>S</i>| \u2264 10<sup>5</sup> where |<i>S</i>| denotes the length of the given series of instructions.</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS                \\\n  ios::sync_with_stdio(0); \\\n  cin.tie(0);              \\\n  cout.tie(0);\n\nint main() {\n  IOS int t;\n  cin >> t;\n  while (t--) {\n    int n;\n    cin >> n;\n    string s;\n    cin >> s;\n    int x = 0, y = 0;\n    int direction = 0;  // 0-north, 1-west, 2-south, 3-east\n    bool flag = false;\n    for (int i = 0; i < n; i++) {\n      if (s[i] == 'L')\n        direction = (direction + 3) % 4;\n      else if (s[i] == 'R')\n        direction = (direction + 1) % 4;\n      else {\n        if (direction == 0)\n          y++;\n        else if (direction == 1)\n          x--;\n        else if (direction == 2)\n          y--;\n        else\n          x++;\n      }\n    }\n    if ((x == 0 && y == 0) || direction != 0)\n      cout << \"YES\" << endl;\n    else\n      cout << \"NO\" << endl;\n  }\n  return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:38:51.288042+00:00"
+        },
+        "hints": {
+            "hint1": "Calculate the final vector of how Bob travels after executing all instructions once - it consists of a change in position plus a change in direction.",
+            "hint2": "Bob stays in the circle only if it changes direction or it stays where it started after completion of instructions.",
+            "solution_approach": "We use two variables x and y to represent the current position of Bob. Initially, both are set to $0$, as Bob starts at the origin $(0, 0)$.\nWe also use a variable direction to keep track of the direction in which Bob is facing. Initially, Bob is facing north (direction = $0$).\nIf the current instruction is 'L', we turn $90$ degrees to the left by decrementing the direction by $1$ and taking the modulo by $4$.\nIf the current instruction is 'R', we turn $90$ degrees to the right by incrementing the direction by $1$ and taking the modulo by $4$.\nIf the current instruction is 'W', we move forward by $1$ unit in the direction that Bob is facing. We do this by updating the values of x and y based on the current direction.\n\nFinally, if Bob returns to origin or the direction is not 0 (i.e., Bob is not facing north), then we print \"YES\", otherwise, we print \"NO\".\n\nTime Complexity:\nThe time complexity of this solution is $O(N)$, where $N$ is the length of the input string S. This is because we are processing each instruction in the string only once."
+        },
+        "id": 90,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\nThe first line of each test case contains N - the length of the input string of instructions.\nThe second line of each test case contains one string S - the series of instructions to move around the park.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p>In the first sample test case, Bob moves north indefinitely.</p><p>In the second sample test case, Bob moves as follows: (0,0) =&gt; (-1,0) =&gt; (-1,-1) =&gt; (0,-1) =&gt; (0,0). So, Bob goes in a circle forever</p><figure class=\"image\"><img src=\"https://docs.google.com/drawings/u/0/d/s6yk4rW7gINCLR9gvCLKoHA/image?w=113&amp;h=94&amp;rev=31&amp;ac=1&amp;parent=1r88r0wHAS-xfy7L9H8t6gxhPHhQyHg5sXRkydJaq9yo\"></figure><p>n the third sample test case, Bob moves from (0,0) to (0,1) turns 180 degress and returns to (0,0). So, Bob goes in a circle forever</p>",
+        "output_format": "For each test case, print \u2018YES\u2019 if Bob is going in a circle forever. Otherwise, print \u2018NO\u2019. (without the quotes)",
+        "samples": [
+            {
+                "input": "3\n3\nWWW\n2\nLW\n4\nWLLW",
+                "output": "NO\nYES\nYES"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Round and Round",
+        "video_editorial_id": 8146
+    },
+    "details": "Problem Details"
+}

@@ -1,0 +1,50 @@
+{
+    "code": 200,
+    "data": {
+        "body": "<p>You are given two arrays A and B, both of size N. A pair is called good if i &lt; j and A<sub>i</sub> + A<sub>j</sub> &gt; B<sub>i</sub> + B<sub>j</sub>. Find the number of good pairs.</p>",
+        "complete_approach": "",
+        "constraints": "1\u2264 T \u2264 10<sup>6</sup>\n\n1\u2264 N \u2264 10<sup>6</sup>\n\n1\u2264 A<></sub> \u2264 10<sup>9</sup>\n\nIt is guaranteed that the sum of N over all test cases does not exceed 10<sup>6</sup>.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\ntypedef long long int ll;\ntypedef vector<ll> vl;\n\nvoid solve()\n{\n    ll i, j, n, cnt = 0;\n    cin >> n;\n    vl A(n), B(n), C(n);\n    for (i = 0; i < n; i++)\n    {\n        cin >> A[i];\n    }\n    for (i = 0; i < n; i++)\n    {\n        cin >> B[i];\n    }\n    for (i = 0; i < n; i++)\n    {\n        C[i] = A[i] - B[i];\n    }\n    // since addition is commutative just sort the elements of the array C\n    sort(C.begin(), C.end());\n    for (i = 0; i < n; i++)\n    {\n        if (C[i] <= 0)\n        {\n            // we want to find element Cj which is strictly greater than -Ci\n            // Cj>-Ci equivalent to finding a  Cj>=-Ci+1\n            if (lower_bound(C.begin(), C.end(), -C[i] + 1ll) - C.begin() != n)\n            {\n                cnt += n - (lower_bound(C.begin(), C.end(), -C[i] + 1ll) - C.begin());\n            }\n        }\n        else\n        {\n            cnt += n - (i + 1);\n        }\n    }\n    cout << cnt << endl;\n}\n\nint main()\n{\n    // #ifndef ONLINE_JUDGE\n    // freopen(\"input.txt\",\"r\",stdin);\n    // freopen(\"output.txt\",\"w\",stdout);\n    // #endif\n\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int i, T;\n\n    T = 1;\n    cin >> T;\n\n    for (i = 1; i <= T; i++)\n    {\n        solve();\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:28:52.895019+00:00"
+        },
+        "hints": {
+            "hint1": "The given inequality is the same as: $(A_i - B_i) + (A_j - B_j) > 0$. Let $C_i = A_i - B_i$. You just need to find pairs such that $C_i + C_j > 0$.",
+            "hint2": "Store all the values of Ai - Bi in a vector and sort it. A question that might arise is how we can allow ourselves to sort the vector since the constraint $i \\lt j$ is clearly mentioned in the problem. Sorting a vector results in the loss of information about the original indices of the elements, making it difficult to determine the original order of the elements.\n\n\nWhen we want to find pairs in a vector such that their sum is greater than $0$, we can use the fact that addition is a commutative operation, which means that the order in which we add the elements doesn't matter. For example, $2 + 3$ is the same as $3 + 2$.\n\nNow, let's say we have a vector $C$ and we want to find pairs $(i,j)$ such that $C_i + C_j > 0$. We can sort the vector in non-decreasing order, which means that the smallest element will be first and the largest element will be last. Once the vector is sorted, we can start with the smallest element and add it to the largest element. If the sum is greater than $0$, then we know that all pairs involving the largest element will satisfy the condition as well, because any pair with a smaller element than the largest element will have a sum that is even smaller than the sum we just computed.\n\nAt no point during this process do we need to worry about losing track of the original indices of the elements, because we can always interchange the indices of any two elements in a pair. For example, if we find a pair $(i,j)$ where $i > j$, we can simply swap $i$ and $j$ to get the pair $(j,i)$. This means that even if we sort the vector, we can still consider all possible pairs and find the ones that satisfy the condition $C_i + C_j > 0$.",
+            "solution_approach": "Store all the values of $A_i - B_i$ in a vector and sort it. Since $C_j > -C_i$, you can use upper_bound for finding the value of such pairs.\n\nTime Complexity per test case: $O(N \\log N)$"
+        },
+        "id": 377,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains one integer N - the length of the array. \n\nThe second line of each test case contains N space-separated integers.\n\nThe third line of each test case contains N space-separated integers.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, following pairs satisfy the given inequality: (2+3) > (2+1) and (3+5) > (1+5)\n\nFor the second test case, following pairs satisfy the given inequality: (1+6) > (2+3) and (4+6) > (3+3)\n\nFor the third test case, following pairs satisfy the given inequality: (5+6) > (1+9), (5+1) > (1+2), (5+1) > (1+4) and (5+2) > (1+1)",
+        "output_format": "For each test case, print the number of good pairs.",
+        "samples": [
+            {
+                "input": "3\n4\n2 3 5 4\n2 1 5 6\n3\n1 4 6\n2 3 3\n5\n5 6 1 1 2\n1 9 2 4 1\n",
+                "output": "2\n2\n4\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "company-Amazon"
+        ],
+        "template_code": [],
+        "time_limit_sec": 2.0,
+        "title": "Good Pairs AZ101",
+        "video_editorial_id": 8191
+    },
+    "details": "Problem Details"
+}

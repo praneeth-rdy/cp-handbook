@@ -1,0 +1,67 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given a string $S$ consisting of lowercase characters. Some of the characters are **good** and the rest are **bad**.\n\nA substring $S[l..r]$ is a string $S_l S_{l+1} \\dots S_r$.\n\nA substring $S[l..r]$ is considered **good** if among the letters $S_l S_{l+1} \\dots S_r$ there are at most $K$ bad ones.\n\nYou have to find the number of **distinct good substrings** of the given string $S$.\n\nTwo substrings $S[l..r]$ and $S[p..q]$ are considered distinct if their content is different, i.e., $S[l..r] \\ne S[p..q]$.",
+        "complete_approach": "",
+        "constraints": "- $1 \\le |S| \\le 3000$\n- The second line is a binary string of length $26$ representing the characters from 'a' to 'z'.\n- Each character in $S$ is a lowercase English letter.\n- $1 \\le K \\le |S|$",
+        "difficulty": 5,
+        "editorial_code": [
+            {
+                "code": "#include <bits/stdc++.h>\nusing namespace std;\n\n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\nusing lli =  long long int;\nusing ii = pair<lli, lli>;\n#define F first\n#define S second\n\nconst int tot = 1e6+5;\nconst lli mod = 1e9+7;\n\nstring s, a;\nint k, n;\nlli ans = 0;\n\nstruct node{\n    node *child[26];\n    node(){\n        for(int i = 0; i < 26; i++){\n            child[i] = NULL;\n        }\n    }\n};\n\nstruct trie{\n    node *root;\n    trie(){\n        root = new node();\n    }\n};\n\ntrie *root_main;\nnode *root1;\n\n// insert the substrings to the nodes\nvoid insert(string s, int start){\n    node *cur = root1;\n    for(int i = start; i < n; i++){\n        int x = s[i]-'a';\n        if(cur->child[x] == NULL){\n            cur->child[x] = new node();\n        }\n        cur = cur->child[x];\n    }\n}\n\nvoid good_search(node *cur, int k){\n    for(int i = 0; i < 26; i++){\n        if(cur->child[i] != NULL){\n            if(k - (a[i] == '0') >= 0){\n                ans++;\n                good_search(cur->child[i], k - (a[i] == '0'));\n            }\n        }\n    }\n}\n\nint main(){\n    IOS\n    cin >> s >> a;\n    cin >> k;\n\n    root_main = new trie();\n    root1 = root_main->root;\n\n    n = s.length();\n\n    for(int i = 0; i < n; i++){\n        insert(s, i);\n    }\n\n    // search for nodes with count <= k\n    good_search(root1, k);\n\n    cout << ans << \"\\n\";\n\n    return 0;\n}\n",
+                "language": "C++14"
+            },
+            {
+                "code": "import sys\nfrom sys import stdin, stdout\n\ndef main():\n    data = stdin.read().split()\n    idx = 0\n    s = data[idx]\n    idx +=1\n    a = data[idx]\n    idx +=1\n    k = int(data[idx])\n    idx +=1\n\n    n = len(s)\n    global ans\n    ans = 0\n\n    root1 = Node()\n\n    for i in range(n):\n        insert(s, i, root1)\n\n    good_search(root1, k, a)\n\n    print(ans)\n\nclass Node:\n    def __init__(self):\n        self.child = [None]*26\n\ndef insert(s, start, root):\n    cur = root\n    n = len(s)\n    for i in range(start, n):\n        x = ord(s[i]) - ord('a')\n        if cur.child[x] is None:\n            cur.child[x] = Node()\n        cur = cur.child[x]\n\nans = 0\n\ndef good_search(cur, k, a):\n    global ans\n    for i in range(26):\n        if cur.child[i] is not None:\n            cost = 1 if a[i] == '0' else 0\n            if k - cost >= 0:\n                ans +=1\n                good_search(cur.child[i], k - cost, a)\n\nif __name__ == \"__main__\":\n    main()\n",
+                "language": "Python3"
+            },
+            {
+                "code": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n    static String s, a;\n    static int k, n;\n    static long ans = 0;\n    static Trie root_main;\n    static Node root1;\n\n    static class Node {\n        Node[] child;\n\n        Node() {\n            child = new Node[26];\n        }\n    }\n\n    static class Trie {\n        Node root;\n\n        Trie() {\n            root = new Node();\n        }\n    }\n\n    public static void insert(String s, int start) {\n        Node cur = root1;\n        for (int i = start; i < n; i++) {\n            int x = s.charAt(i) - 'a';\n            if (cur.child[x] == null) {\n                cur.child[x] = new Node();\n            }\n            cur = cur.child[x];\n        }\n    }\n\n    public static void good_search(Node cur, int k) {\n        for (int i = 0; i < 26; i++) {\n            if (cur.child[i] != null) {\n                int cost = (a.charAt(i) == '0') ? 1 : 0;\n                if (k - cost >= 0) {\n                    ans++;\n                    good_search(cur.child[i], k - cost);\n                }\n            }\n        }\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));\n\n        s = br.readLine();\n        a = br.readLine();\n        k = Integer.parseInt(br.readLine());\n\n        root_main = new Trie();\n        root1 = root_main.root;\n\n        n = s.length();\n\n        for (int i = 0; i < n; i++) {\n            insert(s, i);\n        }\n\n        good_search(root1, k);\n\n        out.println(ans);\n\n        out.flush();\n        out.close();\n    }\n}\n",
+                "language": "Java"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:34:58.350638+00:00"
+        },
+        "hints": {
+            "hint1": "\nFor every substring of the string, we need to count the number of bad characters present in it. As long as the number of bad characters is less than or equal to **$K$**, the substring is valid and should be counted.\n\nA string of length **$n$** has $\\frac{n \\cdot (n+1)}{2}$ substrings, making it infeasible to check every substring individually and count the number of bad characters.\n",
+            "hint2": "\nWe can use a **Trie data structure** to store the substrings. This approach avoids the need to explicitly check each substring while keeping track of the number of bad characters.\n\n- Each **active node** in the Trie corresponds to a substring.\n- For each node, we can maintain a **count of bad characters** in the substring represented by that node.\n\nBy traversing the Trie, we can identify all substrings and determine whether they are valid (i.e., the number of bad characters is less than or equal to **$K$**).\n",
+            "solution_approach": "\n### Building the Trie and Counting Valid Substrings\n\n- In the Trie, we insert all possible substrings $S[i \\dots n-1]$, for $0 \\leq i < n$.\n- All the nodes of the Trie correspond to substrings of $S$, such as $S[0..n-1]$, $S[1..n-1]$, $S[2..n-1]$, ..., $S[n-1..n-1]$.\n- While inserting the nodes into the Trie, we keep track of the **number of bad characters** in the substring up to that node.\n\nAfter building the Trie:\n\n1. Traverse through all the nodes of the Trie.\n2. Count only those nodes where the number of bad characters is less than or equal to $K$.\n\nThis way, we can efficiently count all distinct good substrings without explicitly generating all possible substrings.\n\n### Time Complexity\n\n- Insertion of all substrings into the Trie takes $O(n^2)$ time in the worst case.\n- Traversal of the Trie takes $O(n^2)$ time as well.\n- Overall time complexity: $O(n^2)$.\n\n### Space Complexity\n\n- The space complexity is $O(n^2)$ in the worst case, due to the storage of all substrings in the Trie.\n"
+        },
+        "id": 421,
+        "input_format": "The first line contains a string $S$. $1 \\le |S| \\le 3000$.\nThe second line contains a binary string of length $26$. '0' means the $i$-th character is bad and '1' means the $i$-th character is good.\nThe third line contains an integer $K$, $1 \\le K \\le |S|$.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first sample test case:\nWe need to find the number of distinct substrings in \"algozenith\" that have at most $2$ bad characters.\nAfter processing, we find that there are $24$ distinct substrings satisfying the condition.",
+        "output_format": "Print the number of distinct good substrings of $S$.",
+        "samples": [
+            {
+                "input": "algozenith\n10010100000010100100101100\n2\n",
+                "output": "24\n"
+            },
+            {
+                "input": "acehqnrtuwaealwbqufdmizce\n10000110100000010011101101\n16\n",
+                "output": "316\n"
+            },
+            {
+                "input": "yqahbyyoxltryqdmvenemaqnbakglgqolxnaifnqtoclnnqiab\n11000001000110100111100001\n41\n",
+                "output": "1243\n"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [
+            "Strings",
+            "Data Structures"
+        ],
+        "template_code": [],
+        "time_limit_sec": 5.0,
+        "title": "Good Substrings",
+        "video_editorial_id": null
+    },
+    "details": "Problem Details"
+}

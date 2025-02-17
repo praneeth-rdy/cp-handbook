@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given an array \\(A\\) of size \\(N\\). $(A_1, A_2, \\ldots, A_N)$ are the elements of the array. All elements in the array \\(A\\) are distinct.  \n\nFind the sum of the minimum of all subarrays possible of array \\(A\\).  \n\n##### Definition:\nA **subarray** of an \\(N\\)-element array is an array composed of a contiguous block of the original array's elements.",
+        "complete_approach": "",
+        "constraints": "<p>1 <span style=\"background-color:rgb(255,255,255);color:rgb(34,34,34);\">\u2264</span> <i>T</i> <span style=\"background-color:rgb(255,255,255);color:rgb(34,34,34);\">\u2264</span> 100000<br>1 <span style=\"background-color:rgb(255,255,255);color:rgb(34,34,34);\">\u2264</span> <i>N</i> <span style=\"background-color:rgb(255,255,255);color:rgb(34,34,34);\">\u2264</span> 100000<br>1 <span style=\"background-color:rgb(255,255,255);color:rgb(34,34,34);\">\u2264</span> <i>A<sub>i</sub></i> <span style=\"background-color:rgb(255,255,255);color:rgb(34,34,34);\">\u2264</span> 10<sup>6</sup><br>Sum of <i>N</i> over all test cases <span style=\"background-color:rgb(255,255,255);color:rgb(34,34,34);\">\u2264</span> 5 * 10<sup>5</sup>.<br>It is guaranteed that all elements in an array <i>A</i> are distinct.</p>",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include<bits/stdc++.h>\nusing namespace std;\n\n#define ll long long int\n#define LD long double\n\nconst int N = 100010;\n\nint inf = 1e9;\nint mod = 1e9 + 7;\n\nsigned main()\n{\n    //freopen(\"IN\", \"r\", stdin);\n    //freopen(\"OUT\", \"w\", stdout);\n\n    ios_base::sync_with_stdio(0);\n    cin.tie(0); cout.tie(0);\n\n    int T; cin >> T;\n    while(T--) {\n        int n; cin >> n;\n        int A[n + 2];\n        for(int i = 1; i <= n; i++)\n            cin >> A[i];\n        A[0] = -inf;\n        A[n + 1] = -inf;\n\n        int prev[n + 2], nxt[n + 2];\n\n        stack<int> s;\n        s.push(0);\n        for(int i = 1; i <= n; i++) {\n            while(!s.empty() && A[s.top()] >= A[i])\n                s.pop();\n            assert(!s.empty());\n            prev[i] = s.top();\n            s.push(i);\n        }\n\n        while(!s.empty()) s.pop();\n\n        s.push(n + 1);\n        for(int i = n; i >= 1; i--) {\n            while(!s.empty() && A[s.top()] >= A[i])\n                s.pop();\n            assert(!s.empty());\n            nxt[i] = s.top();\n            s.push(i);\n        }\n\n        ll ans = 0;\n\n        for(int i = 1; i <= n; i++)\n            ans += 1LL * A[i] * (i - prev[i]) * (nxt[i] - i);\n\n        cout << ans << \"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:47:41.807942+00:00"
+        },
+        "hints": {
+            "hint1": "<p>Try to think for the Individual Elements Contribution to the Final answer. How may subarrays will some element <i>A<sub>i</sub></i> be a minimum of in total?</p>",
+            "hint2": "<p>Find the next smaller and just previous smaller elements for all elements in the array. How to find them? Use stack!</p>",
+            "solution_approach": "<p>We try to find the individual contribution of all elements in the array.&nbsp;<br>Suppose <i>cnt<sub>i</sub></i> is the number of subarrays with <i>A<sub>i</sub></i> is the minimum.<br>Then the answer will be the sum of all <i>cnt<sub>i</sub> * A<sub>i</sub></i>. So now the question is how to find <i>cnt<sub>i</sub></i>?<br>Create a new array <i>B</i> by appending <i>-INF</i> at the beginning and end of the array <i>A</i>.<br><i>B = {-INF, A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>N</sub>, -INF}.</i><br>Now for newly constructed array <i>B</i> find the next smaller and the previous smaller for each element <i>B<sub>i</sub></i> s.t. 2 <span style=\"background-color:rgb(255,255,255);color:rgb(34,34,34);\">\u2264</span> <i>i</i> <span style=\"background-color:rgb(255,255,255);color:rgb(34,34,34);\">\u2264</span> <i>N</i>+1 (assuming array to be 1-index).<br>Let <i>n<sub>i</sub></i> and <i>p<sub>i</sub></i> be the index of next smaller and previous smaller of element <i>B<sub>i</sub></i>, s.t. 2 <span style=\"background-color:rgb(255,255,255);color:rgb(34,34,34);\">\u2264</span> <i>i</i> <span style=\"background-color:rgb(255,255,255);color:rgb(34,34,34);\">\u2264</span> <i>N</i>+1.<br>Now all the subarrays <i>[start, end]</i> with <i>start <strong>\u2208</strong> {p<sub>i</sub> + 1, i}</i> and <i>end <strong>\u2208</strong> {i, n<sub>i</sub> - 1}</i> has minimum value of <i>B<sub>i</sub></i>.<br>That means, the contribution of <i>B<sub>i</sub></i> in total sum is <i>(i - p<sub>i</sub>) * (n<sub>i</sub> - i)</i>.<br>So the final answer is the sum of the contribution of all <i>B<sub>i</sub></i>s. (Note that we are only considering 2 <span style=\"background-color:rgb(255,255,255);color:rgb(34,34,34);\">\u2264</span> <i>i</i> <span style=\"background-color:rgb(255,255,255);color:rgb(34,34,34);\">\u2264</span> <i>N</i>+1.)<br>We can find the next smaller and previous smaller in <i>O(N)</i> using stack.</p><p><strong>Time complexity:</strong> <i>O(N)</i><br><strong>Space complexity:</strong> <i>O(N)</i></p>"
+        },
+        "id": 78,
+        "input_format": "<p>The first line contains <i>T</i>, the number of test cases.<br>The first line of each test case contains <i>N</i>, the number of integers in an array <i>A</i>.<br>The second line of each test case contains <i>N</i> space-separated integers <i>A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>N</sub></i>.</p>",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "<p><i><strong>Explanation 1:</strong></i><br>Min{1} + Min{1, 2} + Min{1, 2, 3} + Min{2} + Min{2, 3} + Min{3} = 1 + 1 + 1 + 2 + 2 + 3 = 10</p><p><i><strong>Explanation 2:</strong></i><br>Min{1} + Min{1, 5} + Min{5} = 1 + 1 + 5 = 7</p>",
+        "output_format": "<p>For each test case, print a single number representing the sum of the minimum of all subarrays of <i>A</i>.</p>",
+        "samples": [
+            {
+                "input": "5\n3\n1 2 3\n2\n1 5\n4\n2 3 4 10\n8\n1000000 1000001 1000002 1000003 1000004 1000005 1000006 1000007\n3\n3 1 2",
+                "output": "10\n7\n35\n36000084\n9"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 1.0,
+        "title": "Super Minimum Sum",
+        "video_editorial_id": 8141
+    },
+    "details": "Problem Details"
+}

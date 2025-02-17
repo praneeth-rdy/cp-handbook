@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "data": {
+        "body": "You are given a non-empty string S consisting of lower case characters. You can change at most K letters to maximise the cost. If in the final string, X immediately precedes Y, you get an increase in cost by C. You have to determine the maximum cost possible.",
+        "complete_approach": "",
+        "constraints": "1. $$1 \\leq T \\leq 100$$\n2. $$1 \\leq |S| \\leq 100$$ where $|S|$ denotes the length of the string $S$\n3. $$0 \\leq K \\leq 100$$\n4. $$0 \\leq M \\leq 676$$\n5. $$a \\leq X, Y \\leq z$$\n6. $$-1000 \\leq C \\leq 1000$$\n7. It is guaranteed that no pair $X Y$ is mentioned twice in the input data.",
+        "difficulty": null,
+        "editorial_code": [
+            {
+                "code": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n \n#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);\n#define int long long\nint dp[102][102][26];\n\nsigned main(){\n    IOS\n    int t;\n    cin>>t;\n    while(t--) {\n        string s;\n        int k,m;\n        cin>>s>>k>>m;\n        int n=s.size();\n        int c[26][26]={0};\n        while(m--){\n            char c1,c2;\n            int t;\n            cin>>c1>>c2>>t;\n            c[c1-'a'][c2-'a']=t;\n        }\n        for(int i=0; i<=n; ++i){\n            for(int j=0; j<=k; ++j){\n                for(int p=0; p<26; ++p){\n                    dp[i][j][p]=-1e9;\n                }\n            }\n        }\n        for(int i=0; i<26; ++i){\n            dp[0][1][i]=0;\n        }\n        dp[0][0][s[0]-'a']=0;\n        for(int i=0; i<n; ++i){\n            for(int j=0; j<=k; ++j){\n                for(int p=0; p<26; ++p){\n                    if(dp[i][j][p] != -1e9){\n                        for(int d=0; d<26; ++d){\n                            int t;\n                            if(s[i+1]-'a' == d) t=0;\n                            else t=1;\n                            dp[i+1][j+t][d]=max(dp[i+1][j+t][d], dp[i][j][p] + c[p][d]);\n                        }\n                    }\n                }\n            }\n        }\n        int ans=-1e18;\n        for(int i=0; i<=k; ++i){\n            for(int j=0; j<26; ++j){\n                ans=max(ans, dp[n-1][i][j]);\n            }\n        }\n        cout<<ans<<\"\\n\";\n    }\n    return 0;\n}\n```",
+                "language": "C++14"
+            }
+        ],
+        "health_check": {
+            "issues": [],
+            "last_updated": "2024-06-22T02:33:55.367381+00:00"
+        },
+        "hints": {
+            "hint1": "It can be seen that if we put some character c at position p of the string S, it will not affect symbols at positions (p+2) and greater.",
+            "hint2": "We make a DP array as DP[i][j][p] where i denotes the index of the currently processed symbol of the string, j denotes the number of symbols already changed and  p\u2013 the previous symbol.",
+            "solution_approach": "To calculate the answer for a state, you should choose the best value among all symbols for the current position or just go to the next index with the current symbol s[p]. Thus we get the followings DP transitions:\n\nWhen changing the symbol, DP[i+1][j+1][d]=max(DP[i+1][j+1][d], DP[i][j][p] + c[p][d])\n\nGoing to next character without changing, DP[i+1][j][d]=max(DP[i+1][j][d], DP[i][j][p] + c[p][d])\n\nTime Complexity per test case: O(N*K*26*26)"
+        },
+        "id": 187,
+        "input_format": "The first line of the input contains one integer T - the number of test cases. Then T test cases follow.\n\nThe first line of each test case contains string S and an integer K - the number of characters you can change at most.\n\nThe second line of each test case contains M - the number of cost values.\n\nThe following M lines contain two space-separated integers along with a character X Y C - you get an increase in cost by C if X immediately precedes Y.",
+        "languages": [
+            "C",
+            "C++14",
+            "Java",
+            "Python3"
+        ],
+        "memory_limit_mb": 256000,
+        "note": "For the first test case, change string to adcbz, cost becomes 100+55 = 155\n\nFor the second test case, changing any character will result in negative cost, we don\u2019t change the original string/we can change the string so that e,a and c,v are not adjacent.\n\nFor the third test case, change string to yzcd, cost becomes 100.",
+        "output_format": "For each test case, print a single integer denoting the maximum cost possible on a separate line.",
+        "samples": [
+            {
+                "input": "3\nakcbd 2\n3\na d 55\nb z 100\nb c 50\nsrtlmx 2\n2\ne a -167\nc v -932\nabcd 2\n4\nx y 10\ny z 100\na x -150\nz d -150",
+                "output": "155\n0\n100"
+            }
+        ],
+        "status": "PUBLISHED",
+        "tags": [],
+        "template_code": [],
+        "time_limit_sec": 8.0,
+        "title": "Maximising The Cost",
+        "video_editorial_id": 8165
+    },
+    "details": "Problem Details"
+}
