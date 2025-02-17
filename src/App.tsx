@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router'
 import Home from './components/pages/Home'
 import { Toaster } from './components/ui/toaster';
 import { BASE_URL } from './static/constants';
-import Problem from './components/pages/az/Problem';
+import Problem from './components/pages/az/problem';
 import Module from './components/pages/az/Module';
 import Chapters from './components/pages/az/Chapters';
 

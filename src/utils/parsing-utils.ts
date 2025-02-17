@@ -15,8 +15,12 @@ export function parseProblemData(jsonData: any) {
       lastUpdated: jsonData.health_check.last_updated
     },
     hints: {
-      hint1: jsonData.hints.hint1,
-      hint2: jsonData.hints.hint2,
+      ...Object.keys(jsonData.hints)
+        .filter(key => key !== 'solution_approach')
+        .reduce((acc, key) => ({
+          ...acc,
+          [key]: jsonData.hints[key]
+        }), {}),
       solutionApproach: jsonData.hints.solution_approach
     },
     id: jsonData.id,
